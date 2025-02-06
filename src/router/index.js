@@ -116,7 +116,7 @@ const router = createRouter({
       component: DayLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
       children: [
         {
-          path: "",
+          path: "/CreateProject",
           component: ProjectMenu, // 使用共用佈局(風琴選單) 在components>ProjectMenu
           children: [
             {

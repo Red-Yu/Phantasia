@@ -47,9 +47,9 @@
         <div class="leftContent">
           <div class="contentBox">
             <div class="slogon">
-              <h1 class="tlt1">Reading</h1>
-              <h2 class="tlt2">is more than words—</h2>
-              <h6 class="tlt3">An interactive journey of exploration.</h6>
+              <h1 class="flipInY">Reading</h1>
+              <h2 class="fadeIn">is more than words—</h2>
+              <h6 class="rollIn">An interactive journey of exploration.</h6>
             </div>
             <div class="menu">
               <div class="aboutUs_button">
@@ -236,14 +236,14 @@
 
       <transition name="fade" mode="out-in">
         <div
-          v-show="activeBox === 'aboutUs'"
+          v-show="activeVideo === 'aboutUs'"
           class="aboutUsBox box"
           :class="{
             show: activeBox === 'aboutUs',
             hide: activeBox !== 'aboutUs',
           }"
         >
-          <video ref="videoPlayer" autoplay class="video1">
+          <video ref="aboutUsVideo" class="video">
             <source src="../Assets/Day/video/test_video.mp4" type="video/mp4" />
             您的瀏覽器不支援 HTML5 視頻標籤。
           </video>
@@ -253,31 +253,38 @@
 
       <transition name="fade" mode="out-in">
         <div
-          v-show="activeBox === 'ourOrigin'"
+          v-show="activeVideo === 'ourOrigin'"
           class="ourOriginBox box"
           :class="{
             show: activeBox === 'ourOrigin',
             hide: activeBox !== 'ourOrigin',
           }"
         >
-          <img
+          <video ref="ourOriginVideo" class="video">
+            <source
+              src="../Assets/Day/video/test_video3.mp4"
+              type="video/mp4"
+            />
+            您的瀏覽器不支援 HTML5 視頻標籤。
+          </video>
+          <!-- <img
             src="../Assets/Day/ourOriginImg.jpg"
             alt=""
             class="ourOriginImg"
-          />
+          /> -->
         </div>
       </transition>
 
       <transition name="fade" mode="out-in">
         <div
-          v-show="activeBox === 'ourServices'"
+          v-show="activeVideo === 'ourServices'"
           class="ourServicesBox box"
           :class="{
             show: activeBox === 'ourServices',
             hide: activeBox !== 'ourServices',
           }"
         >
-          <video ref="videoPlayer" autoplay class="video1">
+          <video ref="ourServicesVideo" class="video">
             <source
               src="../Assets/Day/video/test_video2.mp4"
               type="video/mp4"
@@ -307,12 +314,38 @@ import "textillate";
 import "animate.css";
 const activeBox = ref(null);
 const activeButton = ref(null);
+const activeVideo = ref(null);
+
+const aboutUsVideo = ref(null);
+const ourOriginVideo = ref(null);
+const ourServicesVideo = ref(null);
 
 const onAboutUsClick = (clicked) => {
   activeBox.value = clicked;
   activeButton.value = clicked;
-  if (videoPlayer.value) {
-    videoPlayer.value.play(); // 播放影片
+  activeVideo.value = clicked;
+
+  // 根據 activeVideo 播放對應的影片
+  const videoElement = getVideoElement(activeVideo.value);
+  // console.log(videoElement);
+
+  if (videoElement) {
+    videoElement.load(); // 重新載入影片
+    videoElement.play(); // 播放影片
+  }
+};
+
+// 根據 activeVideo 的值選擇正確的影片 ref
+const getVideoElement = (videoKey) => {
+  switch (videoKey) {
+    case "aboutUs":
+      return aboutUsVideo.value;
+    case "ourOrigin":
+      return ourOriginVideo.value;
+    case "ourServices":
+      return ourServicesVideo.value;
+    default:
+      return aboutUsVideo.value;
   }
 };
 
@@ -325,40 +358,34 @@ onMounted(() => {
   setTimeout(() => {
     activeBox.value = "aboutUs";
     activeButton.value = "aboutUs";
+    activeVideo.value = "aboutUs";
+
+    const videoElement = getVideoElement(activeVideo.value);
+    if (videoElement) {
+      videoElement.load(); // 重新載入影片
+      videoElement.play(); // 播放影片
+    }
   }, 200);
 
-  $(".tlt1").textillate({
+  $(".flipInY").textillate({
     in: {
       effect: "flipInY",
       shuffle: true,
       delay: 170,
     },
-    out: {
-      effect: "fadeOut",
-      shuffle: true,
-      delay: 150,
-    },
   });
-  $(".tlt2").textillate({
+  $(".fadeIn").textillate({
     in: {
       effect: "fadeIn",
       shuffle: true,
       delay: 120,
     },
-    out: {
-      effect: "fadeOut",
-      delay: 100,
-    },
   });
-  $(".tlt3").textillate({
+  $(".rollIn").textillate({
     in: {
       effect: "rollIn",
       shuffle: true,
       delay: 70,
-    },
-    out: {
-      effect: "fadeOutDown",
-      delay: 50,
     },
   });
 

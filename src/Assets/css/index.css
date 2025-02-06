@@ -1033,7 +1033,7 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.about .video1 {
+.about .video {
   max-width: 1440px;
   z-index: 1;
   position: absolute;
