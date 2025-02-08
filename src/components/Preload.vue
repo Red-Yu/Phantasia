@@ -1,8 +1,8 @@
 <template>
   <!-- 可選：顯示預加載的動畫或進度條 -->
-  <!-- <div v-if="isLoading" class="loading-animation">
+  <div v-if="isLoading" class="loading-animation">
     <p>Loading...</p>
-  </div> -->
+  </div>
 </template>
 
 <script setup>
@@ -82,28 +82,34 @@ const preloadImagesAndVideos = () => {
     new URL(`../Assets/Day/video/night_transfer.webm`, import.meta.url).href,
   ];
 
-  // 預加載圖片
-  preloadImages.forEach((src) => {
-    const img = new Image();
-    img.src = src;
+  // 使用 Promise 來確保所有資源加載完畢
+  const imagePromises = preloadImages.map((src) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = resolve; // 當圖片加載完成後，調用 resolve
+    });
   });
 
   // 預加載影片
-  preloadVideos.forEach((src) => {
-    const video = document.createElement("video");
-    video.src = src;
-    video.preload = "auto"; // 預加載影片
-    video.load();
+  const videoPromises = preloadVideos.map((src) => {
+    return new Promise((resolve) => {
+      const video = document.createElement("video");
+      video.src = src;
+      video.preload = "auto";
+      video.onloadeddata = resolve; // 當影片數據加載完成後，調用 resolve
+      video.load();
+    });
+  });
+
+  // 等待所有圖片和影片加載完成
+  Promise.all([...imagePromises, ...videoPromises]).then(() => {
+    isLoading.value = false; // 當所有資源加載完畢後，隱藏 loading 動畫
   });
 };
 
 onMounted(() => {
   preloadImagesAndVideos(); // 預加載圖片和影片
-
-  // 假設預加載完畢後，顯示內容並隱藏loading動畫
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 3000); // 這裡可以根據實際需求來調整時間
 });
 </script>
 
