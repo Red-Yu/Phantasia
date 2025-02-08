@@ -38,24 +38,80 @@
   opacity: 0;
   animation: boxFadeOut 1.7s forwards;
 }
+
+/* ==========滑動效果========== */
+
+.slideArea {
+  transition: transform 0.5s ease-in-out;
+}
+
+.slideArea.sliding {
+  transform: translateX(2200px);
+}
 </style>
 
 <template>
   <div class="aboutWrapper">
-    <div class="about">
+    <div :class="['about slideArea', { sliding: isSliding }]">
       <div class="content">
         <div class="leftContent">
           <div class="contentBox">
-            <div class="slogon">
-              <h1 class="flipInY">Reading</h1>
-              <h2 class="fadeIn">is more than words—</h2>
-              <h6 class="rollIn">An interactive journey of exploration.</h6>
-            </div>
+            <transition name="fade" mode="out-in">
+              <div
+                v-show="activeBox === 'aboutUs'"
+                class="slogon box"
+                :class="{
+                  show: activeBox === 'aboutUs',
+                  hide: activeBox !== 'aboutUs',
+                }"
+              >
+                <h1 class="title1 flipInY">Reading</h1>
+                <h2 class="title2 fadeIn">is more than words—</h2>
+                <h6 class="title3 rollIn">
+                  An interactive journey of exploration.
+                </h6>
+              </div>
+            </transition>
+
+            <transition name="fade" mode="out-in">
+              <div
+                v-show="activeBox === 'ourOrigin'"
+                class="slogon box"
+                :class="{
+                  show: activeBox === 'ourOrigin',
+                  hide: activeBox !== 'ourOrigin',
+                }"
+              >
+                <h1 class="title1 flipInY">Learning</h1>
+                <h2 class="title2 fadeIn">is a window to magic—</h2>
+                <h6 class="title3 rollIn">
+                  A magical adventure through stories.
+                </h6>
+              </div>
+            </transition>
+
+            <transition name="fade" mode="out-in">
+              <div
+                v-show="activeBox === 'ourServices'"
+                class="slogon box"
+                :class="{
+                  show: activeBox === 'ourServices',
+                  hide: activeBox !== 'ourServices',
+                }"
+              >
+                <h1 class="title1 flipInY">Wonder</h1>
+                <h2 class="title2 fadeIn">is a trail to phantasia—</h2>
+                <h6 class="title3 rollIn">
+                  Explore new worlds with every click.
+                </h6>
+              </div>
+            </transition>
+
             <div class="menu">
               <div class="aboutUs_button">
                 <button
                   @click="onAboutUsClick('aboutUs')"
-                  class="btnLink white"
+                  class="btnLink white menuIn"
                   :class="{ active: activeButton === 'aboutUs' }"
                 >
                   About Us
@@ -64,7 +120,7 @@
               <div class="ourOrigin_button">
                 <button
                   @click="onAboutUsClick('ourOrigin')"
-                  class="btnLink white"
+                  class="btnLink white menuIn"
                   :class="{ active: activeButton === 'ourOrigin' }"
                 >
                   Our Origin
@@ -73,14 +129,17 @@
               <div class="ourServices_button">
                 <button
                   @click="onAboutUsClick('ourServices')"
-                  class="btnLink white"
+                  class="btnLink white menuIn"
                   :class="{ active: activeButton === 'ourServices' }"
                 >
                   Our Services
                 </button>
               </div>
               <div class="backToHome_button">
-                <button @click="backToHome" class="btnLink white backToHome">
+                <button
+                  @click="backToHome"
+                  class="btnLink white backToHome menuIn"
+                >
                   Back to home
                 </button>
               </div>
@@ -320,6 +379,8 @@ const aboutUsVideo = ref(null);
 const ourOriginVideo = ref(null);
 const ourServicesVideo = ref(null);
 
+const isSliding = ref(false);
+
 const onAboutUsClick = (clicked) => {
   activeBox.value = clicked;
   activeButton.value = clicked;
@@ -333,6 +394,9 @@ const onAboutUsClick = (clicked) => {
     videoElement.load(); // 重新載入影片
     videoElement.play(); // 播放影片
   }
+
+  // 移除並重新附加 class 來觸發動畫
+  resetTextillateAnimations();
 };
 
 // 根據 activeVideo 的值選擇正確的影片 ref
@@ -349,8 +413,20 @@ const getVideoElement = (videoKey) => {
   }
 };
 
+// 移除並重新附加 textillate 動畫 class
+const resetTextillateAnimations = () => {
+  // 重新初始化 textillate 動畫
+  $(".title1").textillate("start");
+  $(".title2").textillate("start");
+  $(".title3").textillate("start");
+};
+
 const backToHome = () => {
-  router.push("/");
+  isSliding.value = true;
+
+  setTimeout(() => {
+    router.push("/");
+  }, 300);
 };
 
 onMounted(() => {
@@ -367,12 +443,19 @@ onMounted(() => {
     }
   }, 200);
 
+  // =========textillate=========
+
   $(".flipInY").textillate({
     in: {
       effect: "flipInY",
       shuffle: true,
       delay: 170,
     },
+    out: {
+      effect: "fadeOut", // 離開效果
+      delay: 50, // 動畫延遲
+    },
+    // loop: true, // 設置是否循環播放
   });
   $(".fadeIn").textillate({
     in: {
@@ -389,15 +472,11 @@ onMounted(() => {
     },
   });
 
-  $(".tlt4").textillate({
+  $(".menuIn").textillate({
     in: {
-      effect: "flip",
-      shuffle: true,
-      delay: 50,
-    },
-    out: {
-      effect: "fadeOutDown",
-      delay: 50,
+      effect: "fadeIn",
+      sequence: true,
+      delay: 60,
     },
   });
 });

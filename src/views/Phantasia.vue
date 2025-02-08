@@ -35,6 +35,16 @@
 .fade_Video-leave-to {
   opacity: 0;
 }
+
+/* ==========滑動效果========== */
+
+.slideArea {
+  transition: transform 0.5s ease-in-out;
+}
+
+.slideArea.sliding {
+  transform: translateX(-2200px);
+}
 </style>
 
 <template>
@@ -42,156 +52,186 @@
 
   <!-- ===================首頁共用組件(前景)===================== -->
 
-  <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
-    <transition name="fade_slow" mode="out-in">
-      <img v-show="showImage" :src="bgBook" alt="" class="bgBook" />
-    </transition>
-    <img
-      style="z-index: 300"
-      src="../Assets/Day/bookRows_lightoff.png"
-      alt=""
-      class="bgBook"
-    />
+  <div ref="blackCover" class="blackCover"></div>
 
-    <div class="positionArea">
-      <div class="main_container" ref="parallaxContainer">
-        <div class="parallax-wrapper" data-depth="0.11">
-          <img
-            src="../Assets/Day/piller_left_lightoff.png"
-            alt=""
-            class="pillar pillar_left"
-          />
-        </div>
-        <transition name="fade_slow" mode="in-out">
-          <div v-show="showImage" class="parallax-wrapper" data-depth="0.11">
-            <img :src="pillar_left" alt="" class="pillar pillar_left" />
-          </div>
+  <div class="blackWrapper">
+    <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
+      <div :class="['slideArea', { sliding: isSliding }]">
+        <transition name="fade_slow" mode="out-in">
+          <img v-show="showImage" :src="bgBook" alt="" class="bgBook" />
         </transition>
+        <img
+          style="z-index: 300"
+          src="../Assets/Day/bookRows_lightoff.png"
+          alt=""
+          class="bgBook"
+        />
 
-        <div class="parallax-wrapper" data-depth="0.11">
-          <img
-            src="../Assets/Day/piller_right_lightoff.png"
-            alt=""
-            class="pillar pillar_right"
-          />
-        </div>
-        <transition name="fade_slow" mode="in-out">
-          <div v-show="showImage" class="parallax-wrapper" data-depth="0.11">
-            <img :src="pillar_right" alt="" class="pillar pillar_right" />
-          </div>
-        </transition>
-
-        <div class="parallax-wrapper" data-depth="0.05">
-          <img
-            src="../Assets/Day/platform_lightoff.png"
-            alt=""
-            class="platform"
-          />
-        </div>
-
-        <transition name="fade_slow" mode="in-out">
-          <div v-show="showImage" class="parallax-wrapper" data-depth="0.05">
-            <img :src="platform" alt="" class="platform" />
-          </div>
-        </transition>
-
-        <transition
-          name="fade"
-          @after-enter="isButtonDisabled = false"
-          mode="in-out"
-        >
-          <div v-show="showImage" class="parallax-wrapper" data-depth="0.05">
-            <button
-              @click="toggleDayNight"
-              :disabled="isButtonDisabled"
-              class="hoverAreaLamp"
-            ></button>
-            <img :src="lamp_hover" alt="" class="lamp img_hover" />
-
-            <img :src="lamp" alt="" class="lamp" />
-          </div>
-        </transition>
-        <transition name="fade_slow" mode="in-out">
-          <div v-show="showImage" class="parallax-wrapper" data-depth="0.05">
-            <a href="" class="hoverAreaBoy">
-              <div class="hoverAreaBoy1"></div>
-              <div class="hoverAreaBoy2"></div>
-            </a>
-            <img :src="boy_hover" alt="" class="boy img_hover" />
-            <img
-              src="../Assets/Day/myCabin_scroll.png"
-              alt=""
-              class="myCabin_scroll scroll"
-            />
-            <img :src="boy" alt="" class="boy" />
-          </div>
-        </transition>
-        <transition name="fade_slow" mode="in-out">
-          <div v-show="showImage" class="parallax-wrapper" data-depth="0.05">
-            <div class="hoverAreaBook" @click="ToAbout"></div>
-            <img :src="book_hover" alt="" class="book img_hover" />
-            <img
-              src="../Assets/Day/about_scroll.png"
-              alt=""
-              class="about_scroll scroll"
-            />
-            <div class="magic">
+        <div class="positionArea">
+          <div class="main_container" ref="parallaxContainer">
+            <div class="parallax-wrapper" data-depth="0.11">
               <img
-                :src="magic1"
+                src="../Assets/Day/piller_left_lightoff.png"
                 alt=""
-                class="about_magic1"
-                style="z-index: 920"
-              />
-              <img
-                :src="magic2"
-                alt=""
-                class="about_magic2"
-                style="z-index: 910"
-              />
-              <img
-                :src="magic3"
-                alt=""
-                class="about_magic3"
-                style="z-index: 900"
+                class="pillar pillar_left"
               />
             </div>
-            <img :src="book" alt="" class="book" />
+            <transition name="fade_slow" mode="in-out">
+              <div
+                v-show="showImage"
+                class="parallax-wrapper"
+                data-depth="0.11"
+              >
+                <img :src="pillar_left" alt="" class="pillar pillar_left" />
+              </div>
+            </transition>
+
+            <div class="parallax-wrapper" data-depth="0.11">
+              <img
+                src="../Assets/Day/piller_right_lightoff.png"
+                alt=""
+                class="pillar pillar_right"
+              />
+            </div>
+            <transition name="fade_slow" mode="in-out">
+              <div
+                v-show="showImage"
+                class="parallax-wrapper"
+                data-depth="0.11"
+              >
+                <img :src="pillar_right" alt="" class="pillar pillar_right" />
+              </div>
+            </transition>
+
+            <div class="parallax-wrapper" data-depth="0.05">
+              <img
+                src="../Assets/Day/platform_lightoff.png"
+                alt=""
+                class="platform"
+              />
+            </div>
+
+            <transition name="fade_slow" mode="in-out">
+              <div
+                v-show="showImage"
+                class="parallax-wrapper"
+                data-depth="0.05"
+              >
+                <img :src="platform" alt="" class="platform" />
+              </div>
+            </transition>
+
+            <transition
+              name="fade"
+              @after-enter="isButtonDisabled = false"
+              mode="in-out"
+            >
+              <div
+                v-show="showImage"
+                class="parallax-wrapper"
+                data-depth="0.05"
+              >
+                <button
+                  @click="toggleDayNight"
+                  :disabled="isButtonDisabled"
+                  class="hoverAreaLamp"
+                ></button>
+                <img :src="lamp_hover" alt="" class="lamp img_hover" />
+
+                <img :src="lamp" alt="" class="lamp" />
+              </div>
+            </transition>
+            <transition name="fade_slow" mode="in-out">
+              <div
+                v-show="showImage"
+                class="parallax-wrapper"
+                data-depth="0.05"
+              >
+                <a href="" class="hoverAreaBoy">
+                  <div class="hoverAreaBoy1"></div>
+                  <div class="hoverAreaBoy2"></div>
+                </a>
+                <img :src="boy_hover" alt="" class="boy img_hover" />
+                <img
+                  src="../Assets/Day/myCabin_scroll.png"
+                  alt=""
+                  class="myCabin_scroll scroll"
+                />
+                <img :src="boy" alt="" class="boy" />
+              </div>
+            </transition>
+            <transition name="fade_slow" mode="in-out">
+              <div
+                v-show="showImage"
+                class="parallax-wrapper"
+                data-depth="0.05"
+              >
+                <div class="hoverAreaBook" @click="ToAbout"></div>
+                <img :src="book_hover" alt="" class="book img_hover" />
+                <img
+                  src="../Assets/Day/about_scroll.png"
+                  alt=""
+                  class="about_scroll scroll"
+                />
+                <div class="magic">
+                  <img
+                    :src="magic1"
+                    alt=""
+                    class="about_magic1"
+                    style="z-index: 920"
+                  />
+                  <img
+                    :src="magic2"
+                    alt=""
+                    class="about_magic2"
+                    style="z-index: 910"
+                  />
+                  <img
+                    :src="magic3"
+                    alt=""
+                    class="about_magic3"
+                    style="z-index: 900"
+                  />
+                </div>
+                <img :src="book" alt="" class="book" />
+              </div>
+            </transition>
           </div>
+        </div>
+        <main>
+          <!-- 顯示子頁面內容 -->
+          <router-view></router-view>
+        </main>
+
+        <transition name="fade_Video">
+          <video
+            v-show="showVideo_day"
+            ref="dayTransferVideo"
+            @ended="showVideo_day = false"
+            preload="auto"
+            height="100vh"
+            class="dayTransferVideo"
+          >
+            <source src="../Assets/Day/video/day_transfer.webm" />
+            <!-- 您的瀏覽器不支援影片播放。 -->
+          </video>
+        </transition>
+
+        <transition name="fade_Video">
+          <video
+            v-show="showVideo_night"
+            ref="nightTransferVideo"
+            @ended="showVideo_night = false"
+            preload="auto"
+            height="100vh"
+            class="nightTransferVideo"
+          >
+            <source src="../Assets/Day/video/night_transfer.webm" />
+            <!-- 您的瀏覽器不支援影片播放。 -->
+          </video>
         </transition>
       </div>
     </div>
-    <main>
-      <!-- 顯示子頁面內容 -->
-      <router-view></router-view>
-    </main>
-
-    <transition name="fade_Video">
-      <video
-        v-show="showVideo_day"
-        ref="dayTransferVideo"
-        @ended="showVideo_day = false"
-        preload="auto"
-        height="100vh"
-        class="dayTransferVideo"
-      >
-        <source src="../Assets/Day/video/day_transfer.webm" />
-        <!-- 您的瀏覽器不支援影片播放。 -->
-      </video>
-    </transition>
-
-    <transition name="fade_Video">
-      <video
-        v-show="showVideo_night"
-        ref="nightTransferVideo"
-        @ended="showVideo_night = false"
-        preload="auto"
-        height="100vh"
-        class="nightTransferVideo"
-      >
-        <source src="../Assets/Day/video/night_transfer.webm" />
-        <!-- 您的瀏覽器不支援影片播放。 -->
-      </video>
-    </transition>
   </div>
 </template>
 
@@ -200,7 +240,9 @@ import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
+import { nextTick } from "vue";
 
+const blackCover = ref(null);
 const parallaxContainer = ref(null);
 const router = useRouter();
 
@@ -213,6 +255,8 @@ const day_night = computed(() => (day.value ? "day" : "night"));
 
 const dayTransferVideo = ref(null);
 const nightTransferVideo = ref(null);
+
+const isSliding = ref(false);
 
 //===============動態加載圖片================
 const bgBook = ref("");
@@ -320,35 +364,14 @@ const toggleDayNight = () => {
     showVideo_day.value = false; // 隱藏白天影片
     nightTransferVideo.value.play();
   }
-
-  //   setInterval的設置倒播的邏輯(效果不佳，最後捨棄);
-  //   setTimeout(() => {
-  //     if (dayTransferVideo.value) {
-  //       if (currentRoute === "/night") {
-  //         // 如果是夜間，影片正序播放
-  //         dayTransferVideo.value.playbackRate = 2.0; // 設置播放速度為2倍速
-  //         dayTransferVideo.value.play(); // 確保影片開始播放
-  //       }
-  //         else if (currentRoute === "/day") {
-  //     //   如果是白天，影片倒序播放
-  //       const duration = transferVideo.value.duration; // 影片總長度
-  //       transferVideo.value.currentTime = duration; // 將影片時間設為結束點
-  //       const interval = setInterval(() => {
-  //         if (transferVideo.value.currentTime > 0) {
-  //           transferVideo.value.currentTime = Math.max(
-  //             0,
-  //             transferVideo.value.currentTime - 0.05
-  //           );
-  //         } else {
-  //           clearInterval(interval); // 當影片播放完畢，停止倒播
-  //         }
-  //       }, 30); // 每100毫秒執行一次
-  //         }
-  //     }
-  //   }, 1000);
 };
 
 onMounted(() => {
+  nextTick(() => {
+    if (blackCover.value) {
+      blackCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值
+    }
+  });
   // 確保 DOM 內容加載完成後執行 Parallax 初始化
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
@@ -395,19 +418,12 @@ onBeforeUnmount(() => {
 });
 
 // ========router.push==========
-const ToAbout = () => {
-  router.push("/About");
-};
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   var scene = document.querySelector(".main_container");
-//   var parallaxInstance = new Parallax(scene, {
-//     relativeInput: true, // 啟用相對滑鼠位置偏移
-//     hoverOnly: true, // 只在滑鼠懸停時啟動 Parallax
-//     originY: 0,
-//     originX: 0.8,
-//     scalarX: 5.5, // 水平方向移動幅度是滑鼠移動的一半
-//     scalarY: 6.5, // 垂直方向移動幅度是滑鼠移動的一半
-//   });
-// });
+const ToAbout = () => {
+  isSliding.value = true;
+
+  setTimeout(() => {
+    router.push("/About");
+  }, 500);
+};
 </script>

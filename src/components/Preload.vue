@@ -1,8 +1,8 @@
 <template>
   <!-- 可選：顯示預加載的動畫或進度條 -->
-  <div v-if="isLoading" class="loading-animation">
+  <!-- <div v-if="isLoading" class="loading-animation">
     <p>Loading...</p>
-  </div>
+  </div> -->
 </template>
 
 <script setup>

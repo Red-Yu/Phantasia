@@ -30,6 +30,10 @@ button {
   z-index: 1;
 }
 
+.blackWrapper {
+  background-color: black;
+}
+
 .wrapper {
   width: 100%;
   height: 100vh;
@@ -37,6 +41,15 @@ button {
   overflow: hidden;
   background-color: black;
   z-index: 3;
+  pointer-events: none;
+}
+.blackCover {
+  position: absolute;
+  z-index: 2000;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  transition: opacity 1.7s ease-in-out; /* 添加平滑過渡 */
   pointer-events: none;
 }
 
@@ -593,6 +606,7 @@ button {
 
         .slogon {
           // border: red solid 2px;
+          position: absolute;
           color: white;
           h1 {
             color: #fff;
