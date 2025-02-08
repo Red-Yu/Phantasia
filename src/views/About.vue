@@ -42,11 +42,12 @@
 /* ==========滑動效果========== */
 
 .slideArea {
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.7s ease-in-out, opacity 0.5s ease-in-out;
 }
 
 .slideArea.sliding {
   transform: translateX(2200px);
+  opacity: 0;
 }
 </style>
 
@@ -303,7 +304,10 @@
           }"
         >
           <video ref="aboutUsVideo" class="video">
-            <source src="../Assets/Day/video/test_video.mp4" type="video/mp4" />
+            <source
+              src="../Assets/Day/video/dragon_video.webm"
+              type="video/mp4"
+            />
             您的瀏覽器不支援 HTML5 視頻標籤。
           </video>
           <!-- <img src="../Assets/Day/aboutUsImg.jpg" alt="" class="aboutUsImg" /> -->
@@ -321,7 +325,7 @@
         >
           <video ref="ourOriginVideo" class="video">
             <source
-              src="../Assets/Day/video/test_video3.mp4"
+              src="../Assets/Day/video/sword_video.webm"
               type="video/mp4"
             />
             您的瀏覽器不支援 HTML5 視頻標籤。
@@ -345,7 +349,7 @@
         >
           <video ref="ourServicesVideo" class="video">
             <source
-              src="../Assets/Day/video/test_video2.mp4"
+              src="../Assets/Day/video/knight_video.webm"
               type="video/mp4"
             />
             您的瀏覽器不支援 HTML5 視頻標籤。
@@ -426,7 +430,7 @@ const backToHome = () => {
 
   setTimeout(() => {
     router.push("/");
-  }, 300);
+  }, 375);
 };
 
 onMounted(() => {

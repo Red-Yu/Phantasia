@@ -80,6 +80,9 @@ const preloadImagesAndVideos = () => {
   const preloadVideos = [
     new URL(`../Assets/Day/video/day_transfer.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/night_transfer.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/dragon_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/sword_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/knight_video.webm`, import.meta.url).href,
   ];
 
   // 使用 Promise 來確保所有資源加載完畢

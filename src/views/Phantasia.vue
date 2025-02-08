@@ -39,11 +39,15 @@
 /* ==========滑動效果========== */
 
 .slideArea {
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.9s ease-in-out, opacity 0.75s ease-in-out;
 }
 
 .slideArea.sliding {
   transform: translateX(-2200px);
+  opacity: 0;
+}
+.blackCover {
+  transition: opacity 0.8s ease-in-out;
 }
 </style>
 
@@ -424,6 +428,6 @@ const ToAbout = () => {
 
   setTimeout(() => {
     router.push("/About");
-  }, 500);
+  }, 450);
 };
 </script>
