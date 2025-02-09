@@ -249,6 +249,7 @@ import { nextTick } from "vue";
 const blackCover = ref(null);
 const parallaxContainer = ref(null);
 const router = useRouter();
+// const isPreloading = ref(null);
 
 const day = ref(true);
 const showImage = ref(true);
@@ -371,6 +372,15 @@ const toggleDayNight = () => {
 };
 
 onMounted(() => {
+  // console.log(sessionStorage.getItem("animationShown"));
+  // // 檢查 sessionStorage，判斷是否是第一次訪問
+  // if (!sessionStorage.getItem("animationShown")) {
+  //   isPreloading.value = true;
+  // } else {
+  //   isPreloading.value = false;
+  // }
+  // sessionStorage.removeItem("animationShown");
+
   nextTick(() => {
     if (blackCover.value) {
       blackCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值

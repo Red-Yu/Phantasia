@@ -32,20 +32,17 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: Phantasia, // 懶加載(可以提升效能)
-      // loading: Preload,
+      component: Phantasia,
       children: [
         {
           path: "Day",
           name: "Day",
-          component: PhantasiaDay, // 懶加載(可以提升效能)
-          // loading: Loading,
+          component: PhantasiaDay,
         },
         {
           path: "Night",
           name: "Night",
-          component: PhantasiaNight, // 懶加載(可以提升效能)
-          // loading: Loading,
+          component: PhantasiaNight,
         },
       ],
     },
@@ -54,7 +51,6 @@ const router = createRouter({
       path: "/About",
       name: "about",
       component: () => import("@/views/About.vue"),
-      // loading: Loading,
     },
 
     //===================個人頁面(書櫃、換裝、集點)=======================
@@ -266,23 +262,12 @@ const router = createRouter({
       path: "/btnFmaily", //按鈕元件範例1  /btnFmaily
       name: "test",
       component: () => import("@/views/test/btnFmaily.vue"),
-      // loading: Loading,
     },
     {
       path: "/sidebar", //按鈕元件範例2  /sidebar
       name: "sidebar",
       component: () => import("@/views/test/sidebar.vue"),
-      // loading: Loading,
     },
-
-    // {
-    //   path: "/about",
-    //   name: "about",
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import("../views/AboutView.vue"),
-    // },
   ],
 });
 

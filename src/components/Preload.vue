@@ -1,14 +1,105 @@
+<style scoped>
+.loading-animation {
+  position: absolute;
+  /* background-color: black; */
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+}
+.video-container {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+  z-index: 2500;
+}
+
+.startVideo {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  z-index: 2500;
+}
+
+p {
+  color: #fff;
+  font-size: 1.5rem;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  z-index: 3000;
+}
+
+.start_btn {
+  cursor: pointer;
+}
+
+/* ==========影片========== */
+.fade_Video-enter-active,
+.fade_Video-leave-active {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.fade_Video-enter,
+.fade_Video-leave-to {
+  opacity: 0;
+}
+</style>
+
 <template>
-  <!-- 可選：顯示預加載的動畫或進度條 -->
   <div v-if="isLoading" class="loading-animation">
     <p>Loading...</p>
   </div>
+
+  <div v-if="isStart" class="loading-animation">
+    <p class="start_btn" @click="startVideo">Start</p>
+  </div>
+
+  <transition name="fade_Video">
+    <div v-show="isVideo" class="video-container">
+      <video
+        ref="startVideoElement"
+        src="../Assets/Day/video/start_video.webm"
+        class="startVideo"
+        @timeupdate="videoTimeUpdate"
+      ></video>
+    </div>
+  </transition>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
 const isLoading = ref(true);
+const isStart = ref(false);
+const isVideo = ref(false);
+const startVideoElement = ref(null);
+
+const startVideo = () => {
+  isStart.value = false;
+  console.log(startVideoElement.value);
+
+  if (startVideoElement.value) {
+    startVideoElement.value.play(); // 開始播放影片
+  }
+};
+
+// 處理影片播放進度
+const videoTimeUpdate = () => {
+  const video = startVideoElement.value;
+  if (video && video.currentTime / video.duration > 0.91) {
+    // 當影片播放超過 95%，觸發隱藏動畫
+    isVideo.value = false;
+  }
+};
 
 // 預加載圖片和影片
 const preloadImagesAndVideos = () => {
@@ -83,46 +174,89 @@ const preloadImagesAndVideos = () => {
     new URL(`../Assets/Day/video/dragon_video.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/sword_video.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/knight_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/start_video.webm`, import.meta.url).href,
   ];
 
-  // 使用 Promise 來確保所有資源加載完畢
-  const imagePromises = preloadImages.map((src) => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = resolve; // 當圖片加載完成後，調用 resolve
+  setTimeout(() => {
+    // 使用 Promise 來確保所有資源加載完畢
+    const imagePromises = preloadImages.map((src) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve; // 當圖片加載完成後，調用 resolve
+        img.onerror = resolve; // 當圖片加載失敗後，也調用 resolve，確保進程繼續
+      });
     });
-  });
 
-  // 預加載影片
-  const videoPromises = preloadVideos.map((src) => {
-    return new Promise((resolve) => {
-      const video = document.createElement("video");
-      video.src = src;
-      video.preload = "auto";
-      video.onloadeddata = resolve; // 當影片數據加載完成後，調用 resolve
-      video.load();
+    // 預加載影片
+    const videoPromises = preloadVideos.map((src) => {
+      return new Promise((resolve) => {
+        const video = document.createElement("video");
+        video.src = src;
+        video.preload = "auto";
+        video.onloadeddata = resolve; // 當影片數據加載完成後，調用 resolve
+        video.onerror = resolve; // 當影片加載失敗後，也調用 resolve，確保進程繼續
+        video.load();
+      });
     });
-  });
 
-  // 等待所有圖片和影片加載完成
-  Promise.all([...imagePromises, ...videoPromises]).then(() => {
-    isLoading.value = false; // 當所有資源加載完畢後，隱藏 loading 動畫
-  });
+    // 等待所有圖片和影片加載完成
+    Promise.all([...imagePromises, ...videoPromises]).then(() => {
+      isLoading.value = false;
+      isStart.value = true;
+    });
+  }, 6000);
 };
 
 onMounted(() => {
-  preloadImagesAndVideos(); // 預加載圖片和影片
+  isVideo.value = true;
+
+  // preloadImagesAndVideos(); // 預加載圖片和影片
+
+  // 檢查 sessionStorage 中是否有標記，決定是否顯示 Preload 動畫
+  if (!sessionStorage.getItem("animationShown")) {
+    // 設置標記，防止下次進來還顯示動畫
+    sessionStorage.setItem("animationShown", "true");
+    // 預加載影片和圖片
+    preloadImagesAndVideos();
+  } else {
+    // 如果已經標記過，直接顯示 Start 按鈕
+    isLoading.value = false;
+    isStart.value = false;
+    isVideo.value = false;
+  }
+});
+// 監聽頁面卸載
+window.addEventListener("beforeunload", (event) => {
+  console.log("Before unload triggered");
+  // 檢查是否是路由導航
+  if (!sessionStorage.getItem("isNavigating")) {
+    // 如果不是路由導航，才執行清理操作
+    console.log("Clearing animationShown");
+    sessionStorage.removeItem("animationShown");
+  }
+});
+
+// 設置標記為 'isNavigating' 來標示是否是路由導航
+const clearNavigationFlag = () => {
+  sessionStorage.setItem("isNavigating", "true");
+};
+
+// 清除導航標記
+const resetNavigationFlag = () => {
+  sessionStorage.removeItem("isNavigating");
+};
+
+// 使用 Vue Router 的導航守衛進行清理
+router.beforeEach((to, from, next) => {
+  // 設置標記，表示正在進行路由導航
+  clearNavigationFlag();
+  next();
+});
+
+// 當路由完成時，重置該標記
+router.afterEach((to, from) => {
+  // 重置標記，表示導航已經完成
+  resetNavigationFlag();
 });
 </script>
-
-<style scoped>
-.loading-animation {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 1.5rem;
-  color: #fff;
-}
-</style>

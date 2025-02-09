@@ -68,9 +68,7 @@
               >
                 <h1 class="title1 flipInY">Reading</h1>
                 <h2 class="title2 fadeIn">is more than words—</h2>
-                <h6 class="title3 rollIn">
-                  An interactive journey of exploration.
-                </h6>
+                <h6 class="title3 rollIn">An interactive journey of exploration.</h6>
               </div>
             </transition>
 
@@ -85,9 +83,7 @@
               >
                 <h1 class="title1 flipInY">Learning</h1>
                 <h2 class="title2 fadeIn">is a window to magic—</h2>
-                <h6 class="title3 rollIn">
-                  A magical adventure through stories.
-                </h6>
+                <h6 class="title3 rollIn">A magical adventure through stories.</h6>
               </div>
             </transition>
 
@@ -102,9 +98,7 @@
               >
                 <h1 class="title1 flipInY">Wonder</h1>
                 <h2 class="title2 fadeIn">is a trail to phantasia—</h2>
-                <h6 class="title3 rollIn">
-                  Explore new worlds with every click.
-                </h6>
+                <h6 class="title3 rollIn">Explore new worlds with every click.</h6>
               </div>
             </transition>
 
@@ -137,10 +131,7 @@
                 </button>
               </div>
               <div class="backToHome_button">
-                <button
-                  @click="backToHome"
-                  class="btnLink white backToHome menuIn"
-                >
+                <button @click="backToHome" class="btnLink white backToHome menuIn">
                   Back to home
                 </button>
               </div>
@@ -164,39 +155,36 @@
                   <h3>About Us</h3>
                   <span>
                     <p>
-                      In today’s fast-paced digital era, we are committed to
-                      creating a safe and nurturing online space for parents and
-                      children. Our platform focuses on the creation and sharing
-                      of interactive picture books, blending stories, special
-                      effects, and engaging interactions to transform reading
-                      into a new way for children to explore the world.
+                      In today’s fast-paced digital era, we are committed to creating a
+                      safe and nurturing online space for parents and children. Our
+                      platform focuses on the creation and sharing of interactive picture
+                      books, blending stories, special effects, and engaging interactions
+                      to transform reading into a new way for children to explore the
+                      world.
                     </p>
                     <p>
-                      We offer more than just one-page story websites; we
-                      provide a platform full of creativity and possibilities:
+                      We offer more than just one-page story websites; we provide a
+                      platform full of creativity and possibilities:
                     </p>
                     <ul>
                       <li>
-                        Designed for creators: Anyone can upload their images
-                        and story texts, and we’ll help transform them into
-                        vibrant, interactive picture books while offering sales
-                        and profit-sharing services.
+                        Designed for creators: Anyone can upload their images and story
+                        texts, and we’ll help transform them into vibrant, interactive
+                        picture books while offering sales and profit-sharing services.
                       </li>
                       <li>
-                        Supporting children’s growth: In an age flooded with
-                        information, we believe reading should be both safe and
-                        enjoyable. Our interactive picture books aim to inspire
-                        children’s creativity, nurture their imagination, and
-                        give parents peace of mind.
+                        Supporting children’s growth: In an age flooded with information,
+                        we believe reading should be both safe and enjoyable. Our
+                        interactive picture books aim to inspire children’s creativity,
+                        nurture their imagination, and give parents peace of mind.
                       </li>
                     </ul>
 
                     <p>
-                      Our vision is to merge technology with storytelling,
-                      becoming a trusted companion on children’s journey of
-                      growth and bringing warmth and hope to the digital
-                      age.Join us and discover the endless possibilities of
-                      interactive picture books!
+                      Our vision is to merge technology with storytelling, becoming a
+                      trusted companion on children’s journey of growth and bringing
+                      warmth and hope to the digital age.Join us and discover the endless
+                      possibilities of interactive picture books!
                     </p>
                   </span>
                 </div>
@@ -214,29 +202,27 @@
                   <h3>Our Origin</h3>
                   <span>
                     <p>
-                      In today’s rapidly evolving technological era, children
-                      are accessing the internet at an increasingly younger age,
-                      leaving parents concerned about how to find beneficial and
-                      safe resources amidst an overwhelming sea of content. This
-                      question became the foundation of our platform.
+                      In today’s rapidly evolving technological era, children are
+                      accessing the internet at an increasingly younger age, leaving
+                      parents concerned about how to find beneficial and safe resources
+                      amidst an overwhelming sea of content. This question became the
+                      foundation of our platform.
                     </p>
                     <p>
-                      We firmly believe that reading and learning should be
-                      filled with warmth and inspiration, not just cold data and
-                      text. By combining storytelling, art, and technology, we
-                      aim to create an interactive picture book platform that
-                      sparks children’s creativity and offers parents a safe and
-                      reliable choice. Reading is no longer limited to printed
-                      pages—it becomes an engaging and exploratory experience.
+                      We firmly believe that reading and learning should be filled with
+                      warmth and inspiration, not just cold data and text. By combining
+                      storytelling, art, and technology, we aim to create an interactive
+                      picture book platform that sparks children’s creativity and offers
+                      parents a safe and reliable choice. Reading is no longer limited to
+                      printed pages—it becomes an engaging and exploratory experience.
                     </p>
 
                     <p>
-                      Additionally, we have created a platform specifically for
-                      parents and creators passionate about children’s
-                      education. It empowers them to transform their stories and
-                      ideas into vibrant, interactive picture books, benefitting
-                      even more families. This is our founding mission and the
-                      driving force behind our journey.
+                      Additionally, we have created a platform specifically for parents
+                      and creators passionate about children’s education. It empowers them
+                      to transform their stories and ideas into vibrant, interactive
+                      picture books, benefitting even more families. This is our founding
+                      mission and the driving force behind our journey.
                     </p>
                   </span>
                 </div>
@@ -255,30 +241,27 @@
                   <span>
                     <h4>Safe Picture Book Subscription</h4>
                     <p>
-                      We provide parents with a worry-free option. By
-                      subscribing to our membership, children can access a
-                      curated collection of high-quality interactive picture
-                      books crafted with care. These stories offer rich content
-                      and educational value, making reading both safe and
+                      We provide parents with a worry-free option. By subscribing to our
+                      membership, children can access a curated collection of high-quality
+                      interactive picture books crafted with care. These stories offer
+                      rich content and educational value, making reading both safe and
                       enjoyable.
                     </p>
                     <h4>Magical Effects and Interactive Experiences</h4>
                     <p>
-                      Our platform features innovative, magic-themed effects and
-                      engaging interactions, creating an immersive storytelling
-                      experience for children. Additionally, kids can design
-                      their own unique magical avatar in the member center,
-                      enhancing their sense of exploration and participation,
-                      making each story journey truly special.
+                      Our platform features innovative, magic-themed effects and engaging
+                      interactions, creating an immersive storytelling experience for
+                      children. Additionally, kids can design their own unique magical
+                      avatar in the member center, enhancing their sense of exploration
+                      and participation, making each story journey truly special.
                     </p>
                     <h4>Supporting Creators’ Educational Aspirations</h4>
                     <p>
-                      If you are a parent passionate about children’s education
-                      or an aspiring creator, we welcome you to join our creator
-                      platform. Transform your stories and ideas into
-                      interactive picture books and share them with more
-                      families. We are dedicated to supporting anyone who wishes
-                      to contribute to children’s education, bringing more
+                      If you are a parent passionate about children’s education or an
+                      aspiring creator, we welcome you to join our creator platform.
+                      Transform your stories and ideas into interactive picture books and
+                      share them with more families. We are dedicated to supporting anyone
+                      who wishes to contribute to children’s education, bringing more
                       outstanding stories to light.
                     </p>
                   </span>
@@ -304,10 +287,7 @@
           }"
         >
           <video ref="aboutUsVideo" class="video">
-            <source
-              src="../Assets/Day/video/dragon_video.webm"
-              type="video/mp4"
-            />
+            <source src="../Assets/Day/video/dragon_video.webm" type="video/webm" />
             您的瀏覽器不支援 HTML5 視頻標籤。
           </video>
           <!-- <img src="../Assets/Day/aboutUsImg.jpg" alt="" class="aboutUsImg" /> -->
@@ -324,10 +304,7 @@
           }"
         >
           <video ref="ourOriginVideo" class="video">
-            <source
-              src="../Assets/Day/video/sword_video.webm"
-              type="video/mp4"
-            />
+            <source src="../Assets/Day/video/sword_video.webm" type="video/webm" />
             您的瀏覽器不支援 HTML5 視頻標籤。
           </video>
           <!-- <img
@@ -348,10 +325,7 @@
           }"
         >
           <video ref="ourServicesVideo" class="video">
-            <source
-              src="../Assets/Day/video/knight_video.webm"
-              type="video/mp4"
-            />
+            <source src="../Assets/Day/video/knight_video.webm" type="video/webm" />
             您的瀏覽器不支援 HTML5 視頻標籤。
           </video>
           <!-- <img
