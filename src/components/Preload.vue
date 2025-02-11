@@ -1,11 +1,28 @@
 <style scoped>
 .loading-animation {
   position: absolute;
-  /* background-color: black; */
+  max-width: 1440px;
   width: 100%;
   height: 100%;
   z-index: 3000;
 }
+
+p {
+  color: white;
+  text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
+  font-family: "Fanwood Text";
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-variant: small-caps;
+  position: absolute;
+  /* transform: translate(-50%, -50%); */
+  bottom: 4%;
+  right: 7%;
+  z-index: 3000;
+}
+
 .video-container {
   position: absolute;
   transform: translate(-50%, -50%);
@@ -15,6 +32,7 @@
   width: 100%;
   height: 100%;
   z-index: 2500;
+  overflow: hidden;
 }
 
 .startVideo {
@@ -22,18 +40,8 @@
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  width: 100%;
+  height: 100%;
   z-index: 2500;
-}
-
-p {
-  color: #fff;
-  font-size: 1.5rem;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  z-index: 3000;
 }
 
 .start_btn {
@@ -50,11 +58,47 @@ p {
 .fade_Video-leave-to {
   opacity: 0;
 }
+
+/* 進場動畫 */
+@keyframes boxFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* 顯示 box 時的樣式 */
+.box.show {
+  animation: boxFadeIn 1.7s forwards;
+}
+
+/* ===========ripple========== */
+
+.rippleArea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3001;
+  background: transparent;
+  /* pointer-events: none; */
+  background-size: cover; /* 圖片會填滿整個元素 */
+  background-position: center; /* 圖片居中顯示 */
+  background-repeat: no-repeat; /* 防止圖片重複 */
+}
+
+.rippleArea .ripples {
+  pointer-events: auto; /* 讓 ripple 效果能夠接收點擊 */
+}
 </style>
 
 <template>
+  <div class="rippleArea"></div>
   <div v-if="isLoading" class="loading-animation">
-    <p>Loading...</p>
+    <p>Now Loading...</p>
   </div>
 
   <div v-if="isStart" class="loading-animation">
@@ -66,7 +110,10 @@ p {
       <video
         ref="startVideoElement"
         src="../Assets/Day/video/start_video.webm"
-        class="startVideo"
+        class="startVideo box"
+        :class="{
+          show: (videoShow = 'true'),
+        }"
         @timeupdate="videoTimeUpdate"
       ></video>
     </div>
@@ -74,13 +121,20 @@ p {
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
+
+import "jquery.ripples";
+import "lettering.js";
+// import "textillate";
+import "animate.css";
 
 const router = useRouter();
 const isLoading = ref(true);
 const isStart = ref(false);
 const isVideo = ref(false);
+const videoShow = ref(true); //讓動畫出現時有過場
+
 const startVideoElement = ref(null);
 
 const startVideo = () => {
@@ -169,12 +223,12 @@ const preloadImagesAndVideos = () => {
 
   // 影片素材
   const preloadVideos = [
+    new URL(`../Assets/Day/video/start_video.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/day_transfer.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/night_transfer.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/dragon_video.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/sword_video.webm`, import.meta.url).href,
     new URL(`../Assets/Day/video/knight_video.webm`, import.meta.url).href,
-    new URL(`../Assets/Day/video/start_video.webm`, import.meta.url).href,
   ];
 
   setTimeout(() => {
@@ -210,8 +264,22 @@ const preloadImagesAndVideos = () => {
 
 onMounted(() => {
   isVideo.value = true;
+  videoShow.value = true;
 
-  // preloadImagesAndVideos(); // 預加載圖片和影片
+  nextTick(() => {
+    // 確保所有 DOM 更新完成
+    $(".rippleArea").ripples({
+      resolution: 1080,
+      perturbance: 0.02,
+      interactive: true,
+      dropRadius: 15,
+      dropColor: "rgba(0, 0, 255, 0.5)",
+      ripplesRadius: 25,
+      effect: "complex",
+      duration: 2000,
+      imageUrl: "./src/Assets/Day/test.jpg",
+    });
+  });
 
   // 檢查 sessionStorage 中是否有標記，決定是否顯示 Preload 動畫
   if (!sessionStorage.getItem("animationShown")) {
@@ -226,6 +294,7 @@ onMounted(() => {
     isVideo.value = false;
   }
 });
+
 // 監聽頁面卸載
 window.addEventListener("beforeunload", (event) => {
   console.log("Before unload triggered");

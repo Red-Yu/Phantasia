@@ -8,8 +8,10 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import $ from "jquery";
-// import "animate.css";
+
 // import "lettering.js";
+// import "textillate";
+// import "animate.css";
 
 if (typeof window !== "undefined") {
   window.$ = $;
@@ -18,6 +20,7 @@ if (typeof window !== "undefined") {
 // import "textillate";
 
 const app = createApp(App);
+// app.config.globalProperties.$ = $;
 
 app.use(createPinia());
 app.use(router);

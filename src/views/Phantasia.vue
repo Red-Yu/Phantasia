@@ -410,6 +410,8 @@ onMounted(() => {
   updateImagePaths(day_night.value);
 
   router.push(`/${day.value ? "day" : "night"}`);
+
+  // =========textillate=========
 });
 
 // ========保持過場影片加載(避免過場卡頓)==========

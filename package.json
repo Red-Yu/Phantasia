@@ -11,6 +11,7 @@
     "animate.css": "^3.7.2",
     "axios": "^1.7.9",
     "jquery": "^3.7.1",
+    "jquery.ripples": "^0.6.3",
     "lettering.js": "^0.8.2",
     "parallax-js": "^3.1.0",
     "pinia": "^2.1.4",
