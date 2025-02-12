@@ -5,6 +5,7 @@
   width: 100%;
   height: 100%;
   z-index: 3000;
+  pointer-events: none;
 }
 
 p {
@@ -21,6 +22,7 @@ p {
   bottom: 4%;
   right: 7%;
   z-index: 3000;
+  pointer-events: auto;
 }
 
 .video-container {
@@ -69,34 +71,55 @@ p {
   }
 }
 
+/* 退場動畫 */
+@keyframes boxFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* 顯示 box 時的樣式 */
 .box.show {
   animation: boxFadeIn 1.7s forwards;
+}
+.box.hide {
+  opacity: 0;
+  animation: boxFadeOut 1.5s forwards;
 }
 
 /* ===========ripple========== */
 
 .rippleArea {
   position: absolute;
-  top: 0;
-  left: 0;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
   width: 100%;
   height: 100%;
-  z-index: 3001;
+  z-index: 2501;
   background: transparent;
   /* pointer-events: none; */
-  background-size: cover; /* 圖片會填滿整個元素 */
-  background-position: center; /* 圖片居中顯示 */
-  background-repeat: no-repeat; /* 防止圖片重複 */
-}
-
-.rippleArea .ripples {
-  pointer-events: auto; /* 讓 ripple 效果能夠接收點擊 */
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 </style>
 
 <template>
-  <div class="rippleArea"></div>
+  <transition name="fade_Video">
+    <div
+      v-show="isRippleArea"
+      class="rippleArea box"
+      :class="{
+        show: isRippleArea == true,
+        hide: isRippleArea == false,
+      }"
+    ></div>
+  </transition>
+
   <div v-if="isLoading" class="loading-animation">
     <p>Now Loading...</p>
   </div>
@@ -110,10 +133,7 @@ p {
       <video
         ref="startVideoElement"
         src="../Assets/Day/video/start_video.webm"
-        class="startVideo box"
-        :class="{
-          show: (videoShow = 'true'),
-        }"
+        class="startVideo"
         @timeupdate="videoTimeUpdate"
       ></video>
     </div>
@@ -134,6 +154,7 @@ const isLoading = ref(true);
 const isStart = ref(false);
 const isVideo = ref(false);
 const videoShow = ref(true); //讓動畫出現時有過場
+const isRippleArea = ref(false);
 
 const startVideoElement = ref(null);
 
@@ -148,11 +169,15 @@ const startVideo = () => {
 
 // 處理影片播放進度
 const videoTimeUpdate = () => {
+  isRippleArea.value = false;
+
   const video = startVideoElement.value;
-  if (video && video.currentTime / video.duration > 0.91) {
-    // 當影片播放超過 95%，觸發隱藏動畫
-    isVideo.value = false;
-  }
+  setTimeout(() => {
+    if (video && video.currentTime / video.duration > 0.91) {
+      // 當影片播放超過 95%，觸發隱藏動畫
+      isVideo.value = false;
+    }
+  }, 1900);
 };
 
 // 預加載圖片和影片
@@ -265,19 +290,21 @@ const preloadImagesAndVideos = () => {
 onMounted(() => {
   isVideo.value = true;
   videoShow.value = true;
+  isRippleArea.value = true;
 
   nextTick(() => {
     // 確保所有 DOM 更新完成
     $(".rippleArea").ripples({
       resolution: 1080,
+      dropRadius: 12,
       perturbance: 0.02,
       interactive: true,
-      dropRadius: 15,
-      dropColor: "rgba(0, 0, 255, 0.5)",
+      cover: true,
+      dropColor: "rgba(0, 255, 191, 0.5)",
       ripplesRadius: 25,
       effect: "complex",
-      duration: 2000,
-      imageUrl: "./src/Assets/Day/test.jpg",
+      duration: 400,
+      imageUrl: new URL("../Assets/Day/startImg.jpg", import.meta.url).href,
     });
   });
 
@@ -292,6 +319,7 @@ onMounted(() => {
     isLoading.value = false;
     isStart.value = false;
     isVideo.value = false;
+    isRippleArea.value = false;
   }
 });
 
