@@ -372,9 +372,9 @@ const router = useRouter();
 
 const videoPlayer = ref(null);
 
-import "lettering.js";
-import "textillate";
-import "animate.css";
+// import "lettering.js";
+// import "textillate";
+// import "animate.css";
 const activeBox = ref(null);
 const activeButton = ref(null);
 const activeVideo = ref(null);

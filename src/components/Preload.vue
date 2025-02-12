@@ -121,11 +121,11 @@ p {
   </transition>
 
   <div v-if="isLoading" class="loading-animation">
-    <p>Now Loading...</p>
+    <p class="loading">Now Loading...</p>
   </div>
 
   <div v-if="isStart" class="loading-animation">
-    <p class="start_btn" @click="startVideo">Start</p>
+    <p class="start_btn start" @click="startVideo">Start</p>
   </div>
 
   <transition name="fade_Video">
@@ -144,10 +144,10 @@ p {
 import { ref, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 
-import "jquery.ripples";
-import "lettering.js";
+// import "jquery.ripples";
+// import "lettering.js";
 // import "textillate";
-import "animate.css";
+// import "animate.css";
 
 const router = useRouter();
 const isLoading = ref(true);
@@ -284,7 +284,7 @@ const preloadImagesAndVideos = () => {
       isLoading.value = false;
       isStart.value = true;
     });
-  }, 6000);
+  }, 15000);
 };
 
 onMounted(() => {
@@ -305,6 +305,29 @@ onMounted(() => {
       effect: "complex",
       duration: 400,
       imageUrl: new URL("../Assets/Day/startImg.jpg", import.meta.url).href,
+    });
+  });
+
+  nextTick(() => {
+    $(".loading").textillate({
+      in: {
+        effect: "fadeIn",
+        sequence: true,
+        delay: 120,
+      },
+      out: {
+        effect: "fadeOut", // 離開效果
+        delay: 120, // 動畫延遲
+      },
+      loop: true,
+    });
+
+    $(".start").textillate({
+      in: {
+        effect: "fadeIn",
+        sequence: true,
+        delay: 50,
+      },
     });
   });
 
