@@ -295,7 +295,7 @@ onMounted(() => {
   nextTick(() => {
     // 確保所有 DOM 更新完成
     $(".rippleArea").ripples({
-      resolution: 1080,
+      resolution: 720,
       dropRadius: 12,
       perturbance: 0.02,
       interactive: true,
@@ -311,12 +311,12 @@ onMounted(() => {
   nextTick(() => {
     $(".loading").textillate({
       in: {
-        effect: "fadeIn",
+        effect: "flip",
         sequence: true,
         delay: 120,
       },
       out: {
-        effect: "fadeOut", // 離開效果
+        effect: "flip", // 離開效果
         delay: 120, // 動畫延遲
       },
       loop: true,

@@ -151,10 +151,10 @@
                 class="parallax-wrapper"
                 data-depth="0.05"
               >
-                <a href="" class="hoverAreaBoy">
+                <div class="hoverAreaBoy" @click="ToCabin">
                   <div class="hoverAreaBoy1"></div>
                   <div class="hoverAreaBoy2"></div>
-                </a>
+                </div>
                 <img :src="boy_hover" alt="" class="boy img_hover" />
                 <img
                   src="../Assets/Day/myCabin_scroll.png"
@@ -434,6 +434,10 @@ onBeforeUnmount(() => {
 });
 
 // ========router.push==========
+
+const ToCabin = () => {
+  router.push("/MyCabin");
+};
 
 const ToAbout = () => {
   isSliding.value = true;

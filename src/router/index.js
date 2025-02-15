@@ -56,13 +56,9 @@ const router = createRouter({
     //===================個人頁面(書櫃、換裝、集點)=======================
     {
       path: "/MyCabin",
-      component: DayLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
+      name: "MyCabin", //個人頁面入口  /MyCabin
+      component: () => import("@/views/MyCabin/MyCabin.vue"),
       children: [
-        {
-          path: "",
-          name: "MyCabin", //個人頁面入口  /MyCabin
-          component: () => import("@/views/MyCabin/MyCabin.vue"),
-        },
         {
           path: "MyBookcase", //書櫃 /MyCabin/MyBookcase
           name: "MyBookcase",
