@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <!-- <div ref="blackCover" class="blackCover"></div> -->
+  <BlackCover />
 
   <div class="blackWrapper">
     <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
@@ -80,9 +80,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
+import BlackCover from "../../components/blackCover.vue";
 
 const parallaxContainer = ref(null);
 const router = useRouter();

@@ -160,7 +160,11 @@ const startVideoElement = ref(null);
 
 const startVideo = () => {
   isStart.value = false;
-  console.log(startVideoElement.value);
+  // console.log(startVideoElement.value);
+
+  setTimeout(() => {
+    $(".rippleArea").ripples("destroy");
+  }, 1700);
 
   if (startVideoElement.value) {
     startVideoElement.value.play(); // 開始播放影片

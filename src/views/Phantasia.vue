@@ -42,12 +42,14 @@
   transition: transform 0.9s ease-in-out, opacity 0.75s ease-in-out;
 }
 
-.slideArea.sliding {
+.slideArea.leftSliding {
   transform: translateX(-2200px);
   opacity: 0;
 }
-.blackCover {
-  transition: opacity 0.8s ease-in-out;
+
+.slideArea.rightSliding {
+  transform: translateX(2200px);
+  opacity: 0;
 }
 </style>
 
@@ -56,11 +58,16 @@
 
   <!-- ===================首頁共用組件(前景)===================== -->
 
-  <div ref="blackCover" class="blackCover"></div>
+  <BlackCover />
 
   <div class="blackWrapper">
     <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
-      <div :class="['slideArea', { sliding: isSliding }]">
+      <div
+        :class="[
+          'slideArea',
+          { rightSliding: isRightSliding, leftSliding: isLeftSliding },
+        ]"
+      >
         <transition name="fade_slow" mode="out-in">
           <img v-show="showImage" :src="bgBook" alt="" class="bgBook" />
         </transition>
@@ -244,12 +251,11 @@ import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
+import BlackCover from "../components/BlackCover.vue";
 import { nextTick } from "vue";
 
-const blackCover = ref(null);
 const parallaxContainer = ref(null);
 const router = useRouter();
-// const isPreloading = ref(null);
 
 const day = ref(true);
 const showImage = ref(true);
@@ -261,7 +267,8 @@ const day_night = computed(() => (day.value ? "day" : "night"));
 const dayTransferVideo = ref(null);
 const nightTransferVideo = ref(null);
 
-const isSliding = ref(false);
+const isLeftSliding = ref(false);
+const isRightSliding = ref(false);
 
 //===============動態加載圖片================
 const bgBook = ref("");
@@ -372,20 +379,6 @@ const toggleDayNight = () => {
 };
 
 onMounted(() => {
-  // console.log(sessionStorage.getItem("animationShown"));
-  // // 檢查 sessionStorage，判斷是否是第一次訪問
-  // if (!sessionStorage.getItem("animationShown")) {
-  //   isPreloading.value = true;
-  // } else {
-  //   isPreloading.value = false;
-  // }
-  // sessionStorage.removeItem("animationShown");
-
-  nextTick(() => {
-    if (blackCover.value) {
-      blackCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值
-    }
-  });
   // 確保 DOM 內容加載完成後執行 Parallax 初始化
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
@@ -436,11 +429,15 @@ onBeforeUnmount(() => {
 // ========router.push==========
 
 const ToCabin = () => {
-  router.push("/MyCabin");
+  isRightSliding.value = true;
+
+  setTimeout(() => {
+    router.push("/MyCabin");
+  }, 650);
 };
 
 const ToAbout = () => {
-  isSliding.value = true;
+  isLeftSliding.value = true;
 
   setTimeout(() => {
     router.push("/About");
