@@ -252,7 +252,6 @@ import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
 import BlackCover from "../components/BlackCover.vue";
-import { nextTick } from "vue";
 
 const parallaxContainer = ref(null);
 const router = useRouter();

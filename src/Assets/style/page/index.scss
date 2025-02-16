@@ -573,13 +573,11 @@ button {
 
   .content {
     max-width: 1440px;
-    // max-height: 1000px;
     width: 100%;
     position: relative;
     display: flex;
     justify-content: space-between;
-
-    z-index: 100;
+    z-index: 400;
     // border: blue solid 4px;
     .leftContent {
       // border: lightgreen solid 4px;
@@ -608,7 +606,7 @@ button {
             font-size: 64px;
             font-style: normal;
             font-weight: 800;
-            line-height: 125%; /* 80px */
+            line-height: 125%;
             text-transform: uppercase;
           }
           h2 {
@@ -781,6 +779,71 @@ button {
 
 // =======================MyCabin頁面==========================
 
+.myCabinContent {
+  @include imgCenter();
+  max-width: 1440px;
+  width: 100%;
+  z-index: 401;
+  padding: 30px 60px 30px 60px;
+  height: 100vh;
+  display: flex;
+  // border: lightgoldenrodyellow solid 2px;
+
+  .slogon {
+    width: 400px;
+    h1 {
+      color: #fff;
+      text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.6);
+      font-family: Aleo;
+      font-size: 64px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 125%;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 15px;
+    }
+    h6 {
+      margin-top: 6px;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+      font-family: Aleo;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+  }
+
+  .menu {
+    margin-top: auto;
+    margin-left: auto;
+    pointer-events: auto;
+
+    .backToHome {
+      font-size: 26px;
+      margin-top: 5px;
+      font-style: italic;
+      &::after {
+        height: 3px;
+      }
+    }
+
+    .btnLink {
+      padding: 0;
+      opacity: 70%;
+      &:hover {
+        opacity: 100%;
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}
+
 @keyframes flickerEffect {
   0% {
     opacity: 1;
@@ -868,3 +931,5 @@ button {
     width: 17.5vw;
   }
 }
+
+// ========================================================

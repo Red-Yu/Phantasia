@@ -1,18 +1,42 @@
 <style scoped>
 @import "../../Assets/css/index.css";
+
+/* ==========滑動效果========== */
+
+.slideArea {
+  transition: transform 0.7s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.slideArea.sliding {
+  transform: translateX(-2200px);
+  opacity: 0;
+}
 </style>
 
 <template>
   <BlackCover />
 
   <div class="blackWrapper">
-    <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
-      <!-- <img
-        style="z-index: 300"
-        src="../../Assets/Day/bookRows_bgi_day.png"
-        alt=""
-        class="bgBook"
-      /> -->
+    <div :class="['wrapper slideArea', { sliding: isSliding }]">
+      <div class="myCabinContent">
+        <div class="slogon">
+          <h1 class="title1 flipInY">My Cabin</h1>
+          <h6 class="title3 rollIn">
+            This is your cabin. Try clicking on the characters and bookshelve in
+            the picture!
+          </h6>
+        </div>
+
+        <div class="menu">
+          <div class="backToHome_button">
+            <button @click="backToHome" class="btnLink white backToHome menuIn">
+              Back to home
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================背景圖片======================= -->
 
       <div class="positionArea">
         <div class="main_container" ref="parallaxContainer">
@@ -83,10 +107,20 @@
 import { onMounted, ref, nextTick } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
-import BlackCover from "../../components/blackCover.vue";
+import BlackCover from "../../components/BlackCover.vue";
 
 const parallaxContainer = ref(null);
 const router = useRouter();
+
+const isSliding = ref(false);
+
+const backToHome = () => {
+  isSliding.value = true;
+
+  setTimeout(() => {
+    router.push("/");
+  }, 375);
+};
 
 onMounted(() => {
   if (parallaxContainer.value) {
