@@ -1,7 +1,7 @@
 <style scoped>
 .blackCover {
   position: absolute;
-  z-index: 2000;
+  z-index: 10000;
   width: 100%;
   height: 100%;
   background-color: black;

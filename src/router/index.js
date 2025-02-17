@@ -58,23 +58,21 @@ const router = createRouter({
       path: "/MyCabin",
       name: "MyCabin", //個人頁面入口  /MyCabin
       component: () => import("@/views/MyCabin/MyCabin.vue"),
-      children: [
-        {
-          path: "MyBookcase", //書櫃 /MyCabin/MyBookcase
-          name: "MyBookcase",
-          component: () => import("@/views/MyCabin/MyBookcase.vue"),
-        },
-        {
-          path: "MyColset", //換裝 /MyCabin/MyColset
-          name: "MyColset",
-          component: () => import("@/views/MyCabin/MyColset.vue"),
-        },
-        {
-          path: "MyRewardCard", //集點頁面 /MyCabin/MyRewardCard
-          name: "MyRewardCard",
-          component: () => import("@/views/MyCabin/MyRewardCard.vue"),
-        },
-      ],
+    },
+    {
+      path: "/MyCabin/MyBookcase", //書櫃 /MyCabin/MyBookcase
+      name: "MyBookcase",
+      component: () => import("@/views/MyCabin/MyBookcase.vue"),
+    },
+    {
+      path: "/MyCabin/MyColset", //換裝 /MyCabin/MyColset
+      name: "MyColset",
+      component: () => import("@/views/MyCabin/MyColset.vue"),
+    },
+    {
+      path: "/MyCabin/MyRewardCard", //集點頁面 /MyCabin/MyRewardCard
+      name: "MyRewardCard",
+      component: () => import("@/views/MyCabin/MyRewardCard.vue"),
     },
 
     //========================商品頁==========================

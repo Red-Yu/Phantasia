@@ -89,6 +89,7 @@
                 src="../../Assets/Day/myCabin/elf183x291_hover.png"
                 alt=""
                 class="elf_hover"
+                @click="ToMyRewardCard"
               />
               <img
                 src="../../Assets/Day/myCabin/elf183x291.png"
@@ -104,7 +105,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, nextTick } from "vue";
+import { onMounted, ref } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import BlackCover from "../../components/BlackCover.vue";
@@ -120,6 +121,10 @@ const backToHome = () => {
   setTimeout(() => {
     router.push("/");
   }, 375);
+};
+
+const ToMyRewardCard = () => {
+  router.push("/MyCabin/MyRewardCard");
 };
 
 onMounted(() => {
