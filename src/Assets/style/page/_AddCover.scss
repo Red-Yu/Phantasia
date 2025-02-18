@@ -1,0 +1,89 @@
+.AddCover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  .coverView {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: 50px;
+    .side {
+      width: 230px;
+      height: 320px;
+      background-color: #eead50;
+    }
+  }
+
+  // title 文字共用
+  .titleGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+    justify-content: center;
+    p {
+      color: #eead50;
+    }
+  }
+  .subtitle {
+    .spanBold {
+      color: #eead50;
+    }
+  }
+
+  // FrontCover
+  .FrontCover {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+  .inputFileGroup {
+    // 排版
+    width: 85%;
+    height: 360px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+    // 樣式
+    background-color: #dee2e6;
+    border-radius: 10px;
+
+    img {
+      width: 80px;
+      height: auto;
+    }
+
+    button {
+      all: unset;
+      position: relative;
+      .btnKey-M light-border {
+        z-index: 1;
+        width: 260px;
+      }
+
+      input[type="file"] {
+        position: absolute;
+        top: 0;
+        z-index: 2;
+      }
+    }
+  }
+
+  // backCover
+  // .backCover{
+  // }
+
+  // FinishBtn
+  .FinishBtn {
+    margin-bottom: 50px;
+  }
+}

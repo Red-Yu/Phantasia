@@ -432,7 +432,7 @@ const ToCabin = () => {
 
   setTimeout(() => {
     router.push("/MyCabin");
-  }, 650);
+  }, 500);
 };
 
 const ToAbout = () => {

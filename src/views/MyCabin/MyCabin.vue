@@ -40,7 +40,7 @@
 
       <div class="positionArea">
         <div class="main_container" ref="parallaxContainer">
-          <div class="parallax-wrapper" data-depth="0.02">
+          <div class="parallax-wrapper" data-depth="0.04">
             <img
               src="../../Assets/Day/myCabin/myCabinBaseDark.jpg"
               alt=""
@@ -53,7 +53,7 @@
             />
           </div>
 
-          <div class="parallax-wrapper" data-depth="0.03">
+          <div class="parallax-wrapper" data-depth="0.05">
             <div class="hoverAreaBookcase"></div>
             <img
               src="../../Assets/Day/myCabin/bookCase_hover.png"
@@ -67,7 +67,7 @@
             />
           </div>
 
-          <div class="parallax-wrapper" data-depth="0.05">
+          <div class="parallax-wrapper" data-depth="0.07">
             <div class="characterWrapper">
               <img
                 src="../../Assets/Day/myCabin/character115x409_hover.png"
@@ -83,7 +83,7 @@
             </div>
           </div>
 
-          <div class="parallax-wrapper" data-depth="0.035">
+          <div class="parallax-wrapper" data-depth="0.055">
             <div class="elfWrapper">
               <img
                 src="../../Assets/Day/myCabin/elf183x291_hover.png"

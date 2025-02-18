@@ -268,6 +268,13 @@
 .btnLink.dark:hover::after, .btnLink.dark.active::after {
   width: 100%;
 }
+.btnLink.dark:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+.btnLink.dark:hover .cols span:nth-child(2) {
+  display: none;
+}
 .btnLink.light {
   color: #eead50;
   width: -moz-fit-content;
@@ -292,6 +299,13 @@
 .btnLink.light:hover::after, .btnLink.light.active::after {
   width: 100%;
 }
+.btnLink.light:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+.btnLink.light:hover .cols span:nth-child(2) {
+  display: none;
+}
 .btnLink.white {
   color: #f9faf9;
   width: -moz-fit-content;
@@ -315,6 +329,268 @@
 }
 .btnLink.white:hover::after, .btnLink.white.active::after {
   width: 100%;
+}
+.btnLink.white:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+.btnLink.white:hover .cols span:nth-child(2) {
+  display: none;
+}
+
+/* ----- tab Btn ---- */
+.btnTab {
+  display: flex;
+  width: 100%;
+  border-bottom: #153243 solid;
+  /* hover */
+}
+.btnTab .text {
+  padding: 5px 10px;
+  color: #153243;
+  width: 100%;
+  font-size: 20px;
+}
+.btnTab .tab-cross {
+  position: relative;
+  width: 40px;
+  border-left: #153243 solid;
+}
+.btnTab .tab-cross .cols {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+}
+.btnTab .tab-cross .cols span {
+  width: 2px;
+  height: 80%;
+  background-color: #153243;
+}
+.btnTab .tab-cross .rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.btnTab .tab-cross .rows span {
+  width: 80%;
+  height: 2px;
+  background-color: #153243;
+}
+.btnTab:hover .tab-cross {
+  position: relative;
+  height: auto;
+  width: 40px;
+  background-color: #153243;
+}
+.btnTab:hover .tab-cross .cols {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+  transform: translateX(4%);
+}
+.btnTab:hover .tab-cross .cols span {
+  width: 2px;
+  height: 80%;
+  background-color: #f9faf9;
+}
+.btnTab:hover .tab-cross .cols span:nth-child(2) {
+  display: none;
+}
+.btnTab:hover .tab-cross .rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.btnTab:hover .tab-cross .rows span {
+  width: 80%;
+  height: 2px;
+  background-color: #f9faf9;
+}
+.btnTab.active {
+  display: flex;
+  width: 100%;
+  border-bottom: #153243 solid;
+  /* hover */
+}
+.btnTab.active .text {
+  padding: 5px 10px;
+  color: #153243;
+  width: 100%;
+  font-size: 18px;
+}
+.btnTab.active .tab-cross {
+  position: relative;
+  width: 40px;
+  border-left: #153243 solid;
+}
+.btnTab.active .tab-cross .cols {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+}
+.btnTab.active .tab-cross .cols span {
+  width: 2px;
+  height: 80%;
+  background-color: #153243;
+}
+.btnTab.active .tab-cross .rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.btnTab.active .tab-cross .rows span {
+  width: 80%;
+  height: 2px;
+  background-color: #153243;
+}
+.btnTab.active:hover .tab-cross {
+  position: relative;
+  height: auto;
+  width: 40px;
+  background-color: #153243;
+}
+.btnTab.active:hover .tab-cross .cols {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+  transform: translateX(4%);
+}
+.btnTab.active:hover .tab-cross .cols span {
+  width: 2px;
+  height: 80%;
+  background-color: #f9faf9;
+}
+.btnTab.active:hover .tab-cross .cols span:nth-child(2) {
+  display: none;
+}
+.btnTab.active:hover .tab-cross .rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.btnTab.active:hover .tab-cross .rows span {
+  width: 80%;
+  height: 2px;
+  background-color: #f9faf9;
+}
+.btnTab.active .text {
+  background-color: #153243;
+  color: #f9faf9;
+}
+
+.btnTab-list {
+  display: flex;
+  width: 100%;
+  border-bottom: #153243 solid;
+  /* hover */
+}
+.btnTab-list .text {
+  padding: 5px 10px;
+  color: #153243;
+  width: 100%;
+  font-size: 18px;
+}
+.btnTab-list .tab-cross {
+  position: relative;
+  width: 40px;
+  border-left: #153243 solid;
+}
+.btnTab-list .tab-cross .cols {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+}
+.btnTab-list .tab-cross .cols span {
+  width: 2px;
+  height: 80%;
+  background-color: #153243;
+}
+.btnTab-list .tab-cross .rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.btnTab-list .tab-cross .rows span {
+  width: 80%;
+  height: 2px;
+  background-color: #153243;
+}
+.btnTab-list:hover .tab-cross {
+  position: relative;
+  height: auto;
+  width: 40px;
+  background-color: #153243;
+}
+.btnTab-list:hover .tab-cross .cols {
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  transform: translateX(0);
+  transition: all 0.3s ease;
+  transform: translateX(4%);
+}
+.btnTab-list:hover .tab-cross .cols span {
+  width: 2px;
+  height: 80%;
+  background-color: #f9faf9;
+}
+.btnTab-list:hover .tab-cross .cols span:nth-child(2) {
+  display: none;
+}
+.btnTab-list:hover .tab-cross .rows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+}
+.btnTab-list:hover .tab-cross .rows span {
+  width: 80%;
+  height: 2px;
+  background-color: #f9faf9;
+}
+
+.accordionContent {
+  border-bottom: #153243 solid;
+  padding: 10px;
 }
 
 * {

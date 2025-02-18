@@ -1,0 +1,76 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($baseBlue, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 300;
+}
+.modal-content {
+  max-width: 80vw;
+  width: 100%;
+  height: 90vh;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  .bgc {
+    width: 100%;
+    height: 100%;
+    background-color: $subWhite;
+    // 邊框
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: solid transparent;
+    }
+    &::before {
+      border-width: 10px; /* 外框寬度 */
+      border-color: $baseBlue; /* 外框顏色 */
+      z-index: 1;
+    }
+    &::after {
+      border-width: 5px; /* 內框寬度 */
+      border-color: $baseBlue; /* 內框顏色 */
+      top: 15px; /* 外框寬度 + padding */
+      left: 15px; /* 外框寬度 + padding */
+      right: 15px; /* 外框寬度 + padding */
+      bottom: 15px; /* 外框寬度 + padding */
+      z-index: 2;
+    }
+  }
+
+  // ===========================
+  .btm-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    z-index: 4;
+  }
+
+  // ===========================
+  .mainContent {
+    // 定位
+    position: absolute;
+    z-index: 3;
+    top: 20px;
+    bottom: 20px;
+    // 外觀
+    width: 100%;
+    overflow: auto;
+    scrollbar-width: none;
+    // 內容排版
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+  }
+}

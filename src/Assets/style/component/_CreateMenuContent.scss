@@ -1,0 +1,100 @@
+.CreateMenuContent{
+    width: 100%;
+    position: relative;
+    .tabGroup{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+
+    }
+}
+
+//====================================
+// ContentBox 共用設定
+//====================================
+.ContentBox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+}
+.ModelBox{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+.model{
+    width: 100px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: $subGray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img{
+        width: 20px;
+        height: auto;
+    }
+}
+.A{
+    .model{
+        background-color: $subDark-gray;
+    }
+}
+//====================================
+// AccordionModel
+//====================================
+.ContentBox.Model{
+    button{
+        all: unset;
+    }
+    .addAll{
+        .btnKey-M{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+    }
+
+}
+//====================================
+// AccordionText
+//====================================
+.AccordionText{
+    .TextStyle{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .secondRow{
+        display: flex;
+        gap: 10px;
+        .fontSize{
+            width: 80px;
+        }
+        .fontWidth{
+            flex: 1;
+        }
+    }
+    .thirdRow{
+        display: flex;
+        justify-content: space-between;
+        .format{
+            width: 25px;
+            height: 25px;
+            border: $subGray solid 1px;
+            border-radius: 5px;
+            img{
+                width: 100%;
+                height: auto;
+                opacity: 50%;
+            }
+        }
+    }
+
+}

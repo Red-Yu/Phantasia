@@ -288,7 +288,7 @@ const preloadImagesAndVideos = () => {
       isLoading.value = false;
       isStart.value = true;
     });
-  }, 15000);
+  }, 3000);
 };
 
 onMounted(() => {

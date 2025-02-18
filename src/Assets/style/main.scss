@@ -13,27 +13,41 @@
 @import "./component/btn";
 @import "./component/form";
 @import "./component/icon";
-@import "./component/sidebar";
 @import "./component/table";
+@import "./component/FileItem";
+@import "./component/ProjectMenu";
+@import "./component/sidebar";
+@import "./component/CreateMenuContent";
 
 // layout  (因為已經拉出成共用組件component，所以這邊好像不需要)
-// @import "./layout/header";
-// @import "./layout/footer";
-// @import "./layout/content";
+@import "./layout/header";
+@import "./layout/footer";
+@import "./layout/content";
+@import "./layout/Day";
+@import "./layout/FullScreenModal";
 
 // page
 @import "./page/btnFamily";
-@import "./page/create";
+@import "./page/IconGroup";
+
+// CreateProject (Project+Draft)
+@import "./page/CreateProject";
+@import "./page/CreateInfo";
+@import "./page/Create";
+//= Props
+@import "./page/CreateNewProject";
+@import "./page/AddCover";
+@import "./page/PublishSuccess";
 
 // 一定要照順序小到大，有權重問題
 
-.wrapper {
-  max-width: 1440px;
-  width: 100%;
-  @include wrapperBgc();
-  padding: 5px;
-  border: $baseBlue 10px solid;
-}
+// .wrapper {
+//   max-width: 1440px;
+//   width: 100%;
+//   @include wrapperBgc();
+//   padding: 5px;
+//   border: $baseBlue 10px solid;
+// }
 
 //大家撰寫自己的sass時，請按照下方方式把自己的code包起來，到時合併時比較不會亂掉
 

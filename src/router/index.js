@@ -106,7 +106,7 @@ const router = createRouter({
       component: DayLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
       children: [
         {
-          path: "/CreateProject",
+          path: "",
           component: ProjectMenu, // 使用共用佈局(風琴選單) 在components>ProjectMenu
           children: [
             {
@@ -135,22 +135,30 @@ const router = createRouter({
           component: () => import("@/views/CreateProject/Create/Create.vue"),
         },
         {
-          path: "CreateCover", //上傳封面  /Create/CreateCover
-          name: "CreateCover",
-          component: () =>
-            import("@/views/CreateProject/Create/CreateCover.vue"),
-        },
-        {
           path: "CreateInfo", //上傳資訊  /Create/CreateInfo
           name: "CreateInfo",
           component: () =>
             import("@/views/CreateProject/Create/CreateInfo.vue"),
-        },
-        {
-          path: "CreateConfirm", //上傳確認發布  /Create/CreateConfirm
-          name: "CreateConfirm",
-          component: () =>
-            import("@/views/CreateProject/Create/CreateConfirm.vue"),
+          children: [
+            {
+              path: "", //
+              name: "CreateCover",
+              component: () =>
+                import("@/views/CreateProject/Create/CreateInforMation.vue"),
+            },
+            {
+              path: "CreateInforMation",
+              name: "CreateInforMation",
+              component: () =>
+                import("@/views/CreateProject/Create/CreateInforMation.vue"),
+            },
+            {
+              path: "CreateConfirm", //
+              name: "CreateConfirm",
+              component: () =>
+                import("@/views/CreateProject/Create/CreateConfirm.vue"),
+            },
+          ],
         },
       ],
     },

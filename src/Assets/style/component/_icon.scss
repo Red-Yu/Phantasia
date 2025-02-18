@@ -30,6 +30,9 @@
     &-setting {
       @include setting("white", $size);
     }
+    &-search {
+      @include search("white", $size);
+    }
     &-cross {
       @include cross($size, $subWhite, 2px);
     }
@@ -62,6 +65,9 @@
     &-setting {
       @include setting("dark", $size);
     }
+    &-search {
+      @include search("dark", $size);
+    }
     &-cross {
       @include cross($size, $baseBlue, 2px);
     }
@@ -93,6 +99,9 @@
     }
     &-setting {
       @include setting("light", $size);
+    }
+    &-search {
+      @include search("light", $size);
     }
     &-cross {
       @include cross($size, $baseOrange, 2px);
@@ -128,6 +137,11 @@
     }
     &-cross {
       @include cross($size, $subGray, 2px);
+    }
+  }
+  .light {
+    &-cross {
+      @include cross($size, $baseOrange, 2px);
     }
   }
 }
@@ -161,6 +175,9 @@
     &-setting {
       @include setting("white", $size);
     }
+    &-search {
+      @include search("white", $size);
+    }
     &-cross {
       @include cross($size, $subWhite, 2px);
     }
@@ -193,6 +210,9 @@
     &-setting {
       @include setting("dark", $size);
     }
+    &-search {
+      @include search("dark", $size);
+    }
     &-cross {
       @include cross($size, $baseBlue, 2px);
     }
@@ -224,6 +244,9 @@
     }
     &-setting {
       @include setting("light", $size);
+    }
+    &-search {
+      @include search("light", $size);
     }
     &-cross {
       @include cross($size, $baseOrange, 2px);
@@ -259,6 +282,11 @@
     }
     &-cross {
       @include cross($size, $subGray, 2px);
+    }
+  }
+  .light {
+    &-cross {
+      @include cross($size, $baseOrange, 2px);
     }
   }
 }

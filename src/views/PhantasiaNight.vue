@@ -46,7 +46,7 @@
           />
         </div>
         <div class="parallax-wrapper" data-depth="0.115">
-          <a href="" class="hoverAreaLeftCastle"></a>
+          <div class="hoverAreaLeftCastle" @click="CreateProject"></div>
           <img
             src="../Assets/Day/left_castle_hover.png"
             alt=""
@@ -62,7 +62,7 @@
         </div>
 
         <div class="parallax-wrapper" data-depth="0.13">
-          <a href="" class="hoverAreaRightCastle"></a>
+          <div class="hoverAreaRightCastle" @click="MemberCenter"></div>
           <img
             src="../Assets/Day/Right_castle_hover.png"
             alt=""
@@ -216,8 +216,12 @@ onMounted(() => {
   }
 });
 
-const ToAbout = () => {
-  router.push("/About");
+const CreateProject = () => {
+  router.push("/CreateProject");
+};
+
+const MemberCenter = () => {
+  router.push("/MemberCenter");
 };
 
 // document.addEventListener("DOMContentLoaded", function () {

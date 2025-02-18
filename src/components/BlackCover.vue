@@ -6,7 +6,7 @@
   height: 100%;
   background-color: black;
   pointer-events: none;
-  transition: opacity 0.8s ease-in-out;
+  transition: opacity 0.5s ease-in-out;
 }
 </style>
 
@@ -21,7 +21,9 @@ const blackCover = ref(null);
 onMounted(() => {
   nextTick(() => {
     if (blackCover.value) {
-      blackCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值
+      setTimeout(() => {
+        blackCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值
+      }, 10);
     }
   });
 });

@@ -1,0 +1,26 @@
+.CreateNewProject{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    .project{
+        margin-top: 20px;
+        width: calc(100%/2);
+        height: 450px;
+        background-color: $subWhite;
+        border-radius: 2%;
+        box-shadow: 0px 4px 30px 0px rgb(21, 50, 67,0.6);
+    }
+    input{
+        all: initial;
+        width: 400px;
+        padding: 10px;
+        border-bottom: $baseBlue solid 1px;
+        text-align: center;
+    }
+    input::placeholder {
+        color:  rgb(21, 50, 67,50%);
+        font-size: 20px;
+      }
+}

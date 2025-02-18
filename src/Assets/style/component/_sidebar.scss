@@ -48,6 +48,9 @@ $border: $baseBlue solid;
 
 // 外層架構
 .sidebar {
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 140px);
   margin-left: 1vw;
   display: flex;
   flex-direction: column;

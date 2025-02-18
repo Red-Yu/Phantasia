@@ -1,0 +1,135 @@
+.createInfo{
+    display: flex;
+// ==========================================
+// bookCover
+// ==========================================
+    .bookCover{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40vw;
+        height: calc(100vh - 140px);
+        background-color: $subGray;
+        position: sticky;
+        top: 0;
+        left: 0;
+        button{
+            all: unset;
+            position: absolute;
+            bottom: 2vh;
+        }
+    }
+    .btnKey-M.light{
+
+    }
+
+// ==========================================
+// InfoInput 共用設定
+// ==========================================
+    .InfoInput{
+        padding: 20px;
+        flex: 1;
+        // 內部排列
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .stepsGroup {
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .steps {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 5px;
+            .icon{
+                // 排版
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                // 外觀
+                width: 90px;
+                height: 90px;
+                background-color: $subWhite;
+                border: $subGray solid ;
+                border-radius: 50%;
+                .frontCover{
+                    @include save("Gray",50px);  // 第一步換封面
+                }
+                .information{
+                    @include edit("Gray",50px)
+                }
+                .publish{
+                    @include check("Gray",50px)
+                }
+            }
+        }
+        span{
+            width: 50px;
+            height: 5px;
+            background-color: $subGray;
+        }
+        // steps 判斷為當前狀態
+        .steps.current{
+            .icon{
+                border: $baseOrange solid ;
+                border-radius: 50%;
+                .frontCover{
+                    @include save("light",50px);  // 第一步換封面
+                }
+                .information{
+                    @include edit("light",50px)
+                }
+                .publish{
+                    @include check("light",50px)
+                }
+            }
+            p{
+                color: $baseOrange;
+            }
+        }
+    }
+    // ------------------------------------------
+    // CreateInforMation / CreateConfirm
+    // ------------------------------------------
+    .inputGroups ,.InfoConfirm{
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 2vh;
+        .infoGroup{
+            .Group{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                h3{
+                    margin-top: 50px; ;
+                }
+            }
+        }
+        // 
+        .StepFunction{
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            .back{
+                display: flex;
+                gap: 10px;
+                opacity: 50%;
+                p{
+                    font-size: 20px;
+                }
+            }
+        }
+        }   
+    .inputGroups.none{
+        opacity: 50%;
+        height: 400px;
+        overflow: hidden;
+
+    }
+
+}

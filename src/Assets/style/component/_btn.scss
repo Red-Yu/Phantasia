@@ -118,3 +118,65 @@
     @include normalBtn($subWhite);
   }
 }
+
+/* ----- tab Btn ---- */
+@mixin btnTab($basecolor, $subcolor, $fontsize) {
+  display: flex;
+  width: 100%;
+  border-bottom: $basecolor solid;
+  .text {
+    padding: 5px 10px;
+    color: $basecolor;
+    width: 100%;
+    font-size: $fontsize;
+  }
+  .tab-cross {
+    position: relative;
+    width: 40px;
+    border-left: $basecolor solid;
+    .cols {
+      @include cols(2px, $basecolor);
+    }
+    .rows {
+      @include rows(2px, $basecolor);
+    }
+  }
+  /* hover */
+  &:hover {
+    .tab-cross {
+      position: relative;
+      height: auto;
+      width: 40px;
+      background-color: $basecolor;
+      .cols {
+        @include cols(2px, $subcolor);
+        transform: translateX(calc(4%));
+        span:nth-child(2) {
+          display: none;
+        }
+      }
+      .rows {
+        @include rows(2px, $subcolor);
+      }
+    }
+  }
+}
+// ProjectMenu , Accordion
+.btnTab {
+  @include btnTab($baseBlue, $subWhite, 20px);
+  &.active {
+    @include btnTab($baseBlue, $subWhite, 18px);
+    .text {
+      background-color: $baseBlue;
+      color: $subWhite;
+    }
+  }
+}
+.btnTab-list {
+  @include btnTab($baseBlue, $subWhite, 18px);
+}
+// Accordion
+.accordionContent {
+  border-bottom: $baseBlue solid;
+  padding: 10px;
+}

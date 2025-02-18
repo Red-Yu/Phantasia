@@ -77,6 +77,10 @@
   &.active::after {
     width: 100%;
   }
+
+  &:hover {
+    @include cols-transition();
+  }
 }
 
 //--------------------------------
@@ -121,6 +125,10 @@
 }
 @mixin setting($color, $size) {
   background-image: url(/src/Assets/img/icon/#{$color}-setting.png);
+  @include iconSize($size);
+}
+@mixin search($color, $size) {
+  background-image: url(/src/Assets/img/icon/#{$color}-search.png);
   @include iconSize($size);
 }
 // cross

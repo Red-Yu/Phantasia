@@ -1,0 +1,100 @@
+// ==========================
+// 共用 input 外觀 -> class = inputBoxBox
+// ==========================
+.inputBox {
+  position: relative;
+  // 項目名
+  p {
+    font-size: 14px;
+    color: $subDark-gray;
+    margin-bottom: 5px;
+  }
+
+  // 填寫格樣式
+  .TextInput,
+  .OtherInput {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+    background-color: $subWhite;
+    border: $subGray solid 1px;
+    border-radius: 5px;
+
+    // 填寫自數樣式
+    .char-counter {
+      display: flex;
+      gap: 5px;
+      width: 100%;
+      justify-content: end;
+
+      .currentChars {
+        color: $baseOrange;
+      }
+      .remainingChars,
+      span {
+        color: $subDark-gray;
+      }
+    }
+  }
+
+  // 覆蓋 icon 樣式
+  .selectIcon {
+    position: absolute;
+    right: 3px;
+    bottom: 3px;
+    .cross {
+      @include cross(20px, $baseBlue, 2px);
+    }
+  }
+  &:hover {
+    @include cols-transition();
+  }
+}
+
+// ==========================
+// TextInput
+// ==========================
+
+textarea {
+  all: unset;
+  resize: none; /* 禁止使用者調整大小 */
+  overflow-y: auto; /* 允許垂直滾動 */
+}
+
+input[date],
+select {
+  all: inherit;
+}
+
+// ==========================
+// InfoData
+// ==========================
+.InfoData {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  .titleGroup {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    margin-bottom: 10px;
+    border-bottom: $subDark-gray dashed 1px;
+    .icon-feather {
+      margin-right: 5px;
+      width: 20px;
+      height: 20px;
+      background-image: url("/src/Assets/img/icon/feather.png");
+      background-size: cover;
+      background-position: center center;
+    }
+    h4 {
+      flex: 1;
+    }
+  }
+  .infoContent {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+}
