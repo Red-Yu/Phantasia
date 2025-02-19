@@ -33,7 +33,7 @@
         </div>
 
         <div class="parallax-wrapper" data-depth="0.1">
-          <a href="" class="hoverAreaSkyCity"></a>
+          <div class="hoverAreaSkyCity" @click="StoryBooks"></div>
           <img
             src="../Assets/Day/day_skyCity_hover.png"
             alt=""
@@ -165,8 +165,8 @@ onMounted(() => {
   }
 });
 
-const ToAbout = () => {
-  router.push("/About");
+const StoryBooks = () => {
+  router.push("/Products");
 };
 
 // document.addEventListener("DOMContentLoaded", function () {

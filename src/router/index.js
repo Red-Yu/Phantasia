@@ -79,7 +79,7 @@ const router = createRouter({
 
     {
       path: "/Products", //商品頁
-      component: DayLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
+      // component: DayLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
       children: [
         {
           path: "", // 商品列表頁  /Products
