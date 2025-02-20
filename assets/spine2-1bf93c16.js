@@ -1,0 +1,1 @@
+const s="/Phantasia/assets/cover-c1497efb.png",a="/Phantasia/assets/backCover-65d3dbee.png",e="/Phantasia/assets/spine-d434a198.png",t="/Phantasia/assets/spine2-3b7fb8f6.png";export{t as a,a as b,s as c,e as s};
