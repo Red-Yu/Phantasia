@@ -4,193 +4,201 @@
 
 <template>
   <div class="productsWrapper">
-    <div class="sec">
-      <div class="title">
-        <h1>Reading is more than words</h1>
-        <h3>An Interactive Journey of Exploration</h3>
-      </div>
-      <div class="x btnKey-L light">
-        <p>ABOUT US</p>
-        <div class="icon-L">
-          <div class="white-cross">
-            <div class="cols">
-              <span></span>
-              <span></span>
-            </div>
-            <div class="rows">
-              <span></span>
-            </div>
-          </div>
+    <div class="whiteLine">
+      <div class="sec">
+        <div class="title">
+          <h1>Reading is more than words</h1>
+          <h3>An Interactive Journey of Exploration</h3>
         </div>
-      </div>
-    </div>
-    <!-- ============================================================== -->
-
-    <div class="carousel-container">
-      <div class="carousel">
-        <div
-          v-for="(item, index) in items"
-          :key="index"
-          class="carousel-item-container"
-          :class="{
-            active: index === activeIndex,
-            left: index === prevIndex,
-            right: index === nextIndex,
-            hidden: ![prevIndex, activeIndex, nextIndex].includes(index),
-          }"
-        >
-          <div class="text-box-container">
-            <h2>{{ item.subtitle }}</h2>
-            <!-- Subtitle -->
-            <h1>{{ item.title }}</h1>
-            <!-- Title -->
-            <h3>{{ item.description }}</h3>
-            <!-- Description -->
-          </div>
-
-          <!-- Carousel Item -->
-          <div class="carousel-item">
-            <img :src="item.image" alt="Item Image" class="item-image" />
-          </div>
-        </div>
-      </div>
-      <div class="buttons">
-        <button @click="prev" class="left-button">
-          <img src="../../Assets/img/pics/circleBtn_L.png" alt="Left Button" />
-        </button>
-        <button @click="next" class="right-button">
-          <img src="../../Assets/img/pics/circleBtn_R.png" alt="Right Button" />
-        </button>
-      </div>
-    </div>
-
-    <!-- ======================================================== -->
-    <div class="pg_wrapper">
-      <div class="pg_sortWrapper">
-        <div class="pg_controlsBar">
-          <button
-            @mouseover="isHovered = true"
-            @mouseleave="isHovered = false"
-            v-for="(label, key) in sortOptions"
-            :key="key"
-            @click="sortProducts(key)"
-            :class="['pg_controlButton ', { pg_active: currentSort === key }]"
-          >
-            {{ label }}
-
-            <div class="icon-L">
-              <div :class="isHovered ? 'orange-cross' : 'white-cross'">
-                <div class="cols">
-                  <span></span>
-                  <span></span>
-                </div>
-                <div class="rows">
-                  <span></span>
-                </div>
+        <div class="x btnKey-L light">
+          <p>ABOUT US</p>
+          <div class="icon-L">
+            <div class="white-cross">
+              <div class="cols">
+                <span></span>
+                <span></span>
+              </div>
+              <div class="rows">
+                <span></span>
               </div>
             </div>
-          </button>
-          <button
-            @click="toggleDateSort"
-            :class="[
-              'pg_controlButton',
-              {
-                'pg_active-newest': currentSort === 'newest',
-                'pg_active-oldest': currentSort === 'oldest',
-              },
-            ]"
-          >
-            {{ dateSortLabel }}
-            <div class="icon-L">
-              <div :class="isHovered ? 'orange-cross' : 'white-cross'">
-                <div class="cols">
-                  <span></span>
-                  <span></span>
-                </div>
-                <div class="rows">
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          </button>
-
-          <div class="pg_searchWrapper">
-            <input
-              type="text"
-              v-model="searchQuery"
-              placeholder="Search"
-              class="pg_searchInput"
-            />
-            <span class="pg_searchIconWrapper">
-              <img
-                src="../../Assets/img/pics/arcticons_xiaoyuan-search.png"
-                alt="Search Icon"
-                class="pg_searchIcon"
-              />
-            </span>
           </div>
         </div>
       </div>
-      <div class="pg_mainContainer">
-        <div class="pg_itemsGrid">
+      <!-- ============================================================== -->
+
+      <div class="carousel-container">
+        <div class="carousel">
           <div
-            v-for="product in paginatedProducts"
-            :key="product.id"
-            class="pg_itemCard"
+            v-for="(item, index) in items"
+            :key="index"
+            class="carousel-item-container"
+            :class="{
+              active: index === activeIndex,
+              left: index === prevIndex,
+              right: index === nextIndex,
+              hidden: ![prevIndex, activeIndex, nextIndex].includes(index),
+            }"
           >
-            <div class="container" @click="goToProductPage(product.id)">
-              <div class="box-holder">
-                <div
-                  class="box box--front"
-                  :style="{ backgroundImage: `url(${product.coverImage})` }"
-                ></div>
-                <div
-                  class="box box--back"
-                  :style="{ backgroundImage: `url(${product.backImage})` }"
-                ></div>
-                <div
-                  class="box box--side-left"
-                  :style="{
-                    backgroundImage: `url(${product.sideLeftImage})`,
-                  }"
-                ></div>
-                <div
-                  class="box box--side-right"
-                  :style="{
-                    backgroundImage: `url(${product.sideRightImage})`,
-                  }"
-                ></div>
-              </div>
+            <div class="text-box-container">
+              <h2>{{ item.subtitle }}</h2>
+              <!-- Subtitle -->
+              <h1>{{ item.title }}</h1>
+              <!-- Title -->
+              <h3>{{ item.description }}</h3>
+              <!-- Description -->
             </div>
-            <p class="pg_itemAuthor">{{ product.author }}</p>
-            <h3 class="pg_itemTitle">{{ product.name }}</h3>
+
+            <!-- Carousel Item -->
+            <div class="carousel-item">
+              <img :src="item.image" alt="Item Image" class="item-image" />
+            </div>
           </div>
         </div>
-
-        <div class="pg_paginationBar">
-          <button
-            @click="changePage(currentPage - 1)"
-            :disabled="currentPage === 1"
-            class="pg_pageButton"
-          >
+        <div class="buttons">
+          <button @click="prev" class="left-button">
             <img
               src="../../Assets/img/pics/circleBtn_L.png"
-              alt="Previous"
-              class="pg_arrowIcon"
+              alt="Left Button"
             />
           </button>
-          <span class="pg_pageCount">{{ currentPage }}/{{ totalPages }}</span>
-          <button
-            @click="changePage(currentPage + 1)"
-            :disabled="currentPage === totalPages"
-            class="pg_pageButton"
-          >
+          <button @click="next" class="right-button">
             <img
               src="../../Assets/img/pics/circleBtn_R.png"
-              alt="Next"
-              class="pg_arrowIcon"
+              alt="Right Button"
             />
           </button>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <div class="pg_wrapper">
+        <div class="pg_sortWrapper">
+          <div class="pg_controlsBar">
+            <button
+              @mouseover="isHovered = true"
+              @mouseleave="isHovered = false"
+              v-for="(label, key) in sortOptions"
+              :key="key"
+              @click="sortProducts(key)"
+              :class="['pg_controlButton ', { pg_active: currentSort === key }]"
+            >
+              {{ label }}
+
+              <div class="icon-L">
+                <div :class="isHovered ? 'orange-cross' : 'white-cross'">
+                  <div class="cols">
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="rows">
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </button>
+            <button
+              @click="toggleDateSort"
+              :class="[
+                'pg_controlButton',
+                {
+                  'pg_active-newest': currentSort === 'newest',
+                  'pg_active-oldest': currentSort === 'oldest',
+                },
+              ]"
+            >
+              {{ dateSortLabel }}
+              <div class="icon-L">
+                <div :class="isHovered ? 'orange-cross' : 'white-cross'">
+                  <div class="cols">
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="rows">
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </button>
+
+            <div class="pg_searchWrapper">
+              <input
+                type="text"
+                v-model="searchQuery"
+                placeholder="Search"
+                class="pg_searchInput"
+              />
+              <span class="pg_searchIconWrapper">
+                <img
+                  src="../../Assets/img/pics/arcticons_xiaoyuan-search.png"
+                  alt="Search Icon"
+                  class="pg_searchIcon"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="pg_mainContainer">
+          <div class="pg_itemsGrid">
+            <div
+              v-for="product in paginatedProducts"
+              :key="product.id"
+              class="pg_itemCard"
+            >
+              <div class="container" @click="goToProductPage(product.id)">
+                <div class="box-holder">
+                  <div
+                    class="box box--front"
+                    :style="{ backgroundImage: `url(${product.coverImage})` }"
+                  ></div>
+                  <div
+                    class="box box--back"
+                    :style="{ backgroundImage: `url(${product.backImage})` }"
+                  ></div>
+                  <div
+                    class="box box--side-left"
+                    :style="{
+                      backgroundImage: `url(${product.sideLeftImage})`,
+                    }"
+                  ></div>
+                  <div
+                    class="box box--side-right"
+                    :style="{
+                      backgroundImage: `url(${product.sideRightImage})`,
+                    }"
+                  ></div>
+                </div>
+              </div>
+              <p class="pg_itemAuthor">{{ product.author }}</p>
+              <h3 class="pg_itemTitle">{{ product.name }}</h3>
+            </div>
+          </div>
+
+          <div class="pg_paginationBar">
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="pg_pageButton"
+            >
+              <img
+                src="../../Assets/img/pics/circleBtn_L.png"
+                alt="Previous"
+                class="pg_arrowIcon"
+              />
+            </button>
+            <span class="pg_pageCount">{{ currentPage }}/{{ totalPages }}</span>
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="pg_pageButton"
+            >
+              <img
+                src="../../Assets/img/pics/circleBtn_R.png"
+                alt="Next"
+                class="pg_arrowIcon"
+              />
+            </button>
+          </div>
         </div>
       </div>
     </div>

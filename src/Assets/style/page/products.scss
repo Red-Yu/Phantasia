@@ -53,6 +53,11 @@ body {
   background-color: #153243;
   max-width: 1440px;
   overflow: hidden;
+  padding: 7px;
+}
+
+.whiteLine {
+  border: white solid 4px;
 }
 
 .carousel-container {
@@ -632,7 +637,7 @@ body {
 // }
 
 .wrapper3 {
-  padding-top: 100px;
+  padding: 7px;
   background-color: #153243;
 }
 
