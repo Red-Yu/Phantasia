@@ -258,7 +258,7 @@ const router = createRouter({
       ],
     },
 
-    // ======================按鈕使用教學=========================
+    // ======================測試頁=========================
 
     {
       path: "/btnFmaily", //按鈕元件範例1  /btnFmaily
@@ -269,6 +269,11 @@ const router = createRouter({
       path: "/sidebar", //按鈕元件範例2  /sidebar
       name: "sidebar",
       component: () => import("@/views/test/sidebar.vue"),
+    },
+    {
+      path: "/firebaseToDo", //按鈕元件範例2  /firebaseToDo
+      name: "firebaseToDo",
+      component: () => import("@/views/test/firebaseDatabaseTest.vue"),
     },
   ],
 });
