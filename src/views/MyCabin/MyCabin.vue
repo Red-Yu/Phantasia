@@ -54,7 +54,7 @@
           </div>
 
           <div class="parallax-wrapper" data-depth="0.05">
-            <div class="hoverAreaBookcase"></div>
+            <div class="hoverAreaBookcase" @click="ToMyBookcase"></div>
             <img
               src="../../Assets/Day/myCabin/bookCase_hover.png"
               alt=""
@@ -125,6 +125,10 @@ const backToHome = () => {
 
 const ToMyRewardCard = () => {
   router.push("/MyCabin/MyRewardCard");
+};
+
+const ToMyBookcase = () => {
+  router.push("/MyCabin/MyBookcase");
 };
 
 onMounted(() => {

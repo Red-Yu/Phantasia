@@ -1447,7 +1447,8 @@ button {
 }
 
 .character_hover:hover,
-.elf_hover:hover {
+.elf_hover:hover,
+.bookCase_hover:hover {
   cursor: pointer;
   opacity: 1;
 }
@@ -1463,6 +1464,7 @@ button {
   height: 39vh;
   top: 40%;
   left: 26%;
+  cursor: pointer;
 }
 
 .hoverAreaBookcase:hover + .bookCase_hover {
