@@ -6,12 +6,13 @@
   <div class="dayLayout">
     <div class="bgd-wrapper"></div>
     <!-- 頁面共用部分 -->
-    <header>
+    <Header/>
+    <!-- <header>
       <nav>
         <button @click="goToHome">Home</button>
         <button @click="goToAbout">About</button>
       </nav>
-    </header>
+    </header> -->
     <!-- 子頁面顯示區域 -->
     <div class="wrapper">
       <main>
@@ -28,6 +29,7 @@ import { onMounted, ref } from "vue";
 
 import { useRouter } from "vue-router";
 import BlackCover from "../components/BlackCover.vue";
+import Header from "../components/Header.vue";
 
 const router = useRouter();
 
