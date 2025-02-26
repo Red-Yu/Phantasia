@@ -41,12 +41,12 @@
 
 //===============EEEE==================
 body {
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   height: auto;
-  //   margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
   background-color: #153243;
+  margin: 0;
 }
 
 .productsWrapper {
@@ -66,6 +66,7 @@ body {
   align-items: center;
   height: 600px;
   border-bottom: 2px solid white;
+  background-color: #153243;
 }
 
 .carousel {
@@ -234,7 +235,7 @@ body {
   /* Aligns text to the left */
   width: 100%;
   /* Ensure it takes up the full width of the container */
-  padding-left: 60px;
+  padding-left: 200px;
   /* Optional: Adds padding to create space from the left edge */
   font-family: "Aleo", sans-serif;
 }
@@ -266,7 +267,7 @@ body {
 /* ---------------------------------------------------------- */
 
 .pg_wrapper {
-  //   background-color: #153243;
+  background-color: #153243;
   margin: 0;
   padding: 0;
 }
@@ -316,13 +317,32 @@ body {
   align-items: center;
   gap: 8px;
   /* Space between text and icon */
-  padding: 8px 12px;
+  padding: 8px 18px;
   font-size: 18px;
+  white-space: nowrap;
 }
 
-.pg_controlButton:hover {
-  @include normalBtn($baseOrange);
+.pg_controlButton .icon-L {
+  transition: filter 0.3s ease-in-out;
 }
+
+/* Active button (clicked) effect */
+.pg_controlButton.pg_active,
+.pg_controlButton.pg_active-newest,
+.pg_controlButton.pg_active-oldest {
+  @include normalBtn($baseOrange);
+  /* Text changes color */
+}
+
+.pg_controlButton.pg_active .icon-L,
+.pg_controlButton.pg_active-newest .icon-L,
+.pg_controlButton.pg_active-oldest .icon-L {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%) hue-rotate(10deg);
+}
+
+// .pg_controlButton:hover {
+//   @include normalBtn($baseOrange);
+// }
 
 .pg_searchWrapper {
   position: relative;
@@ -465,13 +485,13 @@ body {
 
 .pg_itemCard {
   border: 1px solid #153243;
-  border-radius: 8px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   background: #153243;
-
   position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
 .pg_itemCard:not(:nth-child(3n)) {
@@ -1092,5 +1112,7 @@ h2 {
 .no-scroll {
   overflow: hidden;
 }
+
+
 
 //============================================
