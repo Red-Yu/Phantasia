@@ -10,6 +10,10 @@ import Phantasia from "../views/Phantasia.vue";
 import PhantasiaDay from "../views/PhantasiaDay.vue";
 import PhantasiaNight from "../views/PhantasiaNight.vue";
 
+import Login from "../views/Auth/Login.vue";
+import Signup from "../views/Auth/Signup.vue";
+import Success from "../views/Auth/Success.vue";
+
 //==================因為下方使用懶加載，這段不需要====================
 
 // import About from "../views/About.vue";
@@ -51,6 +55,26 @@ const router = createRouter({
       path: "/About",
       name: "about",
       component: () => import("@/views/About.vue"),
+    },
+
+    // ==========================登入相關==============================
+
+    {
+      path: "/login",
+      name: "login",
+      component: Login,
+    },
+
+    {
+      path: "/signup",
+      name: "signup",
+      component: Signup,
+    },
+
+    {
+      path: "/success",
+      name: "success",
+      component: Success,
     },
 
     //===================個人頁面(書櫃、換裝、集點)=======================
