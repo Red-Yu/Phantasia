@@ -1,7 +1,6 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
-/* ----- Key Btn ---- */
 .btnKey-L.dark {
   background-color: #153243;
   width: fit-content;
@@ -230,7 +229,6 @@
   font-size: 20px;
 }
 
-/* ----- Link Btn ---- */
 .btnLink {
   font-size: 20px default;
 }
@@ -325,7 +323,6 @@
   display: none;
 }
 
-/* ----- tab Btn ---- */
 .btnTab {
   display: flex;
   width: 100%;
@@ -578,6 +575,101 @@
 .accordionContent {
   border-bottom: #153243 solid;
   padding: 10px;
+}
+
+.open-close-btn {
+  /* 共用外框設定 */
+  position: relative;
+  width: 60px;
+  height: 40px;
+  border-radius: 50px;
+  /* plus:十字架樣式的動畫和設定*/
+  /* hamburger:漢堡樣式的動畫和設定 */
+}
+.open-close-btn.dark {
+  border: #153243 solid;
+}
+.open-close-btn.light {
+  border: #f9faf9 solid;
+}
+.open-close-btn .dark {
+  background-color: #153243;
+}
+.open-close-btn .light {
+  background-color: #f9faf9;
+}
+.open-close-btn .cols {
+  position: absolute;
+  height: 30px;
+  width: 2px;
+  top: 3px;
+  animation: plusStart 0.5s ease-in forwards;
+  /* 根據 theme 設定顏色 */
+}
+.open-close-btn .rows {
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  width: 40px;
+  height: 2px;
+}
+@keyframes plusStart {
+  0% {
+    left: 26px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    left: var(--final-left); /* 最終位置 */
+  }
+}
+.open-close-btn .right {
+  --final-left: 18px;
+}
+.open-close-btn .left {
+  --final-left: 36px;
+}
+.open-close-btn .line {
+  position: absolute;
+  left: 8px;
+  width: 40px;
+  height: 2px;
+  animation: hamburgerStart 0.6s ease-in forwards;
+}
+@keyframes hamburgerStart {
+  0% {
+    top: 18px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    top: var(--final-top); /* 最終位置 */
+  }
+}
+.open-close-btn .top {
+  --final-top: 10px;
+}
+.open-close-btn .mid {
+  --final-top: 18px;
+}
+.open-close-btn .btm {
+  --final-top: 26px;
+}
+.open-close-btn:hover {
+  /* plus */
+  /* hamburger */
+}
+.open-close-btn:hover .right {
+  transform: translateX(9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .left {
+  transform: translateX(-9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .top {
+  transform: translateY(8px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .btm {
+  transform: translateY(-8px);
+  transition: 0.3s ease-in;
 }
 
 .inputBox {
@@ -2103,40 +2195,39 @@ select {
   opacity: 50%;
 }
 
-.header {
+.headerLayout {
   width: calc(100% - 20px); /* 內外框:2 + 內外框間距:8 = 10 *2 邊(不用算外框 box-sizing: border-box;)*/
   height: 80px;
-  background-color: #f9faf9;
-  border-bottom: #153243 solid;
   position: fixed;
   top: 10px;
   left: 10px;
+  z-index: 100;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1vw;
 }
-.header .logoGroup {
-  height: 80px;
-  width: 80px;
+.headerLayout .logoGroup {
+  height: 78px;
+  width: 78px;
   background-color: #153243;
   padding: 3px;
   display: flex;
   flex-direction: column;
   position: relative;
 }
-.header .logoGroup .textMaskBox {
+.headerLayout .logoGroup .textMaskBox {
   position: absolute;
   width: 90%;
   height: 18px;
   overflow: hidden;
   bottom: 0;
 }
-.header .logoGroup .textMaskBox .textMask {
+.headerLayout .logoGroup .textMaskBox .textMask {
   position: relative;
   width: 94px;
 }
-.header .logoGroup .textMaskBox::after {
+.headerLayout .logoGroup .textMaskBox::after {
   content: "";
   position: absolute;
   left: 0;
@@ -2168,12 +2259,26 @@ select {
     transform: translateX(100%);
   }
 }
-.header .logoGroup:hover .stars {
+.headerLayout .logoGroup:hover .stars {
   animation: glowOnce 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
 }
-.header .logoGroup:hover .textMaskBox::after {
+.headerLayout .logoGroup:hover .textMaskBox::after {
   opacity: 1; /* 讓方塊出現 */
   animation: reveal 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
+}
+
+.day {
+  /* 底色 */
+  background-color: #f9faf9;
+  border-bottom: #153243 solid;
+  /* slogan */
+}
+
+.night {
+  /* 底色 */
+  background-color: #153243;
+  border-bottom: #f9faf9 solid;
+  /* slogan */
 }
 
 .dayLayout {
@@ -2214,7 +2319,7 @@ select {
   z-index: 2;
 }
 .dayLayout .wrapper {
-  width: calc(100% - 30px);
+  width: calc(100% - 20px);
   height: calc(100vh - 100px); /* 20邊框 + 80header */
   position: absolute;
   top: 10px;
@@ -2225,6 +2330,54 @@ select {
   overflow: auto;
   scrollbar-width: none;
   z-index: 200;
+}
+
+.nightLayout {
+  position: relative;
+}
+.nightLayout .bgd-wrapper {
+  width: 100%;
+  height: 100vh;
+  background-color: #153243;
+  position: fixed;
+}
+.nightLayout .bgd-wrapper::before, .nightLayout .bgd-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: solid transparent;
+}
+.nightLayout .bgd-wrapper::before { /* 外框 */
+  border-width: 5px;
+  border-color: #f9faf9;
+  z-index: 1;
+}
+.nightLayout .bgd-wrapper::after { /* 內框 */
+  border-width: 2px;
+  border-color: #f9faf9;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  z-index: 2;
+}
+.nightLayout .wrapper {
+  width: calc(100% - 20px);
+  height: calc(100vh - 20px); /* 20邊框 + 80header */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  overflow: auto;
+  scrollbar-width: none;
+  z-index: 99;
+}
+.nightLayout .Header {
+  display: none;
 }
 
 .modal-overlay {
@@ -2276,7 +2429,7 @@ select {
   bottom: 8px; /* 外框寬度 + padding */
   z-index: 2;
 }
-.modal-content .btm-close {
+.modal-content .btn-close {
   position: absolute;
   top: 30px;
   right: 30px;

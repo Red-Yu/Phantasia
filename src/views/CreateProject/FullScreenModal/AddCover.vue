@@ -2,7 +2,9 @@
   <div class="modal-overlay" v-if="isVisible" @click="closeModal">
     <div class="modal-content" @click.stop>
       <div class="bgc"></div>
-      <button class="btm-close" @click="closeModal">關閉彈窗</button>
+      <div class="btn-close" @click="closeModal">
+        <OpenCloseButton type="plus" color="dark" />
+      </div>
       <!-- mainContent -->
       <div class="mainContent AddCover">
         <div class="coverView">
@@ -77,9 +79,13 @@
   </div>
 </template>
 
-<script setup>
-import router from "../../../router";
 
+<script setup>
+import OpenCloseButton from "../../../components/BTN/OpenCloseButton.vue";
+
+//-----------------------------
+// fullscreen 
+//-----------------------------
 // 定義 props
 const props = defineProps({
   isVisible: {
@@ -95,4 +101,5 @@ const emit = defineEmits(["close"]);
 const closeModal = () => {
   emit("close");
 };
+
 </script>

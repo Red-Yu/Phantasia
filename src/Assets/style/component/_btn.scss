@@ -1,4 +1,6 @@
-/* ----- Key Btn ---- */
+//---------------------------------
+// Key Btn
+//---------------------------------
 .btnKey-L {
   $size: 24px;
   &.dark {
@@ -105,7 +107,9 @@
   }
 }
 
-/* ----- Link Btn ---- */
+//---------------------------------
+// Link Btn
+//---------------------------------
 .btnLink {
   font-size: 20px default;
   &.dark {
@@ -119,7 +123,9 @@
   }
 }
 
-/* ----- tab Btn ---- */
+//---------------------------------
+// tab Btn
+//---------------------------------
 @mixin btnTab($basecolor, $subcolor, $fontsize) {
   display: flex;
   width: 100%;
@@ -161,7 +167,7 @@
     }
   }
 }
-// ProjectMenu , Accordion
+// ProjectMenu , Accordion:創作頁手風琴 (一般 tab Btn)
 .btnTab {
   @include btnTab($baseBlue, $subWhite, 20px);
   &.active {
@@ -175,8 +181,117 @@
 .btnTab-list {
   @include btnTab($baseBlue, $subWhite, 18px);
 }
-// Accordion
+// AccordionContent:創作頁手風琴展開後
 .accordionContent {
   border-bottom: $baseBlue solid;
   padding: 10px;
 }
+
+//---------------------------------
+// open-close-btn (component:OpenCloseButton 包含漢堡和十字架樣式)
+// 
+// 引用元件在type打要的樣式即可,沒有開關功能要自己寫 <OpenCloseButton type="plus/hamburger" color="dark/light"/>
+//---------------------------------
+
+.open-close-btn{
+  /* 共用外框設定 */
+  position: relative;
+  width: 60px;
+  height: 40px;
+  border-radius: 50px;
+  &.dark{
+    border: $baseBlue solid;  
+  }
+  &.light{
+    border: $subWhite solid;  
+  }
+
+  // 內部線條設定
+  .dark{
+    background-color: $baseBlue ;  
+  }
+  .light{
+    background-color: $subWhite ;  
+  }
+
+  /* plus:十字架樣式的動畫和設定*/
+  .cols{
+    position: absolute;
+    height: 30px;
+    width: 2px;
+    top: 3px;
+    animation: plusStart 0.5s ease-in forwards; 
+    /* 根據 theme 設定顏色 */
+  }
+  .rows{
+    position: absolute;
+    left: 8px;
+    top: 18px;
+    width: 40px;
+    height: 2px;
+  }
+  @keyframes plusStart {
+    0% {
+        left: 26px; /* 初始位置重疊在中間 */
+    }
+    100% {
+        left: var(--final-left); /* 最終位置 */
+    }
+  }
+  .right{
+    --final-left: 18px;
+  }
+  .left{
+    --final-left: 36px;
+  }
+
+  /* hamburger:漢堡樣式的動畫和設定 */
+  .line{
+    position: absolute;
+    left: 8px;
+    width: 40px;
+    height: 2px;
+    animation: hamburgerStart .6s ease-in forwards;
+  }
+  @keyframes hamburgerStart {
+    0% {
+        top: 18px; /* 初始位置重疊在中間 */
+    }
+    100% {
+        top: var(--final-top); /* 最終位置 */
+    }
+  }
+  .top{
+    --final-top: 10px;
+  }
+  .mid{
+    --final-top: 18px;
+  }
+  .btm{
+    --final-top: 26px;
+  }
+  // hover 效果
+  &:hover{
+    /* plus */
+    .right{
+    transform: translateX(9px);
+    transition: .3s ease-in;
+    }
+    .left{
+    transform: translateX(-9px);
+    transition: .3s ease-in;
+    }
+    /* hamburger */
+    .top{
+    transform: translateY(8px);
+    transition: .3s ease-in;
+    }
+    .btm{
+    transform: translateY(-8px);
+    transition: .3s ease-in;
+    }
+  }
+
+}
+
+

@@ -9,6 +9,7 @@ import BackStageMenu from "../components/BackStageMenu.vue";
 import Phantasia from "../views/Phantasia.vue";
 import PhantasiaDay from "../views/PhantasiaDay.vue";
 import PhantasiaNight from "../views/PhantasiaNight.vue";
+import NightLayout from "../views/NightLayout.vue";
 
 //==================因為下方使用懶加載，這段不需要====================
 
@@ -79,7 +80,7 @@ const router = createRouter({
 
     {
       path: "/Products", //商品頁
-      // component: DayLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
+      component: NightLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
       children: [
         {
           path: "", // 商品列表頁  /Products

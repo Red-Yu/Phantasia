@@ -1,11 +1,13 @@
-.header {
+//---------------------------------
+//設定都差不多 深色只有改邊框漢文字顏色
+//---------------------------------
+.headerLayout {
   width: calc(100% - 20px); /* 內外框:2 + 內外框間距:8 = 10 *2 邊(不用算外框 box-sizing: border-box;)*/
   height: 80px;
-  background-color: $subWhite;
-  border-bottom: $baseBlue solid;
   position: fixed;
   top: 10px;
   left: 10px;
+  z-index: 100;
   // 內部空間設定
   display: flex;
   justify-content: space-between;
@@ -16,8 +18,8 @@
   // logoGroup
   // -------------------------
   .logoGroup{
-    height: 80px;
-    width: 80px;
+    height: 78px;
+    width: 78px;
     background-color: $baseBlue;
     padding: 3px;
     display: flex;
@@ -70,11 +72,22 @@
       animation: reveal 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
     }
   }
+}
+.day {
+  /* 底色 */
+  background-color: $subWhite;
+  border-bottom: $baseBlue solid;
 
-  // -------------------------
-  // slogan
-  // -------------------------
+  /* slogan */
 
 
 }
+.night {
+  /* 底色 */
+  background-color: $baseBlue;
+  border-bottom: $subWhite solid;
 
+  /* slogan */
+
+
+}
