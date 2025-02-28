@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -16,6 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const auth = getAuth(app);
 
 const firebaseServices = {
   database,
@@ -28,6 +30,7 @@ const firebaseServices = {
 console.log("Firebase Initialized:", app);
 
 export default firebaseServices;
+export { auth };
 
 //使用方法請參照以下.vue檔
 //src>views>test>firebaseDatabaseTest.vue
