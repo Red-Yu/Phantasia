@@ -60,19 +60,19 @@ const router = createRouter({
     // ==========================登入相關==============================
 
     {
-      path: "/login",
+      path: "/login", //登入頁面  /login
       name: "login",
       component: Login,
     },
 
     {
-      path: "/signup",
+      path: "/signup", //登入頁面  /signup
       name: "signup",
       component: Signup,
     },
 
     {
-      path: "/success",
+      path: "/success", //登入頁面  /success
       name: "success",
       component: Success,
     },

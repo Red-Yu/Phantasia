@@ -17,10 +17,17 @@
       </div>
     </div>
     <div class="canvasGroup">
+      <div
+        v-for="(template, i) in templateStore.templates"
+        :key="i"
+        class="canvas"
+      >
+        <component :is="template" />
+      </div>
+      <!-- <div class="canvas"></div>
       <div class="canvas"></div>
       <div class="canvas"></div>
-      <div class="canvas"></div>
-      <div class="canvas"></div>
+      <div class="canvas"></div> -->
     </div>
     <!-- BTN - addCanvas -->
     <router-link to="./Create/CreateInfo">
@@ -44,3 +51,11 @@
     </router-link>
   </div>
 </template>
+
+<script setup>
+// 引入 template store
+import { useTemplateStore } from "@/stores/template";
+
+// 使用 Pinia store
+const templateStore = useTemplateStore();
+</script>

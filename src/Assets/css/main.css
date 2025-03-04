@@ -3052,26 +3052,54 @@ header {
   justify-content: center;
 }
 .Create .PageView .modelView .modelContent {
-  width: 160px;
-  height: 100px;
+  width: 170px;
+  height: 95px;
   border: #dee2e6 solid;
   background-color: #f9faf9;
   border-radius: 10px;
   margin-bottom: 10px;
+  overflow: hidden;
 }
-.Create .Function.close, .Create .PageView.close {
+.Create .PageView .modelView .modelContent .canvasPreview {
+  width: 680px;
+  height: 380px;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn {
+  position: absolute;
+  top: 28px;
+  right: 43px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background-color: #dee2e6;
+  color: white;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn:hover {
+  background-color: #153243;
+}
+.Create .Function.close,
+.Create .PageView.close {
   width: 50px;
 }
-.Create .Function.close .Toggle, .Create .PageView.close .Toggle {
+.Create .Function.close .Toggle,
+.Create .PageView.close .Toggle {
   background-image: url("/src/Assets/img/icon/close.png");
 }
-.Create .Function.close .CheckBox, .Create .PageView.close .CheckBox {
+.Create .Function.close .CheckBox,
+.Create .PageView.close .CheckBox {
   display: none;
 }
-.Create .Function.close .bookInfoBox, .Create .PageView.close .bookInfoBox {
+.Create .Function.close .bookInfoBox,
+.Create .PageView.close .bookInfoBox {
   display: none;
 }
-.Create .Function.close .MenuContent, .Create .PageView.close .MenuContent {
+.Create .Function.close .MenuContent,
+.Create .PageView.close .MenuContent {
   display: none;
 }
 
