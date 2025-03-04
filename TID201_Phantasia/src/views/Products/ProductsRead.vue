@@ -174,7 +174,7 @@ export default {
       const scrollHeight =
         document.documentElement.scrollHeight - window.innerHeight;
 
-      if (scrollTop / scrollHeight >= 0.999999) {
+      if (scrollTop / scrollHeight >= 0.95) {
         showPopup.value = true;
         document.body.style.overflow = "hidden"; // Disable scroll when popup appears
       }

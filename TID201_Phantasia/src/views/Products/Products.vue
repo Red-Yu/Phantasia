@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <div class="wrapper">
+  <div class="productsWrapper">
     <div class="sec">
       <div class="title">
         <h1>Reading is more than words</h1>
@@ -53,15 +53,15 @@
           </div>
         </div>
       </div>
-      <div class="buttons">
+    </div>
+    <div class="buttonPlacer"><div class="buttons">
         <button @click="prev" class="left-button">
           <img src="../../Assets/img/pics/circleBtn_L.png" alt="Left Button" />
         </button>
         <button @click="next" class="right-button">
           <img src="../../Assets/img/pics/circleBtn_R.png" alt="Right Button" />
         </button>
-      </div>
-    </div>
+      </div></div>
     <!-- ======================================================== -->
     <div class="pg_wrapper">
       <div class="pg_sortWrapper">

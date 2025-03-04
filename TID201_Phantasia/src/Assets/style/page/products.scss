@@ -64,8 +64,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 600px;
-  border-bottom: 2px solid white;
+  height: 500px;
+
   background-color: #153243;
 }
 
@@ -165,13 +165,179 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 768px) {
+  .carousel-container {
+    height: auto;
+    /* Adapt to content height */
+    padding: 20px 0;
+    /* Add padding instead of fixed height */
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* Adapt to content */
+  }
+
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    /* Allow textbox to grow downward */
+    width: 100%;
+    max-width: 500px;
+    padding: 0 20px;
+    height: 250px;
+  }
+
+  .carousel-item {
+    width: 150px;
+    height: 100%;
+    /* Fixed height for consistency */
+    right: 0;
+    margin-right: 20px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+
+  .item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Fill container, may crop */
+  }
+
+  .text-box-container {
+    position: relative;
+    width: 300px;
+    height: 100%;
+    /* Let height adapt to content */
+    padding: 15px;
+    /* Consistent padding */
+    top: 0;
+    left: 0;
+    overflow: visible;
+    /* Allow text to be fully visible */
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .text-box-container h1 {
+    font-size: 22px;
+    /* Slightly smaller */
+    margin: 5px 0;
+  }
+
+  .text-box-container h2 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .text-box-container h3 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+}
+
+/* Mobile Breakpoint (480px and below) */
+@media (max-width: 480px) {
+  .carousel-container {
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    /* Allow textbox to grow downward */
+    width: 100%;
+    max-width: 300px;
+    padding: 0 10px;
+    height: 180px;
+  }
+
+  .carousel-item {
+    width: 145px;
+    height: 100%;
+    right: 0;
+    margin-right: 10px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+
+  .item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Fill container, may crop */
+  }
+
+  .text-box-container {
+    position: relative;
+    width: 145px;
+    height: 100%;
+    /* Adapt to content */
+    padding: 10px;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    /* Allow text to be fully visible */
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .text-box-container h1 {
+    font-size: 14px;
+    /* Smaller for mobile */
+    margin: 5px 0;
+  }
+
+  .text-box-container h2 {
+    font-size: 12px;
+    margin: 5px 0;
+  }
+
+  .text-box-container h3 {
+    font-size: 10px;
+    margin: 5px 0;
+  }
+}
+
 .buttons {
   display: flex;
   justify-content: space-between;
   width: 1200px;
-  margin-top: 20px;
   position: relative;
-  top: 180px;
 }
 
 .left-button,
@@ -197,6 +363,19 @@ body {
   /* Adjust the height as needed */
 }
 
+.buttonPlacer {
+  width: 100%;
+  height: auto;
+  background-color: #153243;
+  border-bottom: 2px solid white;
+  /* Remove border */
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
 /* ---------------------------------------------------------------------------- */
 .wrapper1 {
   width: 100%;
@@ -206,26 +385,54 @@ body {
   align-items: center;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .sec {
   width: 100%;
   height: 100vh;
+  /* Full viewport height */
   position: relative;
   text-align: center;
-  background: url("../img/pics/productBg.png");
+  background: url("../img/pics/productBg.png") no-repeat center center;
+  background-size: cover;
+  /* Scales image to cover the section */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-// header {
-//   width: 100%;
-//   height: 80px;
-//   background-color: grey;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
+@media (max-width: 768px) {
+  .sec {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .title {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .title h1 {
+    font-size: 36px;
+  }
+
+  .title h3 {
+    font-size: 24px;
+  }
+
+  .x {
+    position: static;
+    margin-top: 20px;
+  }
+}
 
 .title {
   color: white;
@@ -260,7 +467,7 @@ body {
 .x {
   position: absolute;
   right: 50px;
-  bottom: 100px;
+  bottom: 20px;
   font-family: "Aleo", sans-serif;
 }
 
@@ -383,6 +590,21 @@ body {
   color: #777;
 }
 
+@media (max-width: 768px) {
+  .pg_searchWrapper {
+    flex: 1;
+  }
+
+  .pg_searchInput {
+    width: 100%;
+  }
+
+  .pg_controlButton {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+}
+
 .pg_searchIcon {
   width: 30px;
 }
@@ -471,15 +693,25 @@ body {
   border-radius: 8px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .pg_itemsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
+  }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .pg_itemsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
   }
 }
 
@@ -580,6 +812,19 @@ body {
   color: white;
 }
 
+@media (max-width: 768px) {
+  .pg_pageButton img {
+    width: 30px;
+  }
+
+  .pg_pageCount {
+    font-size: 24px;
+  }
+}
+
+// ----------------------------------------------------------------------------
+// 
+
 .oneonesix {
   display: flex;
   justify-content: center;
@@ -647,14 +892,6 @@ body {
 }
 
 /*---------------------------------------------------------------- */
-// header {
-//   width: 100%;
-//   height: 80px;
-//   background-color: grey;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
 
 .wrapper3 {
   padding: 7px;
@@ -824,13 +1061,14 @@ h2 {
 
 // ----------------------------------------------------------
 
-.body {
+body {
   background-color: #153243;
 }
 
 /* Fullscreen container */
 .webpage-container5 {
   position: relative;
+  background-color: #153243;
 }
 
 /* Each full viewport section */
@@ -840,6 +1078,7 @@ h2 {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #153243;
 }
 
 /* Scroll Indicator (Fixed at Top Left) */
