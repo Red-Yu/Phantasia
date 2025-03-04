@@ -2444,8 +2444,8 @@ select {
   overflow: auto;
   scrollbar-width: none;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   gap: 50px;
 }
 
@@ -3294,23 +3294,58 @@ select {
 }
 
 .AddCover {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+.AddCover .coverView {
+  max-width: 400px;
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  left: 0;
+  top: 0;
+}
+.AddCover .coverSetting {
+  width: 100%;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-}
-.AddCover .coverView {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 50px;
-  margin-top: 50px;
 }
-.AddCover .coverView .side {
-  width: 230px;
-  height: 320px;
+.AddCover .side {
+  width: 160px;
+  height: 220px;
   background-color: #eead50;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.AddCover .side .coverImg {
+  width: 160px;
+  height: auto;
+}
+.AddCover .parent-preview {
+  position: absolute;
+  top: 70px;
+  left: 17px;
+  width: 125px;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+.AddCover .parent-preview .customImg {
+  width: auto;
+  height: 100%;
+  inline-size: -webkit-fill-available;
 }
 .AddCover .titleGroup {
   display: flex;
@@ -3349,18 +3384,10 @@ select {
   width: 80px;
   height: auto;
 }
-.AddCover .inputFileGroup button {
-  all: unset;
-  position: relative;
-}
-.AddCover .inputFileGroup button .btnKey-M light-border {
-  z-index: 1;
-  width: 260px;
-}
-.AddCover .inputFileGroup button input[type=file] {
-  position: absolute;
-  top: 0;
-  z-index: 2;
+.AddCover .backCover {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 .AddCover .FinishBtn {
   margin-bottom: 50px;
