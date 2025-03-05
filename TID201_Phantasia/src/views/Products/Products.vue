@@ -9,6 +9,9 @@
         <h1>Reading is more than words</h1>
         <h3>An interactive journey of exploration</h3>
       </div>
+      
+    </div>
+    <div class="aboutButton">
       <div class="x btnKey-L light">
         <p>ABOUT US</p>
         <div class="icon-L">
