@@ -16,31 +16,33 @@
       bottom: 0;
       border: solid transparent;
     }
-    &::before {
-      border-width: 10px; /* 外框寬度 */
-      border-color: $baseBlue; /* 外框顏色 */
+    &::before { /* 外框 */
+      border-width: 5px; 
+      border-color: $baseBlue; 
       z-index: 1;
     }
-    &::after {
-      border-width: 5px; /* 內框寬度 */
-      border-color: $baseBlue; /* 內框顏色 */
-      top: 15px; /* 外框寬度 + padding */
-      left: 15px; /* 外框寬度 + padding */
-      right: 15px; /* 外框寬度 + padding */
-      bottom: 15px; /* 外框寬度 + padding */
+    &::after { /* 內框 */
+      border-width: 2px; 
+      border-color: $baseBlue;
+      top: 8px;                  
+      left: 8px; 
+      right: 8px; 
+      bottom: 8px;
       z-index: 2;
     }
   }
   // header 共用 component-(z-index 100)
+  // 外框:5 + 中間間隔:8 + 內框:2 = 15px
   .wrapper {
-    width: calc(100% - 40px);
-    height: calc(100vh - 140px);
+    width: calc(100% - 20px);
+    height: calc(100vh - 100px); /* 20邊框 + 80header */
     position: absolute;
-    top: 20px;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    margin-top: 100px;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    margin-top: 80px;
+    
     // 超出範圍隱藏
     overflow: auto;
     scrollbar-width: none;

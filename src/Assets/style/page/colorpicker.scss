@@ -1,0 +1,33 @@
+// .demo {
+//   display: flex;
+//   gap: 40px;
+//   align-items: center;
+//   margin-top: 50px;
+// }
+
+// .demo-mt {
+//   margin-top: 20px;
+// }
+
+// .btn-reset {
+//   border: 1px solid  #dee2e6;
+//   text-align: center;
+//   padding: 4px 0;
+//   border-radius: 4px;
+//   color: #999999;
+//   font-size: 12px;
+//   cursor: pointer;
+//   &:hover {
+//     background-color: #dee2e6;
+//   }
+// }
+
+.vc-colorpicker {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 3px;
+  box-shadow: 0 0 10px hwb(202 8% 74% 50%);
+  user-select: none;
+  width: 276px;
+  z-index: 10000;
+}

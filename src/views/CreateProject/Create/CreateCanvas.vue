@@ -17,7 +17,10 @@
       </div>
     </div>
     <div class="canvasGroup">
-      <div class="canvas"></div>
+      <div class="ZoomAnimation">
+        <div class="Background"></div>
+        <img src="" alt="" class="Background" />
+      </div>
       <div class="canvas"></div>
       <div class="canvas"></div>
       <div class="canvas"></div>
