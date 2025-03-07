@@ -13,6 +13,7 @@ import PhantasiaNight from "../views/PhantasiaNight.vue";
 import Login from "../views/Auth/Login.vue";
 import Signup from "../views/Auth/Signup.vue";
 import Success from "../views/Auth/Success.vue";
+import UserManager from "../components/backStage/UserManager.vue";
 
 //==================因為下方使用懶加載，這段不需要====================
 
@@ -280,6 +281,14 @@ const router = createRouter({
           component: () => import("@/views/Backstage/BackstageProduct.vue"),
         },
       ],
+    },
+
+    // ======================後台管理=======================
+
+    {
+      path: "/UserManager", //登入頁面  /login
+      name: "UserManager",
+      component: UserManager,
     },
 
     // ======================測試頁=========================
