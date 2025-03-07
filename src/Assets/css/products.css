@@ -2064,13 +2064,16 @@ select {
 }
 
 .model {
-  width: 100px;
-  height: 60px;
-  border-radius: 10px;
-  background-color: #dee2e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 102px;
+  height: 57px;
+  border-radius: 8px;
+  border: #dee2e6 solid 1.5px;
+  background-color: #f9faf9;
+  overflow: hidden;
+}
+.model .modelsPreview {
+  width: 680px;
+  height: 380px;
 }
 .model img {
   width: 20px;
@@ -2078,7 +2081,7 @@ select {
 }
 
 .A .model {
-  background-color: #999999;
+  background-color: #f9faf9;
 }
 
 .ContentBox.Model button {
