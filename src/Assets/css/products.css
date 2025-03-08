@@ -3622,7 +3622,7 @@ body {
   /* Aligns text to the left */
   width: 100%;
   /* Ensure it takes up the full width of the container */
-  padding-left: 200px;
+  padding-left: 60px;
   /* Optional: Adds padding to create space from the left edge */
   font-family: "Aleo", sans-serif;
 }
@@ -3645,7 +3645,9 @@ body {
 }
 
 .x {
-  position: relative;
+  position: absolute;
+  right: 50px;
+  bottom: 100px;
   font-family: "Aleo", sans-serif;
 }
 
