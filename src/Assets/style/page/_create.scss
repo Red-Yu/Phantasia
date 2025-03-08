@@ -4,14 +4,14 @@
   // 定位
   .Function {
     position: fixed;
-    top: calc(100px + 20px);
-    left: 20px;
+    top: calc(80px + 10px);
+    left: 10px;
     z-index: 3;
   }
   .PageView {
     position: fixed;
-    top: calc(100px + 20px);
-    right: 20px;
+    top: calc(80px + 10px);
+    right: 10px;
     z-index: 2;
   }
   .main-content {

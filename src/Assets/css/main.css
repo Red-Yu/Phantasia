@@ -3115,14 +3115,14 @@ select {
 }
 .Create .Function {
   position: fixed;
-  top: 120px;
-  left: 20px;
+  top: 90px;
+  left: 10px;
   z-index: 3;
 }
 .Create .PageView {
   position: fixed;
-  top: 120px;
-  right: 20px;
+  top: 90px;
+  right: 10px;
   z-index: 2;
 }
 .Create .main-content {
