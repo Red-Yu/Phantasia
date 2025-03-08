@@ -10,6 +10,7 @@
       <nav>
         <button @click="goToHome">Home</button>
         <button @click="goToAbout">About</button>
+        <BookMenu />
       </nav>
     </header>
     <!-- 子頁面顯示區域 -->
@@ -25,6 +26,7 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import BookMenu from "../components/BookMenu.vue";
 
 import { useRouter } from "vue-router";
 import BlackCover from "../components/BlackCover.vue";
