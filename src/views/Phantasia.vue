@@ -1,8 +1,6 @@
 <style scoped>
 @import "../Assets/css/index.css";
 
-/* test */
-
 /* 當圖片進場時和離場時的過渡效果 */
 /* ==========燈========== */
 .fade-enter-active,

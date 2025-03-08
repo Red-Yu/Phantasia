@@ -28,4 +28,4 @@ coverage
 *.sw?
 
 .env
-/server/phantasia-841b4-firebase-adminsdk-fbsvc-313a484cc2.json
+/src/firebase/firebaseConfig.js

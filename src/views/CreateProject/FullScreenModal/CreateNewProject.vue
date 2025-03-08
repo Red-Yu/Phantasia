@@ -2,9 +2,7 @@
   <div class="modal-overlay" v-if="isVisible" @click="closeModal">
     <div class="modal-content" @click.stop>
       <div class="bgc"></div>
-      <div class="btn-close" @click="closeModal">
-        <OpenCloseButton type="plus" color="dark" />
-      </div>
+      <button class="btm-close" @click="closeModal">關閉彈窗</button>
       <!-- mainContent -->
       <div class="mainContent CreateNewProject">
         <div class="project"></div>
@@ -32,7 +30,6 @@
 
 <script setup>
 import router from "../../../router";
-import OpenCloseButton from "../../../components/BTN/OpenCloseButton.vue";
 
 // 定義 props
 const props = defineProps({

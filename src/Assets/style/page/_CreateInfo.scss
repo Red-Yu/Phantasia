@@ -8,7 +8,7 @@
         align-items: center;
         justify-content: center;
         width: 40vw;
-        height: calc(100vh - 100px);
+        height: calc(100vh - 140px);
         background-color: $subGray;
         position: sticky;
         top: 0;
@@ -100,12 +100,14 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 2vh;
-        .Group{
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            h3{
-                margin-top: 50px; ;
+        .infoGroup{
+            .Group{
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                h3{
+                    margin-top: 50px; ;
+                }
             }
         }
         // 

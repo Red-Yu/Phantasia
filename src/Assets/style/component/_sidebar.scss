@@ -1,4 +1,3 @@
-.member-center{
 // 變數
 $border: $baseBlue solid;
 
@@ -51,7 +50,7 @@ $border: $baseBlue solid;
 .sidebar {
   position: sticky;
   top: 0;
-  height: calc(100vh - 100px); /* header 80 + boder上下 20 */
+  height: calc(100vh - 140px);
   margin-left: 1vw;
   display: flex;
   flex-direction: column;
@@ -108,5 +107,4 @@ $border: $baseBlue solid;
 
 .btnTab-list {
   @include btnTab($baseBlue, $subWhite, 18px);
-}
 }

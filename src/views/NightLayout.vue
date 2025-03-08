@@ -1,25 +1,38 @@
 <!-- Layout.vue (共用佈局組件) -->
-
 <template>
-  <BlackCover />
-  <div class="nightLayout">
-    <div class="bgd-wrapper"></div>
-
-    <!-- Header -->
-    <Header type="night" />
+  <div>
+    <!-- 頁面共用部分 -->
+    <header>
+      <!-- <h1>Site Header</h1> -->
+      <!-- 可以是共用的導航 -->
+      <nav>
+        <!-- <button @click="goToHome">Home</button> -->
+        <!-- <button @click="goToAbout">About</button> -->
+      </nav>
+    </header>
 
     <!-- 子頁面顯示區域 -->
-    <div class="wrapper">
-      <main>
-        <router-view> </router-view>
-      </main>
-      <!-- 頁面共用尾部 -->
-      <footer></footer>
-    </div>
+    <main>
+      <router-view></router-view>
+      <!-- 顯示子頁面內容 -->
+    </main>
+
+    <!-- 頁面共用尾部 -->
+    <footer>
+      <!-- <p>Site Footer</p> -->
+    </footer>
   </div>
 </template>
 
-<script setup>
-import BlackCover from "../components/BlackCover.vue";
-import Header from "../components/Header.vue";
+<script>
+export default {
+  methods: {
+    goToHome() {
+      this.$router.push({ name: "home" });
+    },
+    goToAbout() {
+      this.$router.push({ name: "about" });
+    },
+  },
+};
 </script>

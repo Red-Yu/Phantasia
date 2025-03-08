@@ -8,8 +8,10 @@
       <div class="sec">
         <div class="title">
           <h1>Reading is more than words</h1>
-          <h3>An Interactive Journey of Exploration</h3>
+          <h3>An interactive journey of exploration</h3>
         </div>
+      </div>
+      <div class="aboutButton">
         <div class="x btnKey-L light">
           <p>ABOUT US</p>
           <div class="icon-L">
@@ -26,7 +28,6 @@
         </div>
       </div>
       <!-- ============================================================== -->
-
       <div class="carousel-container">
         <div class="carousel">
           <div
@@ -55,29 +56,22 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="buttonPlacer">
         <div class="buttons">
           <button @click="prev" class="left-button">
-            <img
-              src="../../Assets/img/pics/circleBtn_L.png"
-              alt="Left Button"
-            />
+            <img src="../../Assets/img/pics/circleBtn_L.png" alt="Left Button" />
           </button>
           <button @click="next" class="right-button">
-            <img
-              src="../../Assets/img/pics/circleBtn_R.png"
-              alt="Right Button"
-            />
+            <img src="../../Assets/img/pics/circleBtn_R.png" alt="Right Button" />
           </button>
         </div>
       </div>
-
       <!-- ======================================================== -->
       <div class="pg_wrapper">
         <div class="pg_sortWrapper">
           <div class="pg_controlsBar">
             <button
-              @mouseover="isHovered = true"
-              @mouseleave="isHovered = false"
               v-for="(label, key) in sortOptions"
               :key="key"
               @click="sortProducts(key)"
@@ -86,7 +80,7 @@
               {{ label }}
 
               <div class="icon-L">
-                <div :class="isHovered ? 'orange-cross' : 'white-cross'">
+                <div class="white-cross">
                   <div class="cols">
                     <span></span>
                     <span></span>
@@ -109,7 +103,7 @@
             >
               {{ dateSortLabel }}
               <div class="icon-L">
-                <div :class="isHovered ? 'orange-cross' : 'white-cross'">
+                <div class="white-cross">
                   <div class="cols">
                     <span></span>
                     <span></span>
@@ -157,15 +151,11 @@
                   ></div>
                   <div
                     class="box box--side-left"
-                    :style="{
-                      backgroundImage: `url(${product.sideLeftImage})`,
-                    }"
+                    :style="{ backgroundImage: `url(${product.sideLeftImage})` }"
                   ></div>
                   <div
                     class="box box--side-right"
-                    :style="{
-                      backgroundImage: `url(${product.sideRightImage})`,
-                    }"
+                    :style="{ backgroundImage: `url(${product.sideRightImage})` }"
                   ></div>
                 </div>
               </div>
@@ -208,13 +198,12 @@
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
-import coverImage from "@/Assets/img/pics/cover.png";
-import backImage from "@/Assets/img/pics/backCover.png";
-import sideLeftImage from "@/Assets/img/pics/spine.png";
-import sideRightImage from "@/Assets/img/pics/spine2.png";
+import coverImage from "@/assets/img/pics/cover.png";
+import backImage from "@/assets/img/pics/backCover.png";
+import sideLeftImage from "@/assets/img/pics/spine.png";
+import sideRightImage from "@/assets/img/pics/spine2.png";
 
 const router = useRouter();
-const isHovered = ref(false);
 
 const goToProductPage = (productId) => {
   router.push(`/Products/${productId}`);
@@ -498,9 +487,7 @@ const totalPages = computed(() => {
 });
 
 const dateSortLabel = computed(() => {
-  return dateSortOrder.value === "newest"
-    ? "Newest to Oldest"
-    : "Oldest to Newest";
+  return dateSortOrder.value === "newest" ? "Newest to Oldest" : "Oldest to Newest";
 });
 
 const toggleDateSort = () => {
@@ -509,6 +496,9 @@ const toggleDateSort = () => {
 };
 
 const sortProducts = (criteria) => {
+  if (criteria !== "newest" && criteria !== "oldest") {
+    dateSortOrder.value = "newest"; // Reset dateSortOrder when a non-date sort is selected
+  }
   currentSort.value = criteria;
   currentPage.value = 1;
 };

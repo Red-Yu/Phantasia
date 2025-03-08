@@ -2,289 +2,378 @@
 // L : 25px ; M :20px
 .icon-L {
   $size: 25px;
+
   .white {
     &-save {
       @include save("white", $size);
     }
+
     &-arrow {
       @include arrow("white", $size);
     }
+
     &-check {
       @include check("white", $size);
     }
+
     &-edit {
       @include edit("white", $size);
     }
+
     &-upload {
       @include upload("white", $size);
     }
+
     &-view {
       @include view("white", $size);
     }
+
     &-pen {
       @include pen("white", $size);
     }
+
     &-plus {
       @include plus("white", $size);
     }
+
     &-setting {
       @include setting("white", $size);
     }
+
     &-search {
       @include search("white", $size);
     }
+
     &-cross {
       @include cross($size, $subWhite, 2px);
     }
   }
+
   .dark {
     &-save {
       @include save("dark", $size);
     }
+
     &-arrow {
       @include arrow("dark", $size);
     }
+
     &-check {
       @include check("dark", $size);
     }
+
     &-edit {
       @include edit("dark", $size);
     }
+
     &-upload {
       @include upload("dark", $size);
     }
+
     &-view {
       @include view("dark", $size);
     }
+
     &-pen {
       @include pen("dark", $size);
     }
+
     &-plus {
       @include plus("dark", $size);
     }
+
     &-setting {
       @include setting("dark", $size);
     }
+
     &-search {
       @include search("dark", $size);
     }
+
     &-cross {
       @include cross($size, $baseBlue, 2px);
     }
   }
+
   .light {
     &-save {
       @include save("light", $size);
     }
+
     &-arrow {
       @include arrow("light", $size);
     }
+
     &-check {
       @include check("light", $size);
     }
+
     &-edit {
       @include edit("light", $size);
     }
+
     &-upload {
       @include upload("light", $size);
     }
+
     &-view {
       @include view("light", $size);
     }
+
     &-pen {
       @include pen("light", $size);
     }
+
     &-plus {
       @include plus("light", $size);
     }
+
     &-setting {
       @include setting("light", $size);
     }
+
     &-search {
       @include search("light", $size);
     }
+
     &-cross {
       @include cross($size, $baseOrange, 2px);
     }
   }
+
   .gray {
     &-save {
       @include save("gray", $size);
     }
+
     &-arrow {
       @include arrow("gray", $size);
     }
+
     &-check {
       @include check("gray", $size);
     }
+
     &-edit {
       @include edit("gray", $size);
     }
+
     &-upload {
       @include upload("gray", $size);
     }
+
     &-view {
       @include view("gray", $size);
     }
+
     &-pen {
       @include pen("gray", $size);
     }
+
     &-plus {
       @include plus("gray", $size);
     }
+
     &-setting {
       @include setting("gray", $size);
     }
+
     &-cross {
       @include cross($size, $subGray, 2px);
     }
   }
-  .light {
+
+  .orange {
     &-cross {
       @include cross($size, $baseOrange, 2px);
     }
   }
 }
+
 .icon-M {
   $size: 20px;
+
   .white {
     &-save {
       @include save("white", $size);
     }
+
     &-arrow {
       @include arrow("white", $size);
     }
+
     &-check {
       @include check("white", $size);
     }
+
     &-edit {
       @include edit("white", $size);
     }
+
     &-upload {
       @include upload("white", $size);
     }
+
     &-view {
       @include view("white", $size);
     }
+
     &-pen {
       @include pen("white", $size);
     }
+
     &-plus {
       @include plus("white", $size);
     }
+
     &-setting {
       @include setting("white", $size);
     }
+
     &-search {
       @include search("white", $size);
     }
+
     &-cross {
       @include cross($size, $subWhite, 2px);
     }
   }
+
   .dark {
     &-save {
       @include save("dark", $size);
     }
+
     &-arrow {
       @include arrow("dark", $size);
     }
+
     &-check {
       @include check("dark", $size);
     }
+
     &-edit {
       @include edit("dark", $size);
     }
+
     &-upload {
       @include upload("dark", $size);
     }
+
     &-view {
       @include view("dark", $size);
     }
+
     &-pen {
       @include pen("dark", $size);
     }
+
     &-plus {
       @include plus("dark", $size);
     }
+
     &-setting {
       @include setting("dark", $size);
     }
+
     &-search {
       @include search("dark", $size);
     }
+
     &-cross {
       @include cross($size, $baseBlue, 2px);
     }
   }
+
   .light {
     &-save {
       @include save("light", $size);
     }
+
     &-arrow {
       @include arrow("light", $size);
     }
+
     &-check {
       @include check("light", $size);
     }
+
     &-edit {
       @include edit("light", $size);
     }
+
     &-upload {
       @include upload("light", $size);
     }
+
     &-view {
       @include view("light", $size);
     }
+
     &-pen {
       @include pen("light", $size);
     }
+
     &-plus {
       @include plus("light", $size);
     }
+
     &-setting {
       @include setting("light", $size);
     }
+
     &-search {
       @include search("light", $size);
     }
+
     &-cross {
       @include cross($size, $baseOrange, 2px);
     }
   }
+
   .gray {
     &-save {
       @include save("gray", $size);
     }
+
     &-arrow {
       @include arrow("gray", $size);
     }
+
     &-check {
       @include check("gray", $size);
     }
+
     &-edit {
       @include edit("gray", $size);
     }
+
     &-upload {
       @include upload("gray", $size);
     }
+
     &-view {
       @include view("gray", $size);
     }
+
     &-pen {
       @include pen("gray", $size);
     }
+
     &-plus {
       @include plus("gray", $size);
     }
+
     &-setting {
       @include setting("gray", $size);
     }
+
     &-cross {
       @include cross($size, $subGray, 2px);
     }
   }
-  .light {
+
+  .orange {
     &-cross {
       @include cross($size, $baseOrange, 2px);
     }

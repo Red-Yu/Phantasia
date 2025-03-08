@@ -1,6 +1,5 @@
 <style scoped>
 /* #menu 及 #container 為固定佈局 */
-/* TEST3 */
 #menu {
   position: absolute;
   bottom: 20px;

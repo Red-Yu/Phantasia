@@ -1,9 +1,6 @@
 <style scoped>
 @import "../../Assets/css/MyRewardCard.css";
-/* test */
 </style>
-
-
 
 <template>
   <div class="blackWrapper">

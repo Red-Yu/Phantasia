@@ -41,18 +41,30 @@
 
 //===============EEEE==================
 body {
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   height: auto;
-  //   margin: 0;
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
+  justify-content: flex-start;
+  /* Align content from the top */
+  align-items: stretch;
+  /* Stretch children to full width */
+  min-height: 100vh;
+  /* Ensure it’s at least full viewport height */
   background-color: #153243;
+  margin: 0;
 }
 
 .productsWrapper {
   background-color: #153243;
-  max-width: 1440px;
+  width: 100%;
+  /* Full width */
+  min-height: 100vh;
+  /* At least full viewport height */
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
   overflow: hidden;
+  /* Prevent overflow issues */
   padding: 7px;
 }
 
@@ -64,8 +76,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 600px;
-  border-bottom: 2px solid white;
+  height: 500px;
+
+  background-color: #153243;
 }
 
 .carousel {
@@ -164,13 +177,179 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 768px) {
+  .carousel-container {
+    height: auto;
+    /* Adapt to content height */
+    padding: 20px 0;
+    /* Add padding instead of fixed height */
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* Adapt to content */
+  }
+
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    /* Allow textbox to grow downward */
+    width: 100%;
+    max-width: 500px;
+    padding: 0 20px;
+    height: 250px;
+  }
+
+  .carousel-item {
+    width: 150px;
+    height: 100%;
+    /* Fixed height for consistency */
+    right: 0;
+    margin-right: 20px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+
+  .item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Fill container, may crop */
+  }
+
+  .text-box-container {
+    position: relative;
+    width: 300px;
+    height: 100%;
+    /* Let height adapt to content */
+    padding: 15px;
+    /* Consistent padding */
+    top: 0;
+    left: 0;
+    overflow: visible;
+    /* Allow text to be fully visible */
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .text-box-container h1 {
+    font-size: 22px;
+    /* Slightly smaller */
+    margin: 5px 0;
+  }
+
+  .text-box-container h2 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .text-box-container h3 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+}
+
+/* Mobile Breakpoint (480px and below) */
+@media (max-width: 480px) {
+  .carousel-container {
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+  }
+
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch;
+    /* Allow textbox to grow downward */
+    width: 100%;
+    max-width: 300px;
+    padding: 0 10px;
+    height: 180px;
+  }
+
+  .carousel-item {
+    width: 145px;
+    height: 100%;
+    right: 0;
+    margin-right: 10px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+
+  .item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Fill container, may crop */
+  }
+
+  .text-box-container {
+    position: relative;
+    width: 145px;
+    height: 100%;
+    /* Adapt to content */
+    padding: 10px;
+    top: 0;
+    left: 0;
+    overflow: visible;
+    /* Allow text to be fully visible */
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .text-box-container h1 {
+    font-size: 14px;
+    /* Smaller for mobile */
+    margin: 5px 0;
+  }
+
+  .text-box-container h2 {
+    font-size: 12px;
+    margin: 5px 0;
+  }
+
+  .text-box-container h3 {
+    font-size: 10px;
+    margin: 5px 0;
+  }
+}
+
 .buttons {
   display: flex;
   justify-content: space-between;
   width: 1200px;
-  margin-top: 20px;
   position: relative;
-  top: 180px;
 }
 
 .left-button,
@@ -196,6 +375,19 @@ body {
   /* Adjust the height as needed */
 }
 
+.buttonPlacer {
+  width: 100%;
+  height: auto;
+  background-color: #153243;
+  border-bottom: 2px solid white;
+  /* Remove border */
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
 /* ---------------------------------------------------------------------------- */
 .wrapper1 {
   width: 100%;
@@ -205,26 +397,57 @@ body {
   align-items: center;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  /* Use viewport height instead of percentage */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+}
+
 .sec {
   width: 100%;
   height: 100vh;
+  /* Full viewport height */
   position: relative;
   text-align: center;
-  background: url("../img/pics/productBg.png");
+  background: url("../img/pics/productBg.png") no-repeat center center;
+  background-size: cover;
+  /* Scales image to cover the section */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-// header {
-//   width: 100%;
-//   height: 80px;
-//   background-color: grey;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
+@media (max-width: 768px) {
+  .sec {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  .title {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .title h1 {
+    font-size: 36px;
+  }
+
+  .title h3 {
+    font-size: 24px;
+  }
+
+  .x {
+    position: static;
+    margin-top: 20px;
+  }
+}
 
 .title {
   color: white;
@@ -234,7 +457,7 @@ body {
   /* Aligns text to the left */
   width: 100%;
   /* Ensure it takes up the full width of the container */
-  padding-left: 60px;
+  padding-left: 200px;
   /* Optional: Adds padding to create space from the left edge */
   font-family: "Aleo", sans-serif;
 }
@@ -257,16 +480,24 @@ body {
 }
 
 .x {
-  position: absolute;
-  right: 50px;
-  bottom: 100px;
+  position: relative;
   font-family: "Aleo", sans-serif;
+}
+
+.aboutButton {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  justify-content: right;
+  position: relative;
+  display: flex;
 }
 
 /* ---------------------------------------------------------- */
 
 .pg_wrapper {
-  //   background-color: #153243;
+  background-color: #153243;
   margin: 0;
   padding: 0;
 }
@@ -316,13 +547,32 @@ body {
   align-items: center;
   gap: 8px;
   /* Space between text and icon */
-  padding: 8px 12px;
+  padding: 8px 18px;
   font-size: 18px;
+  white-space: nowrap;
 }
 
-.pg_controlButton:hover {
-  @include normalBtn($baseOrange);
+.pg_controlButton .icon-L {
+  transition: filter 0.3s ease-in-out;
 }
+
+/* Active button (clicked) effect */
+.pg_controlButton.pg_active,
+.pg_controlButton.pg_active-newest,
+.pg_controlButton.pg_active-oldest {
+  @include normalBtn($baseOrange);
+  /* Text changes color */
+}
+
+.pg_controlButton.pg_active .icon-L,
+.pg_controlButton.pg_active-newest .icon-L,
+.pg_controlButton.pg_active-oldest .icon-L {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%) hue-rotate(10deg);
+}
+
+// .pg_controlButton:hover {
+//   @include normalBtn($baseOrange);
+// }
 
 .pg_searchWrapper {
   position: relative;
@@ -361,6 +611,21 @@ body {
   font-size: 16px;
   cursor: pointer;
   color: #777;
+}
+
+@media (max-width: 768px) {
+  .pg_searchWrapper {
+    flex: 1;
+  }
+
+  .pg_searchInput {
+    width: 100%;
+  }
+
+  .pg_controlButton {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
 }
 
 .pg_searchIcon {
@@ -451,27 +716,37 @@ body {
   border-radius: 8px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .pg_itemsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
+  }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .pg_itemsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
   }
 }
 
 .pg_itemCard {
   border: 1px solid #153243;
-  border-radius: 8px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   background: #153243;
-
   position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
 .pg_itemCard:not(:nth-child(3n)) {
@@ -560,81 +835,18 @@ body {
   color: white;
 }
 
-.oneonesix {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+@media (max-width: 768px) {
+  .pg_pageButton img {
+    width: 30px;
+  }
+
+  .pg_pageCount {
+    font-size: 24px;
+  }
 }
 
-.whirl-container {
-  width: 447px;
-  height: 662px;
-  perspective: 1200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.whirl-box-holder {
-  position: relative;
-  transform-style: preserve-3d;
-  width: 447px;
-  height: 662px;
-}
-
-.whirl-box {
-  position: absolute;
-  width: 447px;
-  height: 662px;
-  backface-visibility: hidden;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.whirl-front {
-  transform: translateZ(10px);
-}
-
-.whirl-back {
-  transform: rotateY(180deg) translateZ(10px);
-}
-
-.whirl-side-left {
-  width: 20px;
-  height: 662px;
-  transform: rotateY(-90deg) translateZ(223.5px);
-}
-
-.whirl-side-right {
-  width: 20px;
-  height: 662px;
-  transform: rotateY(90deg) translateZ(223.5px);
-}
-
-.destination-div {
-  margin-top: 830px;
-  width: 200px;
-  height: 200px;
-  background: #153243;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 300px;
-}
-
-/*---------------------------------------------------------------- */
-// header {
-//   width: 100%;
-//   height: 80px;
-//   background-color: grey;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
+// ----------------------------------------------------------------------------
+// 
 
 .wrapper3 {
   padding: 7px;
@@ -648,16 +860,6 @@ body {
   padding-bottom: 40px;
 }
 
-.hero-section3 {
-  padding: 20px 0;
-}
-
-.hero-image3 {
-  width: 50%;
-  display: block;
-  margin: auto;
-}
-
 .content-section3 {
   display: flex;
   justify-content: space-between;
@@ -667,16 +869,18 @@ body {
 
 .content-left3 {
   width: 45%;
-}
-
-.content-image3 {
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Ensure it contains its children */
 }
 
 .content-right3 {
   width: 50%;
   text-align: left;
   color: white;
+  font-size: 24px;
 }
 
 h1,
@@ -708,13 +912,12 @@ h2 {
 
 .readButton {
   position: relative;
-  /* Keep it fixed relative to viewport */
   float: right;
   padding: 20px 0px;
 }
 
 .feedback-section3 {
-  margin-top: 200px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
 }
@@ -725,7 +928,6 @@ h2 {
   padding: 20px;
   width: 1220px;
   height: 810px;
-  /* Fixed height for scrolling */
   overflow: hidden;
   display: flex;
 }
@@ -735,13 +937,15 @@ h2 {
   flex-grow: 1;
   height: 100%;
   padding-right: 20px;
-  /* Prevents content from getting cut off */
-  /* Hide scrollbar for different browsers */
-  /* Hide scrollbar but keep scrolling enabled */
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
   /* IE and Edge */
+}
+
+.feedback-list3::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
 }
 
 .feedback-entry3 {
@@ -776,7 +980,6 @@ h2 {
   margin-top: 10px;
 }
 
-/* Scroll Indicator Styles */
 .scroll-indicator {
   position: absolute;
   right: 10px;
@@ -792,34 +995,318 @@ h2 {
   height: 12px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
-  /* Light white for visibility */
   transition: background-color 0.3s ease;
 }
 
-/* Active dot turns orange */
 .scroll-dot.active {
   background-color: orange;
   transform: scale(1.2);
 }
 
+
+.book3d-container {
+  width: 100vw;
+  height: 100vh;
+  perspective: 1500px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.book3d-box-holder {
+  transform: rotateX(16deg) rotateY(0deg);
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+
+.book3d-box-holder>div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.book3d-box--front {
+  width: 500px;
+  /* 200px * 2.5 */
+  height: 750px;
+  /* 300px * 2.5 */
+  background: url("@/Assets/img/pics/cover.png") no-repeat center right;
+  background-size: auto 100%;
+  transform: translate3d(-250px, -375px, 0) translate3d(0, 0, 0) rotateY(0deg);
+  /* -100px * 2.5, -150px * 2.5 */
+}
+
+.book3d-box--back {
+  width: 500px;
+  height: 750px;
+  background: url("@/Assets/img/pics/backCover.png") no-repeat center left;
+  background-size: auto 100%;
+  transform: translate3d(-250px, -375px, 0) translate3d(0, 0, -40px) rotateY(180deg);
+  /* -16px * 2.5 */
+}
+
+.book3d-box--side-left {
+  width: 40px;
+  /* 16px * 2.5 */
+  height: 750px;
+  background: url("@/Assets/img/pics/spine.png") no-repeat center center;
+  background-size: auto 100%;
+  transform: translate3d(-250px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
+  /* -8px * 2.5 */
+}
+
+.book3d-box--side-right {
+  width: 40px;
+  height: 750px;
+  background: url("@/Assets/img/pics/spine2.png") no-repeat center center;
+  background-size: cover;
+  transform: translate3d(-250px, -375px, 0) translate3d(460px, 0px, -20px) rotateY(90deg);
+  /* (184px * 2.5 = 460px), -8px * 2.5 */
+}
+
+.book3d-box--top {
+  width: 500px;
+  height: 40px;
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  background-size: cover;
+  transform: translate3d(-250px, -375px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
+  /* -8px * 2.5 */
+}
+
+.book3d-box--bottom {
+  width: 500px;
+  height: 40px;
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  background-size: cover;
+  transform: translate3d(-250px, -375px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+  /* (292px * 2.5 = 730px), -8px * 2.5 */
+}
+
+@media (max-width: 1300px) {
+  .page-container3 {
+    width: 90%;
+  }
+
+  .content-section3 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content-left3,
+  .content-right3 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .content-right3 {
+    text-align: center;
+  }
+
+  .readButton {
+    float: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  .book3d-box--front {
+    width: 400px;
+    /* 300px * 1.33 */
+    height: 600px;
+    /* 450px * 1.33 */
+    transform: translate3d(-200px, -300px, 0) translate3d(0, 0, 0) rotateY(0deg);
+    /* -150px * 1.33, -225px * 1.33 */
+  }
+
+  .book3d-box--back {
+    width: 400px;
+    height: 600px;
+    transform: translate3d(-200px, -300px, 0) translate3d(0, 0, -32px) rotateY(180deg);
+    /* -24px * 1.33 */
+  }
+
+  .book3d-box--side-left {
+    width: 32px;
+    /* 24px * 1.33 */
+    height: 600px;
+    transform: translate3d(-200px, -300px, 0) translate3d(-16px, 0, -16px) rotateY(-90deg);
+    /* -12px * 1.33 */
+  }
+
+  .book3d-box--side-right {
+    width: 32px;
+    height: 600px;
+    transform: translate3d(-200px, -300px, 0) translate3d(368px, 0px, -16px) rotateY(90deg);
+    /* 276px * 1.33 ≈ 368px */
+  }
+
+  .book3d-box--top {
+    width: 400px;
+    height: 32px;
+    transform: translate3d(-200px, -300px, 0) translate3d(0px, -16px, -16px) rotateX(90deg);
+    /* -12px * 1.33 */
+  }
+
+  .book3d-box--bottom {
+    width: 400px;
+    height: 32px;
+    transform: translate3d(-200px, -300px, 0) translate3d(0px, 584px, -16px) rotateX(-90deg);
+    /* 438px * 1.33 ≈ 584px */
+  }
+
+  .feedback-box3 {
+    width: 100%;
+    height: 500px;
+  }
+}
+
+/* Small Screens (< 768px) */
+@media (max-width: 767px) {
+
+  .book3d-container {
+    width: 100vw;
+    height: 80vh;
+    perspective: 1500px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .page-container3 {
+    width: 95%;
+    padding-bottom: 20px;
+  }
+
+  .content-section3 {
+    margin-top: 20px;
+  }
+
+  .content-left3,
+  .content-right3 {
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .book3d-box-holder {
+    cursor: default;
+    /* Remove grab cursor on mobile */
+  }
+
+  .book3d-box--front {
+    width: 300px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, 0) rotateY(0deg);
+  }
+
+  .book3d-box--back {
+    width: 300px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px) rotateY(180deg);
+  }
+
+  .book3d-box--side-left {
+    width: 24px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px) rotateY(-90deg);
+  }
+
+  .book3d-box--side-right {
+    width: 24px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px) rotateY(90deg);
+  }
+
+  .book3d-box--top {
+    width: 300px;
+    height: 24px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px) rotateX(90deg);
+  }
+
+  .book3d-box--bottom {
+    width: 300px;
+    height: 24px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px) rotateX(-90deg);
+  }
+
+  .feedback-section3 {
+    margin-top: 30px;
+  }
+
+  .feedback-box3 {
+    width: 100%;
+    height: 400px;
+    padding: 10px;
+  }
+
+  .feedback-icon3 {
+    width: 30px;
+    height: 30px;
+  }
+
+  .feedback-details3 {
+    font-size: 0.9rem;
+  }
+
+  .scroll-indicator {
+    gap: 40px;
+  }
+
+  .scroll-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
 // ----------------------------------------------------------
 
-.body {
-  background-color: #153243;
+// body {
+//   background-color: #153243;
+//   margin: 0;
+//   /* Reset default margin */
+//   padding: 0;
+// }
+
+.body3 {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+
+  &::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari */
+  }
 }
 
 /* Fullscreen container */
 .webpage-container5 {
   position: relative;
+  background-color: #153243;
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* Each full viewport section */
 .full-section5 {
   width: 100%;
-  height: 1270px;
-  background-size: contain;
+  height: 100vh;
+  /* Changed to viewport height for responsiveness */
+  max-height: 1270px;
+  /* Maintain your max height */
+  background-size: cover;
+  /* Changed to cover for better responsiveness */
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #153243;
 }
 
 /* Scroll Indicator (Fixed at Top Left) */
@@ -1058,6 +1545,7 @@ h2 {
   justify-content: center;
   align-items: flex-end;
   /* Ensures the popup box sticks to the bottom */
+  z-index: 2000;
 }
 
 .popup-box {
@@ -1075,7 +1563,7 @@ h2 {
 }
 
 .popup-box p {
-  font-size: 48px;
+  font-size: clamp(24px, 5vw, 48px);
   color: white;
   font-family: "Aleo";
 }
@@ -1091,6 +1579,45 @@ h2 {
 
 .no-scroll {
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .full-section5 {
+    height: 80vh;
+    /* Adjust height for tablets */
+  }
+
+  .scroll-indicator5 {
+    top: 10px;
+    left: 10px;
+    padding: 8px;
+  }
+
+  .text-container-6 {
+    padding: 30px 10px;
+  }
+
+  .action-buttons,
+  .action-buttons8 {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .full-section5 {
+    height: 60vh;
+    /* Further adjust for mobile */
+  }
+
+  .user-input-textbox {
+    height: 150px;
+  }
+
+  .popup-box {
+    min-height: 50%;
+  }
 }
 
 //============================================

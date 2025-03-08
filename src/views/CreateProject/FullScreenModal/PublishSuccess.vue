@@ -2,6 +2,7 @@
   <div class="modal-overlay" v-if="isVisible" @click="closeModal">
     <div class="modal-content" @click.stop>
       <div class="bgc"></div>
+      <button class="btm-close" @click="closeModal">關閉彈窗</button>
       <!-- mainContent -->
       <div class="mainContent PublishSuccess">
         <div class="titleGroup">
@@ -63,8 +64,6 @@
 </template>
 
 <script setup>
-import OpenCloseButton from "../../../components/BTN/OpenCloseButton.vue";
-
 // 定義 props
 const props = defineProps({
   isVisible: {
