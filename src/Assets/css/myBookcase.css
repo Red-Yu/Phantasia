@@ -1,1 +1,140 @@
-/*# sourceMappingURL=myBookcase.css.map */
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
+#menu {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: flex;
+  width: fit-content;
+  gap: 15px;
+}
+
+#container {
+  position: fixed;
+}
+
+/* 按鈕樣式 */
+.btnKey-M.dark {
+  background-color: #153243;
+  width: fit-content;
+  align-items: center;
+  padding: 5px 10px;
+  display: flex;
+  gap: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  color: #f9faf9;
+  transition: all 0.3s ease;
+  font-size: 20px;
+}
+
+.btnKey-M.dark:hover {
+  background-color: #284163;
+}
+
+.btnKey-M.dark:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+
+.btnKey-M.dark:hover .cols span:nth-child(2) {
+  display: none;
+}
+
+.div.btnKey-M.dark-border {
+  background-color: #153142;
+  width: fit-content;
+  align-items: center;
+  padding: 5px 10px;
+  display: flex;
+  gap: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: 1.5px solid #153243;
+  background-color: #f9faf9;
+  color: #153243;
+  color: #153243;
+  transition: all 0.3s ease;
+  font-size: 20px;
+}
+
+.btnKey-M.dark-border:hover {
+  box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
+}
+
+.btnKey-M.dark-border:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+
+.btnKey-M.dark-border:hover .cols span:nth-child(2) {
+  display: none;
+}
+
+/* 元件的主要元素 */
+:deep(.element) {
+  width: 130px;
+  height: 160px;
+  box-shadow: 0px 0px 12px rgba(0, 255, 250, 0.5);
+  border: 3px solid rgba(251, 255, 255, 0.25);
+  font-family: Fanwood Text, sans-serif;
+  text-align: center;
+  line-height: normal;
+  cursor: default;
+}
+
+:deep(.element:hover) {
+  box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+  border: 1px solid rgba(127, 255, 255, 0.75);
+}
+
+:deep(.element .number) {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  font-size: 18px;
+  color: rgba(127, 255, 255, 0.7490196078);
+}
+
+:deep(.element .symbol) {
+  position: absolute;
+  top: 25px;
+  left: 0px;
+  right: 0px;
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.9490196078);
+}
+
+:deep(.element .details) {
+  position: absolute;
+  bottom: 8px;
+  left: 0px;
+  right: 0px;
+  font-size: 18px;
+  color: rgba(0, 255, 255, 0.9490196078);
+}
+
+:deep(.close-btn) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgba(0, 217, 255, 0.564);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+:deep(.close-btn-d-none) {
+  display: none;
+}/*# sourceMappingURL=myBookcase.css.map */
