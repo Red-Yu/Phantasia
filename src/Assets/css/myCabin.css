@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -27,6 +28,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -53,6 +55,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -77,6 +80,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -103,6 +107,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -117,6 +122,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -141,6 +147,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -167,6 +174,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -191,6 +199,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -217,6 +226,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -234,6 +244,7 @@
 }
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -264,6 +275,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -294,6 +306,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;

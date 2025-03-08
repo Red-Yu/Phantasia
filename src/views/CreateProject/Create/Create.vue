@@ -32,17 +32,27 @@
         <span class="Toggle" @click="togglePageView" />
       </div>
       <div class="MenuContent">
-        <div class="modelView">
-          <div class="modelContent"></div>
-          <p>1</p>
-        </div>
-        <div class="modelView">
-          <div class="modelContent"></div>
-          <p>2</p>
-        </div>
-        <div class="modelView">
-          <div class="modelContent"></div>
-          <p>3</p>
+        <div
+          class="modelView"
+          v-for="(template, i) in templateStore.templates"
+          :key="i"
+        >
+          <div class="modelContent">
+            <!-- 顯示縮小版的 template -->
+
+            <div class="canvasPreview" :style="getPreviewStyle()">
+              <component :is="template" />
+              <button
+                class="remove-btn"
+                @click="removeTemplate(i)"
+                :style="{ transform: 'scale(3.5)' }"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+          <p>{{ i + 1 }}</p>
+          <!-- 顯示遞增的編號 -->
         </div>
       </div>
     </div>
@@ -51,9 +61,27 @@
 
 <script setup>
 import { ref } from "vue";
+import { useTemplateStore } from "@/stores/template";
+
 import CheckBox from "../../../components/Input/CheckBox.vue";
 import CreateMenuContent from "./CreateMenuContent.vue";
 import CreateCanvas from "./CreateCanvas.vue";
+
+// 使用 Pinia store
+const templateStore = useTemplateStore();
+
+// 用於縮放預覽樣式的函數
+function getPreviewStyle() {
+  return {
+    transform: `scale(0.25)`, // 這裡調整縮放比例
+    transformOrigin: "top left", // 縮放基準點，從左上角開始縮放
+  };
+}
+
+// 刪除模板的函數
+function removeTemplate(i) {
+  templateStore.removeTemplate(i); // 通過 Pinia store 刪除對應的 template
+}
 
 // 左側邊欄的收縮狀態
 const isLeftClose = ref(false);

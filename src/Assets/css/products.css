@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -27,6 +28,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -53,6 +55,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -77,6 +80,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -103,6 +107,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -117,6 +122,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -141,6 +147,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -167,6 +174,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -191,6 +199,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -217,6 +226,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -234,6 +244,7 @@
 }
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -264,6 +275,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -294,6 +306,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -1684,7 +1697,8 @@ select {
 .grid-view img {
   width: 200px;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .grid-view .file-info {
   display: flex;
@@ -2137,13 +2151,16 @@ select {
 }
 
 .model {
-  width: 100px;
-  height: 60px;
-  border-radius: 10px;
-  background-color: #dee2e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 102px;
+  height: 57px;
+  border-radius: 8px;
+  border: #dee2e6 solid 1.5px;
+  background-color: #f9faf9;
+  overflow: hidden;
+}
+.model .modelsPreview {
+  width: 680px;
+  height: 380px;
 }
 .model img {
   width: 20px;
@@ -2151,7 +2168,7 @@ select {
 }
 
 .A .model {
-  background-color: #999999;
+  background-color: #f9faf9;
 }
 
 .ContentBox.Model button {
@@ -2234,7 +2251,8 @@ select {
   width: 100%;
   height: 100%;
   background: #153243;
-  mask-image: linear-gradient(to right, transparent, black);
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+          mask-image: linear-gradient(to right, transparent, black);
   opacity: 0;
 }
 @keyframes glowOnce {
@@ -2291,7 +2309,8 @@ select {
   background-size: cover;
   background-position: center center;
   background-color: rgba(249, 250, 249, 0.95);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   background-blend-mode: soft-light;
   position: fixed;
 }
@@ -2669,6 +2688,10 @@ select {
 .searchFunction input {
   all: initial;
   width: 100%;
+}
+.searchFunction input::-moz-placeholder {
+  color: rgba(21, 50, 67, 0.5);
+  font-size: 20px;
 }
 .searchFunction input::placeholder {
   color: rgba(21, 50, 67, 0.5);
@@ -3056,6 +3079,22 @@ select {
 }
 .Create .main-content {
   width: 100%;
+  position: relative;
+}
+.Create .main-content .Function {
+  position: fixed;
+  top: 90px;
+  left: 10px;
+  z-index: 3;
+}
+.Create .main-content .PageView {
+  position: fixed;
+  top: 90px;
+  right: 10px;
+  z-index: 2;
+}
+.Create .main-content .main-content {
+  width: 100%;
   z-index: 1;
 }
 .Create .CreateCanvas {
@@ -3195,26 +3234,54 @@ select {
   justify-content: center;
 }
 .Create .PageView .modelView .modelContent {
-  width: 160px;
-  height: 100px;
+  width: 170px;
+  height: 95px;
   border: #dee2e6 solid;
   background-color: #f9faf9;
   border-radius: 10px;
   margin-bottom: 10px;
+  overflow: hidden;
 }
-.Create .Function.close, .Create .PageView.close {
+.Create .PageView .modelView .modelContent .canvasPreview {
+  width: 680px;
+  height: 380px;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn {
+  position: absolute;
+  top: 28px;
+  right: 43px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background-color: #dee2e6;
+  color: white;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn:hover {
+  background-color: #153243;
+}
+.Create .Function.close,
+.Create .PageView.close {
   width: 50px;
 }
-.Create .Function.close .Toggle, .Create .PageView.close .Toggle {
+.Create .Function.close .Toggle,
+.Create .PageView.close .Toggle {
   background-image: url("/src/Assets/img/icon/close.png");
 }
-.Create .Function.close .CheckBox, .Create .PageView.close .CheckBox {
+.Create .Function.close .CheckBox,
+.Create .PageView.close .CheckBox {
   display: none;
 }
-.Create .Function.close .bookInfoBox, .Create .PageView.close .bookInfoBox {
+.Create .Function.close .bookInfoBox,
+.Create .PageView.close .bookInfoBox {
   display: none;
 }
-.Create .Function.close .MenuContent, .Create .PageView.close .MenuContent {
+.Create .Function.close .MenuContent,
+.Create .PageView.close .MenuContent {
   display: none;
 }
 
@@ -3239,6 +3306,10 @@ select {
   padding: 10px;
   border-bottom: #153243 solid 1px;
   text-align: center;
+}
+.CreateNewProject input::-moz-placeholder {
+  color: rgba(21, 50, 67, 0.5);
+  font-size: 20px;
 }
 .CreateNewProject input::placeholder {
   color: rgba(21, 50, 67, 0.5);
@@ -3456,7 +3527,8 @@ body {
   /* Ensure it fills the container width */
   height: 100%;
   /* Ensure it fills the container height */
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   /* Prevent cropping while maintaining aspect ratio */
   border-radius: 10px;
 }
@@ -3661,6 +3733,7 @@ body {
 
 .pg_controlButton:hover {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -3711,6 +3784,13 @@ body {
   padding: 8px;
   outline: none;
   /* Removes the focus outline */
+  font-family: "Fanwood Text", sans-serif;
+}
+
+.pg_searchInput::-moz-placeholder {
+  color: #fffdef;
+  opacity: 40%;
+  /* Change this to modify the placeholder text color */
   font-family: "Fanwood Text", sans-serif;
 }
 
@@ -3854,7 +3934,8 @@ body {
   /* Ensure it fills the container width */
   height: 100%;
   /* Ensure it fills the container height */
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   /* Prevent cropping while maintaining aspect ratio */
   border-radius: 10px;
 }
