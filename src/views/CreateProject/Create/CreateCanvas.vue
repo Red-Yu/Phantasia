@@ -16,15 +16,7 @@
         </div>
       </div>
     </div>
-    <div class="canvasGroup">
-      <div class="ZoomAnimation">
-        <div class="Background"></div>
-        <img src="" alt="" class="Background" />
-      </div>
-      <div class="canvas"></div>
-      <div class="canvas"></div>
-      <div class="canvas"></div>
-    </div>
+    <div class="canvasGroup"></div>
     <!-- BTN - addCanvas -->
     <router-link to="./Create/CreateInfo">
       <div class="addCanvas">
