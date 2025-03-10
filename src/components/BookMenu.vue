@@ -193,7 +193,7 @@
     background-color: rgba(255, 255, 255, 0.3);
   }
   
-  /* 選單覆蓋層 */
+  /* 選單覆蓋層 - 確保子元素的z-index可正常使用 */
   .bm-menu-overlay {
     position: fixed;
     padding: 15px;
@@ -210,6 +210,7 @@
     overflow: hidden;
     top: 0;
     left: 0;
+    transform-style: preserve-3d; /* 確保子元素保持3D效果 */
   }
   
   .bm-menu-overlay.bm-visible {
@@ -253,7 +254,7 @@
     position: relative;
   }
   
-  /* 標題區域 - 調整為絕對定位，提高 z-index 確保在書本上方 */
+  /* 標題區域 - 大幅降低z-index確保書本可以完全覆蓋標題 */
   .bm-site-title {
     position: absolute;
     top: 5%; /* 調整標題區域位置 */
@@ -267,7 +268,7 @@
     padding: 0px;
     gap: 20px;
     filter: drop-shadow(0px 4px 20px rgba(0, 0, 0, 0.4));
-    z-index: 10; /* 提高 z-index，原本是 1 */
+    z-index: 1 !important; /* 大幅降低z-index從5到1並添加!important */
     pointer-events: none; /* 確保點擊事件可以穿透到書本 */
   }
   
@@ -275,7 +276,7 @@
     font-family: 'Aleo';
     font-style: normal;
     font-weight: 700;
-    font-size: 6vw; /* 調整字體大小為相對單位 */
+    font-size: 5vw; /* 調整字體大小為相對單位 */
     line-height: 100%;
     text-align: left;
     display: flex;
@@ -286,6 +287,8 @@
     opacity: 0;
     transform: translateY(-20px);
     transition: opacity 0.5s ease, transform 0.5s ease;
+    position: relative;
+    z-index: 1 !important; /* 確保H1也有低z-index */
   }
   
   .bm-site-title h1.bm-visible {
@@ -322,6 +325,8 @@
     transform: translateY(-20px);
     transition: opacity 0.5s ease 0.4s, transform 0.5s ease 0.4s;
     pointer-events: auto; /* 確保 logo 仍然可點擊 */
+    position: relative;
+    z-index: 6; /* 添加z-index確保在標題上方但在書本下方 */
   }
   
   .bm-logo.bm-visible {
@@ -348,7 +353,7 @@
     object-fit: contain;
   }
   
-  /* 書本樣式 - 調整為更緊密的堆疊並向下移動 */
+  /* 書本樣式 - 調整為更緊密的堆疊並向下移動，大幅提高z-index */
   .bm-books {
     width: 100%;
     max-width: 600px; /* 給一個合理的最大寬度 */
@@ -359,7 +364,7 @@
     align-items: center;
     margin: 0 auto; /* 水平居中 */
     transform: translateY(20%);
-    z-index: 2;
+    z-index: 20 !important; /* 提高整個書本容器的z-index */
     perspective: 1200px; /* 增強3D透視效果 */
   }
   
@@ -458,15 +463,15 @@
     transform: translateY(-5px) rotate(-1deg) !important;
   }
   
-  /* 保持原有的z-index順序 */
+  /* 大幅提高書本的z-index使其可以完全覆蓋標題 */
   .bm-book-2.bm-visible { 
-    z-index: 6 !important;
+    z-index: 50 !important; /* 從15提高到50 */
     position: relative;
   }
-  .bm-book-3.bm-visible { z-index: 5; }
-  .bm-book-4.bm-visible { z-index: 4; }
-  .bm-book-5.bm-visible { z-index: 3; }
-  .bm-book-6.bm-visible { z-index: 2; }
+  .bm-book-3.bm-visible { z-index: 45 !important; } /* 從14提高到45 */
+  .bm-book-4.bm-visible { z-index: 40 !important; } /* 從13提高到40 */
+  .bm-book-5.bm-visible { z-index: 35 !important; } /* 從12提高到35 */
+  .bm-book-6.bm-visible { z-index: 30 !important; } /* 從11提高到30 */
   
   /* 特別針對router-link的樣式，確保router-link元素也有相同的動畫效果 */
   router-link.bm-book.bm-visible {
@@ -482,7 +487,7 @@
     opacity: 1;
     transform: translateY(0) rotate(-1deg);
     transition-delay: 0.1s;
-    z-index: 2;
+    z-index: 30 !important; /* 大幅提高z-index */
     animation: bm-book-appear 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; /* 增加動畫時間 */
     animation-delay: 0.1s;
   }
@@ -492,7 +497,7 @@
     opacity: 1;
     transform: translateY(-15px) rotate(-1deg);
     transition-delay: 0.3s; /* 增加延遲 */
-    z-index: 3;
+    z-index: 35 !important; /* 大幅提高z-index */
     animation: bm-book-appear 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; /* 增加動畫時間 */
     animation-delay: 0.3s; /* 增加延遲 */
   }
@@ -502,7 +507,7 @@
     opacity: 1;
     transform: translateY(-30px) rotate(-1deg);
     transition-delay: 0.5s; /* 增加延遲 */
-    z-index: 4;
+    z-index: 40 !important; /* 大幅提高z-index */
     animation: bm-book-appear 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; /* 增加動畫時間 */
     animation-delay: 0.5s; /* 增加延遲 */
   }
@@ -512,7 +517,7 @@
     opacity: 1;
     transform: translateY(-45px) rotate(-1deg);
     transition-delay: 0.7s; /* 增加延遲 */
-    z-index: 5;
+    z-index: 45 !important; /* 大幅提高z-index */
     animation: bm-book-appear 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; /* 增加動畫時間 */
     animation-delay: 0.7s; /* 增加延遲 */
   }
@@ -522,7 +527,7 @@
     opacity: 1;
     transform: translateY(-60px) rotate(-1deg);
     transition-delay: 0.9s; /* 增加延遲 */
-    z-index: 6;
+    z-index: 50 !important; /* 大幅提高z-index */
     animation: bm-book-appear 1.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards; /* 增加動畫時間 */
     animation-delay: 0.9s; /* 增加延遲 */
   }
