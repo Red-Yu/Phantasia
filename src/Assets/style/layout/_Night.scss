@@ -12,24 +12,24 @@
       &::after {
         content: "";
         position: absolute;
-        top: 5px;
-        left: 5px;
-        right: 5px;
-        bottom: 5px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         border: solid transparent;
       }
       &::before { /* 外框 */
-        border-width: 3px; 
+        border-width: 6px; 
         border-color: $baseBlue; 
         z-index: 1;
       }
       &::after { /* 內框 */
         border-width: 2px; 
         border-color: $subWhite;
-        top: 8px;                  
-        left: 8px; 
-        right: 8px; 
-        bottom: 8px;
+        top: 5px;                  
+        left: 5px; 
+        right: 5px; 
+        bottom: 5px;
         z-index: 2;
       }
     }
