@@ -17,11 +17,7 @@
       </div>
     </div>
     <div class="canvasGroup">
-      <div
-        v-for="(template, i) in templateStore.templates"
-        :key="i"
-        class="canvas"
-      >
+      <div v-for="(template, i) in templateStore.templates" :key="i" class="canvas">
         <component :is="template" />
       </div>
       <!-- <div class="canvas"></div>
