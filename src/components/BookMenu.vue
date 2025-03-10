@@ -2,17 +2,18 @@
 <template>
     <div class="bm-container" :class="{'bm-menu-open': isMenuOpen}">
       <!-- 漢堡按鈕 -->
-      <div class="bm-hamburger-btn" @click="toggleMenu">
-        <span></span>
-        <span></span>
+      <div @click="toggleMenu">
+           <!-- <OpenCloseButton type="hamburger" color="dark" /> -->
+           <OpenCloseButton type="hamburger" color="dark" />
+       
       </div>
       <!-- 全屏選單 -->
       <teleport to="body">
         <div class="bm-menu-overlay" :class="{'bm-visible': isMenuOpen}">
           <!-- 關閉按鈕 -->
           <div class="bm-close-btn" @click="toggleMenu">
-            <span></span>
-            <span></span>
+            <OpenCloseButton type="plus" color="light" />
+         
           </div>
           
           <!-- 選單內容 - 調整為居中布局 -->
@@ -71,6 +72,7 @@
   import book5Image from '@/assets/img/menu/bookMemberCenter.png'
   import book6Image from '@/assets/img/menu/bookCreationCenter.svg'
   import logo from '@/assets/img/menu/logo.svg'
+import OpenCloseButton from "./BTN/OpenCloseButton.vue";
     
   const isMenuOpen = ref(false);
     
@@ -109,7 +111,7 @@
   };
   </script>
     
-  <style>
+  <style scoped>
   /* 使用前綴避免衝突 */
   /* 基本樣式 */
   .bm-container {
@@ -117,81 +119,18 @@
     z-index: 9990 !important;
   }
   
-  /* 漢堡按鈕樣式 */
-  .bm-hamburger-btn {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.2);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    z-index: 100000 !important;
-    transition: all 0.3s ease;
-  }
-  
-  .bm-hamburger-btn span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background-color: white;
-    margin: 3px 0;
-    transition: all 0.3s ease;
-  }
-  
-  .bm-menu-open .bm-hamburger-btn span:first-child {
-    transform: translateY(5px) rotate(45deg);
-  }
-  
-  .bm-menu-open .bm-hamburger-btn span:last-child {
-    transform: translateY(-5px) rotate(-45deg);
-  }
+ 
   
   /* 關閉按鈕樣式 */
   .bm-close-btn {
     position: absolute;
     top: 15px;
     right: 15px;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.2);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
     z-index: 100001 !important;
-    transition: all 0.3s ease;
   }
   
-  .bm-close-btn span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background-color: white;
-    margin: 0;
-    transition: all 0.3s ease;
-  }
   
-  .bm-close-btn span:first-child {
-    transform: rotate(45deg);
-  }
-  
-  .bm-close-btn span:last-child {
-    transform: rotate(-45deg);
-    position: relative;
-    top: -2px;
-  }
-  
-  .bm-close-btn:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
   
   /* 選單覆蓋層 - 確保子元素的z-index可正常使用 */
   .bm-menu-overlay {

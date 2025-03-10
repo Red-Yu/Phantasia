@@ -16,9 +16,6 @@
         </div>
       </div>
     </div>
-<<<<<<< HEAD
-    <div class="canvasGroup"></div>
-=======
     <div class="canvasGroup">
       <div
         v-for="(template, i) in templateStore.templates"
@@ -32,7 +29,6 @@
       <div class="canvas"></div>
       <div class="canvas"></div> -->
     </div>
->>>>>>> 94a4fe65fc109ce14c0d03cedc82c4dfda3980d8
     <!-- BTN - addCanvas -->
     <router-link to="./Create/CreateInfo">
       <div class="addCanvas">
