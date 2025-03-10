@@ -1,0 +1,72 @@
+@import "../base/color";
+
+.bkTitle{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;      /* 垂直對齊 */
+    padding: 10px 0;       /* 設置內邊距，讓元素與邊緣保持一定距離 */
+}
+.searchFunction{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+    
+input.search{
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid $baseBlue;
+    padding: 7px;
+    // text-align: center;
+    // align-items: center;
+}
+    
+.searchIcon {
+    cursor: pointer;
+    color: #777;
+}
+    
+  
+// 會員資料表格
+table{
+    width: 100%;
+    border: 1px solid;  
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+table, th ,tr,td  {
+    text-align: center;
+    padding: 10px;
+}
+thead{
+    background-color: $baseBlue;
+    color:$subWhite;
+}
+tbody>tr{
+    &:hover{
+        background-color: $subGray;
+    }
+}
+
+// 頁碼
+.pagination {
+    text-align: center;
+}
+
+.pagination button {
+    margin: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.pagination button.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+  
+.pagination button.active {
+    font-weight: bold;
+    background-color: #007bff;
+    color: white;
+}

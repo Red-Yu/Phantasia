@@ -18,6 +18,7 @@
 @import "./component/ProjectMenu";
 @import "./component/sidebar";
 @import "./component/CreateMenuContent";
+@import "./component/backStageMenu";
 
 // layout  (因為已經拉出成共用組件component，所以這邊好像不需要)
 @import "./layout/header";
@@ -30,6 +31,7 @@
 // page
 @import "./page/btnFamily";
 @import "./page/IconGroup";
+@import "./page/backStage.scss";
 
 // CreateProject (Project+Draft)
 @import "./page/CreateProject";
