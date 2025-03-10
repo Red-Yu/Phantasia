@@ -4,7 +4,7 @@
 
 <template>
   <div class="wrapper3">
-    <div class="whiteLine">
+    
       <div class="page-container3">
         <section class="content-section3">
           <div class="content-left3">
@@ -116,7 +116,7 @@
           </div>
         </section>
       </div>
-    </div>
+    
   </div>
 </template>
 

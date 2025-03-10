@@ -4,7 +4,7 @@
 
 <template>
   <div class="productsWrapper">
-    <div class="whiteLine">
+    
       <div class="sec">
         <div class="title">
           <h1>Reading is more than words</h1>
@@ -191,7 +191,7 @@
           </div>
         </div>
       </div>
-    </div>
+    
   </div>
 </template>
 
