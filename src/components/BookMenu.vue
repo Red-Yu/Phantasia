@@ -217,7 +217,7 @@
     visibility: visible !important;
   }
   
-  /* 調整魔法粒子背景效果的大小和不透明度 */
+  /*雪畫雪畫背景效果的大小和不透明度 */
   .bm-menu-overlay.bm-visible::before {
     content: '';
     position: absolute;
@@ -613,7 +613,7 @@
       background-position: 55px 55px; /* 中間點的位移，讓動畫更有變化 */
     }
     100% {
-      background-position: 110px 110px;
+      background-position: 100px 100px;
     }
-  }
+  }   
   </style>
