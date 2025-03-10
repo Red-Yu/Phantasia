@@ -201,7 +201,7 @@ import { useRouter } from "vue-router";
 import coverImage from "@/assets/img/pics/cover.png";
 import backImage from "@/assets/img/pics/backCover.png";
 import sideLeftImage from "@/assets/img/pics/spine.png";
-import sideRightImage from "@/assets/img/pics/spine2.png";
+import sideRightImage from "@/assets/img/pics/2paper.png";
 
 const router = useRouter();
 
