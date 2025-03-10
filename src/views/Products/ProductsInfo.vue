@@ -3,37 +3,21 @@
 </style>
 
 <template>
-  <!-- <header></header> -->
   <div class="wrapper3">
-    <div class="whiteLine">
+    
       <div class="page-container3">
-        <section class="hero-section3">
-          <div class="oneonesix">
-            <div class="whirl-container" :style="bookStyle">
-              <div class="whirl-box-holder">
-                <div
-                  class="whirl-box whirl-front"
-                  :style="{ backgroundImage: `url(${coverImage})` }"
-                ></div>
-                <div
-                  class="whirl-box whirl-side-left"
-                  :style="{ backgroundImage: `url(${sideLeftImage})` }"
-                ></div>
-                <div
-                  class="whirl-box whirl-side-right"
-                  :style="{ backgroundImage: `url(${sideRightImage})` }"
-                ></div>
-                <div
-                  class="whirl-box whirl-back"
-                  :style="{ backgroundImage: `url(${backImage})` }"
-                ></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section class="content-section3">
           <div class="content-left3">
+            <div class="book3d-container">
+              <div class="book3d-box-holder" ref="bookHolder">
+                <div class="book3d-box--front"></div>
+                <div class="book3d-box--side-left"></div>
+                <div class="book3d-box--side-right"></div>
+                <div class="book3d-box--top"></div>
+                <div class="book3d-box--bottom"></div>
+                <div class="book3d-box--back"></div>
+              </div>
+            </div>
             <div class="destination-div" ref="destinationRef"></div>
           </div>
           <div class="content-right3">
@@ -46,25 +30,23 @@
             </div>
             <hr class="info-divider3" />
             <p>
-              In a forgotten era, Perciliurs Khan was a cunning and fearless
-              warrior who led an army of exiles against the tyrannical Empire of
-              Velmont. Born into poverty and cast out for a crime he didn’t
-              commit, Perciliurs rose to power through his unmatched intellect
-              and charisma, uniting outlaws, farmers, and forgotten tribes under
-              his banner. His legend was cemented when he allegedly tamed the
-              mythical shadow beast, Xarnath, using only his voice, making him
+              In a forgotten era, Perciliurs Khan was a cunning and fearless warrior who
+              led an army of exiles against the tyrannical Empire of Velmont. Born into
+              poverty and cast out for a crime he didn’t commit, Perciliurs rose to power
+              through his unmatched intellect and charisma, uniting outlaws, farmers, and
+              forgotten tribes under his banner. His legend was cemented when he allegedly
+              tamed the mythical shadow beast, Xarnath, using only his voice, making him
               invincible in battle. <br /><br />
-              The story tells of his greatest feat: a daring raid on the
-              Imperial Vault, where he stole the fabled Amulet of Aeons, said to
-              control time itself. With it, he turned the tide of war,
-              liberating his people and carving his name into history. However,
-              as whispers of his power grew, some questioned if Perciliurs Khan
-              truly existed or if he was a myth, crafted to inspire hope in dark
-              times.
+              The story tells of his greatest feat: a daring raid on the Imperial Vault,
+              where he stole the fabled Amulet of Aeons, said to control time itself. With
+              it, he turned the tide of war, liberating his people and carving his name
+              into history. However, as whispers of his power grew, some questioned if
+              Perciliurs Khan truly existed or if he was a myth, crafted to inspire hope
+              in dark times.
               <br /><br />
-              The tale ends with a mysterious twist: a traveler in the present
-              day uncovers a hidden artifact—an ancient blade inscribed with the
-              words “Khan will rise again.”
+              The tale ends with a mysterious twist: a traveler in the present day
+              uncovers a hidden artifact—an ancient blade inscribed with the words “Khan
+              will rise again.”
             </p>
 
             <div class="info-group3">
@@ -75,7 +57,7 @@
             <p>
               Author : Melinda Wenner<br />
               Illustrator: Ho Hsueh-Yi<br />
-              Publication Date:Melinda Wenner<br />
+              Publication Date: Melinda Wenner<br />
               Language: English
             </p>
             <section class="readButton">
@@ -100,11 +82,7 @@
         <section class="feedback-section3">
           <div class="feedback-box3">
             <!-- Scrollable Review List -->
-            <div
-              ref="feedbackList"
-              class="feedback-list3"
-              @scroll="updateActiveDot"
-            >
+            <div ref="feedbackList" class="feedback-list3" @scroll="updateActiveDot">
               <div
                 v-for="(comment, index) in comments"
                 :key="index"
@@ -138,38 +116,19 @@
           </div>
         </section>
       </div>
-    </div>
+    
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
-import coverImage from "@/Assets/img/pics/cover.png";
-import backImage from "@/Assets/img/pics/backCover.png";
-import sideLeftImage from "@/Assets/img/pics/spine.png";
-import sideRightImage from "@/Assets/img/pics/spine2.png";
 
 const router = useRouter();
-const scrollPosition = ref(0);
-const destinationRef = ref(null);
-const viewportHeight = window.innerHeight;
+const destinationRef = ref(null); // Still needed for content-left3 reference
 
 const goToProductReadPage = (productId) => {
   router.push(`/Products/${productId}/read`);
-};
-
-const handleScroll = () => {
-  const triggerPoint = viewportHeight / 4; // When animation should start
-  const destinationPoint =
-    destinationRef.value?.offsetTop - viewportHeight / 1.5;
-
-  if (window.scrollY > triggerPoint) {
-    scrollPosition.value = Math.min(
-      (window.scrollY - triggerPoint) / (destinationPoint - triggerPoint),
-      1
-    );
-  }
 };
 
 const comments = ref([
@@ -195,33 +154,104 @@ const feedbackList = ref(null);
 const updateActiveDot = () => {
   if (!feedbackList.value) return;
   const list = feedbackList.value;
-  const scrollPercentage =
-    list.scrollTop / (list.scrollHeight - list.clientHeight);
+  const scrollPercentage = list.scrollTop / (list.scrollHeight - list.clientHeight);
   activeDot.value = Math.floor(scrollPercentage * 10);
+};
+
+const bookHolder = ref(null);
+const bookIsDragging = ref(false);
+const bookPreviousX = ref(0);
+const bookPreviousY = ref(0);
+const bookRotateY = ref(0);
+const bookRotateX = ref(16);
+
+const bookStartDragging = (e) => {
+  bookIsDragging.value = true;
+  bookPreviousX.value = e.clientX;
+  bookPreviousY.value = e.clientY;
+  bookHolder.value.style.cursor = "grabbing";
+  e.preventDefault();
+};
+
+const bookDrag = (e) => {
+  if (!bookIsDragging.value) return;
+
+  const bookCurrentX = e.clientX;
+  const bookCurrentY = e.clientY;
+  const bookDeltaX = bookCurrentX - bookPreviousX.value;
+  const bookDeltaY = bookCurrentY - bookPreviousY.value;
+
+  bookRotateY.value += bookDeltaX * 0.5;
+  bookRotateX.value -= bookDeltaY * 0.5;
+  bookRotateX.value = Math.max(-90, Math.min(90, bookRotateX.value));
+
+  bookHolder.value.style.transform = `rotateX(${bookRotateX.value}deg) rotateY(${bookRotateY.value}deg)`;
+  bookPreviousX.value = bookCurrentX;
+  bookPreviousY.value = bookCurrentY;
+};
+
+const bookStopDragging = () => {
+  bookIsDragging.value = false;
+  bookHolder.value.style.cursor = "grab";
+};
+
+const bookTouchStart = (e) => {
+  bookIsDragging.value = true;
+  bookPreviousX.value = e.touches[0].clientX;
+  bookPreviousY.value = e.touches[0].clientY;
+  e.preventDefault();
+};
+
+const bookTouchMove = (e) => {
+  if (!bookIsDragging.value) return;
+  const bookCurrentX = e.touches[0].clientX;
+  const bookCurrentY = e.touches[0].clientY;
+  const bookDeltaX = bookCurrentX - bookPreviousX.value;
+  const bookDeltaY = bookCurrentY - bookPreviousY.value;
+
+  bookRotateY.value += bookDeltaX * 0.5;
+  bookRotateX.value -= bookDeltaY * 0.5;
+  bookRotateX.value = Math.max(-90, Math.min(90, bookRotateX.value));
+
+  bookHolder.value.style.transform = `rotateX(${bookRotateX.value}deg) rotateY(${bookRotateY.value}deg)`;
+  bookPreviousX.value = bookCurrentX;
+  bookPreviousY.value = bookCurrentY;
+  e.preventDefault();
+};
+
+const bookTouchEnd = () => {
+  bookIsDragging.value = false;
 };
 
 onMounted(() => {
   if (feedbackList.value) {
     feedbackList.value.addEventListener("scroll", updateActiveDot);
   }
-  window.addEventListener("scroll", handleScroll);
+
+  if (bookHolder.value) {
+    bookHolder.value.addEventListener("mousedown", bookStartDragging);
+    document.addEventListener("mousemove", bookDrag);
+    document.addEventListener("mouseup", bookStopDragging);
+
+    bookHolder.value.addEventListener("touchstart", bookTouchStart);
+    document.addEventListener("touchmove", bookTouchMove);
+    document.addEventListener("touchend", bookTouchEnd);
+  }
 });
 
 onUnmounted(() => {
   if (feedbackList.value) {
     feedbackList.value.removeEventListener("scroll", updateActiveDot);
   }
-  window.removeEventListener("scroll", handleScroll);
-});
 
-const bookStyle = computed(() => {
-  const rotation = scrollPosition.value * 360; // Full rotation (360°)
-  const moveX = scrollPosition.value * -30; // Move to the left (-50vw)
-  const moveY = scrollPosition.value * 1000; // Move down (500px)
+  if (bookHolder.value) {
+    bookHolder.value.removeEventListener("mousedown", bookStartDragging);
+    document.removeEventListener("mousemove", bookDrag);
+    document.removeEventListener("mouseup", bookStopDragging);
 
-  return {
-    transform: `translate(${moveX}vw, ${moveY}px) rotateY(${rotation}deg)`,
-    transition: "transform 0.2s ease-out",
-  };
+    bookHolder.value.removeEventListener("touchstart", bookTouchStart);
+    document.removeEventListener("touchmove", bookTouchMove);
+    document.removeEventListener("touchend", bookTouchEnd);
+  }
 });
 </script>
