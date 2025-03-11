@@ -12,6 +12,10 @@
   justify-content: flex-end;
 }
 
+.add {
+  margin-left: 10px;
+}
+
 input.search {
   width: 200px;
   border-radius: 5px;

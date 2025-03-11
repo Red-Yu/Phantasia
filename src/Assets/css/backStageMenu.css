@@ -14,11 +14,9 @@
   flex-direction: column;
   border: #153243 solid;
   background-color: #f9faf9;
-  justify-content: space-between;
 }
 .backStageMenu .user {
   width: 100%;
-  height: 100%;
   padding: 20px;
   display: flex;
   justify-content: center;

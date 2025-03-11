@@ -25,17 +25,17 @@ const changeStyle = () => {};
       <div class="tab-group">
         <TabButton
           text="會員管理"
-          to="/BackstageMember"
+          to="/BKMember"
           @click="changeStyle"
         />
         <TabButton 
           text="商品管理" 
-          to="/BackstageProduct" 
+          to="/BKMember/BKProduct" 
           @click="changeStyle"
         />
         <TabButton 
           text="資訊管理" 
-          to="/BackstageInfo" 
+          to="/BKMember/BKInfo" 
           @click="changeStyle"
         />
         <div class="logout-container">
