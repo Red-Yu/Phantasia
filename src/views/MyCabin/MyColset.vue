@@ -7,9 +7,26 @@
 
   <div class="blackWrapper">
     <div class="wrapper">
-      <!-- ====================背景圖片======================= -->
+      <!-- ====================文字選單======================= -->
 
       <div class="positionArea">
+        <div class="myColsetContent">
+          <div class="section">Hair</div>
+          <div class="line"></div>
+          <div class="optionArea">
+            <button
+              class="btnLink white"
+              v-for="(image, index) in imageNames"
+              :key="index"
+              @click="selectImage(index)"
+            >
+              {{ image.name }}
+            </button>
+          </div>
+        </div>
+
+        <!-- ====================背景圖片======================= -->
+
         <div class="main_container" ref="parallaxContainer">
           <div class="parallax-wrapper" data-depth="0.04">
             <img
@@ -41,11 +58,22 @@
                 alt=""
                 class="characterClothes"
               />
+
               <img
+                v-show="selectedImage === 0"
+                :src="`/MyColset/${imageNames[0].url}`"
+                :alt="imageNames[0].name"
+              />
+              <img
+                v-show="selectedImage === 1"
+                :src="`/MyColset/${imageNames[1].url}`"
+                :alt="imageNames[1].name"
+              />
+              <!-- <img
                 src="../../Assets/Day/myColset/head_1.png"
                 alt=""
                 class="characterHead"
-              />
+              /> -->
             </div>
           </div>
 
@@ -113,3 +141,23 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref } from "vue";
+
+const imageNames = [
+  { name: "Short Hair", url: "shortHair.png" }, // 短髮圖片
+  { name: "Mid-length Hair", url: "mid-lengthHair.png" }, // 長髮圖片
+  { name: "Curly Hair", url: "curly-hair.jpg" }, // 捲髮圖片
+  { name: "Bald", url: "bald.jpg" }, // 禿頭圖片
+  { name: "Bald", url: "bald.jpg" }, // 禿頭圖片
+  { name: "Bald", url: "bald.jpg" }, // 禿頭圖片
+];
+
+const selectedImage = ref(0); // 使用 ref 來定義選中的圖片索引
+
+// 點擊按鈕選擇對應的圖片
+const selectImage = (index) => {
+  selectedImage.value = index; // 更新選中的圖片
+};
+</script>

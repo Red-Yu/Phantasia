@@ -967,7 +967,7 @@ button {
   @include imgCenter();
   left: 23%;
   top: 18%;
-  width: 10vw;
+  // width: 10vw;
   height: 10vh;
 }
 
@@ -975,7 +975,7 @@ button {
   @include imgCenter();
   left: 29%;
   top: 39%;
-  width: 7vw;
+  // width: 7vw;
   height: 7vh;
 }
 
@@ -983,7 +983,7 @@ button {
   @include imgCenter();
   left: 36%;
   top: 24%;
-  width: 5.5vw;
+  // width: 5.5vw;
   height: 5.5vh;
 }
 
@@ -991,7 +991,7 @@ button {
   @include imgCenter();
   left: 65%;
   top: 29%;
-  width: 6.5vw;
+  // width: 6.5vw;
   height: 6.5vh;
 }
 
@@ -999,6 +999,75 @@ button {
   @include imgCenter();
   left: 75%;
   top: 37%;
-  width: 9vw;
+  // width: 9vw;
   height: 9vh;
+}
+
+// =====================換裝頁=======================
+
+.myColsetContent {
+  @include imgCenter();
+  left: 28%;
+  top: 70%;
+  z-index: 500;
+
+  width: 347px;
+  height: 250px;
+  border: 1.5px solid #fff;
+  background: rgba(21, 50, 67, 0.7);
+  box-shadow: 4px 8px 12px 6px rgba(0, 0, 0, 0.35);
+
+  .section {
+    text-align: center;
+    color: #fff;
+    text-shadow: 2px 4px 4.3px rgba(0, 0, 0, 0.35);
+    font-family: Aleo;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-transform: uppercase;
+    padding: 5px 0 3px 0;
+  }
+
+  .line {
+    margin: auto;
+    border: 1px solid #fff;
+    width: 80%;
+  }
+
+  .optionArea {
+    margin: auto;
+    margin-top: 10px;
+    width: 80%;
+    height: 70%;
+    overflow: auto;
+    // background-color: yellow;
+
+    text-shadow: 2px 4px 4.3px rgba(0, 0, 0, 0.35);
+    font-family: "Fanwood Text";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 2.8px;
+    text-transform: capitalize;
+    pointer-events: auto;
+
+    &::-webkit-scrollbar {
+      width: 5px; /* 垂直滾動條的寬度 */
+    }
+
+    /* 設定滾動條的滑塊（即可拖動的部分） */
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.7); /* 滾動條滑塊的顏色 */
+      border-radius: 10px; /* 滾動條滑塊的圓角 */
+    }
+
+    button {
+      // display: block;
+      width: 85%;
+      pointer-events: auto;
+    }
+  }
 }

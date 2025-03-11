@@ -3,6 +3,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -27,6 +28,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -53,6 +55,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -77,6 +80,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -103,6 +107,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -117,6 +122,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -141,6 +147,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -167,6 +174,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -191,6 +199,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -217,6 +226,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -234,6 +244,7 @@
 }
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -264,6 +275,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -294,6 +306,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -741,7 +754,8 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 100%;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   transition: transform 0.1s ease-out;
   transition: opacity 0.6s ease-out;
 }
@@ -1586,7 +1600,6 @@ button {
   transform: translate(-50%, -50%);
   left: 23%;
   top: 18%;
-  width: 10vw;
   height: 10vh;
 }
 
@@ -1597,7 +1610,6 @@ button {
   transform: translate(-50%, -50%);
   left: 29%;
   top: 39%;
-  width: 7vw;
   height: 7vh;
 }
 
@@ -1608,7 +1620,6 @@ button {
   transform: translate(-50%, -50%);
   left: 36%;
   top: 24%;
-  width: 5.5vw;
   height: 5.5vh;
 }
 
@@ -1619,7 +1630,6 @@ button {
   transform: translate(-50%, -50%);
   left: 65%;
   top: 29%;
-  width: 6.5vw;
   height: 6.5vh;
 }
 
@@ -1630,6 +1640,65 @@ button {
   transform: translate(-50%, -50%);
   left: 75%;
   top: 37%;
-  width: 9vw;
   height: 9vh;
+}
+
+.myColsetContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  left: 28%;
+  top: 70%;
+  z-index: 500;
+  width: 347px;
+  height: 250px;
+  border: 1.5px solid #fff;
+  background: rgba(21, 50, 67, 0.7);
+  box-shadow: 4px 8px 12px 6px rgba(0, 0, 0, 0.35);
+}
+.myColsetContent .section {
+  text-align: center;
+  color: #fff;
+  text-shadow: 2px 4px 4.3px rgba(0, 0, 0, 0.35);
+  font-family: Aleo;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  padding: 5px 0 3px 0;
+}
+.myColsetContent .line {
+  margin: auto;
+  border: 1px solid #fff;
+  width: 80%;
+}
+.myColsetContent .optionArea {
+  margin: auto;
+  margin-top: 10px;
+  width: 80%;
+  height: 70%;
+  overflow: auto;
+  text-shadow: 2px 4px 4.3px rgba(0, 0, 0, 0.35);
+  font-family: "Fanwood Text";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 2.8px;
+  text-transform: capitalize;
+  pointer-events: auto;
+  /* 設定滾動條的滑塊（即可拖動的部分） */
+}
+.myColsetContent .optionArea::-webkit-scrollbar {
+  width: 5px; /* 垂直滾動條的寬度 */
+}
+.myColsetContent .optionArea::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.7); /* 滾動條滑塊的顏色 */
+  border-radius: 10px; /* 滾動條滑塊的圓角 */
+}
+.myColsetContent .optionArea button {
+  width: 85%;
+  pointer-events: auto;
 }/*# sourceMappingURL=index.css.map */
