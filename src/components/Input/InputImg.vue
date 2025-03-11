@@ -1,5 +1,5 @@
 <template>
-  <div class="inputBox">
+  <div class="inputImg">
     <input
       type="file"
       id="CustomImgInput"
@@ -7,8 +7,8 @@
       @change="handleFileChange"
       accept=".png, .jpeg, .jpg, .gif"
     />
-    <label for="CustomImgInput" class="btnKey-L dark-border">
-      <p>dark-border</p>
+    <label for="CustomImgInput" class="btnKey-M dark-border">
+      <p>Browse file</p>
       <div class="icon-L">
         <div class="dark-cross">
           <div class="cols">
@@ -54,18 +54,7 @@ const validateFileType = (file) => {
 </script>
 
 <style scoped>
-.btnKey-L {
-  background-color: #000;
-  width: fit-content;
-  align-items: center;
-  padding: 5px 10px;
-  display: flex;
-  gap: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-  z-index: 3;
-}
-.hidden-input {
+.inputImg > input {
   display: none;
 }
 </style>
