@@ -969,6 +969,9 @@ button {
   top: 18%;
   // width: 10vw;
   height: 10vh;
+  cursor: pointer;
+  pointer-events: auto;
+  // background-color: yellow;
 }
 
 .selectBall_2 {
@@ -977,6 +980,8 @@ button {
   top: 39%;
   // width: 7vw;
   height: 7vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_3 {
@@ -985,6 +990,8 @@ button {
   top: 24%;
   // width: 5.5vw;
   height: 5.5vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_4 {
@@ -993,6 +1000,8 @@ button {
   top: 29%;
   // width: 6.5vw;
   height: 6.5vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_5 {
@@ -1001,6 +1010,8 @@ button {
   top: 37%;
   // width: 9vw;
   height: 9vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 // =====================換裝頁=======================
@@ -1010,7 +1021,8 @@ button {
   left: 28%;
   top: 70%;
   z-index: 500;
-
+  // opacity: 0;
+  transition: opacity 0.5s;
   width: 347px;
   height: 250px;
   border: 1.5px solid #fff;

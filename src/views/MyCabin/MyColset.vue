@@ -1,5 +1,50 @@
 <style scoped>
 @import "../../Assets/css/index.css";
+/* 隱藏所有 box */
+.box {
+  height: 0;
+  opacity: 0;
+  overflow: hidden; /* 隱藏溢出的內容 */
+  animation-fill-mode: forwards;
+}
+
+/* 進場動畫 */
+@keyframes boxFadeIn {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 250px;
+    opacity: 1;
+  }
+}
+
+/* 退場動畫 */
+@keyframes boxFadeOut {
+  from {
+    height: 250px;
+    opacity: 1;
+  }
+  to {
+    height: 0;
+    opacity: 0;
+  }
+}
+
+/* 顯示 box 時的樣式 */
+.box.show {
+  opacity: 1;
+  height: 250px; /* 確保顯示後的高度是 250px */
+  animation: boxFadeIn 0.4s forwards;
+}
+
+/* 隱藏 box 時的樣式 */
+.box.hide {
+  opacity: 0;
+  height: 0; /* 確保隱藏後的高度是 0 */
+  animation: boxFadeOut 0.4s forwards;
+}
 </style>
 
 <template>
@@ -7,23 +52,56 @@
 
   <div class="blackWrapper">
     <div class="wrapper">
-      <!-- ====================文字選單======================= -->
-
       <div class="positionArea">
-        <div class="myColsetContent">
-          <div class="section">Hair</div>
-          <div class="line"></div>
-          <div class="optionArea">
-            <button
-              class="btnLink white"
-              v-for="(image, index) in imageNames"
-              :key="index"
-              @click="selectImage(index)"
-            >
-              {{ image.name }}
-            </button>
+        <!-- ===================頭髮選單================== -->
+        <transition name="fade" mode="out-in">
+          <div
+            v-show="selectedBall === 'hair'"
+            class="myColsetContent hair box"
+            :class="{
+              show: selectedBall === 'hair',
+              hide: selectedBall !== 'hair',
+            }"
+          >
+            <div class="section">Hair</div>
+            <div class="line"></div>
+            <div class="optionArea">
+              <button
+                class="btnLink white"
+                v-for="(image, index) in hairImages"
+                :key="index"
+                @click="selectHairImage(index)"
+              >
+                {{ image.name }}
+              </button>
+            </div>
           </div>
-        </div>
+        </transition>
+
+        <!-- ===================衣服選單================== -->
+        <transition name="fade" mode="out-in">
+          <div
+            v-show="selectedBall === 'clothes'"
+            class="myColsetContent clothes box"
+            :class="{
+              show: selectedBall === 'clothes',
+              hide: selectedBall !== 'clothes',
+            }"
+          >
+            <div class="section">Clothes</div>
+            <div class="line"></div>
+            <div class="optionArea">
+              <button
+                class="btnLink white"
+                v-for="(image, index) in clothesImages"
+                :key="index"
+                @click="selectClothesImage(index)"
+              >
+                {{ image.name }}
+              </button>
+            </div>
+          </div>
+        </transition>
 
         <!-- ====================背景圖片======================= -->
 
@@ -54,20 +132,32 @@
           <div class="parallax-wrapper" data-depth="0.07">
             <div class="characterChangeClothesWrapper">
               <img
-                src="../../Assets/Day/myColset/clothes_1.png"
-                alt=""
-                class="characterClothes"
+                v-show="selectedClothesImage === 0"
+                :src="`/MyColset/${clothesImages[0].url}`"
+                :alt="clothesImages[0].name"
               />
 
               <img
-                v-show="selectedImage === 0"
-                :src="`/MyColset/${imageNames[0].url}`"
-                :alt="imageNames[0].name"
+                v-show="selectedClothesImage === 1"
+                :src="`/MyColset/${clothesImages[1].url}`"
+                :alt="clothesImages[1].name"
+              />
+
+              <!-- <img
+                src="../../Assets/Day/myColset/clothes_1.png"
+                alt=""
+                class="characterClothes"
+              /> -->
+
+              <img
+                v-show="selectedHairImage === 0"
+                :src="`/MyColset/${hairImages[0].url}`"
+                :alt="hairImages[0].name"
               />
               <img
-                v-show="selectedImage === 1"
-                :src="`/MyColset/${imageNames[1].url}`"
-                :alt="imageNames[1].name"
+                v-show="selectedHairImage === 1"
+                :src="`/MyColset/${hairImages[1].url}`"
+                :alt="hairImages[1].name"
               />
               <!-- <img
                 src="../../Assets/Day/myColset/head_1.png"
@@ -88,7 +178,7 @@
           </div>
           <!-- ===============ball=============== -->
           <div class="parallax-wrapper" data-depth="0.055">
-            <div class="selectBall_1">
+            <div class="selectBall_1" @click="selectBall('hair')">
               <img
                 src="../../Assets/Day/myColset/ball_1_76x76.png"
                 alt=""
@@ -98,7 +188,7 @@
           </div>
 
           <div class="parallax-wrapper" data-depth="0.055">
-            <div class="selectBall_2">
+            <div class="selectBall_2" @click="selectBall('clothes')">
               <img
                 src="../../Assets/Day/myColset/ball_2_60x60.png"
                 alt=""
@@ -145,7 +235,7 @@
 <script setup>
 import { ref } from "vue";
 
-const imageNames = [
+const hairImages = [
   { name: "Short Hair", url: "shortHair.png" }, // 短髮圖片
   { name: "Mid-length Hair", url: "mid-lengthHair.png" }, // 長髮圖片
   { name: "Curly Hair", url: "curly-hair.jpg" }, // 捲髮圖片
@@ -154,10 +244,33 @@ const imageNames = [
   { name: "Bald", url: "bald.jpg" }, // 禿頭圖片
 ];
 
-const selectedImage = ref(0); // 使用 ref 來定義選中的圖片索引
+const clothesImages = [
+  { name: "Blue Coat", url: "blueCoat.png" },
+  { name: "Red Robe", url: "redRobe.png" },
+  { name: "Shirt", url: "Shirt.jpg" },
+  { name: "Shirt", url: "Shirt.jpg" },
+];
 
-// 點擊按鈕選擇對應的圖片
-const selectImage = (index) => {
-  selectedImage.value = index; // 更新選中的圖片
+const selectedBall = ref(null);
+const selectedHairImage = ref(0);
+const selectedClothesImage = ref(0);
+
+// 選擇部位
+const selectHairImage = (index) => {
+  selectedHairImage.value = index;
+};
+
+const selectClothesImage = (index) => {
+  selectedClothesImage.value = index;
+};
+
+// 選擇球選單
+const selectBall = (optionArea) => {
+  // 如果點擊的是相同的球，隱藏選單
+  if (selectedBall.value === optionArea) {
+    selectedBall.value = null; // 隱藏選單
+  } else {
+    selectedBall.value = optionArea; // 根據選中的球號設置
+  }
 };
 </script>

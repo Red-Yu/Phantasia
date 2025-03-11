@@ -1601,6 +1601,8 @@ button {
   left: 23%;
   top: 18%;
   height: 10vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_2 {
@@ -1611,6 +1613,8 @@ button {
   left: 29%;
   top: 39%;
   height: 7vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_3 {
@@ -1621,6 +1625,8 @@ button {
   left: 36%;
   top: 24%;
   height: 5.5vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_4 {
@@ -1631,6 +1637,8 @@ button {
   left: 65%;
   top: 29%;
   height: 6.5vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_5 {
@@ -1641,6 +1649,8 @@ button {
   left: 75%;
   top: 37%;
   height: 9vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .myColsetContent {
@@ -1651,6 +1661,7 @@ button {
   left: 28%;
   top: 70%;
   z-index: 500;
+  transition: opacity 0.5s;
   width: 347px;
   height: 250px;
   border: 1.5px solid #fff;
