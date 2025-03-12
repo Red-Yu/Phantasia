@@ -1,0 +1,335 @@
+@charset "UTF-8";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.blackWrapper {
+  position: absolute;
+  background-color: black;
+  width: 100%;
+  height: 100%;
+}
+
+.wrap {
+  background-color: black;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  width: 100%;
+  height: 100vh; /* 高度為螢幕高度 */
+  overflow: hidden;
+}
+
+/* 背景圖 */
+.bg {
+  position: relative;
+  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png), url(../../Assets/Day/rewardCard/rc_bg.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+}
+
+.bg::before {
+  content: "";
+  position: absolute;
+  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  transition: transform 1s ease;
+  z-index: 1;
+  animation: transformBackground 7s infinite;
+}
+
+@keyframes transformBackground {
+  0% {
+    transform: scale(1); /* 初始大小 */
+  }
+  25% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  50% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+  75% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  100% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+}
+.rcContain {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.7);
+  /* width: 100%; */
+  /* height: 100%; */
+  /* min-width: 800px; */
+  object-fit: contain;
+  z-index: 400;
+}
+
+@media (max-width: 1200px) {
+  .rcContain {
+    transform: translate(-50%, -50%) scale(0.5); /* 視窗縮小時減少縮放 */
+  }
+}
+@media (max-width: 800px) {
+  .rcContain {
+    transform: translate(-50%, -50%) scale(0.3); /* 視窗更小時進一步縮放 */
+  }
+}
+/* 卡片容器全開 */
+.cardWrapper {
+  width: 1124px;
+  height: 670px;
+  /* max-width:1124px; */
+  /* max-height: 676px;  */
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  perspective: 7000px;
+  /* width: 100%; */
+  /* height: auto; */
+  /* min-width:1039px; */
+  /* min-height: 619px;  */
+}
+
+.left,
+.middle,
+.right {
+  width: 33%;
+  position: relative;
+  overflow: hidden;
+  /* pointer-events: none; */
+  transform-style: preserve-3d;
+}
+
+/* 左封面 */
+.front {
+  position: relative;
+  /* width: 100%; */
+  /* height: 250px; */
+  /* overflow: hidden; */
+}
+
+.card_wallpaper img {
+  width: 100%;
+  position: absolute;
+}
+
+.card3 {
+  /* transform: scale(0.8); */
+  /* width: 60%; */
+  /* transform-origin: top center;  */
+  animation: bellSwing 2s ease-in-out infinite;
+  /* transition: transform 1s ease;
+    animation: hat 7s infinite ; */
+}
+
+@keyframes bellSwing {
+  0% {
+    transform: rotate(15deg) scale(0.8);
+  }
+  50% {
+    transform: rotate(-15deg) scale(0.8);
+  }
+  100% {
+    transform: rotate(15deg) scale(0.8);
+  }
+}
+.card_txt {
+  width: 75%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, 88%);
+  text-align: center;
+  z-index: 1; /* 文字在圖片層上 */
+  color: rgb(255, 255, 255);
+}
+
+.card_txt h1 {
+  font-family: Aleo;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.card_txt p {
+  font-family: Fanwood Text;
+  text-transform: capitalize;
+}
+
+/* 左邊內容 */
+.avatar {
+  width: 100%;
+  position: absolute;
+}
+
+/* 中間內文 */
+.middle,
+.right {
+  background-color: #153243;
+  overflow: hidden;
+}
+
+.pointAll {
+  width: 70%;
+  margin: auto;
+  padding: 20% 0;
+}
+
+.point_5 {
+  padding: 10px 0px;
+}
+
+.point {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255);
+  opacity: 70%;
+  position: relative;
+}
+
+.point img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.twicePoint {
+  display: flex;
+  justify-content: space-between;
+}
+
+.oncePoint {
+  display: flex;
+  justify-content: center;
+  margin: -20px 0px;
+}
+
+/* 右邊內文 */
+.right {
+  position: relative;
+}
+
+.rightCard_txt {
+  width: 80%;
+  /* position: absolute;
+    left: 50%;
+    top: 20%;
+    transform: translate(-50%,-50%); */
+  text-align: center;
+  z-index: 1; /* 文字在圖片層上 */
+  color: rgb(255, 255, 255);
+}
+
+.rightCard_txt h1 {
+  font-family: Aleo;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.rightCard_txt p {
+  font-family: Fanwood Text;
+  text-transform: capitalize;
+  margin: 5% 0;
+}
+
+.octagon {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: rgb(51, 59, 122);
+  opacity: 70%;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+  margin: 10px;
+}
+
+.octagon img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.unlock {
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.contain {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 14% 0;
+}
+
+/* -------------測試-------------- */
+/* 左右邊打開 */
+.left,
+.right {
+  transition: transform 0.7s ease-in-out; /* 動畫過渡 */
+}
+
+.right {
+  transform: rotateY(-180deg);
+  transform-origin: 0% 50%;
+  transition: transform 0.7s ease-in-out;
+}
+
+.right.open {
+  transform: rotateY(0deg);
+}
+
+/* 左側旋轉動畫 */
+.left {
+  z-index: 20;
+  transform: rotateY(180deg); /* 初始位置 */
+  transform-origin: 100% 50%;
+}
+
+.front,
+.back {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.front {
+  transform: rotateY(180deg);
+  z-index: 5;
+}
+
+.left.open {
+  transform: rotateY(0deg);
+  z-index: 10;
+}
+
+.back {
+  z-index: 2;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: transform 0.7s ease-in-out;
+}
+
+.back.open {
+  z-index: 10;
+  /* transform: rotateY(-180deg);  點擊後翻轉180度 */
+  transition: transform 0.7s ease-in-out;
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}/*# sourceMappingURL=MyRewardCard.css.map */

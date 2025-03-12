@@ -832,8 +832,8 @@ export default {
           background-color: rgb(25, 25, 25);
           color: #fff;
           overscroll-behavior: none;
-          width: 1440px;
-          height: 800px;
+          width: 100%;
+          height: 100vh;
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;

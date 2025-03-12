@@ -1,0 +1,98 @@
+@charset "UTF-8";
+#menu {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+#container {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+}
+
+/* 元件的主要元素 */
+:deep(.element) {
+  width: 130px;
+  height: 160px;
+  box-shadow: 0px 0px 12px rgba(0, 255, 250, 0.5);
+  border: 3px solid rgba(68, 172, 172, 0.25);
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  line-height: normal;
+  cursor: default;
+  /* background-color: rgba(0, 127, 127,0.725); */
+}
+
+:deep(.element:hover) {
+  box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+  border: 1px solid rgba(127, 255, 255, 0.75);
+}
+
+:deep(.element .number) {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  font-size: 12px;
+  color: rgba(127, 255, 255, 0.75);
+}
+
+:deep(.element .symbol) {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  right: 0px;
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
+}
+
+:deep(.element .details) {
+  position: absolute;
+  bottom: 5px;
+  left: 0px;
+  right: 0px;
+  font-size: 12px;
+  color: rgba(127, 255, 255, 0.75);
+}
+
+/* 按鈕樣式 */
+button {
+  color: rgba(127, 255, 255, 0.75);
+  background: transparent;
+  outline: 1px solid rgba(127, 255, 255, 0.75);
+  border: 0px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: rgba(0, 255, 255, 0.5);
+}
+
+button:active {
+  color: #000000;
+  background-color: rgba(0, 255, 255, 0.75);
+}
+
+/* 關閉按鈕樣式 */
+:deep(.close-btn) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgba(34, 128, 112, 0.75);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+:deep(.close-btn-d-none) {
+  display: none;
+}/*# sourceMappingURL=myBookcase.css.map */
