@@ -1,21 +1,63 @@
 <template>
-  <div>
-    <h1>註冊</h1>
+   <div class="modal-overlay" >
+    <!-- <div class="modal-overlay" v-if="isVisible" @click="closeModal"> -->
+   
+      <div class="modal-content" @click.stop>
+        <div class="bgc"></div>
+          <!-- mainContent -->
+          <div class="lightbox-content">
 
-    <form @submit.prevent="signup">
-      <input type="email" v-model="email" placeholder="Your email" required />
-      <input
-        type="password"
-        v-model="password"
-        placeholder="Password"
-        required
-      />
-      <button>註冊</button>
-    </form>
+            <h1>Sign Up</h1>
 
-    <p v-if="error">{{ error }}</p>
-  </div>
+            <form @submit.prevent="signup">
+              <label for="username">Name</label>
+              <input type="text" v-model="name"  placeholder="Please enter your name." required>
+
+              <label for="email">E-Mail</label>
+              <input type="email" v-model="email" placeholder="Please enter your e-mail." required />
+              
+              <label for="password">Password</label>
+              <input
+                type="password"
+                v-model="password"
+                placeholder="Please enter your password."
+                required
+              />
+
+              <label for="confirmPassword">Confirm Password</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Please enter your password again.">
+
+              <p id="errorMessage" class="error"></p>
+
+              <div class="btn">
+                <button type="submit" class="btnKey-L dark">Submit</button>
+              </div>
+
+              <!-- <p>By clicking "Submit", you agree to our <a href="#">Terms of service</a> and our <a href="#">Privacy Policy</a>.</p>
+
+              <div class="or">
+                <p>OR</p>
+              </div> -->
+
+              <p class="gotoLogin">Already have an account? 
+              <router-link to="/login">Click here to log in.</router-link>
+              </p>
+              
+
+            </form>
+
+            <p v-if="error">{{ error }}</p>
+          </div>
+      </div>
+    </div>
+       
+    
 </template>
+
+<style scoped>
+@import "../../Assets/css/main.css";
+@import "../../Assets/css/loginSignup.css";
+</style>
 
 <script setup>
 import { ref } from "vue";
@@ -38,8 +80,4 @@ const signup = async () => {
 };
 </script>
 
-<style scoped>
-h1 {
-  color: rgb(11, 66, 184);
-}
-</style>
+
