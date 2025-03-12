@@ -1,6 +1,6 @@
 <template>
-   <div class="modal-overlay" >
-    <!-- <div class="modal-overlay" v-if="isVisible" @click="closeModal"> -->
+   <!-- <div class="modal-overlay" > -->
+    <div class="modal-overlay" v-if="isVisible" @click="closeModal">
    
       <div class="modal-content" @click.stop>
         <div class="bgc"></div>
@@ -109,6 +109,21 @@ const signup = async ()  => {
     errorMessage.value = `Error: ${error.message}`;
   }  
 };
+
+// 用於控制光箱顯示與隱藏
+const isVisible = ref(true); 
+
+// 關閉光箱
+const closeModal = () => {
+  isVisible.value = false; 
+};
+// 定義 props
+const props = defineProps({
+  isVisible: {
+    type: Boolean,
+    required: true,
+  },
+});
 </script>
 
 

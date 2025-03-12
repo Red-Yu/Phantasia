@@ -97,9 +97,11 @@ const props = defineProps({
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
-    router.push("/"); // 登入成功後導向首頁
+    // 登入成功後關閉光箱
+    isVisible.value = false;
+    alert('Login Successful!');
   } catch (err) {
-    error.value = `登入失敗: ${err.message}`;
+    error.value = `Login failed: ${err.message}`;
   }
 };
 </script>
