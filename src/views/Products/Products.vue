@@ -40,15 +40,6 @@
             hidden: ![prevIndex, activeIndex, nextIndex].includes(index),
           }"
         >
-          <div class="text-box-container">
-            <h2>{{ product.author }}</h2>
-            <!-- Subtitle -->
-            <h1>{{ product.name }}</h1>
-            <!-- Title -->
-            <h3>{{ product.description }}</h3>
-            <!-- Description -->
-          </div>
-
           <!-- Carousel Item -->
           <div class="carousel-item">
             <div class="box box--front">
@@ -62,6 +53,15 @@
                 :style="{ backgroundImage: `url(${product.coverImage})` }"
               ></div>
             </div>
+          </div>
+
+          <div class="text-box-container">
+            <h2>{{ product.author }}</h2>
+            <!-- Subtitle -->
+            <h1>{{ product.name }}</h1>
+            <!-- Title -->
+            <h3>{{ product.description }}</h3>
+            <!-- Description -->
           </div>
         </div>
       </div>
@@ -227,49 +227,6 @@ const goToProductPage = (productId) => {
   router.push(`/Products/${productId}`);
 };
 
-const items = ref([
-  {
-    name: "Item 1",
-    title: "Charlie Chick Learns to Fly1", // Title
-    subtitle: "Nick Denchfield", // Subtitle
-    description:
-      "Centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.", // Description
-    image: new URL("../../Assets/img/pics/Banner.png", import.meta.url).href,
-  },
-  {
-    name: "Item 2",
-    title: "Charlie Chick Learns to Fly2", // Title
-    subtitle: "Nick Denchfield", // Subtitle
-    description:
-      "Centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.", // Description
-    image: new URL("../../Assets/img/pics/Banner.png", import.meta.url).href,
-  },
-  {
-    name: "Item 3",
-    title: "Charlie Chick Learns to Fly3", // Title
-    subtitle: "Nick Denchfield", // Subtitle
-    description:
-      "Centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.", // Description
-    image: new URL("../../Assets/img/pics/Banner.png", import.meta.url).href,
-  },
-  {
-    name: "Item 4",
-    title: "Charlie Chick Learns to Fly4", // Title
-    subtitle: "Nick Denchfield", // Subtitle
-    description:
-      "Centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.", // Description
-    image: new URL("../../Assets/img/pics/Banner.png", import.meta.url).href,
-  },
-  {
-    name: "Item 5",
-    title: "Charlie Chick Learns to Fly5", // Title
-    subtitle: "Nick Denchfield", // Subtitle
-    description:
-      "Centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.", // Description
-    image: new URL("../../Assets/img/pics/Banner.png", import.meta.url).href,
-  },
-]);
-
 const activeIndex = ref(1);
 
 const prevIndex = computed(
@@ -312,7 +269,7 @@ const products = [
     dateAdded: "2024-01-15",
     ageGroup: "1-6",
     description:
-      "1A wonderful wooden block set that enhances creativity and motor skills for young children.",
+      "1A wonderful wooden block set that enh1A wonderful wooden block set that enh1A wonderful wooden block set that enh1A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 2,

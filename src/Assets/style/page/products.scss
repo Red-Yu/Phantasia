@@ -129,6 +129,7 @@ body {
   z-index: 2;
   text-align: left;
   font-family: "Fanwood Text", sans-serif;
+  z-index: 1;
 }
 
 .text-box-container h1 {
@@ -172,7 +173,8 @@ body {
   .carousel-container {
     height: auto;
     /* Adapt to content height */
-    padding-top: 100px;
+    padding-top: 80px;
+
     /* Add padding instead of fixed height */
   }
 
@@ -195,9 +197,92 @@ body {
     opacity: 1;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     /* Ensures left & right spacing */
     align-items: center;
+    /* Centers items vertically */
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+    height: 100%;
+  }
+
+  .carousel-item {
+    width: 150px;
+    height: 100%;
+    /* Fixed height for consistency */
+    right: 0;
+    // margin-left: 100px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+
+
+  .text-box-container {
+    width: 50%;
+    /* Take half of the container */
+    height: auto;
+    padding: 20px;
+    background-color: #2a5670;
+    color: white;
+    border-radius: 10px;
+    position: relative;
+    text-align: left;
+    font-family: "Fanwood Text", sans-serif;
+    flex: 1;
+  }
+
+  .text-box-container h1 {
+    font-size: 22px;
+    /* Slightly smaller */
+    margin: 5px 0;
+  }
+
+  .text-box-container h2 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .text-box-container h3 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+}
+
+
+@media (max-width: 550px) {
+  .carousel-container {
+    height: auto;
+    /* Adapt to content height */
+    padding-top: 80px;
+    padding-bottom: 50px;
+
+    /* Add padding instead of fixed height */
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* Adapt to content */
+  }
+
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start
+      /* Ensures left & right spacing */
+      align-items: center;
     /* Centers items vertically */
     width: 100%;
     max-width: 700px;
@@ -247,102 +332,8 @@ body {
     margin: 5px 0;
   }
 
-  .box--front {
-    width: 200px;
-    height: 300px;
-    transform: translate3d(0, 0, 0);
-    /* Remove misalignment */
-    position: relative;
-    flex-shrink: 0;
-    /* Prevent it from resizing */
-  }
 }
 
-
-@media (max-width: 550px) {
-  .carousel-container {
-    height: 300px;
-    /* Adjust padding */
-  }
-
-  .carousel {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    /* Stack carousel items vertically */
-    justify-content: center;
-    align-items: center;
-  }
-
-  .carousel-item-container.left,
-  .carousel-item-container.right {
-    display: none;
-    /* Remove non-active items */
-  }
-
-  .carousel-item-container.active {
-    position: relative;
-    transform: none;
-    opacity: 1;
-    display: flex;
-    flex-direction: column;
-    /* Stack carousel items vertically */
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    /* Let the height adjust to content */
-  }
-
-  .carousel-item {
-    width: 120px;
-    height: auto;
-    margin-bottom: 10px;
-    /* Space between the box and text box */
-    background-color: transparent;
-    flex: 1;
-  }
-
-  .box--front {
-    transform: translate3d(0, 0, 0);
-    /* Remove misalignment */
-
-    .text-box-container {
-      width: 100%;
-      /* Full width below the box */
-      padding: 10px;
-      /* Reduce padding */
-      background-color: #2a5670;
-      color: white;
-      border-radius: 10px;
-      text-align: left;
-      font-family: "Fanwood Text", sans-serif;
-      flex: 1;
-    }
-
-    .text-box-container h1 {
-      font-size: 12px;
-      /* Smaller font size */
-      margin: 5px 0;
-    }
-
-    .text-box-container h2 {
-      font-size: 10px;
-      /* Smaller font size */
-      margin: 5px 0;
-    }
-
-    .text-box-container h3 {
-      font-size: 8px;
-      /* Smaller font size */
-      margin: 5px 0;
-    }
-
-  }
-}
 
 
 
@@ -886,15 +877,6 @@ body {
   color: white;
 }
 
-@media (max-width: 768px) {
-  .pg_pageButton img {
-    width: 30px;
-  }
-
-  .pg_pageCount {
-    font-size: 24px;
-  }
-}
 
 // ----------------------------------------------------------------------------
 // 
@@ -1076,6 +1058,11 @@ h2 {
   backface-visibility: hidden;
 }
 
+.pb-color-layer {
+  z-index: 0;
+  background-color: palegoldenrod;
+}
+
 .product-box--front {
   width: 500px;
   /* Adjust based on your design */
@@ -1091,24 +1078,24 @@ h2 {
   position: absolute;
   transform: translate3d(-250px, -375px, -40px) rotateY(180deg);
   /* Example for back face */
-  background-color: palegoldenrod;
+  // background-color: palegoldenrod;
 }
 
 .product-box--side-left {
   width: 40px;
   height: 750px;
   transform: translate3d(-250px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
-  background-color: palegoldenrod;
+  // background-color: palegoldenrod;
 }
 
 .product-box--side-right {
   width: 40px;
   height: 750px;
-  transform: translate3d(-250px, -375px, 0) translate3d(460px, 0px, -20px) rotateY(90deg);
+  transform: translate3d(-250px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
 }
 
 .product-box--top {
-  width: 480px;
+  width: 500px;
   height: 40px;
   transform: translate3d(-250px, -375px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
@@ -1116,7 +1103,7 @@ h2 {
 }
 
 .product-box--bottom {
-  width: 480px;
+  width: 500px;
   height: 40px;
   transform: translate3d(-250px, -375px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
@@ -1135,8 +1122,7 @@ h2 {
 }
 
 .product-box--front .pb-outer-layer {
-  width: 100%;
-  height: 100%;
+
   z-index: 0;
   /* Below inner layer */
   background-size: cover;
@@ -1148,8 +1134,7 @@ h2 {
 }
 
 .product-box--back .pb-outer-layer {
-  width: 100%;
-  height: 100%;
+
   z-index: 0;
   /* Below inner layer */
   background-size: cover;
@@ -1160,10 +1145,23 @@ h2 {
   /* Prevents tiling */
 }
 
-.product-box--front .pb-color-layer {
+/* Add this specific rule for side-left */
+.product-box--side-left .pb-outer-layer {
   width: 100%;
+  /* 40px */
   height: 100%;
-  background-color: palegoldenrod;
+  /* 750px */
+  background-size: cover;
+  /* Fits image proportionally without cropping */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents tiling */
+  z-index: 0;
+  /* Matches other outer layers */
+}
+
+.product-box--front .pb-color-layer {
   /* Or your color */
   z-index: -1;
   /* Behind all */
@@ -1215,47 +1213,55 @@ h2 {
 
   .product-box--front {
     width: 400px;
-    /* 300px * 1.33 */
+    /* 500px × 0.8 */
     height: 600px;
-    /* 450px * 1.33 */
-    transform: translate3d(-200px, -300px, 0) translate3d(0, 0, 0) rotateY(0deg);
-    /* -150px * 1.33, -225px * 1.33 */
+    /* 750px × 0.8 */
+    transform: translate3d(-200px, -300px, 0);
+    /* -250px × 0.8, -375px × 0.8 */
   }
 
   .product-box--back {
     width: 400px;
+    /* 500px × 0.8 */
     height: 600px;
-    transform: translate3d(-200px, -300px, 0) translate3d(0, 0, -32px) rotateY(180deg);
-    /* -24px * 1.33 */
+    /* 750px × 0.8 */
+    transform: translate3d(-200px, -300px, -32px) rotateY(180deg);
+    /* -40px × 0.8 */
   }
 
-  .book3d-box--side-left {
+  .product-box--side-left {
     width: 32px;
-    /* 24px * 1.33 */
+    /* 40px × 0.8 */
     height: 600px;
+    /* 750px × 0.8 */
     transform: translate3d(-200px, -300px, 0) translate3d(-16px, 0, -16px) rotateY(-90deg);
-    /* -12px * 1.33 */
+    /* -20px × 0.8 */
   }
 
-  .book3d-box--side-right {
+  .product-box--side-right {
     width: 32px;
+    /* 40px × 0.8 */
     height: 600px;
-    transform: translate3d(-200px, -300px, 0) translate3d(368px, 0px, -16px) rotateY(90deg);
-    /* 276px * 1.33 ≈ 368px */
+    /* 750px × 0.8 */
+    transform: translate3d(-200px, -300px, 0) translate3d(384px, 0, -16px) rotateY(90deg);
+    /* 480px × 0.8 */
   }
 
-  .book3d-box--top {
+  .product-box--top {
     width: 400px;
+    /* 500px × 0.8 */
     height: 32px;
-    transform: translate3d(-200px, -300px, 0) translate3d(0px, -16px, -16px) rotateX(90deg);
-    /* -12px * 1.33 */
+    /* 40px × 0.8 */
+    transform: translate3d(-200px, -300px, 0) translate3d(0, -16px, -16px) rotateX(90deg);
   }
 
-  .book3d-box--bottom {
+  .product-box--bottom {
     width: 400px;
+    /* 500px × 0.8 */
     height: 32px;
-    transform: translate3d(-200px, -300px, 0) translate3d(0px, 584px, -16px) rotateX(-90deg);
-    /* 438px * 1.33 ≈ 584px */
+    /* 40px × 0.8 */
+    transform: translate3d(-200px, -300px, 0) translate3d(0, 584px, -16px) rotateX(-90deg);
+    /* 730px × 0.8 */
   }
 
   .feedback-box3 {
