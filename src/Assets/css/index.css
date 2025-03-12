@@ -1680,6 +1680,7 @@ button {
   height: 73vh;
   min-width: 120px;
   pointer-events: auto;
+  z-index: 2;
 }
 
 .elfChangeClothesWrapper {
@@ -1695,6 +1696,16 @@ button {
   pointer-events: auto;
 }
 
+.magicCircleWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 85vh;
+  min-width: 100px;
+  z-index: 1;
+}
+
 .selectBall_1 {
   position: absolute;
   top: 50%;
@@ -1702,8 +1713,9 @@ button {
   transform: translate(-50%, -50%);
   left: 23%;
   top: 18%;
-  width: 10vw;
   height: 10vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_2 {
@@ -1713,8 +1725,9 @@ button {
   transform: translate(-50%, -50%);
   left: 29%;
   top: 39%;
-  width: 7vw;
   height: 7vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_3 {
@@ -1724,8 +1737,9 @@ button {
   transform: translate(-50%, -50%);
   left: 36%;
   top: 24%;
-  width: 5.5vw;
   height: 5.5vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_4 {
@@ -1735,8 +1749,9 @@ button {
   transform: translate(-50%, -50%);
   left: 65%;
   top: 29%;
-  width: 6.5vw;
   height: 6.5vh;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .selectBall_5 {
@@ -1746,6 +1761,72 @@ button {
   transform: translate(-50%, -50%);
   left: 75%;
   top: 37%;
-  width: 9vw;
   height: 9vh;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.myColsetContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  left: 28%;
+  top: 70%;
+  z-index: 500;
+  transition: opacity 0.5s;
+  width: 347px;
+  height: 250px;
+  border: 1.5px solid #fff;
+  background: rgba(21, 50, 67, 0.7);
+  box-shadow: 4px 8px 12px 6px rgba(0, 0, 0, 0.35);
+}
+.myColsetContent .section {
+  text-align: center;
+  color: #fff;
+  text-shadow: 2px 4px 4.3px rgba(0, 0, 0, 0.35);
+  font-family: Aleo;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  padding: 5px 0 3px 0;
+}
+.myColsetContent .line {
+  margin: auto;
+  border: 1px solid #fff;
+  width: 80%;
+}
+.myColsetContent .optionArea {
+  margin: auto;
+  margin-top: 10px;
+  width: 80%;
+  height: 70%;
+  overflow: auto;
+  text-shadow: 2px 4px 4.3px rgba(0, 0, 0, 0.35);
+  font-family: "Fanwood Text";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 2.8px;
+  text-transform: capitalize;
+  pointer-events: auto;
+  /* 設定滾動條的滑塊（即可拖動的部分） */
+}
+.myColsetContent .optionArea::-webkit-scrollbar {
+  width: 5px; /* 垂直滾動條的寬度 */
+}
+.myColsetContent .optionArea::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.7); /* 滾動條滑塊的顏色 */
+  border-radius: 10px; /* 滾動條滑塊的圓角 */
+}
+.myColsetContent .optionArea button {
+  width: 85%;
+  pointer-events: auto;
+  padding: 6px;
+}
+.myColsetContent .optionArea .magicCircle {
+  font-size: 18px;
 }/*# sourceMappingURL=index.css.map */
