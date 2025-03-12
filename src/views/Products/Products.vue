@@ -30,7 +30,7 @@
     <div class="carousel-container">
       <div class="carousel">
         <div
-          v-for="(item, index) in items"
+          v-for="(product, index) in products"
           :key="index"
           class="carousel-item-container"
           :class="{
@@ -41,17 +41,27 @@
           }"
         >
           <div class="text-box-container">
-            <h2>{{ item.subtitle }}</h2>
+            <h2>{{ product.author }}</h2>
             <!-- Subtitle -->
-            <h1>{{ item.title }}</h1>
+            <h1>{{ product.name }}</h1>
             <!-- Title -->
-            <h3>{{ item.description }}</h3>
+            <h3>{{ product.description }}</h3>
             <!-- Description -->
           </div>
 
           <!-- Carousel Item -->
           <div class="carousel-item">
-            <img :src="item.image" alt="Item Image" class="item-image" />
+            <div class="box box--front">
+              <div class="colorLayer"></div>
+              <div
+                class="inner-layer"
+                :style="{ backgroundImage: `url(${product.innerCoverImage})` }"
+              ></div>
+              <div
+                class="outer-layer"
+                :style="{ backgroundImage: `url(${product.coverImage})` }"
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -263,9 +273,9 @@ const items = ref([
 const activeIndex = ref(1);
 
 const prevIndex = computed(
-  () => (activeIndex.value - 1 + items.value.length) % items.value.length
+  () => (activeIndex.value - 1 + products.length) % products.length
 );
-const nextIndex = computed(() => (activeIndex.value + 1) % items.value.length);
+const nextIndex = computed(() => (activeIndex.value + 1) % products.length);
 
 const prev = () => {
   activeIndex.value = prevIndex.value;
@@ -274,6 +284,7 @@ const prev = () => {
 const next = () => {
   activeIndex.value = nextIndex.value;
 };
+
 // ==================================================================
 const currentSort = ref("all");
 const dateSortOrder = ref("newest");
@@ -300,6 +311,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-01-15",
     ageGroup: "1-6",
+    description:
+      "1A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 2,
@@ -312,6 +325,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-01",
     ageGroup: "7-12",
+    description:
+      "2A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 3,
@@ -324,6 +339,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-13",
     ageGroup: "1-6",
+    description:
+      "3A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 4,
@@ -336,6 +353,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-22",
     ageGroup: "7-12",
+    description:
+      "4A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 5,
@@ -348,6 +367,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-03-22",
     ageGroup: "1-6",
+    description:
+      "5A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 6,
@@ -360,6 +381,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-01-15",
     ageGroup: "1-6",
+    description:
+      "6A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 7,
@@ -372,6 +395,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-01",
     ageGroup: "7-12",
+    description:
+      "7A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 8,
@@ -384,6 +409,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-13",
     ageGroup: "1-6",
+    description:
+      "8A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 9,
@@ -396,6 +423,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-22",
     ageGroup: "7-12",
+    description:
+      "9A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 10,
@@ -408,6 +437,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-03-22",
     ageGroup: "1-6",
+    description:
+      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 11,
@@ -420,6 +451,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-01-15",
     ageGroup: "1-6",
+    description:
+      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 12,
@@ -432,6 +465,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-01",
     ageGroup: "7-12",
+    description:
+      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 13,
@@ -444,6 +479,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-13",
     ageGroup: "1-6",
+    description:
+      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 14,
@@ -456,6 +493,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-02-22",
     ageGroup: "7-12",
+    description:
+      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
   {
     id: 15,
@@ -468,6 +507,8 @@ const products = [
     sideRightImage: sideRightImage,
     dateAdded: "2024-03-22",
     ageGroup: "1-6",
+    description:
+      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
   },
 ];
 const filteredProducts = computed(() => {
