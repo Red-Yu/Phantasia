@@ -20,14 +20,14 @@
               <input
                 type="password"
                 v-model="password"
-                placeholder="Please enter your password."
+                placeholder="Password should be at least 6 characters."
                 required
               />
 
               <label for="confirmPassword">Confirm Password</label>
-              <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Please enter your password again.">
+              <input type="password" id="confirmPassword" v-model="confirmPassword" required placeholder="Please enter your password again.">
 
-              <p id="errorMessage" class="error"></p>
+              <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
 
               <div class="btn">
                 <button type="submit" class="btnKey-L dark">Submit</button>
@@ -46,7 +46,8 @@
 
             </form>
 
-            <p v-if="error">{{ error }}</p>
+
+            <!-- <p v-if="error">{{ error }}</p> -->
           </div>
       </div>
     </div>
@@ -67,16 +68,46 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const email = ref("");
 const password = ref("");
-const error = ref("");
+const confirmPassword = ref('');
+// const error = ref("");
 const router = useRouter("");
 
-const signup = async () => {
+const errorMessage = ref('');
+
+// const signup = async () => {
+//   try {
+//     await createUserWithEmailAndPassword(auth, email.value, password.value);
+//     router.push("/success");
+//   } catch (why) {
+//     error.value = `註冊失敗: ${why.message}`;
+//   }
+// };
+
+// 處理提交表單的函數
+const signup = async ()  => {
+  if (password.value !== confirmPassword.value) {
+    // 密碼不匹配時顯示錯誤消息
+    errorMessage.value = 'Password does not match.';
+    return; // 如果密碼不匹配，則停止進行註冊
+  } 
+
   try {
     await createUserWithEmailAndPassword(auth, email.value, password.value);
-    router.push("/success");
-  } catch (why) {
-    error.value = `註冊失敗: ${why.message}`;
-  }
+    // 註冊成功後顯示提示
+    alert('Registration Successful!');
+    
+    // 清空表單
+    // email.value = '';
+    // password.value = '';
+    // confirmPassword.value = '';
+    
+    // 跳轉到登入頁面
+    router.push('/login');  
+
+  } catch (error) {
+    // 處理 Firebase 錯誤
+    errorMessage.value = `Error: ${error.message}`;
+  }  
 };
 </script>
 
