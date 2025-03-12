@@ -937,23 +937,16 @@ button {
 // =========================換裝頁面============================
 
 .characterChangeClothesWrapper {
-  // background-color: yellow;
-  // position: absolute;
-  // bottom: 3vh;
-  // left: 48%;
   @include imgCenter();
   top: 55%;
   width: 12vw;
   height: 73vh;
   min-width: 120px;
   pointer-events: auto;
+  z-index: 2;
 }
 
 .elfChangeClothesWrapper {
-  // background-color: yellow;
-  // position: absolute;
-  // bottom: 55vh;
-  // left: 68%;
   @include imgCenter();
   left: 65%;
   top: 73%;
@@ -961,6 +954,14 @@ button {
   height: 30vh;
   min-width: 100px;
   pointer-events: auto;
+}
+
+.magicCircleWrapper {
+  @include imgCenter();
+  // width: 9vw;
+  height: 85vh;
+  min-width: 100px;
+  z-index: 1;
 }
 
 .selectBall_1 {
@@ -1013,8 +1014,6 @@ button {
   cursor: pointer;
   pointer-events: auto;
 }
-
-// =====================換裝頁=======================
 
 .myColsetContent {
   @include imgCenter();
@@ -1081,6 +1080,10 @@ button {
       width: 85%;
       pointer-events: auto;
       padding: 6px;
+    }
+
+    .magicCircle {
+      font-size: 18px;
     }
   }
 }

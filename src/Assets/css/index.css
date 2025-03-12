@@ -1680,6 +1680,7 @@ button {
   height: 73vh;
   min-width: 120px;
   pointer-events: auto;
+  z-index: 2;
 }
 
 .elfChangeClothesWrapper {
@@ -1693,6 +1694,16 @@ button {
   height: 30vh;
   min-width: 100px;
   pointer-events: auto;
+}
+
+.magicCircleWrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 85vh;
+  min-width: 100px;
+  z-index: 1;
 }
 
 .selectBall_1 {
@@ -1815,4 +1826,7 @@ button {
   width: 85%;
   pointer-events: auto;
   padding: 6px;
+}
+.myColsetContent .optionArea .magicCircle {
+  font-size: 18px;
 }/*# sourceMappingURL=index.css.map */
