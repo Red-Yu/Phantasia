@@ -112,7 +112,7 @@
               <div class="aboutUs_button">
                 <button
                   @click="onAboutUsClick('aboutUs')"
-                  class="btnLink white menuIn"
+                  class="btnLink whiteForFrontPage menuIn"
                   :class="{ active: activeButton === 'aboutUs' }"
                 >
                   About Us
@@ -121,7 +121,7 @@
               <div class="ourOrigin_button">
                 <button
                   @click="onAboutUsClick('ourOrigin')"
-                  class="btnLink white menuIn"
+                  class="btnLink whiteForFrontPage menuIn"
                   :class="{ active: activeButton === 'ourOrigin' }"
                 >
                   Our Origin
@@ -130,7 +130,7 @@
               <div class="ourServices_button">
                 <button
                   @click="onAboutUsClick('ourServices')"
-                  class="btnLink white menuIn"
+                  class="btnLink whiteForFrontPage menuIn"
                   :class="{ active: activeButton === 'ourServices' }"
                 >
                   Our Services
@@ -139,7 +139,7 @@
               <div class="backToHome_button">
                 <button
                   @click="backToHome"
-                  class="btnLink white backToHome menuIn"
+                  class="btnLink whiteForFrontPage backToHome menuIn"
                 >
                   Back to home
                 </button>

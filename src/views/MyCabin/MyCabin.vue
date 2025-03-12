@@ -29,7 +29,10 @@
 
         <div class="menu">
           <div class="backToHome_button">
-            <button @click="backToHome" class="btnLink white backToHome menuIn">
+            <button
+              @click="backToHome"
+              class="btnLink whiteForFrontPage backToHome menuIn"
+            >
               Back to home
             </button>
           </div>
