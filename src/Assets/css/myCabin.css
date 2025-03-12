@@ -1,6 +1,13 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
+/* FanwoodText
+    AG - [ 全大寫 + 高低差 : 裝飾標題]
+    Ag - [ 字首大寫 + 粗體 : 副標 , linkBtn ]
+    normal - [ 一般文字 (內文) ]  */
+/* Aleo
+    AG - [ 內文標題、發光按鈕 ]
+    Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
   width: fit-content;
@@ -11,9 +18,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark:hover {
   background-color: #284163;
@@ -37,9 +48,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -61,9 +76,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light:hover {
   background-color: #ffcf8b;
@@ -87,9 +106,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -111,8 +134,12 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #dee2e6;
-  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .btnKey-M.dark {
@@ -125,9 +152,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark:hover {
   background-color: #284163;
@@ -151,9 +182,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -175,9 +210,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light:hover {
   background-color: #ffcf8b;
@@ -201,9 +240,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -225,13 +268,14 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #dee2e6;
-  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
-.btnLink {
-  font-size: 20px default;
-}
 .btnLink.dark {
   color: #153243;
   width: fit-content;
@@ -240,6 +284,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnLink.dark::after {
   content: "";
@@ -270,6 +319,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #eead50;
+  font-weight: 600;
 }
 .btnLink.light::after {
   content: "";
@@ -300,6 +354,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 600;
 }
 .btnLink.white::after {
   content: "";
@@ -331,9 +390,13 @@
 }
 .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab .tab-cross {
   position: relative;
@@ -412,9 +475,13 @@
 }
 .btnTab.active .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab.active .tab-cross {
   position: relative;
@@ -498,9 +565,13 @@
 }
 .btnTab-list .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab-list .tab-cross {
   position: relative;

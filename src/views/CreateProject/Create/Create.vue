@@ -14,7 +14,7 @@
           <span class="Toggle" @click="toggleFunction" />
         </div>
         <div class="bookInfoBox">
-          <h1 class="title">Project Name 01010</h1>
+          <h1 class="title">Project Name 0101001010010100101001010</h1>
           <h3 class="subTitle">Drafts</h3>
         </div>
       </div>
@@ -32,11 +32,7 @@
         <span class="Toggle" @click="togglePageView" />
       </div>
       <div class="MenuContent">
-        <div
-          class="modelView"
-          v-for="(template, i) in templateStore.templates"
-          :key="i"
-        >
+        <div class="modelView" v-for="(template, i) in templateStore.templates" :key="i">
           <div class="modelContent">
             <!-- 顯示縮小版的 template -->
 

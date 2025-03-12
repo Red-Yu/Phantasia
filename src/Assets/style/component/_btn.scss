@@ -2,22 +2,20 @@
 // Key Btn
 //---------------------------------
 .btnKey-L {
-  $size: 24px;
+  $size: 20px;
   &.dark {
-    @include keybtn($baseBlue, false, ture);
-    color: $subWhite;
+    @include keybtn($baseBlue, false, true);
+    @include Aleo-AG($size,$subWhite);
     transition: all 0.3s ease;
-    font-size: $size;
     &:hover {
       background-color: $subBlue;
       @include cols-transition();
     }
     // border
     &-border {
-      @include keybtn($baseBlue, ture, false);
-      color: $baseBlue;
+      @include keybtn($baseBlue, true, false);
+      @include Aleo-AG($size,$baseBlue);
       transition: all 0.3s ease;
-      font-size: $size;
       &:hover {
         box-shadow: 0px 0px 20px 0px rgba($baseBlue, 0.6);
         @include cols-transition();
@@ -26,20 +24,18 @@
   }
 
   &.light {
-    @include keybtn($baseOrange, false, ture);
-    color: $subWhite;
+    @include keybtn($baseOrange, false, true);
+    @include Aleo-AG($size,$subWhite);
     transition: all 0.3s ease;
-    font-size: $size;
     &:hover {
       background-color: $subOrange;
       @include cols-transition();
     }
     // border
     &-border {
-      @include keybtn($baseOrange, ture, false);
-      color: $baseOrange;
+      @include keybtn($baseOrange, true, false);
+      @include Aleo-AG($size,$baseOrange);
       transition: all 0.3s ease;
-      font-size: $size;
       &:hover {
         box-shadow: 0px 0px 20px 0px rgba($baseOrange, 0.6);
         @include cols-transition();
@@ -49,18 +45,16 @@
 
   &.none {
     @include keybtn($subDark-gray, false);
-    color: $subGray;
-    font-size: $size;
+    @include Aleo-AG($size,$subGray);
   }
 }
 
-.btnKey-M {
-  $size: 20px;
+.btnKey-M{
+  $size: 16px;
   &.dark {
-    @include keybtn($baseBlue, false, ture);
-    color: $subWhite;
+    @include keybtn($baseBlue, false, true);
+    @include Aleo-AG($size,$subWhite);
     transition: all 0.3s ease;
-    font-size: $size;
     &:hover {
       background-color: $subBlue;
       @include cols-transition();
@@ -68,9 +62,8 @@
     // border
     &-border {
       @include keybtn($baseBlue, ture, false);
-      color: $baseBlue;
+      @include Aleo-AG($size,$baseBlue);
       transition: all 0.3s ease;
-      font-size: $size;
       &:hover {
         box-shadow: 0px 0px 20px 0px rgba($baseBlue, 0.6);
         @include cols-transition();
@@ -79,20 +72,18 @@
   }
 
   &.light {
-    @include keybtn($baseOrange, false, ture);
-    color: $subWhite;
+    @include keybtn($baseOrange, false, true);
+    @include Aleo-AG($size,$subWhite);
     transition: all 0.3s ease;
-    font-size: $size;
     &:hover {
       background-color: $subOrange;
       @include cols-transition();
     }
     // border
     &-border {
-      @include keybtn($baseOrange, ture, false);
-      color: $baseOrange;
+      @include keybtn($baseOrange, true, false);
+      @include Aleo-AG($size,$baseOrange);
       transition: all 0.3s ease;
-      font-size: $size;
       &:hover {
         box-shadow: 0px 0px 20px 0px rgba($baseOrange, 0.6);
         @include cols-transition();
@@ -102,8 +93,7 @@
 
   &.none {
     @include keybtn($subDark-gray, false);
-    color: $subGray;
-    font-size: $size;
+    @include Aleo-AG($size,$subGray);
   }
 }
 
@@ -111,15 +101,18 @@
 // Link Btn
 //---------------------------------
 .btnLink {
-  font-size: 20px default;
+  $size: 16px ;
   &.dark {
     @include normalBtn($baseBlue);
+    @include FanwoodText-Ag($size,$baseBlue);
   }
   &.light {
     @include normalBtn($baseOrange);
+    @include FanwoodText-Ag($size,$baseOrange);
   }
   &.white {
     @include normalBtn($subWhite);
+    @include FanwoodText-Ag($size,$subWhite);
   }
 }
 
@@ -132,9 +125,8 @@
   border-bottom: $basecolor solid;
   .text {
     padding: 5px 10px;
-    color: $basecolor;
     width: 100%;
-    font-size: $fontsize;
+    @include FanwoodText-AG($fontsize,$basecolor);
   }
   .tab-cross {
     position: relative;
