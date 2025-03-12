@@ -17,7 +17,8 @@
       <button class="btnKey-M dark" @click="handleClick('table', true)">EDIT</button>
       <button class="btnKey-M dark" @click="handleClick('sphere', false)">SPHERE</button>
       <button class="btnKey-M dark" @click="handleClick('grid', false)">GRID</button>
-    
+
+   
     </div>
   </div>
 </template>
@@ -30,6 +31,7 @@ import {
   CSS3DObject,
 } from "three/addons/renderers/CSS3DRenderer.js";
 import * as TWEEN from "@tweenjs/tween.js";
+
 
 export default {
   name: "Book",
@@ -832,8 +834,8 @@ export default {
           background-color: rgb(25, 25, 25);
           color: #fff;
           overscroll-behavior: none;
-          width: 1440px;
-          height: 800px;
+          width: 100%;
+          height: 100vh;
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;
