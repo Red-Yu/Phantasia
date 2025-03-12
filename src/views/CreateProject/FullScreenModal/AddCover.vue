@@ -9,9 +9,13 @@
       <div class="mainContent">
         <div class="AddCover">
           <div class="coverView">
-            <div class="side frontSide" :style="{ backgroundColor: color }">
-              <div v-if="parentImageUrl" class="parent-preview">
-                <img class="customImg" :src="parentImageUrl" alt="Uploaded in Parent" />
+            <div class="side frontSide" :style="{ backgroundColor: coverSetting.color }">
+              <div v-if="coverSetting.UserCoverImageUrl" class="User-preview">
+                <img
+                  class="customImg"
+                  :src="coverSetting.UserCoverImageUrl"
+                  alt="Uploaded in User"
+                />
               </div>
               <img class="coverImg" src="../../../Assets/img/book/封面.png" alt="" />
             </div>
@@ -32,7 +36,7 @@
                   <span>Max. file size</span>
                   <span class="spanBold">5MB</span>
                 </div>
-                <InputImg @update:image="parentImageUrl = $event" />
+                <InputImg @update:image="coverSetting.UserCoverImageUrl = $event" />
               </div>
             </div>
             <div class="backCover">
@@ -45,7 +49,7 @@
                 picker-type="chrome"
                 disable-alpha
                 disableHistory
-                v-model:pureColor="color"
+                v-model:pureColor="coverSetting.color"
                 @change="updateColor"
               />
             </div>
@@ -77,9 +81,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import OpenCloseButton from "../../../components/BTN/OpenCloseButton.vue";
-import InputImg from "../../../components/Input/InputImg.vue";
+// import { ref } from "vue";
+import { useCoverStore } from "@/stores/coverSetting";
+import OpenCloseButton from "@/components/BTN/OpenCloseButton.vue";
+import InputImg from "@/components/Input/InputImg.vue";
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
 //-----------------------------
@@ -101,18 +106,34 @@ const closeModal = () => {
   emit("close");
 };
 
-//-----------------------------
-// 封面上傳父層顯示
-//-----------------------------
-const parentImageUrl = ref(null);
-//-----------------------------
-// backCover
-//-----------------------------
-// 定义颜色变量
-const color = ref("#EEAD50"); // 默认颜色
+// //-----------------------------
+// // 封面上傳父層顯示
+// //-----------------------------
+// const UserCoverImageUrl = ref(null);
 
-// 更新颜色的方法
+// //-----------------------------
+// // backCover
+// //-----------------------------
+// // 原始默認背景色
+// const color = ref("#EEAD50");
+
+// // 更新颜色的方法
+// const updateColor = (newColor) => {
+//   color.value = newColor;
+// };
+
+//-----------------------------
+// 監聽圖片上傳並暫存 Pinia
+//-----------------------------
+const coverSetting = useCoverStore();
+
+// 監聽圖片上傳，存入 Pinia
+const updateImage = (imageUrl) => {
+  coverSetting.setImageUrl(imageUrl);
+};
+
+// 監聽顏色變更，存入 Pinia
 const updateColor = (newColor) => {
-  color.value = newColor;
+  coverSetting.setColor(newColor);
 };
 </script>
