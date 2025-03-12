@@ -2,46 +2,46 @@
   width: 100%;
   position: relative;
   display: flex;
+  gap: 10px;
   .coverView{
-    max-width: 400px;
-    width: 100%;
+    width: 400px;
     height: 85vh;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
     align-items: center;
     justify-content: center;
+    padding: 0 0 0 20px;
     position: sticky;
-    left: 0;
+    left: 10px;
     top: 0;
   }
   .coverSetting{
     width: 100%;
-    padding: 20px;
+    margin-top: 80px;
+    padding: 0 10px 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 50px;
   }
   .side {
-    width: 160px;
-    height: 220px ;
+    width: 220px;
+    height: 305px ;
     background-color: #eead50;
     align-items: center;
     justify-content: center;
     position: relative;
     .coverImg{
-      width: 160px;
+      width: 220px;
       height: auto;
     }
   }
   //frontSide
   .parent-preview{
     position: absolute;
-    top: 70px;
-    left: 17px;
-    width: 125px;
-    height: 125px;
+    top: 95px;
+    left: 22px;
+    width: 175px;
+    height: 175px;
     display: flex;
     align-items: center;
     justify-items: center;
@@ -61,12 +61,18 @@
     text-align: center;
     justify-content: center;
     p {
-      color: #eead50;
+      @include Aleo-AG(16px,$baseOrange);
+    }
+    h2{
+      @include FanwoodText-AG(24px,$baseBlue);
     }
   }
   .subtitle {
+    @include FanwoodText-Normal(16px,$baseBlue);
+    font-weight: 600;
     .spanBold {
-      color: #eead50;
+      @include Aleo-AG(16px,$baseOrange);
+      padding-left: 5px;
     }
   }
 

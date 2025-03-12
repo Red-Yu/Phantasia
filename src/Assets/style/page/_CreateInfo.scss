@@ -66,6 +66,9 @@
                     @include check("Gray",50px)
                 }
             }
+            p{
+                @include FanwoodText-AG(16px,$subDark-gray)
+            }
         }
         span{
             width: 50px;
@@ -88,7 +91,7 @@
                 }
             }
             p{
-                color: $baseOrange;
+                @include FanwoodText-AG(16px,$baseOrange)
             }
         }
     }
@@ -105,7 +108,9 @@
             flex-direction: column;
             gap: 10px;
             h3{
-                margin-top: 50px; ;
+                margin-top: 50px;
+                @include Aleo-AG(16px,$baseBlue);
+                font-weight: 800;
             }
         }
         // 
@@ -117,9 +122,6 @@
                 display: flex;
                 gap: 10px;
                 opacity: 50%;
-                p{
-                    font-size: 20px;
-                }
             }
         }
         }   

@@ -67,7 +67,7 @@
             <div class="line"></div>
             <div class="optionArea">
               <button
-                class="btnLink white"
+                class="btnLink whiteForFrontPage"
                 v-for="(image, index) in hairImages"
                 :key="index"
                 @click="selectHairImage(index)"
@@ -92,7 +92,7 @@
             <div class="line"></div>
             <div class="optionArea">
               <button
-                class="btnLink white"
+                class="btnLink whiteForFrontPage"
                 v-for="(image, index) in clothesImages"
                 :key="index"
                 @click="selectClothesImage(index)"
@@ -234,6 +234,8 @@
 
 <script setup>
 import { ref } from "vue";
+
+import BlackCover from "../../components/BlackCover.vue";
 
 const hairImages = [
   { name: "Short Hair", url: "shortHair.png" }, // 短髮圖片

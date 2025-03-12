@@ -3,9 +3,9 @@
     <!-- FunctionBar -->
     <div class="FunctionBar">
       <div class="Zoom">
-        <button>+</button>
-        <span> 100% </span>
-        <button>-</button>
+        <span class="btn" @click="zoomOut">-</span>
+        <span> {{ zoomLevel }}% </span>
+        <span class="btn" @click="zoomIn">+</span>
       </div>
       <div class="stepGroup">
         <div class="step">
@@ -16,42 +16,59 @@
         </div>
       </div>
     </div>
-    <div class="canvasGroup">
-      <div v-for="(template, i) in templateStore.templates" :key="i" class="canvas">
+    <!-- Canvas Group，綁定縮放 -->
+    <div
+      class="canvasGroup"
+      :style="{
+        transform: `scale(${zoomLevel / 100})`,
+        transformOrigin: 'top center',
+      }"
+    >
+      <div class="canvas" v-for="(template, i) in templateStore.templates" :key="i">
         <component :is="template" />
       </div>
-      <!-- <div class="canvas"></div>
-      <div class="canvas"></div>
-      <div class="canvas"></div>
-      <div class="canvas"></div> -->
-    </div>
-    <!-- BTN - addCanvas -->
-    <router-link to="./Create/CreateInfo">
-      <div class="addCanvas">
-        <div class="btnKey-M dark-border">
-          <p>Add new page (先連到下一頁)</p>
-          <!-- cross (icon) :內層 class 同上(內部還有其他元素不要掉了)-->
-          <div class="icon-M">
-            <div class="dark-cross">
-              <div class="cols">
-                <span></span>
-                <span></span>
-              </div>
-              <div class="rows">
-                <span></span>
+      <!-- BTN - saveCanvas -->
+      <router-link to="./Create/CreateInfo">
+        <div class="saveCanvas">
+          <div class="btnKey-M dark-border">
+            <p>SAVE</p>
+            <!-- cross (icon) :內層 class 同上(內部還有其他元素不要掉了)-->
+            <div class="icon-M">
+              <div class="dark-cross">
+                <div class="cols">
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="rows">
+                  <span></span>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </router-link>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
 // 引入 template store
 import { useTemplateStore } from "@/stores/template";
 
 // 使用 Pinia store
 const templateStore = useTemplateStore();
+
+// =================
+// 縮放比例
+// =================
+const zoomLevel = ref(100);
+// 放大
+const zoomIn = () => {
+  if (zoomLevel.value < 150) zoomLevel.value += 10;
+};
+// 縮小
+const zoomOut = () => {
+  if (zoomLevel.value > 50) zoomLevel.value -= 10;
+};
 </script>

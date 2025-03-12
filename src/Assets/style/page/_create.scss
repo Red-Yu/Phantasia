@@ -14,54 +14,41 @@
     right: 10px;
     z-index: 2;
   }
-  .main-content {
-    width: 100%;
-    position: relative;
-    // 定位
-    .Function {
-      position: fixed;
-      top: calc(80px + 10px);
-      left: 10px;
-      z-index: 3;
-    }
-    .PageView {
-      position: fixed;
-      top: calc(80px + 10px);
-      right: 10px;
-      z-index: 2;
-    }
-    .main-content {
-      width: 100%;
-      z-index: 1;
-    }
-  }
 
   //====================================
   // CreateCanvas
   //====================================
   .CreateCanvas {
-    width: 100%;
+    margin-top: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 10px;
     .FunctionBar {
+      position: fixed;
+      top: calc(80px + 30px);
+      z-index: 30;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px;
-      width: 30%;
+      max-width: 30vw;
+      width: 100%;
       background-color: $baseBlue;
       border-radius: 100px;
-      margin-top: 30px;
-      .Zoom {
+      .Zoom{
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 20px;
         flex: 1;
         color: $subWhite;
+        @include Aleo-AG(16px,$subWhite);
+        .btn{
+          width: 30px;
+          text-align: center;
+          @include Aleo-AG(24px,$subWhite);
+          cursor: pointer;
+        }
       }
       .stepGroup {
         width: 60px;
@@ -90,21 +77,23 @@
         }
       }
     }
-    .canvasGroup {
-      margin-top: 30px;
-    }
-    .canvas {
-      width: 680px;
-      height: 380px;
-      background-color: $subWhite;
-      border: $subGray solid 1px;
-    }
-    .addCanvas {
-      margin-top: 10px;
-      margin-bottom: 50px;
+    .canvasGroup{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      .canvas {
+        width: 680px;
+        height: 380px;
+        background-color: $subWhite;
+        border: $subGray solid 1px;
+      }
+      .saveCanvas {
+        margin-top: 10px;
+        margin-bottom: 50px;
+      }
     }
   }
-
   // =========================
   // CreateMenu 共用設定
   // =========================
@@ -153,11 +142,13 @@
       padding: 10px;
       margin-bottom: 30px;
       .title {
-        color: $baseOrange;
+        @include Aleo-Ag(36px,$baseOrange);
+        overflow: hidden;
+        text-overflow: ellipsis; /* 超出部分顯示為 ... */
       }
       .subTitle {
-        margin-top: 20px;
-        color: $subDark-gray;
+        margin-top: 10px;
+        @include FanwoodText-AG(20px,$subDark-gray);
       }
     }
   }
@@ -181,6 +172,7 @@
       flex-direction: column;
       padding: 20px 10px;
       gap: 10px;
+      @include FanwoodText-Normal(20px,$baseBlue);
     }
     .modelView {
       display: flex;
@@ -242,3 +234,4 @@
     }
   }
 }
+

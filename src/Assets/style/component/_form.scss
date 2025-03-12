@@ -5,8 +5,7 @@
   position: relative;
   // 項目名
   p {
-    font-size: 14px;
-    color: $subDark-gray;
+    @include FanwoodText-Normal(14px,$subDark-gray);
     margin-bottom: 5px;
   }
 
@@ -21,7 +20,7 @@
     background-color: $subWhite;
     border: $subGray solid 1px;
     border-radius: 5px;
-
+    @include FanwoodText-Normal(16px,$baseBlue);
     // 填寫自數樣式
     .char-counter {
       display: flex;
@@ -30,11 +29,11 @@
       justify-content: end;
 
       .currentChars {
-        color: $baseOrange;
+        @include Aleo-AG(12px,$baseOrange);
       }
       .remainingChars,
       span {
-        color: $subDark-gray;
+        @include Aleo-AG(12px,$subDark-gray);
       }
     }
   }
@@ -61,6 +60,7 @@ textarea {
   all: unset;
   resize: none; /* 禁止使用者調整大小 */
   overflow-y: auto; /* 允許垂直滾動 */
+  @include FanwoodText-Normal(16px,$baseBlue);
 }
 
 input[date],
@@ -91,10 +91,12 @@ select {
     }
     h4 {
       flex: 1;
+      @include Aleo-AG(16px,$baseBlue)
     }
   }
   .infoContent {
     padding: 5px;
     margin-bottom: 10px;
+    @include FanwoodText-Normal(16px,$baseBlue);
   }
 }

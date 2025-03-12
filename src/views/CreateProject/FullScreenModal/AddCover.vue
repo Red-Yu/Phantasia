@@ -15,9 +15,6 @@
               </div>
               <img class="coverImg" src="../../../Assets/img/book/封面.png" alt="" />
             </div>
-            <div class="side backSide" :style="{ backgroundColor: color }">
-              <img class="coverImg" src="../../../Assets/img/book/封底.png" alt="" />
-            </div>
           </div>
           <div class="coverSetting">
             <div class="FrontCover">

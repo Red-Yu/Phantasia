@@ -1,8 +1,16 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
+/* FanwoodText
+    AG - [ 全大寫 + 高低差 : 裝飾標題]
+    Ag - [ 字首大寫 + 粗體 : 副標 , linkBtn ]
+    normal - [ 一般文字 (內文) ]  */
+/* Aleo
+    AG - [ 內文標題、發光按鈕 ]
+    Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -11,9 +19,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark:hover {
   background-color: #284163;
@@ -27,6 +39,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -37,9 +50,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -53,6 +70,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -61,9 +79,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light:hover {
   background-color: #ffcf8b;
@@ -77,6 +99,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -87,9 +110,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -103,6 +130,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -111,12 +139,17 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #dee2e6;
-  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -125,9 +158,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark:hover {
   background-color: #284163;
@@ -141,6 +178,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -151,9 +189,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -167,6 +209,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -175,9 +218,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light:hover {
   background-color: #ffcf8b;
@@ -191,6 +238,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -201,9 +249,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -217,6 +269,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -225,21 +278,28 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #dee2e6;
-  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
-.btnLink {
-  font-size: 20px default;
-}
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnLink.dark::after {
   content: "";
@@ -264,12 +324,18 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #eead50;
+  font-weight: 600;
 }
 .btnLink.light::after {
   content: "";
@@ -294,12 +360,18 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 600;
 }
 .btnLink.white::after {
   content: "";
@@ -322,6 +394,37 @@
 .btnLink.white:hover .cols span:nth-child(2) {
   display: none;
 }
+.btnLink.whiteForFrontPage {
+  color: #f9faf9;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  position: relative;
+}
+.btnLink.whiteForFrontPage::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0;
+  background-color: #f9faf9;
+  transition: width 0.4s ease;
+  transform-origin: left;
+}
+.btnLink.whiteForFrontPage:hover::after, .btnLink.whiteForFrontPage.active::after {
+  width: 100%;
+}
+.btnLink.whiteForFrontPage:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+.btnLink.whiteForFrontPage:hover .cols span:nth-child(2) {
+  display: none;
+}
 
 .btnTab {
   display: flex;
@@ -331,9 +434,13 @@
 }
 .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab .tab-cross {
   position: relative;
@@ -412,9 +519,13 @@
 }
 .btnTab.active .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab.active .tab-cross {
   position: relative;
@@ -498,9 +609,13 @@
 }
 .btnTab-list .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab-list .tab-cross {
   position: relative;
@@ -676,8 +791,12 @@
   position: relative;
 }
 .inputBox p {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 14px;
   color: #999999;
+  font-weight: 400;
+  font-style: normal;
   margin-bottom: 5px;
 }
 .inputBox .TextInput,
@@ -690,6 +809,12 @@
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
   border-radius: 5px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .inputBox .TextInput .char-counter,
 .inputBox .OtherInput .char-counter {
@@ -700,13 +825,23 @@
 }
 .inputBox .TextInput .char-counter .currentChars,
 .inputBox .OtherInput .char-counter .currentChars {
+  font-family: "Aleo";
+  font-size: 12px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .inputBox .TextInput .char-counter .remainingChars,
 .inputBox .TextInput .char-counter span,
 .inputBox .OtherInput .char-counter .remainingChars,
 .inputBox .OtherInput .char-counter span {
+  font-family: "Aleo";
+  font-size: 12px;
   color: #999999;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .inputBox .selectIcon {
   position: absolute;
@@ -764,6 +899,12 @@ textarea {
   all: unset;
   resize: none; /* 禁止使用者調整大小 */
   overflow-y: auto; /* 允許垂直滾動 */
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 input[date],
@@ -793,10 +934,22 @@ select {
 }
 .InfoData .titleGroup h4 {
   flex: 1;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .InfoData .infoContent {
   padding: 5px;
   margin-bottom: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .icon-L .white-save {
@@ -1659,11 +1812,6 @@ select {
   display: none;
 }
 
-.file-item {
-  padding: 5px;
-  margin: 5px;
-}
-
 .grid-view {
   display: flex;
   flex-direction: column;
@@ -1684,7 +1832,8 @@ select {
 .grid-view img {
   width: 200px;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 .grid-view .file-info {
   display: flex;
@@ -1694,15 +1843,32 @@ select {
   gap: 5px;
   background-color: #f9faf9;
 }
+.grid-view .file-info .file-name {
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
+}
 .grid-view .file-info .file-time {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 12px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .list-view {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
   border-bottom: #999999 solid 1px;
 }
 .list-view .file-img {
@@ -1717,18 +1883,33 @@ select {
   flex: 1;
   text-align: start;
   padding-left: 10px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .list-view .file-time {
   width: 200px;
   text-align: right;
   padding-right: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .draft-view {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
   border-bottom: #999999 solid 1px;
 }
 .draft-view .file-img {
@@ -1743,11 +1924,26 @@ select {
   flex: 1;
   text-align: start;
   padding-left: 10px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .draft-view .file-time {
   width: 200px;
   display: flex;
   justify-content: end;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .draft-view .more-button {
   width: 150px;
@@ -1761,7 +1957,12 @@ select {
   background-size: cover;
 }
 .draft-view .more-button p {
-  font-size: 16px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .ProjectMenu {
@@ -2237,7 +2438,8 @@ select {
   width: 100%;
   height: 100%;
   background: #153243;
-  mask-image: linear-gradient(to right, transparent, black);
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+          mask-image: linear-gradient(to right, transparent, black);
   opacity: 0;
 }
 @keyframes glowOnce {
@@ -2270,11 +2472,30 @@ select {
   animation: reveal 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .day {
   /* 底色 */
   background-color: #f9faf9;
   border-bottom: #153243 solid;
   /* slogan */
+}
+.day .slogan {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
+  color: #153243;
+  font-weight: 600;
+  animation: fadeIn 1s ease forwards;
 }
 
 .night {
@@ -2282,6 +2503,15 @@ select {
   background-color: #153243;
   border-bottom: #f9faf9 solid;
   /* slogan */
+}
+.night .slogan {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
+  color: #f9faf9;
+  font-weight: 600;
+  animation: fadeIn 1s ease forwards;
 }
 
 .dayLayout {
@@ -2294,7 +2524,8 @@ select {
   background-size: cover;
   background-position: center center;
   background-color: rgba(249, 250, 249, 0.95);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   background-blend-mode: soft-light;
   position: fixed;
 }
@@ -2673,9 +2904,21 @@ select {
   all: initial;
   width: 100%;
 }
-.searchFunction input::placeholder {
-  color: rgba(21, 50, 67, 0.5);
+.searchFunction input::-moz-placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
+}
+.searchFunction input::placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .searchFunction .fileSearch {
   display: flex;
@@ -2693,13 +2936,19 @@ select {
 .file-manager .titleBar {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  margin-bottom: 30px;
 }
 .file-manager .titleBar h3 {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 }
 .file-manager .titleBar h3 .arrow {
   background-image: url(/src/Assets/img/icon/light-arrow.png);
@@ -2708,10 +2957,12 @@ select {
   background-size: cover;
   transform: rotate(90deg);
 }
+.file-manager .titleBar h3 .arrow.asc {
+  transform: rotate(270deg);
+}
 .file-manager .titleBar .file-name {
   flex: 1;
   text-align: start;
-  padding-left: 10px;
 }
 .file-manager .titleBar .file-time {
   width: 200px;
@@ -2721,7 +2972,6 @@ select {
 .file-manager .titleBar .more-button {
   width: 150px;
   display: flex;
-  padding-right: 10px;
   justify-content: end;
 }
 
@@ -2736,16 +2986,20 @@ select {
 .CreateProject .modeFunction {
   width: 100%;
   display: flex;
-  padding: 10px;
   justify-content: space-between;
+  align-items: center;
 }
 .CreateProject .modeFunction .title {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .CreateProject .modeFunction .view-mode-buttons {
   display: flex;
-  justify-content: end;
-  padding-right: 20px;
+  justify-content: space-between;
   gap: 20px;
 }
 .CreateProject .modeFunction .view-mode-buttons button {
@@ -2767,8 +3021,8 @@ select {
 }
 .CreateProject .Recent-file-list.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
 }
 .CreateProject .file-list {
   display: flex;
@@ -2776,8 +3030,8 @@ select {
 }
 .CreateProject .file-list.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
 }
 .CreateProject .file-list.list {
   display: flex;
@@ -2802,9 +3056,13 @@ select {
 }
 .Draft .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .Draft .btnTab .tab-cross {
   position: relative;
@@ -2883,7 +3141,6 @@ select {
   display: flex;
   gap: 30px;
   align-items: baseline;
-  padding: 5px;
 }
 .Draft .notion {
   width: 100%;
@@ -2892,8 +3149,22 @@ select {
   background-color: #dee2e6;
   color: #153243;
 }
+.Draft .notion h3 {
+  font-family: "Aleo";
+  font-size: 20px;
+  color: #153243;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: capitalize;
+}
 .Draft .notion p {
   padding-top: 20px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 18px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .Draft .notion .memberCenterLink {
   width: 100%;
@@ -2906,9 +3177,6 @@ select {
   width: 16px;
   height: 16px;
   background-size: cover;
-}
-.Draft .notion .memberCenterLink span {
-  font-size: 16px;
 }
 
 .createInfo {
@@ -2978,6 +3246,14 @@ select {
   height: 50px;
   background-size: cover;
 }
+.createInfo .stepsGroup .steps p {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 16px;
+  color: #999999;
+  font-weight: 600;
+}
 .createInfo .stepsGroup span {
   width: 50px;
   height: 5px;
@@ -3006,7 +3282,12 @@ select {
   background-size: cover;
 }
 .createInfo .stepsGroup .steps.current p {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 16px;
   color: #eead50;
+  font-weight: 600;
 }
 .createInfo .inputGroups, .createInfo .InfoConfirm {
   width: 90%;
@@ -3021,6 +3302,13 @@ select {
 }
 .createInfo .inputGroups .Group h3, .createInfo .InfoConfirm .Group h3 {
   margin-top: 50px;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  font-weight: 800;
 }
 .createInfo .inputGroups .StepFunction, .createInfo .InfoConfirm .StepFunction {
   display: flex;
@@ -3031,9 +3319,6 @@ select {
   display: flex;
   gap: 10px;
   opacity: 50%;
-}
-.createInfo .inputGroups .StepFunction .back p, .createInfo .InfoConfirm .StepFunction .back p {
-  font-size: 20px;
 }
 .createInfo .inputGroups.none {
   opacity: 50%;
@@ -3057,51 +3342,49 @@ select {
   right: 10px;
   z-index: 2;
 }
-.Create .main-content {
-  width: 100%;
-  position: relative;
-}
-.Create .main-content .Function {
-  position: fixed;
-  top: 90px;
-  left: 10px;
-  z-index: 3;
-}
-.Create .main-content .PageView {
-  position: fixed;
-  top: 90px;
-  right: 10px;
-  z-index: 2;
-}
-.Create .main-content .main-content {
-  width: 100%;
-  z-index: 1;
-}
 .Create .CreateCanvas {
-  width: 100%;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
 .Create .CreateCanvas .FunctionBar {
+  position: fixed;
+  top: 110px;
+  z-index: 30;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  width: 30%;
+  max-width: 30vw;
+  width: 100%;
   background-color: #153243;
   border-radius: 100px;
-  margin-top: 30px;
 }
 .Create .CreateCanvas .FunctionBar .Zoom {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   flex: 1;
   color: #f9faf9;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.Create .CreateCanvas .FunctionBar .Zoom .btn {
+  width: 30px;
+  text-align: center;
+  font-family: "Aleo";
+  font-size: 24px;
+  color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 .Create .CreateCanvas .FunctionBar .stepGroup {
   width: 60px;
@@ -3130,15 +3413,18 @@ select {
   background-position: center center;
 }
 .Create .CreateCanvas .canvasGroup {
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.Create .CreateCanvas .canvas {
+.Create .CreateCanvas .canvasGroup .canvas {
   width: 680px;
   height: 380px;
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
 }
-.Create .CreateCanvas .addCanvas {
+.Create .CreateCanvas .canvasGroup .saveCanvas {
   margin-top: 10px;
   margin-bottom: 50px;
 }
@@ -3182,11 +3468,23 @@ select {
   margin-bottom: 30px;
 }
 .Create .Function .bookInfoBox .title {
+  font-family: "Aleo";
+  font-size: 36px;
   color: #eead50;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .Create .Function .bookInfoBox .subTitle {
-  margin-top: 20px;
+  margin-top: 10px;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
   color: #999999;
+  font-weight: 600;
 }
 .Create .PageView {
   border-left: solid #153243;
@@ -3206,6 +3504,12 @@ select {
   flex-direction: column;
   padding: 20px 10px;
   gap: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .Create .PageView .modelView {
   display: flex;
@@ -3287,55 +3591,67 @@ select {
   border-bottom: #153243 solid 1px;
   text-align: center;
 }
-.CreateNewProject input::placeholder {
-  color: rgba(21, 50, 67, 0.5);
+.CreateNewProject input::-moz-placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
+}
+.CreateNewProject input::placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 
 .AddCover {
   width: 100%;
   position: relative;
   display: flex;
+  gap: 10px;
 }
 .AddCover .coverView {
-  max-width: 400px;
-  width: 100%;
+  width: 400px;
   height: 85vh;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
   align-items: center;
   justify-content: center;
+  padding: 0 0 0 20px;
   position: sticky;
-  left: 0;
+  left: 10px;
   top: 0;
 }
 .AddCover .coverSetting {
   width: 100%;
-  padding: 20px;
+  margin-top: 80px;
+  padding: 0 10px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 50px;
 }
 .AddCover .side {
-  width: 160px;
-  height: 220px;
+  width: 220px;
+  height: 305px;
   background-color: #eead50;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 .AddCover .side .coverImg {
-  width: 160px;
+  width: 220px;
   height: auto;
 }
 .AddCover .parent-preview {
   position: absolute;
-  top: 70px;
-  left: 17px;
-  width: 125px;
-  height: 125px;
+  top: 95px;
+  left: 22px;
+  width: 175px;
+  height: 175px;
   display: flex;
   align-items: center;
   justify-items: center;
@@ -3354,10 +3670,38 @@ select {
   justify-content: center;
 }
 .AddCover .titleGroup p {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.AddCover .titleGroup h2 {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 24px;
+  color: #153243;
+  font-weight: 600;
+}
+.AddCover .subtitle {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 600;
 }
 .AddCover .subtitle .spanBold {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  padding-left: 5px;
 }
 .AddCover .FrontCover {
   width: 100%;
@@ -3399,36 +3743,6 @@ select {
   align-items: center;
   justify-content: center;
 }
-.PublishSuccess .titleGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.PublishSuccess .titleGroup p {
-  display: flex;
-  align-items: center;
-}
-.PublishSuccess .titleGroup p .large {
-  font-size: 14vh;
-}
-.PublishSuccess .titleGroup p .middle {
-  font-size: 10vh;
-}
-.PublishSuccess .titleGroup p .little {
-  font-size: 8vh;
-}
-.PublishSuccess .titleGroup .top {
-  transform: translateY(4vh);
-}
-.PublishSuccess .titleGroup .mid .line {
-  width: 10vw;
-  height: 0.5vh;
-  background-color: #153243;
-}
-.PublishSuccess .titleGroup .btm {
-  transform: translateY(-4vh);
-}
 .PublishSuccess .btnGroup {
   display: flex;
   flex-direction: column;
@@ -3437,7 +3751,7 @@ select {
   align-items: center;
 }
 .PublishSuccess .btnGroup .btnKey-L {
-  width: 360px;
+  width: 400px;
   align-items: center;
   justify-content: center;
 }
@@ -3520,7 +3834,8 @@ body {
   /* Ensure it fills the container width */
   height: 100%;
   /* Ensure it fills the container height */
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   /* Prevent cropping while maintaining aspect ratio */
   border-radius: 10px;
 }
@@ -3623,7 +3938,8 @@ body {
   .item-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     /* Fill container, may crop */
   }
   .text-box-container {
@@ -3696,7 +4012,8 @@ body {
   .item-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     /* Fill container, may crop */
   }
   .text-box-container {
@@ -3937,6 +4254,7 @@ body {
 .pg_controlButton.pg_active-newest,
 .pg_controlButton.pg_active-oldest {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -4004,6 +4322,13 @@ body {
   padding: 8px;
   outline: none;
   /* Removes the focus outline */
+  font-family: "Fanwood Text", sans-serif;
+}
+
+.pg_searchInput::-moz-placeholder {
+  color: #fffdef;
+  opacity: 40%;
+  /* Change this to modify the placeholder text color */
   font-family: "Fanwood Text", sans-serif;
 }
 
@@ -4168,7 +4493,8 @@ body {
   /* Ensure it fills the container width */
   height: 100%;
   /* Ensure it fills the container height */
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   /* Prevent cropping while maintaining aspect ratio */
   border-radius: 10px;
 }
