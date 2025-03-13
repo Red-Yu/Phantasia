@@ -3830,9 +3830,10 @@ body {
 
 .text-box-container {
   width: 460px;
-  height: 260px;
-  padding-left: 90px;
-  padding-top: 60px;
+  padding-left: 120px;
+  padding-right: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   background-color: #2a5670;
   color: white;
   border-radius: 10px;
@@ -4397,16 +4398,12 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 216.55px;
   height: 300px;
   backface-visibility: hidden;
   background-size: cover;
   background-position: center;
   /* Temporary solid color */
-}
-
-.box--front {
-  transform: translate3d(-100px, -150px, 0) rotateY(0deg);
 }
 
 .colorLayer,
@@ -4415,45 +4412,53 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-size: cover;
-  background-position: center;
+  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
 .colorLayer {
   z-index: 0;
   /* Behind everything */
-  background-color: rgb(5, 96, 255);
+  background-color: #eead50;
 }
 
 .inner-layer {
   z-index: 1;
   /* On top */
-  width: 60%;
+  width: 73%;
   /* Your custom width */
-  height: 60%;
+  height: 53%;
   /* Your custom height */
   left: 50%;
   /* Move to center horizontally */
-  top: 63%;
+  top: 60.5%;
   /* Move to center vertically */
   transform: translate(-50%, -50%);
   /* Offset by half its size to truly center */
-  -o-object-fit: contain;
-     object-fit: contain;
+  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+.box--front {
+  transform: translate3d(-100px, -150px, 8.3px) rotateY(0deg);
 }
 
 .box--back {
-  transform: translate3d(-100px, -150px, -16px) rotateY(180deg);
+  transform: translate3d(-100px, -150px, -24.3px) rotateY(180deg);
 }
 
 .box--side-left {
-  width: 16px;
-  transform: translate3d(-100px, -150px, -8px) rotateY(-90deg);
+  width: 32.78px;
+  height: 300px;
+  transform: translate3d(-116.2px, -150px, -8px) rotateY(-90deg);
 }
 
 .box--side-right {
-  width: 16px;
-  transform: translate3d(84px, -150px, -8px) rotateY(90deg);
+  width: 32.78px;
+  height: 300px;
+  transform: translate3d(99px, -150px, -8px) rotateY(90deg);
 }
 
 .pg_itemsGrid {
@@ -4761,50 +4766,49 @@ h2 {
 
 .pb-color-layer {
   z-index: 0;
-  background-color: palegoldenrod;
+  background-color: #eead50;
 }
 
 .product-box--front {
-  width: 500px;
-  /* Adjust based on your design */
-  height: 750px;
+  width: 507.93px;
+  height: 700px;
   position: absolute;
-  transform: translate3d(-250px, -375px, 0);
+  transform: translate3d(-250px, -375px, 18px);
   /* Example for front face */
 }
 
 .product-box--back {
-  width: 500px;
-  height: 750px;
+  width: 507.93px;
+  height: 700px;
   position: absolute;
-  transform: translate3d(-250px, -375px, -40px) rotateY(180deg);
+  transform: translate3d(-250px, -375px, -59px) rotateY(180deg);
   /* Example for back face */
 }
 
 .product-box--side-left {
-  width: 40px;
-  height: 750px;
-  transform: translate3d(-250px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
 }
 
 .product-box--side-right {
-  width: 40px;
-  height: 750px;
-  transform: translate3d(-250px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
 }
 
 .product-box--top {
-  width: 500px;
-  height: 40px;
-  transform: translate3d(-250px, -375px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
   background-size: cover;
 }
 
 .product-box--bottom {
-  width: 500px;
-  height: 40px;
-  transform: translate3d(-250px, -375px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
   background-size: cover;
 }
@@ -4820,26 +4824,19 @@ h2 {
   height: 100%;
 }
 
+.pb-outer-layer,
+.pb-inner-layer {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .product-box--front .pb-outer-layer {
   z-index: 0;
-  /* Below inner layer */
-  background-size: cover;
-  /* Scales image to cover the box */
-  background-position: center;
-  /* Centers the image */
-  background-repeat: no-repeat;
-  /* Prevents tiling */
 }
 
 .product-box--back .pb-outer-layer {
   z-index: 0;
-  /* Below inner layer */
-  background-size: cover;
-  /* Scales image to cover the box */
-  background-position: center;
-  /* Centers the image */
-  background-repeat: no-repeat;
-  /* Prevents tiling */
 }
 
 /* Add this specific rule for side-left */
@@ -4848,12 +4845,6 @@ h2 {
   /* 40px */
   height: 100%;
   /* 750px */
-  background-size: cover;
-  /* Fits image proportionally without cropping */
-  background-position: center;
-  /* Centers the image */
-  background-repeat: no-repeat;
-  /* Prevents tiling */
   z-index: 0;
   /* Matches other outer layers */
 }
@@ -4865,19 +4856,16 @@ h2 {
 }
 
 .product-box--front .pb-inner-layer {
-  width: 50%;
+  width: 73%;
   /* 250px */
-  height: 50%;
+  height: 53%;
   /* 375px */
   left: 50%;
-  top: 60%;
+  top: 60.5%;
   transform: translate(-50%, -50%);
   /* Center it */
   z-index: 1;
   /* On top */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 @media (max-width: 1300px) {
@@ -4902,51 +4890,35 @@ h2 {
     justify-content: center;
   }
   .product-box--front {
-    width: 400px;
-    /* 500px × 0.8 */
-    height: 600px;
-    /* 750px × 0.8 */
-    transform: translate3d(-200px, -300px, 0);
-    /* -250px × 0.8, -375px × 0.8 */
+    width: 406.344px;
+    height: 560px;
+    transform: translate3d(-200px, -300px, 14.4px);
   }
   .product-box--back {
-    width: 400px;
-    /* 500px × 0.8 */
-    height: 600px;
-    /* 750px × 0.8 */
-    transform: translate3d(-200px, -300px, -32px) rotateY(180deg);
-    /* -40px × 0.8 */
+    width: 406.344px;
+    height: 560px;
+    transform: translate3d(-200px, -300px, -47.2px) rotateY(180deg);
   }
   .product-box--side-left {
-    width: 32px;
-    /* 40px × 0.8 */
-    height: 600px;
-    /* 750px × 0.8 */
-    transform: translate3d(-200px, -300px, 0) translate3d(-16px, 0, -16px) rotateY(-90deg);
-    /* -20px × 0.8 */
+    width: 61.192px;
+    height: 560px;
+    transform: translate3d(-214.4px, -300px, 0) translate3d(-16px, 0, -16px) rotateY(-90deg);
   }
   .product-box--side-right {
-    width: 32px;
-    /* 40px × 0.8 */
-    height: 600px;
-    /* 750px × 0.8 */
-    transform: translate3d(-200px, -300px, 0) translate3d(384px, 0, -16px) rotateY(90deg);
+    width: 61.192px;
+    height: 560px;
+    transform: translate3d(-209.6px, -300px, 0) translate3d(384px, 0px, -16px) rotateY(90deg);
     /* 480px × 0.8 */
   }
   .product-box--top {
-    width: 400px;
-    /* 500px × 0.8 */
-    height: 32px;
-    /* 40px × 0.8 */
-    transform: translate3d(-200px, -300px, 0) translate3d(0, -16px, -16px) rotateX(90deg);
+    width: 406.344px;
+    height: 61.192px;
+    transform: translate3d(-200px, -314.4px, 0) translate3d(0px, -16px, -16px) rotateX(90deg);
   }
   .product-box--bottom {
-    width: 400px;
-    /* 500px × 0.8 */
-    height: 32px;
-    /* 40px × 0.8 */
-    transform: translate3d(-200px, -300px, 0) translate3d(0, 584px, -16px) rotateX(-90deg);
-    /* 730px × 0.8 */
+    width: 406.344px;
+    height: 61.192px;
+    transform: translate3d(-200px, -354.4px, 0) translate3d(0px, 584px, -16px) rotateX(-90deg);
   }
   .feedback-box3 {
     width: 100%;
