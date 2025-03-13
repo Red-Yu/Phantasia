@@ -128,9 +128,9 @@ const closeModal = () => {
 const coverSetting = useCoverStore();
 
 // 監聽圖片上傳，存入 Pinia
-const updateImage = (imageUrl) => {
-  coverSetting.setImageUrl(imageUrl);
-};
+// const updateImage = (imageUrl) => {
+//   coverSetting.setImageUrl(imageUrl);
+// };
 
 // 監聽顏色變更，存入 Pinia
 const updateColor = (newColor) => {
