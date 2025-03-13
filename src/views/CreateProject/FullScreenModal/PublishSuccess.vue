@@ -4,7 +4,7 @@
       <div class="bgc"></div>
       <!-- mainContent -->
       <div class="mainContent PublishSuccess">
-        <div class="titleGroup">
+        <!-- <div class="titleGroup">
           <p class="top">
             <span class="large">L</span>
             <span class="middle">AUNCHED</span>
@@ -18,7 +18,8 @@
             <span class="large">A</span>
             <span class="middle">LREADY</span>
           </p>
-        </div>
+        </div> -->
+        <TitleTemplate firstTitle="Launched" middleText="Is" secondTitle="Already" />
         <div class="btnGroup">
           <router-link class="backToCreate" to="/CreateProject" @click="closeModal">
             <div class="btnKey-L light">
@@ -64,6 +65,7 @@
 
 <script setup>
 import OpenCloseButton from "../../../components/BTN/OpenCloseButton.vue";
+import TitleTemplate from "../../../components/TitleTemplate.vue";
 
 // 定義 props
 const props = defineProps({

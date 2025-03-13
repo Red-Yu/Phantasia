@@ -20,7 +20,6 @@
         text-align: center;
     }
     input::placeholder {
-        color:  rgb(21, 50, 67,50%);
-        font-size: 20px;
+        @include FanwoodText-Normal(20px, rgb(21, 50, 67,50%));
       }
 }

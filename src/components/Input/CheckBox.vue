@@ -23,6 +23,10 @@ label {
     width: 20px;
     font-size: 12px;
     text-align: center;
+    font-family: "Fanwood Text";
+    text-transform: capitalize;
+    font-weight: 600;
+    color: #153243;
   }
   .btn-box {
     display: inline-block;

@@ -73,14 +73,26 @@
     }
   }
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 .day {
   /* 底色 */
   background-color: $subWhite;
   border-bottom: $baseBlue solid;
 
   /* slogan */
-
-
+  .slogan{
+    @include FanwoodText-AG(20px,$baseBlue);
+    animation: fadeIn 1s ease forwards;
+  }
 }
 .night {
   /* 底色 */
@@ -88,6 +100,9 @@
   border-bottom: $subWhite solid;
 
   /* slogan */
-
+  .slogan{
+    @include FanwoodText-AG(20px,$subWhite);
+    animation: fadeIn 1s ease forwards;
+  }
 
 }

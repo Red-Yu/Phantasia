@@ -3,95 +3,138 @@
 </style>
 
 <template>
-  <div class="webpage-container5" :class="{ 'no-scroll': showPopup }">
-    <!-- Custom Scroll Indicator -->
-    <div class="scroll-indicator5">
-      <span
-        v-for="(dot, index) in dots"
-        :key="index"
-        class="scroll-dot5"
-        :class="{ active5: index <= activeDot }"
-        @click="scrollToPosition(index)"
-      ></span>
-      <img
-        src="@/assets/img/pics/upArrow.png"
-        alt="Back to Top"
-        class="back-to-top5"
-        @click="scrollToTop"
-      />
-    </div>
-
-    <!-- Fullscreen Image Sections -->
-    <section
-      v-for="(section, index) in sections"
-      :key="index"
-      :id="'section-' + index"
-      class="full-section5"
-      :style="{ backgroundImage: `url(${section.image})` }"
-    ></section>
-  </div>
-
-  <div class="text-container-6">
-    <h1 class="title-6">ADD</h1>
-    <div class="h3-wrapper-6">
-      <div class="line-6"></div>
-      <h3 class="subtitle-6">A</h3>
-      <div class="line-6"></div>
-    </div>
-    <h1 class="title-6">REVIEW</h1>
-  </div>
-  <div class="user-input-wrapper">
-    <div class="user-input-container">
-      <div class="feedback-content37">
+  <div class="body3">
+    <div class="webpage-container5" :class="{ 'no-scroll': showPopup }">
+      <!-- Custom Scroll Indicator -->
+      <div class="scroll-indicator5">
+        <span
+          v-for="(dot, index) in dots"
+          :key="index"
+          class="scroll-dot5"
+          :class="{ active5: index <= activeDot }"
+          @click="scrollToPosition(index)"
+        ></span>
         <img
-          src="../../Assets/img/pics/Acc icon.png"
-          alt="Feedback Icon"
-          class="feedback-icon37"
+          src="@/assets/img/pics/upArrow.png"
+          alt="Back to Top"
+          class="back-to-top5"
+          @click="scrollToTop"
         />
-        <div class="feedback-details37">
-          <div class="feedback-stars37">
-            <span
-              v-for="star7 in totalStars7"
-              :key="star7"
-              @mouseover="hoverStar7(star7)"
-              @mouseleave="resetHover7"
-              @click="setRating7(star7)"
-              :class="{
-                filled: star7 <= currentRating7 || star7 <= hoverRating7,
-              }"
-              class="star7"
-              >&#9733;</span
-            >
+      </div>
+
+      <!-- Fullscreen Image Sections -->
+      <section
+        v-for="(section, index) in sections"
+        :key="index"
+        :id="'section-' + index"
+        class="full-section5"
+        :style="{ backgroundImage: `url(${section.image})` }"
+      ></section>
+    </div>
+
+    <div class="text-container-6">
+      <h1 class="title-6">ADD</h1>
+      <div class="h3-wrapper-6">
+        <div class="line-6"></div>
+        <h3 class="subtitle-6">A</h3>
+        <div class="line-6"></div>
+      </div>
+      <h1 class="title-6">REVIEW</h1>
+    </div>
+    <div class="user-input-wrapper">
+      <div class="user-input-container">
+        <div class="feedback-content37">
+          <img
+            src="../../Assets/img/pics/Acc icon.png"
+            alt="Feedback Icon"
+            class="feedback-icon37"
+          />
+          <div class="feedback-details37">
+            <div class="feedback-stars37">
+              <span
+                v-for="star7 in totalStars7"
+                :key="star7"
+                @mouseover="hoverStar7(star7)"
+                @mouseleave="resetHover7"
+                @click="setRating7(star7)"
+                :class="{
+                  filled: star7 <= currentRating7 || star7 <= hoverRating7,
+                }"
+                class="star7"
+                >&#9733;</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="reviewText">
+          <p>
+            Kindly note that your comments will be publicly visible, so please
+            post responsibly.
+          </p>
+        </div>
+
+        <div class="textarea-wrapper">
+          <textarea
+            class="user-input-textbox"
+            v-model="userInput"
+            placeholder="Enter your feedback..."
+          ></textarea>
+          <span class="char-counter">{{ charCount }}/1000</span>
+        </div>
+        <div class="actionButtonWrapper">
+          <div class="action-buttons">
+            <div @click="saveData" class="action-button btnLink light">
+              <p>Save</p>
+              <div class="icon-L">
+                <div class="light-edit"></div>
+              </div>
+            </div>
+
+            <div @click="submitData" class="action-button btnKey-L light">
+              <p>Submit</p>
+              <div class="icon-L">
+                <div class="white-cross">
+                  <div class="cols">
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="rows">
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="reviewText">
-        <p>
-          Kindly note that your comments will be publicly visible, so please
-          post responsibly.
-        </p>
-      </div>
-
-      <div class="textarea-wrapper">
-        <textarea
-          class="user-input-textbox"
-          v-model="userInput"
-          placeholder="Enter your feedback..."
-        ></textarea>
-        <span class="char-counter">{{ charCount }}/1000</span>
-      </div>
-      <div class="actionButtonWrapper">
-        <div class="action-buttons">
-          <div @click="saveData" class="action-button btnLink light">
-            <p>Save</p>
-            <div class="icon-L">
-              <div class="light-edit"></div>
-            </div>
+    </div>
+    <div class="actionButtonWrapper8">
+      <div class="action-buttons8">
+        <div @click="submitData" class="action-button8 btnKey-L light">
+          <p>COLLECT YOUR STAMPS</p>
+        </div>
+        <div @click="saveData" class="action-button8 btnLink light">
+          <p>Back to shop</p>
+          <div class="icon-L">
+            <div class="light-arrow"></div>
           </div>
+        </div>
+      </div>
+    </div>
 
-          <div @click="submitData" class="action-button btnKey-L light">
-            <p>Submit</p>
+    <div v-if="showPopup" class="overlay">
+      <div class="popup-box">
+        <p>
+          YOU’VE REACH THE END OF THE TRIAL <br />
+          SUBSCRIBE NOW TO READ MORE
+        </p>
+        <div class="popup-buttons">
+          <div @click="confirmAction" class="action-button btnKey-L light">
+            <p>BACK TO STORE</p>
+          </div>
+          <div @click="closePopup" class="action-button btnKey-L light">
+            <p>SUBSCRIBE</p>
             <div class="icon-L">
               <div class="white-cross">
                 <div class="cols">
@@ -101,47 +144,6 @@
                 <div class="rows">
                   <span></span>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="actionButtonWrapper8">
-    <div class="action-buttons8">
-      <div @click="submitData" class="action-button8 btnKey-L light">
-        <p>COLLECT YOUR STAMPS</p>
-      </div>
-      <div @click="saveData" class="action-button8 btnLink light">
-        <p>Back to shop</p>
-        <div class="icon-L">
-          <div class="light-arrow"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div v-if="showPopup" class="overlay">
-    <div class="popup-box">
-      <p>
-        YOU’VE REACH THE END OF THE TRIAL <br />
-        SUBSCRIBE NOW TO READ MORE
-      </p>
-      <div class="popup-buttons">
-        <div @click="confirmAction" class="action-button btnKey-L light">
-          <p>BACK TO STORE</p>
-        </div>
-        <div @click="closePopup" class="action-button btnKey-L light">
-          <p>SUBSCRIBE</p>
-          <div class="icon-L">
-            <div class="white-cross">
-              <div class="cols">
-                <span></span>
-                <span></span>
-              </div>
-              <div class="rows">
-                <span></span>
               </div>
             </div>
           </div>
@@ -174,7 +176,7 @@ export default {
       const scrollHeight =
         document.documentElement.scrollHeight - window.innerHeight;
 
-      if (scrollTop / scrollHeight >= 0.999999) {
+      if (scrollTop / scrollHeight >= 0.95) {
         showPopup.value = true;
         document.body.style.overflow = "hidden"; // Disable scroll when popup appears
       }

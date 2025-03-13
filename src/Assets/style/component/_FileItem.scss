@@ -1,8 +1,3 @@
-.file-item {
-    padding: 5px;
-    margin: 5px;
-}
-
 // 塊狀檢視樣式
 .grid-view {
     display: flex;
@@ -12,7 +7,6 @@
     border-radius: 5%;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     overflow: hidden;
-
     // img
     .file-img {
         width: 200px;
@@ -36,8 +30,15 @@
         padding: 10px;
         gap: 5px;
         background-color: $subWhite;
+        .file-name{
+            @include Aleo-AG(14px,$baseBlue);
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap; /* 防止文字換行 */
+            text-overflow: ellipsis; /* 超出部分顯示為 ... */
+        }
         .file-time {
-            font-size: 12px;
+            @include FanwoodText-Normal(12px,$baseBlue);
         }
     }
 }
@@ -46,7 +47,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 10px 0;
     border-bottom: $subDark-gray solid 1px;
     
     // img 
@@ -64,11 +65,16 @@
         flex: 1;
         text-align: start;
         padding-left: 10px;
+        @include Aleo-AG(14px,$baseBlue);
+        overflow: hidden;
+        white-space: nowrap; /* 防止文字換行 */
+        text-overflow: ellipsis; /* 超出部分顯示為 ... */
     }
     .file-time {
         width: 200px;
         text-align: right;
         padding-right: 10px;
+        @include FanwoodText-Normal(16px,$baseBlue);
     }
 }
 // 作品檢視樣式
@@ -76,7 +82,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 10px 0;
     border-bottom: $subDark-gray solid 1px;
     
     // img 
@@ -94,11 +100,16 @@
         flex: 1;
         text-align: start;
         padding-left: 10px;
+        @include Aleo-AG(14px,$baseBlue);
+        overflow: hidden;
+        white-space: nowrap; /* 防止文字換行 */
+        text-overflow: ellipsis; /* 超出部分顯示為 ... */
     }
     .file-time {
         width: 200px;
         display: flex;
         justify-content: end;
+        @include FanwoodText-Normal(16px,$baseBlue);
     }
     .more-button{
         width: 150px;
@@ -108,7 +119,7 @@
             @include view("dark",16px);
         }
         p{
-            font-size: 16px;
+            @include Aleo-AG(14px,$baseBlue);
         }
     }
 

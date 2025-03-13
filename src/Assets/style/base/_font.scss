@@ -2,3 +2,54 @@
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 // Fanwood Text
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
+
+//--------------------------------
+//font system
+//--------------------------------
+/* FanwoodText
+    AG - [ 全大寫 + 高低差 : 裝飾標題]
+    Ag - [ 字首大寫 + 粗體 : 副標 , linkBtn ]
+    normal - [ 一般文字 (內文) ]  */
+@mixin FanwoodText-AG($size,$color){
+    font-family: "Fanwood Text";
+    font-variant: small-caps;
+    letter-spacing: 0.8px;
+    font-size: $size;
+    color: $color;
+    font-weight: 600;
+}
+@mixin FanwoodText-Ag($size,$color){
+    font-family: "Fanwood Text";
+    text-transform: capitalize;
+    font-size: $size;
+    color: $color;
+    font-weight: 600;
+}
+@mixin FanwoodText-Normal($size,$color){
+    font-family: "Fanwood Text";
+    text-transform: capitalize;
+    font-size: $size;
+    color: $color;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* Aleo
+    AG - [ 內文標題、發光按鈕 ]
+    Ag - [ 粗體副標 ] */
+@mixin Aleo-AG($size,$color){
+    font-family: "Aleo";
+    font-size: $size;
+    color: $color;
+    font-weight: 500;
+    font-style: normal;
+    text-transform: uppercase;
+}
+@mixin Aleo-Ag($size,$color){
+    font-family: "Aleo";
+    font-size: $size;
+    color: $color;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: capitalize;
+}
