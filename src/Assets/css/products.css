@@ -3826,38 +3826,26 @@ body {
   /* justify-content: center; */
   align-items: center;
   position: relative;
-  right: 130px;
-}
-
-.item-image {
-  width: 100%;
-  /* Ensure it fills the container width */
-  height: 100%;
-  /* Ensure it fills the container height */
-  -o-object-fit: contain;
-     object-fit: contain;
-  /* Prevent cropping while maintaining aspect ratio */
-  border-radius: 10px;
 }
 
 .text-box-container {
-  width: 500px;
-  height: 300px;
+  width: 460px;
+  height: 260px;
   padding-left: 90px;
   padding-top: 60px;
   background-color: #2a5670;
   color: white;
   border-radius: 10px;
   position: absolute;
-  top: 30px;
   left: 20px;
   z-index: 2;
   text-align: left;
   font-family: "Fanwood Text", sans-serif;
+  z-index: 1;
 }
 
 .text-box-container h1 {
-  font-size: 28px;
+  font-size: 30px;
   margin: 10px 0;
 }
 
@@ -3867,7 +3855,7 @@ body {
 }
 
 .text-box-container h3 {
-  font-size: 18px;
+  font-size: 16px;
   margin: 5px 0;
 }
 
@@ -3878,12 +3866,12 @@ body {
 }
 
 .left {
-  transform: translateX(-500px);
+  transform: translateX(-600px);
   z-index: 2;
 }
 
 .right {
-  transform: translateX(500px);
+  transform: translateX(600px);
   z-index: 2;
 }
 
@@ -3893,11 +3881,11 @@ body {
   z-index: 0;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 916px) {
   .carousel-container {
     height: auto;
     /* Adapt to content height */
-    padding: 20px 0;
+    padding-top: 80px;
     /* Add padding instead of fixed height */
   }
   .carousel {
@@ -3917,43 +3905,35 @@ body {
     opacity: 1;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: stretch;
-    /* Allow textbox to grow downward */
+    justify-content: flex-start;
+    /* Ensures left & right spacing */
+    align-items: center;
+    /* Centers items vertically */
     width: 100%;
-    max-width: 500px;
+    max-width: 700px;
     padding: 0 20px;
-    height: 250px;
+    height: 100%;
   }
   .carousel-item {
     width: 150px;
     height: 100%;
     /* Fixed height for consistency */
     right: 0;
-    margin-right: 20px;
     background-color: transparent;
     /* Remove lightblue background */
     flex: 1;
   }
-  .item-image {
-    width: 100%;
-    height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
-    /* Fill container, may crop */
-  }
   .text-box-container {
+    width: 50%;
+    /* Take half of the container */
+    height: auto;
+    padding: 20px;
+    background-color: #2a5670;
+    color: white;
+    border-radius: 10px;
     position: relative;
-    width: 300px;
-    height: 100%;
-    /* Let height adapt to content */
-    padding: 15px;
-    /* Consistent padding */
-    top: 0;
-    left: 0;
-    overflow: visible;
-    /* Allow text to be fully visible */
-    overflow-y: auto;
+    text-align: left;
+    font-family: "Fanwood Text", sans-serif;
     flex: 1;
   }
   .text-box-container h1 {
@@ -3970,16 +3950,19 @@ body {
     margin: 5px 0;
   }
 }
-/* Mobile Breakpoint (480px and below) */
-@media (max-width: 480px) {
+@media (max-width: 550px) {
   .carousel-container {
     height: auto;
-    padding: 20px 0;
+    /* Adapt to content height */
+    padding-top: 80px;
+    padding-bottom: 50px;
+    /* Add padding instead of fixed height */
   }
   .carousel {
     width: 100%;
-    max-width: 300px;
+    max-width: 500px;
     height: auto;
+    /* Adapt to content */
   }
   .carousel-item-container.left,
   .carousel-item-container.right {
@@ -3992,54 +3975,49 @@ body {
     opacity: 1;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-    /* Allow textbox to grow downward */
+    justify-content: flex-start;
+    /* Ensures left & right spacing */
+    align-items: center;
+    /* Centers items vertically */
     width: 100%;
-    max-width: 300px;
-    padding: 0 10px;
-    height: 180px;
+    max-width: 700px;
+    padding: 0 20px;
+    height: 100%;
   }
   .carousel-item {
-    width: 145px;
+    width: 150px;
     height: 100%;
+    /* Fixed height for consistency */
     right: 0;
-    margin-right: 10px;
+    margin-left: 100px;
     background-color: transparent;
     /* Remove lightblue background */
     flex: 1;
   }
-  .item-image {
-    width: 100%;
-    height: 100%;
-    -o-object-fit: cover;
-       object-fit: cover;
-    /* Fill container, may crop */
-  }
   .text-box-container {
+    width: 50%;
+    /* Take half of the container */
+    height: auto;
+    padding: 20px;
+    background-color: #2a5670;
+    color: white;
+    border-radius: 10px;
     position: relative;
-    width: 145px;
-    height: 100%;
-    /* Adapt to content */
-    padding: 10px;
-    top: 0;
-    left: 0;
-    overflow: visible;
-    /* Allow text to be fully visible */
-    overflow-y: auto;
+    text-align: left;
+    font-family: "Fanwood Text", sans-serif;
     flex: 1;
   }
   .text-box-container h1 {
-    font-size: 14px;
-    /* Smaller for mobile */
+    font-size: 22px;
+    /* Slightly smaller */
     margin: 5px 0;
   }
   .text-box-container h2 {
-    font-size: 12px;
+    font-size: 16px;
     margin: 5px 0;
   }
   .text-box-container h3 {
-    font-size: 10px;
+    font-size: 14px;
     margin: 5px 0;
   }
 }
@@ -4120,27 +4098,6 @@ body {
   justify-content: center;
 }
 
-@media (max-width: 768px) {
-  .sec {
-    height: auto;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  .title {
-    padding-left: 0;
-    text-align: center;
-  }
-  .title h1 {
-    font-size: 36px;
-  }
-  .title h3 {
-    font-size: 24px;
-  }
-  .x {
-    position: static;
-    margin-top: 20px;
-  }
-}
 .title {
   color: white;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -4188,6 +4145,40 @@ body {
   display: flex;
 }
 
+@media (max-width: 964px) {
+  .sec {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+  .title {
+    padding-left: 0;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+  .title h1 {
+    font-size: 42px;
+    flex-wrap: wrap;
+  }
+  .title h3 {
+    font-size: 30px;
+    flex-wrap: wrap;
+  }
+  .x {
+    position: static;
+    margin-top: 20px;
+  }
+  .aboutButton {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    position: relative;
+    display: flex;
+  }
+}
 /* ---------------------------------------------------------- */
 .pg_wrapper {
   background-color: #153243;
@@ -4393,7 +4384,6 @@ body {
   transform: rotateY(10deg);
   transform-style: preserve-3d;
   position: relative;
-  border: 2px solid red;
   /* Temporary border to see if it's rendered */
   background-color: rgba(255, 0, 0, 0.1);
   /* Light background to check visibility */
@@ -4412,12 +4402,44 @@ body {
   backface-visibility: hidden;
   background-size: cover;
   background-position: center;
-  background-color: #f00;
   /* Temporary solid color */
 }
 
 .box--front {
   transform: translate3d(-100px, -150px, 0) rotateY(0deg);
+}
+
+.colorLayer,
+.inner-layer,
+.outer-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.colorLayer {
+  z-index: 0;
+  /* Behind everything */
+  background-color: rgb(5, 96, 255);
+}
+
+.inner-layer {
+  z-index: 1;
+  /* On top */
+  width: 60%;
+  /* Your custom width */
+  height: 60%;
+  /* Your custom height */
+  left: 50%;
+  /* Move to center horizontally */
+  top: 63%;
+  /* Move to center vertically */
+  transform: translate(-50%, -50%);
+  /* Offset by half its size to truly center */
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .box--back {
@@ -4560,14 +4582,6 @@ body {
   color: white;
 }
 
-@media (max-width: 768px) {
-  .pg_pageButton img {
-    width: 30px;
-  }
-  .pg_pageCount {
-    font-size: 24px;
-  }
-}
 .wrapper3 {
   padding: 7px;
   background-color: #153243;
@@ -4723,7 +4737,7 @@ h2 {
   transform: scale(1.2);
 }
 
-.book3d-container {
+.product-box-container {
   width: 100vw;
   height: 100vh;
   perspective: 1500px;
@@ -4732,74 +4746,138 @@ h2 {
   align-items: center;
 }
 
-.book3d-box-holder {
+.product-box-holder {
   transform: rotateX(16deg) rotateY(0deg);
   transform-style: preserve-3d;
   cursor: grab;
 }
 
-.book3d-box-holder > div {
+.product-box-holder > div {
   position: absolute;
   top: 0;
   left: 0;
   backface-visibility: hidden;
 }
 
-.book3d-box--front {
-  width: 500px;
-  /* 200px * 2.5 */
-  height: 750px;
-  /* 300px * 2.5 */
-  background: url("@/Assets/img/pics/cover.png") no-repeat center right;
-  background-size: auto 100%;
-  transform: translate3d(-250px, -375px, 0) translate3d(0, 0, 0) rotateY(0deg);
-  /* -100px * 2.5, -150px * 2.5 */
+.pb-color-layer {
+  z-index: 0;
+  background-color: palegoldenrod;
 }
 
-.book3d-box--back {
+.product-box--front {
   width: 500px;
+  /* Adjust based on your design */
   height: 750px;
-  background: url("@/Assets/img/pics/backCover.png") no-repeat center left;
-  background-size: auto 100%;
-  transform: translate3d(-250px, -375px, 0) translate3d(0, 0, -40px) rotateY(180deg);
-  /* -16px * 2.5 */
+  position: absolute;
+  transform: translate3d(-250px, -375px, 0);
+  /* Example for front face */
 }
 
-.book3d-box--side-left {
+.product-box--back {
+  width: 500px;
+  height: 750px;
+  position: absolute;
+  transform: translate3d(-250px, -375px, -40px) rotateY(180deg);
+  /* Example for back face */
+}
+
+.product-box--side-left {
   width: 40px;
-  /* 16px * 2.5 */
   height: 750px;
-  background: url("@/Assets/img/pics/spine.png") no-repeat center center;
-  background-size: auto 100%;
   transform: translate3d(-250px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
-  /* -8px * 2.5 */
 }
 
-.book3d-box--side-right {
+.product-box--side-right {
   width: 40px;
   height: 750px;
-  background: url("@/Assets/img/pics/spine2.png") no-repeat center center;
-  background-size: cover;
-  transform: translate3d(-250px, -375px, 0) translate3d(460px, 0px, -20px) rotateY(90deg);
-  /* (184px * 2.5 = 460px), -8px * 2.5 */
+  transform: translate3d(-250px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
 }
 
-.book3d-box--top {
+.product-box--top {
   width: 500px;
   height: 40px;
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
-  background-size: cover;
   transform: translate3d(-250px, -375px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
-  /* -8px * 2.5 */
-}
-
-.book3d-box--bottom {
-  width: 500px;
-  height: 40px;
   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
   background-size: cover;
+}
+
+.product-box--bottom {
+  width: 500px;
+  height: 40px;
   transform: translate3d(-250px, -375px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
-  /* (292px * 2.5 = 730px), -8px * 2.5 */
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+/* Styles for inner divs to fill their parent containers */
+.product-box--front > div,
+.product-box--back > div,
+.product-box--side-left > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.product-box--front .pb-outer-layer {
+  z-index: 0;
+  /* Below inner layer */
+  background-size: cover;
+  /* Scales image to cover the box */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents tiling */
+}
+
+.product-box--back .pb-outer-layer {
+  z-index: 0;
+  /* Below inner layer */
+  background-size: cover;
+  /* Scales image to cover the box */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents tiling */
+}
+
+/* Add this specific rule for side-left */
+.product-box--side-left .pb-outer-layer {
+  width: 100%;
+  /* 40px */
+  height: 100%;
+  /* 750px */
+  background-size: cover;
+  /* Fits image proportionally without cropping */
+  background-position: center;
+  /* Centers the image */
+  background-repeat: no-repeat;
+  /* Prevents tiling */
+  z-index: 0;
+  /* Matches other outer layers */
+}
+
+.product-box--front .pb-color-layer {
+  /* Or your color */
+  z-index: -1;
+  /* Behind all */
+}
+
+.product-box--front .pb-inner-layer {
+  width: 50%;
+  /* 250px */
+  height: 50%;
+  /* 375px */
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%, -50%);
+  /* Center it */
+  z-index: 1;
+  /* On top */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 @media (max-width: 1300px) {
@@ -4823,44 +4901,52 @@ h2 {
     display: flex;
     justify-content: center;
   }
-  .book3d-box--front {
+  .product-box--front {
     width: 400px;
-    /* 300px * 1.33 */
+    /* 500px × 0.8 */
     height: 600px;
-    /* 450px * 1.33 */
-    transform: translate3d(-200px, -300px, 0) translate3d(0, 0, 0) rotateY(0deg);
-    /* -150px * 1.33, -225px * 1.33 */
+    /* 750px × 0.8 */
+    transform: translate3d(-200px, -300px, 0);
+    /* -250px × 0.8, -375px × 0.8 */
   }
-  .book3d-box--back {
+  .product-box--back {
     width: 400px;
+    /* 500px × 0.8 */
     height: 600px;
-    transform: translate3d(-200px, -300px, 0) translate3d(0, 0, -32px) rotateY(180deg);
-    /* -24px * 1.33 */
+    /* 750px × 0.8 */
+    transform: translate3d(-200px, -300px, -32px) rotateY(180deg);
+    /* -40px × 0.8 */
   }
-  .book3d-box--side-left {
+  .product-box--side-left {
     width: 32px;
-    /* 24px * 1.33 */
+    /* 40px × 0.8 */
     height: 600px;
+    /* 750px × 0.8 */
     transform: translate3d(-200px, -300px, 0) translate3d(-16px, 0, -16px) rotateY(-90deg);
-    /* -12px * 1.33 */
+    /* -20px × 0.8 */
   }
-  .book3d-box--side-right {
+  .product-box--side-right {
     width: 32px;
+    /* 40px × 0.8 */
     height: 600px;
-    transform: translate3d(-200px, -300px, 0) translate3d(368px, 0px, -16px) rotateY(90deg);
-    /* 276px * 1.33 ≈ 368px */
+    /* 750px × 0.8 */
+    transform: translate3d(-200px, -300px, 0) translate3d(384px, 0, -16px) rotateY(90deg);
+    /* 480px × 0.8 */
   }
-  .book3d-box--top {
+  .product-box--top {
     width: 400px;
+    /* 500px × 0.8 */
     height: 32px;
-    transform: translate3d(-200px, -300px, 0) translate3d(0px, -16px, -16px) rotateX(90deg);
-    /* -12px * 1.33 */
+    /* 40px × 0.8 */
+    transform: translate3d(-200px, -300px, 0) translate3d(0, -16px, -16px) rotateX(90deg);
   }
-  .book3d-box--bottom {
+  .product-box--bottom {
     width: 400px;
+    /* 500px × 0.8 */
     height: 32px;
-    transform: translate3d(-200px, -300px, 0) translate3d(0px, 584px, -16px) rotateX(-90deg);
-    /* 438px * 1.33 ≈ 584px */
+    /* 40px × 0.8 */
+    transform: translate3d(-200px, -300px, 0) translate3d(0, 584px, -16px) rotateX(-90deg);
+    /* 730px × 0.8 */
   }
   .feedback-box3 {
     width: 100%;

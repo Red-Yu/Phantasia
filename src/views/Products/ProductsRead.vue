@@ -69,8 +69,8 @@
 
         <div class="reviewText">
           <p>
-            Kindly note that your comments will be publicly visible, so please post
-            responsibly.
+            Kindly note that your comments will be publicly visible, so please
+            post responsibly.
           </p>
         </div>
 
@@ -173,7 +173,8 @@ export default {
       if (showPopup.value) return; // Prevent scroll handling when popup is active
 
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
 
       if (scrollTop / scrollHeight >= 0.95) {
         showPopup.value = true;
@@ -205,7 +206,8 @@ export default {
         return; // Stop executing further code
       }
 
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
       const scrollTo = (scrollHeight / 9) * index;
 
       // Scroll smoothly to the calculated position
@@ -216,8 +218,12 @@ export default {
       if (showPopup.value) return; // Prevents updating the scroll indicator when popup is active
 
       const scrollTop = window.scrollY;
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-      activeDot.value = Math.min(9, Math.floor((scrollTop / scrollHeight) * 10));
+      const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      activeDot.value = Math.min(
+        9,
+        Math.floor((scrollTop / scrollHeight) * 10)
+      );
     };
 
     const scrollToTop = (event) => {
