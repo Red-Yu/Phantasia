@@ -3438,6 +3438,7 @@ select {
   height: 380px;
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
+  position: relative;
 }
 .Create .CreateCanvas .canvasGroup .saveCanvas {
   margin-top: 10px;
