@@ -15,7 +15,6 @@
         <router-view> </router-view>
       </main>
       <!-- 頁面共用尾部 -->
-      <footer></footer>
     </div>
   </div>
 </template>

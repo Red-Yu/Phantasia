@@ -53,6 +53,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { throttle } from "lodash";
 // 引入 template store
 import { useTemplateStore } from "@/stores/template";
 
@@ -64,11 +65,11 @@ const templateStore = useTemplateStore();
 // =================
 const zoomLevel = ref(100);
 // 放大
-const zoomIn = () => {
+const zoomIn = throttle(() => {
   if (zoomLevel.value < 150) zoomLevel.value += 10;
-};
+}, 1000);
 // 縮小
-const zoomOut = () => {
+const zoomOut = throttle(() => {
   if (zoomLevel.value > 50) zoomLevel.value -= 10;
-};
+}, 1000);
 </script>

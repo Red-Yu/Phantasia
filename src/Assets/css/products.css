@@ -3193,6 +3193,38 @@ select {
   top: 0;
   left: 0;
 }
+.createInfo .bookCover .cover-save-preview {
+  display: flex;
+  gap: 30px;
+}
+.createInfo .bookCover .cover-save-preview .side {
+  width: 220px;
+  height: 305px;
+  background-color: #eead50;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.createInfo .bookCover .cover-save-preview .side .coverImg {
+  width: 220px;
+  height: auto;
+}
+.createInfo .bookCover .cover-save-preview .User-preview {
+  position: absolute;
+  top: 95px;
+  left: 22px;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+.createInfo .bookCover .cover-save-preview .User-preview .customImg {
+  width: auto;
+  height: 100%;
+  inline-size: -webkit-fill-available;
+}
 .createInfo .bookCover button {
   all: unset;
   position: absolute;
@@ -3423,6 +3455,7 @@ select {
   height: 380px;
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
+  position: relative;
 }
 .Create .CreateCanvas .canvasGroup .saveCanvas {
   margin-top: 10px;
@@ -3646,7 +3679,7 @@ select {
   width: 220px;
   height: auto;
 }
-.AddCover .parent-preview {
+.AddCover .User-preview {
   position: absolute;
   top: 95px;
   left: 22px;
@@ -3657,7 +3690,7 @@ select {
   justify-items: center;
   overflow: hidden;
 }
-.AddCover .parent-preview .customImg {
+.AddCover .User-preview .customImg {
   width: auto;
   height: 100%;
   inline-size: -webkit-fill-available;
