@@ -9,6 +9,12 @@ import BackStageMenu from "../components/BackStageMenu.vue";
 import Phantasia from "../views/Phantasia.vue";
 import PhantasiaDay from "../views/PhantasiaDay.vue";
 import PhantasiaNight from "../views/PhantasiaNight.vue";
+import NightLayout from "../views/NightLayout.vue";
+
+import Login from "../views/Auth/Login.vue";
+import Signup from "../views/Auth/Signup.vue";
+import Success from "../views/Auth/Success.vue";
+import UserManager from "../components/backStage/UserManager.vue";
 
 //==================因為下方使用懶加載，這段不需要====================
 
@@ -53,6 +59,26 @@ const router = createRouter({
       component: () => import("@/views/About.vue"),
     },
 
+    // ==========================登入相關==============================
+
+    {
+      path: "/login", //登入頁面  /login
+      name: "login",
+      component: Login,
+    },
+
+    {
+      path: "/signup", //登入頁面  /signup
+      name: "signup",
+      component: Signup,
+    },
+
+    {
+      path: "/success", //登入頁面  /success
+      name: "success",
+      component: Success,
+    },
+
     //===================個人頁面(書櫃、換裝、集點)=======================
     {
       path: "/MyCabin",
@@ -79,7 +105,7 @@ const router = createRouter({
 
     {
       path: "/Products", //商品頁
-      // component: DayLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
+      component: NightLayout, // 使用共用佈局(header和footer) 在src>views>DayLayout
       children: [
         {
           path: "", // 商品列表頁  /Products
@@ -256,6 +282,14 @@ const router = createRouter({
           component: () => import("@/views/Backstage/BackstageProduct.vue"),
         },
       ],
+    },
+
+    // ======================後台管理=======================
+
+    {
+      path: "/UserManager", //登入頁面  /login
+      name: "UserManager",
+      component: UserManager,
     },
 
     // ======================測試頁=========================

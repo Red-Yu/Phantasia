@@ -15,7 +15,7 @@
   background-color: rgba(255, 255, 255, 0);
 }
 
-//====================================
+//================共用設定(資玲)============
 // ---------------
 // 背景+邊框
 // ---------------
@@ -33,7 +33,7 @@
 //key-btn
 //--------------------------------
 
-@mixin keybtn($bgc, $borderColor: false, $boxShadow: ture) {
+@mixin keybtn($bgc, $borderColor: false, $boxShadow: true) {
   background-color: $bgc;
   width: fit-content;
   align-items: center;
@@ -52,7 +52,7 @@
   }
 }
 //--------------------------------
-//nomal-btn
+//normal-btn
 //--------------------------------
 @mixin normalBtn($Color) {
   color: $Color;
@@ -77,7 +77,6 @@
   &.active::after {
     width: 100%;
   }
-
   &:hover {
     @include cols-transition();
   }

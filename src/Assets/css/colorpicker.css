@@ -1,0 +1,11 @@
+.vc-colorpicker {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 3px;
+  box-shadow: 0 0 10px hwb(202 8% 74% 50%);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  width: 276px;
+  z-index: 10000;
+}/*# sourceMappingURL=colorpicker.css.map */

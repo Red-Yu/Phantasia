@@ -1,7 +1,13 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
-/* ----- Key Btn ---- */
+/* FanwoodText
+    AG - [ 全大寫 + 高低差 : 裝飾標題]
+    Ag - [ 字首大寫 + 粗體 : 副標 , linkBtn ]
+    normal - [ 一般文字 (內文) ]  */
+/* Aleo
+    AG - [ 內文標題、發光按鈕 ]
+    Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
   width: -moz-fit-content;
@@ -13,9 +19,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark:hover {
   background-color: #284163;
@@ -40,9 +50,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -65,9 +79,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light:hover {
   background-color: #ffcf8b;
@@ -92,9 +110,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -117,8 +139,12 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #dee2e6;
-  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .btnKey-M.dark {
@@ -132,9 +158,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark:hover {
   background-color: #284163;
@@ -159,9 +189,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -184,9 +218,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light:hover {
   background-color: #ffcf8b;
@@ -211,9 +249,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -236,14 +278,14 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #dee2e6;
-  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
-/* ----- Link Btn ---- */
-.btnLink {
-  font-size: 20px default;
-}
 .btnLink.dark {
   color: #153243;
   width: -moz-fit-content;
@@ -253,6 +295,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnLink.dark::after {
   content: "";
@@ -284,6 +331,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #eead50;
+  font-weight: 600;
 }
 .btnLink.light::after {
   content: "";
@@ -315,6 +367,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 600;
 }
 .btnLink.white::after {
   content: "";
@@ -337,8 +394,38 @@
 .btnLink.white:hover .cols span:nth-child(2) {
   display: none;
 }
+.btnLink.whiteForFrontPage {
+  color: #f9faf9;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  position: relative;
+}
+.btnLink.whiteForFrontPage::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0;
+  background-color: #f9faf9;
+  transition: width 0.4s ease;
+  transform-origin: left;
+}
+.btnLink.whiteForFrontPage:hover::after, .btnLink.whiteForFrontPage.active::after {
+  width: 100%;
+}
+.btnLink.whiteForFrontPage:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+.btnLink.whiteForFrontPage:hover .cols span:nth-child(2) {
+  display: none;
+}
 
-/* ----- tab Btn ---- */
 .btnTab {
   display: flex;
   width: 100%;
@@ -347,9 +434,13 @@
 }
 .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab .tab-cross {
   position: relative;
@@ -428,9 +519,13 @@
 }
 .btnTab.active .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab.active .tab-cross {
   position: relative;
@@ -514,9 +609,13 @@
 }
 .btnTab-list .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab-list .tab-cross {
   position: relative;
@@ -593,12 +692,111 @@
   padding: 10px;
 }
 
+.open-close-btn {
+  /* 共用外框設定 */
+  position: relative;
+  width: 60px;
+  height: 40px;
+  border-radius: 50px;
+  /* plus:十字架樣式的動畫和設定*/
+  /* hamburger:漢堡樣式的動畫和設定 */
+}
+.open-close-btn.dark {
+  border: #153243 solid;
+}
+.open-close-btn.light {
+  border: #f9faf9 solid;
+}
+.open-close-btn .dark {
+  background-color: #153243;
+}
+.open-close-btn .light {
+  background-color: #f9faf9;
+}
+.open-close-btn .cols {
+  position: absolute;
+  height: 30px;
+  width: 2px;
+  top: 3px;
+  animation: plusStart 0.5s ease-in forwards;
+  /* 根據 theme 設定顏色 */
+}
+.open-close-btn .rows {
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  width: 40px;
+  height: 2px;
+}
+@keyframes plusStart {
+  0% {
+    left: 26px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    left: var(--final-left); /* 最終位置 */
+  }
+}
+.open-close-btn .right {
+  --final-left: 18px;
+}
+.open-close-btn .left {
+  --final-left: 36px;
+}
+.open-close-btn .line {
+  position: absolute;
+  left: 8px;
+  width: 40px;
+  height: 2px;
+  animation: hamburgerStart 0.6s ease-in forwards;
+}
+@keyframes hamburgerStart {
+  0% {
+    top: 18px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    top: var(--final-top); /* 最終位置 */
+  }
+}
+.open-close-btn .top {
+  --final-top: 10px;
+}
+.open-close-btn .mid {
+  --final-top: 18px;
+}
+.open-close-btn .btm {
+  --final-top: 26px;
+}
+.open-close-btn:hover {
+  /* plus */
+  /* hamburger */
+}
+.open-close-btn:hover .right {
+  transform: translateX(9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .left {
+  transform: translateX(-9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .top {
+  transform: translateY(8px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .btm {
+  transform: translateY(-8px);
+  transition: 0.3s ease-in;
+}
+
 .inputBox {
   position: relative;
 }
 .inputBox p {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 14px;
   color: #999999;
+  font-weight: 400;
+  font-style: normal;
   margin-bottom: 5px;
 }
 .inputBox .TextInput,
@@ -611,6 +809,12 @@
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
   border-radius: 5px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .inputBox .TextInput .char-counter,
 .inputBox .OtherInput .char-counter {
@@ -621,13 +825,23 @@
 }
 .inputBox .TextInput .char-counter .currentChars,
 .inputBox .OtherInput .char-counter .currentChars {
+  font-family: "Aleo";
+  font-size: 12px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .inputBox .TextInput .char-counter .remainingChars,
 .inputBox .TextInput .char-counter span,
 .inputBox .OtherInput .char-counter .remainingChars,
 .inputBox .OtherInput .char-counter span {
+  font-family: "Aleo";
+  font-size: 12px;
   color: #999999;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .inputBox .selectIcon {
   position: absolute;
@@ -685,6 +899,12 @@ textarea {
   all: unset;
   resize: none; /* 禁止使用者調整大小 */
   overflow-y: auto; /* 允許垂直滾動 */
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 input[date],
@@ -714,10 +934,22 @@ select {
 }
 .InfoData .titleGroup h4 {
   flex: 1;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .InfoData .infoContent {
   padding: 5px;
   margin-bottom: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .icon-L .white-save {
@@ -1580,11 +1812,6 @@ select {
   display: none;
 }
 
-.file-item {
-  padding: 5px;
-  margin: 5px;
-}
-
 .grid-view {
   display: flex;
   flex-direction: column;
@@ -1616,15 +1843,32 @@ select {
   gap: 5px;
   background-color: #f9faf9;
 }
+.grid-view .file-info .file-name {
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
+}
 .grid-view .file-info .file-time {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 12px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .list-view {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
   border-bottom: #999999 solid 1px;
 }
 .list-view .file-img {
@@ -1639,18 +1883,33 @@ select {
   flex: 1;
   text-align: start;
   padding-left: 10px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .list-view .file-time {
   width: 200px;
   text-align: right;
   padding-right: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .draft-view {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
   border-bottom: #999999 solid 1px;
 }
 .draft-view .file-img {
@@ -1665,11 +1924,26 @@ select {
   flex: 1;
   text-align: start;
   padding-left: 10px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .draft-view .file-time {
   width: 200px;
   display: flex;
   justify-content: end;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .draft-view .more-button {
   width: 150px;
@@ -1683,7 +1957,12 @@ select {
   background-size: cover;
 }
 .draft-view .more-button p {
-  font-size: 16px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .ProjectMenu {
@@ -1742,10 +2021,10 @@ select {
   z-index: 2;
 }
 
-.sidebar {
+.member-center .sidebar {
   position: sticky;
   top: 0;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px); /* header 80 + boder上下 20 */
   margin-left: 1vw;
   display: flex;
   flex-direction: column;
@@ -1755,7 +2034,7 @@ select {
   border-right: #153243 solid;
   background-color: #f9faf9;
 }
-.sidebar .user {
+.member-center .sidebar .user {
   width: 100%;
   height: 250px;
   padding: 20px;
@@ -1763,8 +2042,7 @@ select {
   justify-content: center;
   align-items: center;
 }
-
-.useImg {
+.member-center .useImg {
   width: 100%;
   height: 100%;
   border-radius: 80%;
@@ -1773,38 +2051,36 @@ select {
   align-items: center;
   border: #153243 solid;
 }
-.useImg .avatar {
+.member-center .useImg .avatar {
   width: 85%;
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
 }
-
-.tab-group {
+.member-center .tab-group {
   width: 100%;
   display: flex;
   flex-direction: column;
   border-top: #153243 solid;
 }
-
-.btnTab {
+.member-center .btnTab {
   display: flex;
   width: 100%;
   border-bottom: #153243 solid;
   /* hover */
 }
-.btnTab .text {
+.member-center .btnTab .text {
   padding: 5px 10px;
   color: #153243;
   width: 100%;
   font-size: 20px;
 }
-.btnTab .tab-cross {
+.member-center .btnTab .tab-cross {
   position: relative;
   width: 40px;
   border-left: #153243 solid;
 }
-.btnTab .tab-cross .cols {
+.member-center .btnTab .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1812,12 +2088,12 @@ select {
   transform: translateX(0);
   transition: all 0.3s ease;
 }
-.btnTab .tab-cross .cols span {
+.member-center .btnTab .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #153243;
 }
-.btnTab .tab-cross .rows {
+.member-center .btnTab .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1826,18 +2102,18 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab .tab-cross .rows span {
+.member-center .btnTab .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #153243;
 }
-.btnTab:hover .tab-cross {
+.member-center .btnTab:hover .tab-cross {
   position: relative;
   height: auto;
   width: 40px;
   background-color: #153243;
 }
-.btnTab:hover .tab-cross .cols {
+.member-center .btnTab:hover .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1846,15 +2122,15 @@ select {
   transition: all 0.3s ease;
   transform: translateX(4%);
 }
-.btnTab:hover .tab-cross .cols span {
+.member-center .btnTab:hover .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #f9faf9;
 }
-.btnTab:hover .tab-cross .cols span:nth-child(2) {
+.member-center .btnTab:hover .tab-cross .cols span:nth-child(2) {
   display: none;
 }
-.btnTab:hover .tab-cross .rows {
+.member-center .btnTab:hover .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1863,30 +2139,29 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab:hover .tab-cross .rows span {
+.member-center .btnTab:hover .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #f9faf9;
 }
-
-.btnTab-click {
+.member-center .btnTab-click {
   display: flex;
   width: 100%;
   border-bottom: #153243 solid;
   /* hover */
 }
-.btnTab-click .text {
+.member-center .btnTab-click .text {
   padding: 5px 10px;
   color: #153243;
   width: 100%;
   font-size: 18px;
 }
-.btnTab-click .tab-cross {
+.member-center .btnTab-click .tab-cross {
   position: relative;
   width: 40px;
   border-left: #153243 solid;
 }
-.btnTab-click .tab-cross .cols {
+.member-center .btnTab-click .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1894,12 +2169,12 @@ select {
   transform: translateX(0);
   transition: all 0.3s ease;
 }
-.btnTab-click .tab-cross .cols span {
+.member-center .btnTab-click .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #153243;
 }
-.btnTab-click .tab-cross .rows {
+.member-center .btnTab-click .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1908,18 +2183,18 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-click .tab-cross .rows span {
+.member-center .btnTab-click .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #153243;
 }
-.btnTab-click:hover .tab-cross {
+.member-center .btnTab-click:hover .tab-cross {
   position: relative;
   height: auto;
   width: 40px;
   background-color: #153243;
 }
-.btnTab-click:hover .tab-cross .cols {
+.member-center .btnTab-click:hover .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1928,15 +2203,15 @@ select {
   transition: all 0.3s ease;
   transform: translateX(4%);
 }
-.btnTab-click:hover .tab-cross .cols span {
+.member-center .btnTab-click:hover .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #f9faf9;
 }
-.btnTab-click:hover .tab-cross .cols span:nth-child(2) {
+.member-center .btnTab-click:hover .tab-cross .cols span:nth-child(2) {
   display: none;
 }
-.btnTab-click:hover .tab-cross .rows {
+.member-center .btnTab-click:hover .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1945,34 +2220,33 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-click:hover .tab-cross .rows span {
+.member-center .btnTab-click:hover .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #f9faf9;
 }
-.btnTab-click .text {
+.member-center .btnTab-click .text {
   background-color: #153243;
   color: #f9faf9;
 }
-
-.btnTab-list {
+.member-center .btnTab-list {
   display: flex;
   width: 100%;
   border-bottom: #153243 solid;
   /* hover */
 }
-.btnTab-list .text {
+.member-center .btnTab-list .text {
   padding: 5px 10px;
   color: #153243;
   width: 100%;
   font-size: 18px;
 }
-.btnTab-list .tab-cross {
+.member-center .btnTab-list .tab-cross {
   position: relative;
   width: 40px;
   border-left: #153243 solid;
 }
-.btnTab-list .tab-cross .cols {
+.member-center .btnTab-list .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1980,12 +2254,12 @@ select {
   transform: translateX(0);
   transition: all 0.3s ease;
 }
-.btnTab-list .tab-cross .cols span {
+.member-center .btnTab-list .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #153243;
 }
-.btnTab-list .tab-cross .rows {
+.member-center .btnTab-list .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1994,18 +2268,18 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-list .tab-cross .rows span {
+.member-center .btnTab-list .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #153243;
 }
-.btnTab-list:hover .tab-cross {
+.member-center .btnTab-list:hover .tab-cross {
   position: relative;
   height: auto;
   width: 40px;
   background-color: #153243;
 }
-.btnTab-list:hover .tab-cross .cols {
+.member-center .btnTab-list:hover .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -2014,15 +2288,15 @@ select {
   transition: all 0.3s ease;
   transform: translateX(4%);
 }
-.btnTab-list:hover .tab-cross .cols span {
+.member-center .btnTab-list:hover .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #f9faf9;
 }
-.btnTab-list:hover .tab-cross .cols span:nth-child(2) {
+.member-center .btnTab-list:hover .tab-cross .cols span:nth-child(2) {
   display: none;
 }
-.btnTab-list:hover .tab-cross .rows {
+.member-center .btnTab-list:hover .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -2031,7 +2305,7 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-list:hover .tab-cross .rows span {
+.member-center .btnTab-list:hover .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #f9faf9;
@@ -2064,13 +2338,16 @@ select {
 }
 
 .model {
-  width: 100px;
-  height: 60px;
-  border-radius: 10px;
-  background-color: #dee2e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 102px;
+  height: 57px;
+  border-radius: 8px;
+  border: #dee2e6 solid 1.5px;
+  background-color: #f9faf9;
+  overflow: hidden;
+}
+.model .modelsPreview {
+  width: 680px;
+  height: 380px;
 }
 .model img {
   width: 20px;
@@ -2078,7 +2355,7 @@ select {
 }
 
 .A .model {
-  background-color: #999999;
+  background-color: #f9faf9;
 }
 
 .ContentBox.Model button {
@@ -2122,15 +2399,175 @@ select {
   opacity: 50%;
 }
 
-header {
-  width: calc(100% - 40px);
-  height: 100px;
+.backStageMenu {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+.backStageMenu .sidebar {
+  position: sticky;
+  left: 1vw;
+  top: 0;
+  max-width: 250px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: #153243 solid;
+  background-color: #f9faf9;
+}
+.backStageMenu .user {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: #153243 solid;
+}
+.backStageMenu .user .useImg {
+  width: 180px;
+  height: 180px;
+  border-radius: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #153243 solid;
+}
+.backStageMenu .user .useImg .avatar {
+  width: 85%;
+  height: 85%;
+  border-radius: 80%;
+  background-color: #dee2e6;
+}
+.backStageMenu .user .tab-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: #153243 solid;
+}
+.backStageMenu .logout-container {
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* 讓登出按鈕橫向置中 */
+}
+.backStageMenu main {
+  flex: 1;
+  padding: 20px;
+  z-index: 2;
+}
+
+.headerLayout {
+  width: calc(100% - 20px); /* 內外框:2 + 內外框間距:8 = 10 *2 邊(不用算外框 box-sizing: border-box;)*/
+  height: 80px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1vw;
+}
+.headerLayout .logoGroup {
+  height: 78px;
+  width: 78px;
+  background-color: #153243;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.headerLayout .logoGroup .textMaskBox {
+  position: absolute;
+  width: 90%;
+  height: 18px;
+  overflow: hidden;
+  bottom: 0;
+}
+.headerLayout .logoGroup .textMaskBox .textMask {
+  position: relative;
+  width: 94px;
+}
+.headerLayout .logoGroup .textMaskBox::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #153243;
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+          mask-image: linear-gradient(to right, transparent, black);
+  opacity: 0;
+}
+@keyframes glowOnce {
+  0% {
+    opacity: 50%;
+  }
+  25% {
+    opacity: 90%;
+  } /* 變亮 */
+  50% {
+    opacity: 30%;
+  }
+  100% {
+    opacity: 100%;
+  } /* 回到原本透明度 */
+}
+@keyframes reveal {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.headerLayout .logoGroup:hover .stars {
+  animation: glowOnce 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
+}
+.headerLayout .logoGroup:hover .textMaskBox::after {
+  opacity: 1; /* 讓方塊出現 */
+  animation: reveal 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.day {
+  /* 底色 */
   background-color: #f9faf9;
   border-bottom: #153243 solid;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
+  /* slogan */
+}
+.day .slogan {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
+  color: #153243;
+  font-weight: 600;
+  animation: fadeIn 1s ease forwards;
+}
+
+.night {
+  /* 底色 */
+  background-color: #153243;
+  border-bottom: #f9faf9 solid;
+  /* slogan */
+}
+.night .slogan {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
+  color: #f9faf9;
+  font-weight: 600;
+  animation: fadeIn 1s ease forwards;
 }
 
 .dayLayout {
@@ -2157,32 +2594,70 @@ header {
   bottom: 0;
   border: solid transparent;
 }
-.dayLayout .bgd-wrapper::before {
-  border-width: 10px; /* 外框寬度 */
-  border-color: #153243; /* 外框顏色 */
+.dayLayout .bgd-wrapper::before { /* 外框 */
+  border-width: 5px;
+  border-color: #153243;
   z-index: 1;
 }
-.dayLayout .bgd-wrapper::after {
-  border-width: 5px; /* 內框寬度 */
-  border-color: #153243; /* 內框顏色 */
-  top: 15px; /* 外框寬度 + padding */
-  left: 15px; /* 外框寬度 + padding */
-  right: 15px; /* 外框寬度 + padding */
-  bottom: 15px; /* 外框寬度 + padding */
+.dayLayout .bgd-wrapper::after { /* 內框 */
+  border-width: 2px;
+  border-color: #153243;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
   z-index: 2;
 }
 .dayLayout .wrapper {
-  width: calc(100% - 40px);
-  height: calc(100vh - 140px);
+  width: calc(100% - 20px);
+  height: calc(100vh - 100px); /* 20邊框 + 80header */
   position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  margin-top: 100px;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  margin-top: 80px;
   overflow: auto;
   scrollbar-width: none;
   z-index: 200;
+}
+
+.nightLayout {
+  position: relative;
+}
+.nightLayout .bgd-wrapper {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 30;
+  pointer-events: none;
+  border: 5px solid #f9faf9;
+}
+.nightLayout .bgd-wrapper::before, .nightLayout .bgd-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: solid transparent;
+}
+.nightLayout .bgd-wrapper::before { /* 外框 */
+  border-width: 6px;
+  border-color: #153243;
+  z-index: 1;
+}
+.nightLayout .bgd-wrapper::after { /* 內框 */
+  border-width: 2px;
+  border-color: #f9faf9;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  z-index: 2;
+}
+.nightLayout .Header {
+  display: none;
 }
 
 .modal-overlay {
@@ -2202,7 +2677,7 @@ header {
   max-width: 80vw;
   width: 100%;
   height: 90vh;
-  border-radius: 8px;
+  border-radius: 2px;
   overflow: hidden;
   position: relative;
 }
@@ -2221,20 +2696,20 @@ header {
   border: solid transparent;
 }
 .modal-content .bgc::before {
-  border-width: 10px; /* 外框寬度 */
+  border-width: 5px; /* 外框寬度 */
   border-color: #153243; /* 外框顏色 */
   z-index: 1;
 }
 .modal-content .bgc::after {
-  border-width: 5px; /* 內框寬度 */
+  border-width: 2px; /* 內框寬度 */
   border-color: #153243; /* 內框顏色 */
-  top: 15px; /* 外框寬度 + padding */
-  left: 15px; /* 外框寬度 + padding */
-  right: 15px; /* 外框寬度 + padding */
-  bottom: 15px; /* 外框寬度 + padding */
+  top: 8px; /* 外框寬度 + padding */
+  left: 8px; /* 外框寬度 + padding */
+  right: 8px; /* 外框寬度 + padding */
+  bottom: 8px; /* 外框寬度 + padding */
   z-index: 2;
 }
-.modal-content .btm-close {
+.modal-content .btn-close {
   position: absolute;
   top: 30px;
   right: 30px;
@@ -2243,14 +2718,14 @@ header {
 .modal-content .mainContent {
   position: absolute;
   z-index: 3;
-  top: 20px;
-  bottom: 20px;
+  top: 10px;
+  bottom: 10px;
   width: 100%;
   overflow: auto;
   scrollbar-width: none;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   gap: 50px;
 }
 
@@ -2500,6 +2975,77 @@ header {
   display: none;
 }
 
+.bkTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 垂直對齊 */
+  padding: 10px 0; /* 設置內邊距，讓元素與邊緣保持一定距離 */
+}
+
+.searchFunction {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.add {
+  margin-left: 10px;
+}
+
+input.search {
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #153243;
+  padding: 7px;
+}
+
+.searchIcon {
+  cursor: pointer;
+  color: #777;
+}
+
+table {
+  width: 100%;
+  border: 1px solid;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+table, th, tr, td {
+  text-align: center;
+  padding: 10px;
+}
+
+thead {
+  background-color: #153243;
+  color: #f9faf9;
+}
+
+tbody > tr:hover {
+  background-color: #dee2e6;
+}
+
+.pagination {
+  text-align: center;
+}
+
+.pagination button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pagination button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+}
+
 .topBar {
   display: flex;
   justify-content: space-between;
@@ -2524,12 +3070,20 @@ header {
   width: 100%;
 }
 .searchFunction input::-moz-placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .searchFunction input::placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .searchFunction .fileSearch {
   display: flex;
@@ -2547,13 +3101,19 @@ header {
 .file-manager .titleBar {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  margin-bottom: 30px;
 }
 .file-manager .titleBar h3 {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 }
 .file-manager .titleBar h3 .arrow {
   background-image: url(/src/Assets/img/icon/light-arrow.png);
@@ -2562,10 +3122,12 @@ header {
   background-size: cover;
   transform: rotate(90deg);
 }
+.file-manager .titleBar h3 .arrow.asc {
+  transform: rotate(270deg);
+}
 .file-manager .titleBar .file-name {
   flex: 1;
   text-align: start;
-  padding-left: 10px;
 }
 .file-manager .titleBar .file-time {
   width: 200px;
@@ -2575,7 +3137,6 @@ header {
 .file-manager .titleBar .more-button {
   width: 150px;
   display: flex;
-  padding-right: 10px;
   justify-content: end;
 }
 
@@ -2590,16 +3151,20 @@ header {
 .CreateProject .modeFunction {
   width: 100%;
   display: flex;
-  padding: 10px;
   justify-content: space-between;
+  align-items: center;
 }
 .CreateProject .modeFunction .title {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .CreateProject .modeFunction .view-mode-buttons {
   display: flex;
-  justify-content: end;
-  padding-right: 20px;
+  justify-content: space-between;
   gap: 20px;
 }
 .CreateProject .modeFunction .view-mode-buttons button {
@@ -2621,8 +3186,8 @@ header {
 }
 .CreateProject .Recent-file-list.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
 }
 .CreateProject .file-list {
   display: flex;
@@ -2630,8 +3195,8 @@ header {
 }
 .CreateProject .file-list.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
 }
 .CreateProject .file-list.list {
   display: flex;
@@ -2656,9 +3221,13 @@ header {
 }
 .Draft .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .Draft .btnTab .tab-cross {
   position: relative;
@@ -2737,7 +3306,6 @@ header {
   display: flex;
   gap: 30px;
   align-items: baseline;
-  padding: 5px;
 }
 .Draft .notion {
   width: 100%;
@@ -2746,8 +3314,22 @@ header {
   background-color: #dee2e6;
   color: #153243;
 }
+.Draft .notion h3 {
+  font-family: "Aleo";
+  font-size: 20px;
+  color: #153243;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: capitalize;
+}
 .Draft .notion p {
   padding-top: 20px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 18px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .Draft .notion .memberCenterLink {
   width: 100%;
@@ -2761,9 +3343,6 @@ header {
   height: 16px;
   background-size: cover;
 }
-.Draft .notion .memberCenterLink span {
-  font-size: 16px;
-}
 
 .createInfo {
   display: flex;
@@ -2773,11 +3352,43 @@ header {
   align-items: center;
   justify-content: center;
   width: 40vw;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px);
   background-color: #dee2e6;
   position: sticky;
   top: 0;
   left: 0;
+}
+.createInfo .bookCover .cover-save-preview {
+  display: flex;
+  gap: 30px;
+}
+.createInfo .bookCover .cover-save-preview .side {
+  width: 220px;
+  height: 305px;
+  background-color: #eead50;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.createInfo .bookCover .cover-save-preview .side .coverImg {
+  width: 220px;
+  height: auto;
+}
+.createInfo .bookCover .cover-save-preview .User-preview {
+  position: absolute;
+  top: 95px;
+  left: 22px;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+.createInfo .bookCover .cover-save-preview .User-preview .customImg {
+  width: auto;
+  height: 100%;
+  inline-size: -webkit-fill-available;
 }
 .createInfo .bookCover button {
   all: unset;
@@ -2832,6 +3443,14 @@ header {
   height: 50px;
   background-size: cover;
 }
+.createInfo .stepsGroup .steps p {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 16px;
+  color: #999999;
+  font-weight: 600;
+}
 .createInfo .stepsGroup span {
   width: 50px;
   height: 5px;
@@ -2860,7 +3479,12 @@ header {
   background-size: cover;
 }
 .createInfo .stepsGroup .steps.current p {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 16px;
   color: #eead50;
+  font-weight: 600;
 }
 .createInfo .inputGroups, .createInfo .InfoConfirm {
   width: 90%;
@@ -2868,13 +3492,20 @@ header {
   flex-direction: column;
   margin-bottom: 2vh;
 }
-.createInfo .inputGroups .infoGroup .Group, .createInfo .InfoConfirm .infoGroup .Group {
+.createInfo .inputGroups .Group, .createInfo .InfoConfirm .Group {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.createInfo .inputGroups .infoGroup .Group h3, .createInfo .InfoConfirm .infoGroup .Group h3 {
+.createInfo .inputGroups .Group h3, .createInfo .InfoConfirm .Group h3 {
   margin-top: 50px;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  font-weight: 800;
 }
 .createInfo .inputGroups .StepFunction, .createInfo .InfoConfirm .StepFunction {
   display: flex;
@@ -2885,9 +3516,6 @@ header {
   display: flex;
   gap: 10px;
   opacity: 50%;
-}
-.createInfo .inputGroups .StepFunction .back p, .createInfo .InfoConfirm .StepFunction .back p {
-  font-size: 20px;
 }
 .createInfo .inputGroups.none {
   opacity: 50%;
@@ -2901,45 +3529,59 @@ header {
 }
 .Create .Function {
   position: fixed;
-  top: 120px;
-  left: 20px;
+  top: 90px;
+  left: 10px;
   z-index: 3;
 }
 .Create .PageView {
   position: fixed;
-  top: 120px;
-  right: 20px;
+  top: 90px;
+  right: 10px;
   z-index: 2;
 }
-.Create .main-content {
-  width: 100%;
-  z-index: 1;
-}
 .Create .CreateCanvas {
-  width: 100%;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
 .Create .CreateCanvas .FunctionBar {
+  position: fixed;
+  top: 110px;
+  z-index: 30;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  width: 30%;
+  max-width: 30vw;
+  width: 100%;
   background-color: #153243;
   border-radius: 100px;
-  margin-top: 30px;
 }
 .Create .CreateCanvas .FunctionBar .Zoom {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   flex: 1;
   color: #f9faf9;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.Create .CreateCanvas .FunctionBar .Zoom .btn {
+  width: 30px;
+  text-align: center;
+  font-family: "Aleo";
+  font-size: 24px;
+  color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 .Create .CreateCanvas .FunctionBar .stepGroup {
   width: 60px;
@@ -2968,15 +3610,19 @@ header {
   background-position: center center;
 }
 .Create .CreateCanvas .canvasGroup {
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.Create .CreateCanvas .canvas {
+.Create .CreateCanvas .canvasGroup .canvas {
   width: 680px;
   height: 380px;
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
+  position: relative;
 }
-.Create .CreateCanvas .addCanvas {
+.Create .CreateCanvas .canvasGroup .saveCanvas {
   margin-top: 10px;
   margin-bottom: 50px;
 }
@@ -2984,7 +3630,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px);
   background-color: #f9faf9;
   transition: width 0.3s ease;
   overflow: auto;
@@ -3020,11 +3666,23 @@ header {
   margin-bottom: 30px;
 }
 .Create .Function .bookInfoBox .title {
+  font-family: "Aleo";
+  font-size: 36px;
   color: #eead50;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .Create .Function .bookInfoBox .subTitle {
-  margin-top: 20px;
+  margin-top: 10px;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
   color: #999999;
+  font-weight: 600;
 }
 .Create .PageView {
   border-left: solid #153243;
@@ -3044,6 +3702,12 @@ header {
   flex-direction: column;
   padding: 20px 10px;
   gap: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .Create .PageView .modelView {
   display: flex;
@@ -3052,26 +3716,54 @@ header {
   justify-content: center;
 }
 .Create .PageView .modelView .modelContent {
-  width: 160px;
-  height: 100px;
+  width: 170px;
+  height: 95px;
   border: #dee2e6 solid;
   background-color: #f9faf9;
   border-radius: 10px;
   margin-bottom: 10px;
+  overflow: hidden;
 }
-.Create .Function.close, .Create .PageView.close {
+.Create .PageView .modelView .modelContent .canvasPreview {
+  width: 680px;
+  height: 380px;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn {
+  position: absolute;
+  top: 28px;
+  right: 43px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background-color: #dee2e6;
+  color: white;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn:hover {
+  background-color: #153243;
+}
+.Create .Function.close,
+.Create .PageView.close {
   width: 50px;
 }
-.Create .Function.close .Toggle, .Create .PageView.close .Toggle {
+.Create .Function.close .Toggle,
+.Create .PageView.close .Toggle {
   background-image: url("/src/Assets/img/icon/close.png");
 }
-.Create .Function.close .CheckBox, .Create .PageView.close .CheckBox {
+.Create .Function.close .CheckBox,
+.Create .PageView.close .CheckBox {
   display: none;
 }
-.Create .Function.close .bookInfoBox, .Create .PageView.close .bookInfoBox {
+.Create .Function.close .bookInfoBox,
+.Create .PageView.close .bookInfoBox {
   display: none;
 }
-.Create .Function.close .MenuContent, .Create .PageView.close .MenuContent {
+.Create .Function.close .MenuContent,
+.Create .PageView.close .MenuContent {
   display: none;
 }
 
@@ -3098,32 +3790,75 @@ header {
   text-align: center;
 }
 .CreateNewProject input::-moz-placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .CreateNewProject input::placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 
 .AddCover {
+  width: 100%;
+  position: relative;
+  display: flex;
+  gap: 10px;
+}
+.AddCover .coverView {
+  width: 400px;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 0 20px;
+  position: sticky;
+  left: 10px;
+  top: 0;
+}
+.AddCover .coverSetting {
+  width: 100%;
+  margin-top: 80px;
+  padding: 0 10px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-}
-.AddCover .coverView {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 50px;
-  margin-top: 50px;
 }
-.AddCover .coverView .side {
-  width: 230px;
-  height: 320px;
+.AddCover .side {
+  width: 220px;
+  height: 305px;
   background-color: #eead50;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.AddCover .side .coverImg {
+  width: 220px;
+  height: auto;
+}
+.AddCover .User-preview {
+  position: absolute;
+  top: 95px;
+  left: 22px;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+.AddCover .User-preview .customImg {
+  width: auto;
+  height: 100%;
+  inline-size: -webkit-fill-available;
 }
 .AddCover .titleGroup {
   display: flex;
@@ -3133,10 +3868,38 @@ header {
   justify-content: center;
 }
 .AddCover .titleGroup p {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.AddCover .titleGroup h2 {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 24px;
+  color: #153243;
+  font-weight: 600;
+}
+.AddCover .subtitle {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 600;
 }
 .AddCover .subtitle .spanBold {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  padding-left: 5px;
 }
 .AddCover .FrontCover {
   width: 100%;
@@ -3162,18 +3925,10 @@ header {
   width: 80px;
   height: auto;
 }
-.AddCover .inputFileGroup button {
-  all: unset;
-  position: relative;
-}
-.AddCover .inputFileGroup button .btnKey-M light-border {
-  z-index: 1;
-  width: 260px;
-}
-.AddCover .inputFileGroup button input[type=file] {
-  position: absolute;
-  top: 0;
-  z-index: 2;
+.AddCover .backCover {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 .AddCover .FinishBtn {
   margin-bottom: 50px;
@@ -3186,36 +3941,6 @@ header {
   align-items: center;
   justify-content: center;
 }
-.PublishSuccess .titleGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.PublishSuccess .titleGroup p {
-  display: flex;
-  align-items: center;
-}
-.PublishSuccess .titleGroup p .large {
-  font-size: 14vh;
-}
-.PublishSuccess .titleGroup p .middle {
-  font-size: 10vh;
-}
-.PublishSuccess .titleGroup p .little {
-  font-size: 8vh;
-}
-.PublishSuccess .titleGroup .top {
-  transform: translateY(4vh);
-}
-.PublishSuccess .titleGroup .mid .line {
-  width: 10vw;
-  height: 0.5vh;
-  background-color: #153243;
-}
-.PublishSuccess .titleGroup .btm {
-  transform: translateY(-4vh);
-}
 .PublishSuccess .btnGroup {
   display: flex;
   flex-direction: column;
@@ -3224,7 +3949,7 @@ header {
   align-items: center;
 }
 .PublishSuccess .btnGroup .btnKey-L {
-  width: 360px;
+  width: 400px;
   align-items: center;
   justify-content: center;
 }/*# sourceMappingURL=main.css.map */

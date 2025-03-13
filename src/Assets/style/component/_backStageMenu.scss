@@ -1,0 +1,82 @@
+// 變數
+@import '../base/color';
+$border: $baseBlue solid;
+
+.backStageMenu{
+    width: 100%;
+    display: flex;
+    gap: 10px;
+
+  // -----------------------
+  // sidebar架構
+  // -----------------------
+  .sidebar {
+    // 位置
+    position: sticky;
+    left: 1vw;
+    top: 0;
+    // 外觀
+    max-width: 250px;
+    width: 100%;
+    // height: 50vh;
+    // 內容排版
+    display: flex;
+    flex-direction: column;
+    border: $border;
+    // border-left: $border;
+    // border-right: $border;
+    // border-bottom: $border;
+    background-color: $subWhite;
+    // padding-bottom: 50px;
+
+    // justify-content: space-between; 
+  }
+  // user 物件
+  .user {
+    width: 100%;
+    // height: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: $baseBlue solid;
+    .useImg {
+      width: 180px;
+      height: 180px;
+      border-radius: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: $baseBlue solid;
+      .avatar {
+        width: 85%;
+        height: 85%;
+        border-radius: 80%;
+        background-color: $subGray;
+      }
+    }
+    .tab-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      border-top: $baseBlue solid;
+    }
+  }
+  .logout-container {
+    padding: 10px;
+    display: flex;
+    justify-content: center; /* 讓登出按鈕橫向置中 */
+    
+  }
+  // -----------------------
+  // TabBTN 在 Component btn.scss
+  // -----------------------
+  // -----------------------
+  // main架構
+  // -----------------------
+  main {
+    flex: 1;
+    padding: 20px;
+    z-index: 2;
+  }
+}

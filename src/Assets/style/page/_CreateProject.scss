@@ -22,8 +22,7 @@
         all: initial;
         width: 100%;
         &::placeholder {
-            color:  rgb(21, 50, 67,50%);
-            font-size: 20px;
+            @include FanwoodText-Normal(20px, rgb(21, 50, 67,50%))
         }
     }
     .fileSearch{
@@ -42,21 +41,24 @@
     .titleBar{
         display: flex;
         justify-content: space-between;
-        padding: 10px;
+        margin-bottom: 30px;
         h3{
-            color: $baseOrange;
+            @include Aleo-AG (16px,$baseOrange);
             display: flex;
             align-items: center;
             gap: 5px;
+            cursor: pointer;
             .arrow {
                 @include arrow("light",12px);
                 transform: rotate(90deg);
+                &.asc{
+                    transform: rotate(270deg);
+                }
             }
         }
         .file-name {
             flex: 1;
             text-align: start;
-            padding-left: 10px;
         }
         .file-time {
             width: 200px;
@@ -66,7 +68,6 @@
         .more-button{
             width: 150px;
             display: flex;
-            padding-right: 10px;
             justify-content: end;
         }
     }
@@ -86,17 +87,16 @@
     .modeFunction{
         width: 100%;
         display: flex;
-        padding: 10px;
         justify-content: space-between;
+        align-items: center;
         // title
         .title{
-            color: $baseOrange;
+            @include Aleo-AG (16px,$baseOrange);
         } 
         // 按鈕樣式
         .view-mode-buttons {
             display: flex;
-            justify-content: end;
-            padding-right: 20px;
+            justify-content: space-between;
             gap: 20px;
         
             // 換檢視方式
@@ -121,8 +121,8 @@
         flex-wrap: wrap;
         &.grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  // Grid 屬性，定義網格容器中每一列的寬度
-            gap: 5px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));  // Grid 屬性，定義網格容器中每一列的寬度
+            gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
         }
     }
     .file-list {
@@ -131,8 +131,8 @@
         // 塊狀
         &.grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));  // Grid 屬性，定義網格容器中每一列的寬度
-            gap: 5px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));  // Grid 屬性，定義網格容器中每一列的寬度
+            gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
         }
         // 條列
         &.list {
@@ -169,7 +169,6 @@
         display: flex;
         gap: 30px;
         align-items: baseline;
-        padding: 5px;
    }
    .notion{
         width: 100%;
@@ -177,8 +176,12 @@
         padding: 20px;
         background-color: $subGray;
         color: $baseBlue;
+        h3{
+            @include Aleo-Ag(20px,$baseBlue);
+        }
         p{
             padding-top:20px ;
+            @include FanwoodText-Normal(18px,$baseBlue);
         }
         .memberCenterLink{
             width: 100%;
@@ -187,9 +190,6 @@
             margin-top: 20px;
             .arrowIcon{
                 @include arrow("dark",16px);
-            }
-            span{
-                font-size: 16px;
             }
         }
    }

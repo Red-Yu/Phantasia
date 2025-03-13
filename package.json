@@ -5,13 +5,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "node server/server.js"
   },
   "dependencies": {
     "@three-ts/orbit-controls": "^1.4.7",
     "@tweenjs/tween.js": "^23.1.1",
     "animate.css": "^3.7.2",
     "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "firebase": "^11.3.1",
     "firebase-admin": "^13.1.0",
     "jquery": "^3.7.1",
@@ -26,6 +29,9 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
-    "vite": "^4.4.6"
+    "gsap": "^3.12.7",
+    "lodash": "^4.17.21",
+    "vite": "^4.4.6",
+    "vue3-colorpicker": "^2.3.0"
   }
 }

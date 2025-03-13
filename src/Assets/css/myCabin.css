@@ -1,6 +1,13 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
-/* ----- Key Btn ---- */
+/* FanwoodText
+    AG - [ 全大寫 + 高低差 : 裝飾標題]
+    Ag - [ 字首大寫 + 粗體 : 副標 , linkBtn ]
+    normal - [ 一般文字 (內文) ]  */
+/* Aleo
+    AG - [ 內文標題、發光按鈕 ]
+    Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
   width: -moz-fit-content;
@@ -12,9 +19,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark:hover {
   background-color: #284163;
@@ -39,9 +50,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -64,9 +79,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light:hover {
   background-color: #ffcf8b;
@@ -91,9 +110,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -116,8 +139,12 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #dee2e6;
-  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .btnKey-M.dark {
@@ -131,9 +158,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark:hover {
   background-color: #284163;
@@ -158,9 +189,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -183,9 +218,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light:hover {
   background-color: #ffcf8b;
@@ -210,9 +249,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -235,14 +278,14 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #dee2e6;
-  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
-/* ----- Link Btn ---- */
-.btnLink {
-  font-size: 20px default;
-}
 .btnLink.dark {
   color: #153243;
   width: -moz-fit-content;
@@ -252,6 +295,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnLink.dark::after {
   content: "";
@@ -283,6 +331,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #eead50;
+  font-weight: 600;
 }
 .btnLink.light::after {
   content: "";
@@ -314,6 +367,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 600;
 }
 .btnLink.white::after {
   content: "";
@@ -336,8 +394,38 @@
 .btnLink.white:hover .cols span:nth-child(2) {
   display: none;
 }
+.btnLink.whiteForFrontPage {
+  color: #f9faf9;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  position: relative;
+}
+.btnLink.whiteForFrontPage::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0;
+  background-color: #f9faf9;
+  transition: width 0.4s ease;
+  transform-origin: left;
+}
+.btnLink.whiteForFrontPage:hover::after, .btnLink.whiteForFrontPage.active::after {
+  width: 100%;
+}
+.btnLink.whiteForFrontPage:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+.btnLink.whiteForFrontPage:hover .cols span:nth-child(2) {
+  display: none;
+}
 
-/* ----- tab Btn ---- */
 .btnTab {
   display: flex;
   width: 100%;
@@ -346,9 +434,13 @@
 }
 .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab .tab-cross {
   position: relative;
@@ -427,9 +519,13 @@
 }
 .btnTab.active .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab.active .tab-cross {
   position: relative;
@@ -513,9 +609,13 @@
 }
 .btnTab-list .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab-list .tab-cross {
   position: relative;
@@ -590,6 +690,101 @@
 .accordionContent {
   border-bottom: #153243 solid;
   padding: 10px;
+}
+
+.open-close-btn {
+  /* 共用外框設定 */
+  position: relative;
+  width: 60px;
+  height: 40px;
+  border-radius: 50px;
+  /* plus:十字架樣式的動畫和設定*/
+  /* hamburger:漢堡樣式的動畫和設定 */
+}
+.open-close-btn.dark {
+  border: #153243 solid;
+}
+.open-close-btn.light {
+  border: #f9faf9 solid;
+}
+.open-close-btn .dark {
+  background-color: #153243;
+}
+.open-close-btn .light {
+  background-color: #f9faf9;
+}
+.open-close-btn .cols {
+  position: absolute;
+  height: 30px;
+  width: 2px;
+  top: 3px;
+  animation: plusStart 0.5s ease-in forwards;
+  /* 根據 theme 設定顏色 */
+}
+.open-close-btn .rows {
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  width: 40px;
+  height: 2px;
+}
+@keyframes plusStart {
+  0% {
+    left: 26px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    left: var(--final-left); /* 最終位置 */
+  }
+}
+.open-close-btn .right {
+  --final-left: 18px;
+}
+.open-close-btn .left {
+  --final-left: 36px;
+}
+.open-close-btn .line {
+  position: absolute;
+  left: 8px;
+  width: 40px;
+  height: 2px;
+  animation: hamburgerStart 0.6s ease-in forwards;
+}
+@keyframes hamburgerStart {
+  0% {
+    top: 18px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    top: var(--final-top); /* 最終位置 */
+  }
+}
+.open-close-btn .top {
+  --final-top: 10px;
+}
+.open-close-btn .mid {
+  --final-top: 18px;
+}
+.open-close-btn .btm {
+  --final-top: 26px;
+}
+.open-close-btn:hover {
+  /* plus */
+  /* hamburger */
+}
+.open-close-btn:hover .right {
+  transform: translateX(9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .left {
+  transform: translateX(-9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .top {
+  transform: translateY(8px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .btm {
+  transform: translateY(-8px);
+  transition: 0.3s ease-in;
 }
 
 * {

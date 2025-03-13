@@ -5,6 +5,23 @@
 <template>
   <div class="createInfo">
     <div class="bookCover">
+      <!-- AddCover 預覽畫面 -->
+      <div class="cover-save-preview">
+        <div class="side frontSide" :style="{ backgroundColor: coverSetting.color }">
+          <div v-if="coverSetting.UserCoverImageUrl" class="User-preview">
+            <img
+              class="customImg"
+              :src="coverSetting.UserCoverImageUrl"
+              alt="Uploaded in User"
+            />
+          </div>
+          <img class="coverImg" src="../../../Assets/img/book/封面.png" alt="" />
+        </div>
+        <div class="side backSide" :style="{ backgroundColor: coverSetting.color }">
+          <img class="coverImg" src="../../../Assets/img/book/封底.png" alt="" />
+        </div>
+      </div>
+      <!-- btn: AddCover -->
       <button class="addCover" @click="openModal">
         <div class="btnKey-M light">
           <p>FRONT COVER SETTING</p>
@@ -59,6 +76,7 @@
 <script setup>
 import { ref } from "vue";
 import AddCover from "../FullScreenModal/AddCover.vue";
+import { useCoverStore } from "../../../stores/coverSetting";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -77,4 +95,7 @@ const openModal = () => {
 const closeModal = () => {
   isModalVisible.value = false;
 };
+
+// 使用 Pinia store
+const coverSetting = useCoverStore();
 </script>

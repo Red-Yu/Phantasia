@@ -1,7 +1,13 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
-/* ----- Key Btn ---- */
+/* FanwoodText
+    AG - [ 全大寫 + 高低差 : 裝飾標題]
+    Ag - [ 字首大寫 + 粗體 : 副標 , linkBtn ]
+    normal - [ 一般文字 (內文) ]  */
+/* Aleo
+    AG - [ 內文標題、發光按鈕 ]
+    Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
   width: -moz-fit-content;
@@ -13,9 +19,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark:hover {
   background-color: #284163;
@@ -40,9 +50,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -65,9 +79,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light:hover {
   background-color: #ffcf8b;
@@ -92,9 +110,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 20px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 24px;
 }
 .btnKey-L.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -117,8 +139,12 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 20px;
   color: #dee2e6;
-  font-size: 24px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .btnKey-M.dark {
@@ -132,9 +158,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(21, 50, 67, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark:hover {
   background-color: #284163;
@@ -159,9 +189,13 @@
   border: 1.5px solid #153243;
   background-color: #f9faf9;
   color: #153243;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.dark-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(21, 50, 67, 0.6);
@@ -184,9 +218,13 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(238, 173, 80, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light:hover {
   background-color: #ffcf8b;
@@ -211,9 +249,13 @@
   border: 1.5px solid #eead50;
   background-color: #f9faf9;
   color: #eead50;
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-size: 20px;
 }
 .btnKey-M.light-border:hover {
   box-shadow: 0px 0px 20px 0px rgba(238, 173, 80, 0.6);
@@ -236,14 +278,14 @@
   border-radius: 10px;
   cursor: pointer;
   box-shadow: 0px 0px 30px 0px rgba(153, 153, 153, 0.6);
+  font-family: "Aleo";
+  font-size: 16px;
   color: #dee2e6;
-  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
-/* ----- Link Btn ---- */
-.btnLink {
-  font-size: 20px default;
-}
 .btnLink.dark {
   color: #153243;
   width: -moz-fit-content;
@@ -253,6 +295,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnLink.dark::after {
   content: "";
@@ -284,6 +331,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #eead50;
+  font-weight: 600;
 }
 .btnLink.light::after {
   content: "";
@@ -315,6 +367,11 @@
   gap: 10px;
   padding: 5px;
   position: relative;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 600;
 }
 .btnLink.white::after {
   content: "";
@@ -337,8 +394,38 @@
 .btnLink.white:hover .cols span:nth-child(2) {
   display: none;
 }
+.btnLink.whiteForFrontPage {
+  color: #f9faf9;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  position: relative;
+}
+.btnLink.whiteForFrontPage::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0;
+  background-color: #f9faf9;
+  transition: width 0.4s ease;
+  transform-origin: left;
+}
+.btnLink.whiteForFrontPage:hover::after, .btnLink.whiteForFrontPage.active::after {
+  width: 100%;
+}
+.btnLink.whiteForFrontPage:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+.btnLink.whiteForFrontPage:hover .cols span:nth-child(2) {
+  display: none;
+}
 
-/* ----- tab Btn ---- */
 .btnTab {
   display: flex;
   width: 100%;
@@ -347,9 +434,13 @@
 }
 .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab .tab-cross {
   position: relative;
@@ -428,9 +519,13 @@
 }
 .btnTab.active .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab.active .tab-cross {
   position: relative;
@@ -514,9 +609,13 @@
 }
 .btnTab-list .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 18px;
+  color: #153243;
+  font-weight: 600;
 }
 .btnTab-list .tab-cross {
   position: relative;
@@ -593,12 +692,111 @@
   padding: 10px;
 }
 
+.open-close-btn {
+  /* 共用外框設定 */
+  position: relative;
+  width: 60px;
+  height: 40px;
+  border-radius: 50px;
+  /* plus:十字架樣式的動畫和設定*/
+  /* hamburger:漢堡樣式的動畫和設定 */
+}
+.open-close-btn.dark {
+  border: #153243 solid;
+}
+.open-close-btn.light {
+  border: #f9faf9 solid;
+}
+.open-close-btn .dark {
+  background-color: #153243;
+}
+.open-close-btn .light {
+  background-color: #f9faf9;
+}
+.open-close-btn .cols {
+  position: absolute;
+  height: 30px;
+  width: 2px;
+  top: 3px;
+  animation: plusStart 0.5s ease-in forwards;
+  /* 根據 theme 設定顏色 */
+}
+.open-close-btn .rows {
+  position: absolute;
+  left: 8px;
+  top: 18px;
+  width: 40px;
+  height: 2px;
+}
+@keyframes plusStart {
+  0% {
+    left: 26px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    left: var(--final-left); /* 最終位置 */
+  }
+}
+.open-close-btn .right {
+  --final-left: 18px;
+}
+.open-close-btn .left {
+  --final-left: 36px;
+}
+.open-close-btn .line {
+  position: absolute;
+  left: 8px;
+  width: 40px;
+  height: 2px;
+  animation: hamburgerStart 0.6s ease-in forwards;
+}
+@keyframes hamburgerStart {
+  0% {
+    top: 18px; /* 初始位置重疊在中間 */
+  }
+  100% {
+    top: var(--final-top); /* 最終位置 */
+  }
+}
+.open-close-btn .top {
+  --final-top: 10px;
+}
+.open-close-btn .mid {
+  --final-top: 18px;
+}
+.open-close-btn .btm {
+  --final-top: 26px;
+}
+.open-close-btn:hover {
+  /* plus */
+  /* hamburger */
+}
+.open-close-btn:hover .right {
+  transform: translateX(9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .left {
+  transform: translateX(-9px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .top {
+  transform: translateY(8px);
+  transition: 0.3s ease-in;
+}
+.open-close-btn:hover .btm {
+  transform: translateY(-8px);
+  transition: 0.3s ease-in;
+}
+
 .inputBox {
   position: relative;
 }
 .inputBox p {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 14px;
   color: #999999;
+  font-weight: 400;
+  font-style: normal;
   margin-bottom: 5px;
 }
 .inputBox .TextInput,
@@ -611,6 +809,12 @@
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
   border-radius: 5px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .inputBox .TextInput .char-counter,
 .inputBox .OtherInput .char-counter {
@@ -621,13 +825,23 @@
 }
 .inputBox .TextInput .char-counter .currentChars,
 .inputBox .OtherInput .char-counter .currentChars {
+  font-family: "Aleo";
+  font-size: 12px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .inputBox .TextInput .char-counter .remainingChars,
 .inputBox .TextInput .char-counter span,
 .inputBox .OtherInput .char-counter .remainingChars,
 .inputBox .OtherInput .char-counter span {
+  font-family: "Aleo";
+  font-size: 12px;
   color: #999999;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .inputBox .selectIcon {
   position: absolute;
@@ -685,6 +899,12 @@ textarea {
   all: unset;
   resize: none; /* 禁止使用者調整大小 */
   overflow-y: auto; /* 允許垂直滾動 */
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 input[date],
@@ -714,10 +934,22 @@ select {
 }
 .InfoData .titleGroup h4 {
   flex: 1;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .InfoData .infoContent {
   padding: 5px;
   margin-bottom: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .icon-L .white-save {
@@ -1580,11 +1812,6 @@ select {
   display: none;
 }
 
-.file-item {
-  padding: 5px;
-  margin: 5px;
-}
-
 .grid-view {
   display: flex;
   flex-direction: column;
@@ -1616,15 +1843,32 @@ select {
   gap: 5px;
   background-color: #f9faf9;
 }
+.grid-view .file-info .file-name {
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
+}
 .grid-view .file-info .file-time {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 12px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .list-view {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
   border-bottom: #999999 solid 1px;
 }
 .list-view .file-img {
@@ -1639,18 +1883,33 @@ select {
   flex: 1;
   text-align: start;
   padding-left: 10px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .list-view .file-time {
   width: 200px;
   text-align: right;
   padding-right: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .draft-view {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
+  padding: 10px 0;
   border-bottom: #999999 solid 1px;
 }
 .draft-view .file-img {
@@ -1665,11 +1924,26 @@ select {
   flex: 1;
   text-align: start;
   padding-left: 10px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  overflow: hidden;
+  white-space: nowrap; /* 防止文字換行 */
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .draft-view .file-time {
   width: 200px;
   display: flex;
   justify-content: end;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .draft-view .more-button {
   width: 150px;
@@ -1683,7 +1957,12 @@ select {
   background-size: cover;
 }
 .draft-view .more-button p {
-  font-size: 16px;
+  font-family: "Aleo";
+  font-size: 14px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 
 .ProjectMenu {
@@ -1742,10 +2021,10 @@ select {
   z-index: 2;
 }
 
-.sidebar {
+.member-center .sidebar {
   position: sticky;
   top: 0;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px); /* header 80 + boder上下 20 */
   margin-left: 1vw;
   display: flex;
   flex-direction: column;
@@ -1755,7 +2034,7 @@ select {
   border-right: #153243 solid;
   background-color: #f9faf9;
 }
-.sidebar .user {
+.member-center .sidebar .user {
   width: 100%;
   height: 250px;
   padding: 20px;
@@ -1763,8 +2042,7 @@ select {
   justify-content: center;
   align-items: center;
 }
-
-.useImg {
+.member-center .useImg {
   width: 100%;
   height: 100%;
   border-radius: 80%;
@@ -1773,38 +2051,36 @@ select {
   align-items: center;
   border: #153243 solid;
 }
-.useImg .avatar {
+.member-center .useImg .avatar {
   width: 85%;
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
 }
-
-.tab-group {
+.member-center .tab-group {
   width: 100%;
   display: flex;
   flex-direction: column;
   border-top: #153243 solid;
 }
-
-.btnTab {
+.member-center .btnTab {
   display: flex;
   width: 100%;
   border-bottom: #153243 solid;
   /* hover */
 }
-.btnTab .text {
+.member-center .btnTab .text {
   padding: 5px 10px;
   color: #153243;
   width: 100%;
   font-size: 20px;
 }
-.btnTab .tab-cross {
+.member-center .btnTab .tab-cross {
   position: relative;
   width: 40px;
   border-left: #153243 solid;
 }
-.btnTab .tab-cross .cols {
+.member-center .btnTab .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1812,12 +2088,12 @@ select {
   transform: translateX(0);
   transition: all 0.3s ease;
 }
-.btnTab .tab-cross .cols span {
+.member-center .btnTab .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #153243;
 }
-.btnTab .tab-cross .rows {
+.member-center .btnTab .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1826,18 +2102,18 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab .tab-cross .rows span {
+.member-center .btnTab .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #153243;
 }
-.btnTab:hover .tab-cross {
+.member-center .btnTab:hover .tab-cross {
   position: relative;
   height: auto;
   width: 40px;
   background-color: #153243;
 }
-.btnTab:hover .tab-cross .cols {
+.member-center .btnTab:hover .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1846,15 +2122,15 @@ select {
   transition: all 0.3s ease;
   transform: translateX(4%);
 }
-.btnTab:hover .tab-cross .cols span {
+.member-center .btnTab:hover .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #f9faf9;
 }
-.btnTab:hover .tab-cross .cols span:nth-child(2) {
+.member-center .btnTab:hover .tab-cross .cols span:nth-child(2) {
   display: none;
 }
-.btnTab:hover .tab-cross .rows {
+.member-center .btnTab:hover .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1863,30 +2139,29 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab:hover .tab-cross .rows span {
+.member-center .btnTab:hover .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #f9faf9;
 }
-
-.btnTab-click {
+.member-center .btnTab-click {
   display: flex;
   width: 100%;
   border-bottom: #153243 solid;
   /* hover */
 }
-.btnTab-click .text {
+.member-center .btnTab-click .text {
   padding: 5px 10px;
   color: #153243;
   width: 100%;
   font-size: 18px;
 }
-.btnTab-click .tab-cross {
+.member-center .btnTab-click .tab-cross {
   position: relative;
   width: 40px;
   border-left: #153243 solid;
 }
-.btnTab-click .tab-cross .cols {
+.member-center .btnTab-click .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1894,12 +2169,12 @@ select {
   transform: translateX(0);
   transition: all 0.3s ease;
 }
-.btnTab-click .tab-cross .cols span {
+.member-center .btnTab-click .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #153243;
 }
-.btnTab-click .tab-cross .rows {
+.member-center .btnTab-click .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1908,18 +2183,18 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-click .tab-cross .rows span {
+.member-center .btnTab-click .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #153243;
 }
-.btnTab-click:hover .tab-cross {
+.member-center .btnTab-click:hover .tab-cross {
   position: relative;
   height: auto;
   width: 40px;
   background-color: #153243;
 }
-.btnTab-click:hover .tab-cross .cols {
+.member-center .btnTab-click:hover .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1928,15 +2203,15 @@ select {
   transition: all 0.3s ease;
   transform: translateX(4%);
 }
-.btnTab-click:hover .tab-cross .cols span {
+.member-center .btnTab-click:hover .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #f9faf9;
 }
-.btnTab-click:hover .tab-cross .cols span:nth-child(2) {
+.member-center .btnTab-click:hover .tab-cross .cols span:nth-child(2) {
   display: none;
 }
-.btnTab-click:hover .tab-cross .rows {
+.member-center .btnTab-click:hover .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1945,34 +2220,33 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-click:hover .tab-cross .rows span {
+.member-center .btnTab-click:hover .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #f9faf9;
 }
-.btnTab-click .text {
+.member-center .btnTab-click .text {
   background-color: #153243;
   color: #f9faf9;
 }
-
-.btnTab-list {
+.member-center .btnTab-list {
   display: flex;
   width: 100%;
   border-bottom: #153243 solid;
   /* hover */
 }
-.btnTab-list .text {
+.member-center .btnTab-list .text {
   padding: 5px 10px;
   color: #153243;
   width: 100%;
   font-size: 18px;
 }
-.btnTab-list .tab-cross {
+.member-center .btnTab-list .tab-cross {
   position: relative;
   width: 40px;
   border-left: #153243 solid;
 }
-.btnTab-list .tab-cross .cols {
+.member-center .btnTab-list .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -1980,12 +2254,12 @@ select {
   transform: translateX(0);
   transition: all 0.3s ease;
 }
-.btnTab-list .tab-cross .cols span {
+.member-center .btnTab-list .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #153243;
 }
-.btnTab-list .tab-cross .rows {
+.member-center .btnTab-list .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1994,18 +2268,18 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-list .tab-cross .rows span {
+.member-center .btnTab-list .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #153243;
 }
-.btnTab-list:hover .tab-cross {
+.member-center .btnTab-list:hover .tab-cross {
   position: relative;
   height: auto;
   width: 40px;
   background-color: #153243;
 }
-.btnTab-list:hover .tab-cross .cols {
+.member-center .btnTab-list:hover .tab-cross .cols {
   height: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -2014,15 +2288,15 @@ select {
   transition: all 0.3s ease;
   transform: translateX(4%);
 }
-.btnTab-list:hover .tab-cross .cols span {
+.member-center .btnTab-list:hover .tab-cross .cols span {
   width: 2px;
   height: 80%;
   background-color: #f9faf9;
 }
-.btnTab-list:hover .tab-cross .cols span:nth-child(2) {
+.member-center .btnTab-list:hover .tab-cross .cols span:nth-child(2) {
   display: none;
 }
-.btnTab-list:hover .tab-cross .rows {
+.member-center .btnTab-list:hover .tab-cross .rows {
   width: 100%;
   height: 100%;
   display: flex;
@@ -2031,7 +2305,7 @@ select {
   position: absolute;
   bottom: 0;
 }
-.btnTab-list:hover .tab-cross .rows span {
+.member-center .btnTab-list:hover .tab-cross .rows span {
   width: 80%;
   height: 2px;
   background-color: #f9faf9;
@@ -2064,13 +2338,16 @@ select {
 }
 
 .model {
-  width: 100px;
-  height: 60px;
-  border-radius: 10px;
-  background-color: #dee2e6;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 102px;
+  height: 57px;
+  border-radius: 8px;
+  border: #dee2e6 solid 1.5px;
+  background-color: #f9faf9;
+  overflow: hidden;
+}
+.model .modelsPreview {
+  width: 680px;
+  height: 380px;
 }
 .model img {
   width: 20px;
@@ -2078,7 +2355,7 @@ select {
 }
 
 .A .model {
-  background-color: #999999;
+  background-color: #f9faf9;
 }
 
 .ContentBox.Model button {
@@ -2122,15 +2399,119 @@ select {
   opacity: 50%;
 }
 
-header {
-  width: calc(100% - 40px);
-  height: 100px;
+.headerLayout {
+  width: calc(100% - 20px); /* 內外框:2 + 內外框間距:8 = 10 *2 邊(不用算外框 box-sizing: border-box;)*/
+  height: 80px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1vw;
+}
+.headerLayout .logoGroup {
+  height: 78px;
+  width: 78px;
+  background-color: #153243;
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.headerLayout .logoGroup .textMaskBox {
+  position: absolute;
+  width: 90%;
+  height: 18px;
+  overflow: hidden;
+  bottom: 0;
+}
+.headerLayout .logoGroup .textMaskBox .textMask {
+  position: relative;
+  width: 94px;
+}
+.headerLayout .logoGroup .textMaskBox::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #153243;
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+          mask-image: linear-gradient(to right, transparent, black);
+  opacity: 0;
+}
+@keyframes glowOnce {
+  0% {
+    opacity: 50%;
+  }
+  25% {
+    opacity: 90%;
+  } /* 變亮 */
+  50% {
+    opacity: 30%;
+  }
+  100% {
+    opacity: 100%;
+  } /* 回到原本透明度 */
+}
+@keyframes reveal {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+.headerLayout .logoGroup:hover .stars {
+  animation: glowOnce 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
+}
+.headerLayout .logoGroup:hover .textMaskBox::after {
+  opacity: 1; /* 讓方塊出現 */
+  animation: reveal 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.day {
+  /* 底色 */
   background-color: #f9faf9;
   border-bottom: #153243 solid;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
+  /* slogan */
+}
+.day .slogan {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
+  color: #153243;
+  font-weight: 600;
+  animation: fadeIn 1s ease forwards;
+}
+
+.night {
+  /* 底色 */
+  background-color: #153243;
+  border-bottom: #f9faf9 solid;
+  /* slogan */
+}
+.night .slogan {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
+  color: #f9faf9;
+  font-weight: 600;
+  animation: fadeIn 1s ease forwards;
 }
 
 .dayLayout {
@@ -2157,29 +2538,29 @@ header {
   bottom: 0;
   border: solid transparent;
 }
-.dayLayout .bgd-wrapper::before {
-  border-width: 10px; /* 外框寬度 */
-  border-color: #153243; /* 外框顏色 */
+.dayLayout .bgd-wrapper::before { /* 外框 */
+  border-width: 5px;
+  border-color: #153243;
   z-index: 1;
 }
-.dayLayout .bgd-wrapper::after {
-  border-width: 5px; /* 內框寬度 */
-  border-color: #153243; /* 內框顏色 */
-  top: 15px; /* 外框寬度 + padding */
-  left: 15px; /* 外框寬度 + padding */
-  right: 15px; /* 外框寬度 + padding */
-  bottom: 15px; /* 外框寬度 + padding */
+.dayLayout .bgd-wrapper::after { /* 內框 */
+  border-width: 2px;
+  border-color: #153243;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
   z-index: 2;
 }
 .dayLayout .wrapper {
-  width: calc(100% - 40px);
-  height: calc(100vh - 140px);
+  width: calc(100% - 20px);
+  height: calc(100vh - 100px); /* 20邊框 + 80header */
   position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  bottom: 20px;
-  margin-top: 100px;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  margin-top: 80px;
   overflow: auto;
   scrollbar-width: none;
   z-index: 200;
@@ -2202,7 +2583,7 @@ header {
   max-width: 80vw;
   width: 100%;
   height: 90vh;
-  border-radius: 8px;
+  border-radius: 2px;
   overflow: hidden;
   position: relative;
 }
@@ -2221,20 +2602,20 @@ header {
   border: solid transparent;
 }
 .modal-content .bgc::before {
-  border-width: 10px; /* 外框寬度 */
+  border-width: 5px; /* 外框寬度 */
   border-color: #153243; /* 外框顏色 */
   z-index: 1;
 }
 .modal-content .bgc::after {
-  border-width: 5px; /* 內框寬度 */
+  border-width: 2px; /* 內框寬度 */
   border-color: #153243; /* 內框顏色 */
-  top: 15px; /* 外框寬度 + padding */
-  left: 15px; /* 外框寬度 + padding */
-  right: 15px; /* 外框寬度 + padding */
-  bottom: 15px; /* 外框寬度 + padding */
+  top: 8px; /* 外框寬度 + padding */
+  left: 8px; /* 外框寬度 + padding */
+  right: 8px; /* 外框寬度 + padding */
+  bottom: 8px; /* 外框寬度 + padding */
   z-index: 2;
 }
-.modal-content .btm-close {
+.modal-content .btn-close {
   position: absolute;
   top: 30px;
   right: 30px;
@@ -2243,14 +2624,14 @@ header {
 .modal-content .mainContent {
   position: absolute;
   z-index: 3;
-  top: 20px;
-  bottom: 20px;
+  top: 10px;
+  bottom: 10px;
   width: 100%;
   overflow: auto;
   scrollbar-width: none;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   gap: 50px;
 }
 
@@ -2524,12 +2905,20 @@ header {
   width: 100%;
 }
 .searchFunction input::-moz-placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .searchFunction input::placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .searchFunction .fileSearch {
   display: flex;
@@ -2547,13 +2936,19 @@ header {
 .file-manager .titleBar {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  margin-bottom: 30px;
 }
 .file-manager .titleBar h3 {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 }
 .file-manager .titleBar h3 .arrow {
   background-image: url(/src/Assets/img/icon/light-arrow.png);
@@ -2562,10 +2957,12 @@ header {
   background-size: cover;
   transform: rotate(90deg);
 }
+.file-manager .titleBar h3 .arrow.asc {
+  transform: rotate(270deg);
+}
 .file-manager .titleBar .file-name {
   flex: 1;
   text-align: start;
-  padding-left: 10px;
 }
 .file-manager .titleBar .file-time {
   width: 200px;
@@ -2575,7 +2972,6 @@ header {
 .file-manager .titleBar .more-button {
   width: 150px;
   display: flex;
-  padding-right: 10px;
   justify-content: end;
 }
 
@@ -2590,16 +2986,20 @@ header {
 .CreateProject .modeFunction {
   width: 100%;
   display: flex;
-  padding: 10px;
   justify-content: space-between;
+  align-items: center;
 }
 .CreateProject .modeFunction .title {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
 }
 .CreateProject .modeFunction .view-mode-buttons {
   display: flex;
-  justify-content: end;
-  padding-right: 20px;
+  justify-content: space-between;
   gap: 20px;
 }
 .CreateProject .modeFunction .view-mode-buttons button {
@@ -2621,8 +3021,8 @@ header {
 }
 .CreateProject .Recent-file-list.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
 }
 .CreateProject .file-list {
   display: flex;
@@ -2630,8 +3030,8 @@ header {
 }
 .CreateProject .file-list.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 5px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: min(20px, 5%); /* 間距為 20px 或 5%，取較小值 */
 }
 .CreateProject .file-list.list {
   display: flex;
@@ -2656,9 +3056,13 @@ header {
 }
 .Draft .btnTab .text {
   padding: 5px 10px;
-  color: #153243;
   width: 100%;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
   font-size: 20px;
+  color: #153243;
+  font-weight: 600;
 }
 .Draft .btnTab .tab-cross {
   position: relative;
@@ -2737,7 +3141,6 @@ header {
   display: flex;
   gap: 30px;
   align-items: baseline;
-  padding: 5px;
 }
 .Draft .notion {
   width: 100%;
@@ -2746,8 +3149,22 @@ header {
   background-color: #dee2e6;
   color: #153243;
 }
+.Draft .notion h3 {
+  font-family: "Aleo";
+  font-size: 20px;
+  color: #153243;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: capitalize;
+}
 .Draft .notion p {
   padding-top: 20px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 18px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .Draft .notion .memberCenterLink {
   width: 100%;
@@ -2761,9 +3178,6 @@ header {
   height: 16px;
   background-size: cover;
 }
-.Draft .notion .memberCenterLink span {
-  font-size: 16px;
-}
 
 .createInfo {
   display: flex;
@@ -2773,11 +3187,43 @@ header {
   align-items: center;
   justify-content: center;
   width: 40vw;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px);
   background-color: #dee2e6;
   position: sticky;
   top: 0;
   left: 0;
+}
+.createInfo .bookCover .cover-save-preview {
+  display: flex;
+  gap: 30px;
+}
+.createInfo .bookCover .cover-save-preview .side {
+  width: 220px;
+  height: 305px;
+  background-color: #eead50;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.createInfo .bookCover .cover-save-preview .side .coverImg {
+  width: 220px;
+  height: auto;
+}
+.createInfo .bookCover .cover-save-preview .User-preview {
+  position: absolute;
+  top: 95px;
+  left: 22px;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+.createInfo .bookCover .cover-save-preview .User-preview .customImg {
+  width: auto;
+  height: 100%;
+  inline-size: -webkit-fill-available;
 }
 .createInfo .bookCover button {
   all: unset;
@@ -2832,6 +3278,14 @@ header {
   height: 50px;
   background-size: cover;
 }
+.createInfo .stepsGroup .steps p {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 16px;
+  color: #999999;
+  font-weight: 600;
+}
 .createInfo .stepsGroup span {
   width: 50px;
   height: 5px;
@@ -2860,7 +3314,12 @@ header {
   background-size: cover;
 }
 .createInfo .stepsGroup .steps.current p {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 16px;
   color: #eead50;
+  font-weight: 600;
 }
 .createInfo .inputGroups, .createInfo .InfoConfirm {
   width: 90%;
@@ -2868,13 +3327,20 @@ header {
   flex-direction: column;
   margin-bottom: 2vh;
 }
-.createInfo .inputGroups .infoGroup .Group, .createInfo .InfoConfirm .infoGroup .Group {
+.createInfo .inputGroups .Group, .createInfo .InfoConfirm .Group {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.createInfo .inputGroups .infoGroup .Group h3, .createInfo .InfoConfirm .infoGroup .Group h3 {
+.createInfo .inputGroups .Group h3, .createInfo .InfoConfirm .Group h3 {
   margin-top: 50px;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #153243;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  font-weight: 800;
 }
 .createInfo .inputGroups .StepFunction, .createInfo .InfoConfirm .StepFunction {
   display: flex;
@@ -2885,9 +3351,6 @@ header {
   display: flex;
   gap: 10px;
   opacity: 50%;
-}
-.createInfo .inputGroups .StepFunction .back p, .createInfo .InfoConfirm .StepFunction .back p {
-  font-size: 20px;
 }
 .createInfo .inputGroups.none {
   opacity: 50%;
@@ -2901,45 +3364,59 @@ header {
 }
 .Create .Function {
   position: fixed;
-  top: 120px;
-  left: 20px;
+  top: 90px;
+  left: 10px;
   z-index: 3;
 }
 .Create .PageView {
   position: fixed;
-  top: 120px;
-  right: 20px;
+  top: 90px;
+  right: 10px;
   z-index: 2;
 }
-.Create .main-content {
-  width: 100%;
-  z-index: 1;
-}
 .Create .CreateCanvas {
-  width: 100%;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
 }
 .Create .CreateCanvas .FunctionBar {
+  position: fixed;
+  top: 110px;
+  z-index: 30;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  width: 30%;
+  max-width: 30vw;
+  width: 100%;
   background-color: #153243;
   border-radius: 100px;
-  margin-top: 30px;
 }
 .Create .CreateCanvas .FunctionBar .Zoom {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
   flex: 1;
   color: #f9faf9;
+  font-family: "Aleo";
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.Create .CreateCanvas .FunctionBar .Zoom .btn {
+  width: 30px;
+  text-align: center;
+  font-family: "Aleo";
+  font-size: 24px;
+  color: #f9faf9;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 .Create .CreateCanvas .FunctionBar .stepGroup {
   width: 60px;
@@ -2968,15 +3445,19 @@ header {
   background-position: center center;
 }
 .Create .CreateCanvas .canvasGroup {
-  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.Create .CreateCanvas .canvas {
+.Create .CreateCanvas .canvasGroup .canvas {
   width: 680px;
   height: 380px;
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
+  position: relative;
 }
-.Create .CreateCanvas .addCanvas {
+.Create .CreateCanvas .canvasGroup .saveCanvas {
   margin-top: 10px;
   margin-bottom: 50px;
 }
@@ -2984,7 +3465,7 @@ header {
   display: flex;
   flex-direction: column;
   width: 250px;
-  height: calc(100vh - 140px);
+  height: calc(100vh - 100px);
   background-color: #f9faf9;
   transition: width 0.3s ease;
   overflow: auto;
@@ -3020,11 +3501,23 @@ header {
   margin-bottom: 30px;
 }
 .Create .Function .bookInfoBox .title {
+  font-family: "Aleo";
+  font-size: 36px;
   color: #eead50;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis; /* 超出部分顯示為 ... */
 }
 .Create .Function .bookInfoBox .subTitle {
-  margin-top: 20px;
+  margin-top: 10px;
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 20px;
   color: #999999;
+  font-weight: 600;
 }
 .Create .PageView {
   border-left: solid #153243;
@@ -3044,6 +3537,12 @@ header {
   flex-direction: column;
   padding: 20px 10px;
   gap: 10px;
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
 }
 .Create .PageView .modelView {
   display: flex;
@@ -3052,26 +3551,54 @@ header {
   justify-content: center;
 }
 .Create .PageView .modelView .modelContent {
-  width: 160px;
-  height: 100px;
+  width: 170px;
+  height: 95px;
   border: #dee2e6 solid;
   background-color: #f9faf9;
   border-radius: 10px;
   margin-bottom: 10px;
+  overflow: hidden;
 }
-.Create .Function.close, .Create .PageView.close {
+.Create .PageView .modelView .modelContent .canvasPreview {
+  width: 680px;
+  height: 380px;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn {
+  position: absolute;
+  top: 28px;
+  right: 43px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background-color: #dee2e6;
+  color: white;
+}
+.Create .PageView .modelView .modelContent .canvasPreview .remove-btn:hover {
+  background-color: #153243;
+}
+.Create .Function.close,
+.Create .PageView.close {
   width: 50px;
 }
-.Create .Function.close .Toggle, .Create .PageView.close .Toggle {
+.Create .Function.close .Toggle,
+.Create .PageView.close .Toggle {
   background-image: url("/src/Assets/img/icon/close.png");
 }
-.Create .Function.close .CheckBox, .Create .PageView.close .CheckBox {
+.Create .Function.close .CheckBox,
+.Create .PageView.close .CheckBox {
   display: none;
 }
-.Create .Function.close .bookInfoBox, .Create .PageView.close .bookInfoBox {
+.Create .Function.close .bookInfoBox,
+.Create .PageView.close .bookInfoBox {
   display: none;
 }
-.Create .Function.close .MenuContent, .Create .PageView.close .MenuContent {
+.Create .Function.close .MenuContent,
+.Create .PageView.close .MenuContent {
   display: none;
 }
 
@@ -3098,32 +3625,75 @@ header {
   text-align: center;
 }
 .CreateNewProject input::-moz-placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .CreateNewProject input::placeholder {
-  color: rgba(21, 50, 67, 0.5);
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
   font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 
 .AddCover {
+  width: 100%;
+  position: relative;
+  display: flex;
+  gap: 10px;
+}
+.AddCover .coverView {
+  width: 400px;
+  height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0 0 20px;
+  position: sticky;
+  left: 10px;
+  top: 0;
+}
+.AddCover .coverSetting {
+  width: 100%;
+  margin-top: 80px;
+  padding: 0 10px 0 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-}
-.AddCover .coverView {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   gap: 50px;
-  margin-top: 50px;
 }
-.AddCover .coverView .side {
-  width: 230px;
-  height: 320px;
+.AddCover .side {
+  width: 220px;
+  height: 305px;
   background-color: #eead50;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.AddCover .side .coverImg {
+  width: 220px;
+  height: auto;
+}
+.AddCover .User-preview {
+  position: absolute;
+  top: 95px;
+  left: 22px;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+.AddCover .User-preview .customImg {
+  width: auto;
+  height: 100%;
+  inline-size: -webkit-fill-available;
 }
 .AddCover .titleGroup {
   display: flex;
@@ -3133,10 +3703,38 @@ header {
   justify-content: center;
 }
 .AddCover .titleGroup p {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+}
+.AddCover .titleGroup h2 {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 24px;
+  color: #153243;
+  font-weight: 600;
+}
+.AddCover .subtitle {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 16px;
+  color: #153243;
+  font-weight: 400;
+  font-style: normal;
+  font-weight: 600;
 }
 .AddCover .subtitle .spanBold {
+  font-family: "Aleo";
+  font-size: 16px;
   color: #eead50;
+  font-weight: 500;
+  font-style: normal;
+  text-transform: uppercase;
+  padding-left: 5px;
 }
 .AddCover .FrontCover {
   width: 100%;
@@ -3162,18 +3760,10 @@ header {
   width: 80px;
   height: auto;
 }
-.AddCover .inputFileGroup button {
-  all: unset;
-  position: relative;
-}
-.AddCover .inputFileGroup button .btnKey-M light-border {
-  z-index: 1;
-  width: 260px;
-}
-.AddCover .inputFileGroup button input[type=file] {
-  position: absolute;
-  top: 0;
-  z-index: 2;
+.AddCover .backCover {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 .AddCover .FinishBtn {
   margin-bottom: 50px;
@@ -3186,36 +3776,6 @@ header {
   align-items: center;
   justify-content: center;
 }
-.PublishSuccess .titleGroup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.PublishSuccess .titleGroup p {
-  display: flex;
-  align-items: center;
-}
-.PublishSuccess .titleGroup p .large {
-  font-size: 14vh;
-}
-.PublishSuccess .titleGroup p .middle {
-  font-size: 10vh;
-}
-.PublishSuccess .titleGroup p .little {
-  font-size: 8vh;
-}
-.PublishSuccess .titleGroup .top {
-  transform: translateY(4vh);
-}
-.PublishSuccess .titleGroup .mid .line {
-  width: 10vw;
-  height: 0.5vh;
-  background-color: #153243;
-}
-.PublishSuccess .titleGroup .btm {
-  transform: translateY(-4vh);
-}
 .PublishSuccess .btnGroup {
   display: flex;
   flex-direction: column;
@@ -3224,19 +3784,36 @@ header {
   align-items: center;
 }
 .PublishSuccess .btnGroup .btnKey-L {
-  width: 360px;
+  width: 400px;
   align-items: center;
   justify-content: center;
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
+  justify-content: flex-start;
+  /* Align content from the top */
+  align-items: stretch;
+  /* Stretch children to full width */
+  min-height: 100vh;
+  /* Ensure it’s at least full viewport height */
   background-color: #153243;
+  margin: 0;
 }
 
 .productsWrapper {
   background-color: #153243;
-  max-width: 1440px;
+  width: 100%;
+  /* Full width */
+  min-height: 100vh;
+  /* At least full viewport height */
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
   overflow: hidden;
+  /* Prevent overflow issues */
   padding: 7px;
 }
 
@@ -3248,8 +3825,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 600px;
-  border-bottom: 2px solid white;
+  height: 500px;
+  background-color: #153243;
 }
 
 .carousel {
@@ -3282,38 +3859,27 @@ body {
   /* justify-content: center; */
   align-items: center;
   position: relative;
-  right: 130px;
-}
-
-.item-image {
-  width: 100%;
-  /* Ensure it fills the container width */
-  height: 100%;
-  /* Ensure it fills the container height */
-  -o-object-fit: contain;
-     object-fit: contain;
-  /* Prevent cropping while maintaining aspect ratio */
-  border-radius: 10px;
 }
 
 .text-box-container {
-  width: 500px;
-  height: 300px;
-  padding-left: 90px;
-  padding-top: 60px;
+  width: 460px;
+  padding-left: 120px;
+  padding-right: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   background-color: #2a5670;
   color: white;
   border-radius: 10px;
   position: absolute;
-  top: 30px;
   left: 20px;
   z-index: 2;
   text-align: left;
   font-family: "Fanwood Text", sans-serif;
+  z-index: 1;
 }
 
 .text-box-container h1 {
-  font-size: 28px;
+  font-size: 30px;
   margin: 10px 0;
 }
 
@@ -3323,7 +3889,7 @@ body {
 }
 
 .text-box-container h3 {
-  font-size: 18px;
+  font-size: 16px;
   margin: 5px 0;
 }
 
@@ -3334,12 +3900,12 @@ body {
 }
 
 .left {
-  transform: translateX(-500px);
+  transform: translateX(-600px);
   z-index: 2;
 }
 
 .right {
-  transform: translateX(500px);
+  transform: translateX(600px);
   z-index: 2;
 }
 
@@ -3349,13 +3915,151 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 916px) {
+  .carousel-container {
+    height: auto;
+    /* Adapt to content height */
+    padding-top: 80px;
+    /* Add padding instead of fixed height */
+  }
+  .carousel {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* Adapt to content */
+  }
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* Ensures left & right spacing */
+    align-items: center;
+    /* Centers items vertically */
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+    height: 100%;
+  }
+  .carousel-item {
+    width: 150px;
+    height: 100%;
+    /* Fixed height for consistency */
+    right: 0;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+  .text-box-container {
+    width: 50%;
+    /* Take half of the container */
+    height: auto;
+    padding: 20px;
+    background-color: #2a5670;
+    color: white;
+    border-radius: 10px;
+    position: relative;
+    text-align: left;
+    font-family: "Fanwood Text", sans-serif;
+    flex: 1;
+  }
+  .text-box-container h1 {
+    font-size: 22px;
+    /* Slightly smaller */
+    margin: 5px 0;
+  }
+  .text-box-container h2 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  .text-box-container h3 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+}
+@media (max-width: 550px) {
+  .carousel-container {
+    height: auto;
+    /* Adapt to content height */
+    padding-top: 80px;
+    padding-bottom: 50px;
+    /* Add padding instead of fixed height */
+  }
+  .carousel {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* Adapt to content */
+  }
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* Ensures left & right spacing */
+    align-items: center;
+    /* Centers items vertically */
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+    height: 100%;
+  }
+  .carousel-item {
+    width: 150px;
+    height: 100%;
+    /* Fixed height for consistency */
+    right: 0;
+    margin-left: 100px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+  .text-box-container {
+    width: 50%;
+    /* Take half of the container */
+    height: auto;
+    padding: 20px;
+    background-color: #2a5670;
+    color: white;
+    border-radius: 10px;
+    position: relative;
+    text-align: left;
+    font-family: "Fanwood Text", sans-serif;
+    flex: 1;
+  }
+  .text-box-container h1 {
+    font-size: 22px;
+    /* Slightly smaller */
+    margin: 5px 0;
+  }
+  .text-box-container h2 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+  .text-box-container h3 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+}
 .buttons {
   display: flex;
   justify-content: space-between;
   width: 1200px;
-  margin-top: 20px;
   position: relative;
-  top: 180px;
 }
 
 .left-button,
@@ -3381,6 +4085,18 @@ body {
   /* Adjust the height as needed */
 }
 
+.buttonPlacer {
+  width: 100%;
+  height: auto;
+  background-color: #153243;
+  border-bottom: 2px solid white;
+  /* Remove border */
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* ---------------------------------------------------------------------------- */
 .wrapper1 {
   width: 100%;
@@ -3390,12 +4106,26 @@ body {
   align-items: center;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  /* Use viewport height instead of percentage */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+}
+
 .sec {
   width: 100%;
   height: 100vh;
+  /* Full viewport height */
   position: relative;
   text-align: center;
-  background: url("../img/pics/productBg.png");
+  background: url("../img/pics/productBg.png") no-repeat center center;
+  background-size: cover;
+  /* Scales image to cover the section */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3439,8 +4169,53 @@ body {
   font-family: "Aleo", sans-serif;
 }
 
+.aboutButton {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  justify-content: right;
+  position: relative;
+  display: flex;
+}
+
+@media (max-width: 964px) {
+  .sec {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+  .title {
+    padding-left: 0;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+  .title h1 {
+    font-size: 42px;
+    flex-wrap: wrap;
+  }
+  .title h3 {
+    font-size: 30px;
+    flex-wrap: wrap;
+  }
+  .x {
+    position: static;
+    margin-top: 20px;
+  }
+  .aboutButton {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    position: relative;
+    display: flex;
+  }
+}
 /* ---------------------------------------------------------- */
 .pg_wrapper {
+  background-color: #153243;
   margin: 0;
   padding: 0;
 }
@@ -3490,11 +4265,19 @@ body {
   align-items: center;
   gap: 8px;
   /* Space between text and icon */
-  padding: 8px 12px;
+  padding: 8px 18px;
   font-size: 18px;
+  white-space: nowrap;
 }
 
-.pg_controlButton:hover {
+.pg_controlButton .icon-L {
+  transition: filter 0.3s ease-in-out;
+}
+
+/* Active button (clicked) effect */
+.pg_controlButton.pg_active,
+.pg_controlButton.pg_active-newest,
+.pg_controlButton.pg_active-oldest {
   color: #eead50;
   width: -moz-fit-content;
   width: fit-content;
@@ -3503,8 +4286,11 @@ body {
   gap: 10px;
   padding: 5px;
   position: relative;
+  /* Text changes color */
 }
-.pg_controlButton:hover::after {
+.pg_controlButton.pg_active::after,
+.pg_controlButton.pg_active-newest::after,
+.pg_controlButton.pg_active-oldest::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -3515,15 +4301,29 @@ body {
   transition: width 0.4s ease;
   transform-origin: left;
 }
-.pg_controlButton:hover:hover::after, .pg_controlButton:hover.active::after {
+.pg_controlButton.pg_active:hover::after, .pg_controlButton.pg_active.active::after,
+.pg_controlButton.pg_active-newest:hover::after,
+.pg_controlButton.pg_active-newest.active::after,
+.pg_controlButton.pg_active-oldest:hover::after,
+.pg_controlButton.pg_active-oldest.active::after {
   width: 100%;
 }
-.pg_controlButton:hover:hover .cols {
+.pg_controlButton.pg_active:hover .cols,
+.pg_controlButton.pg_active-newest:hover .cols,
+.pg_controlButton.pg_active-oldest:hover .cols {
   display: flex;
   transform: translateX(4%);
 }
-.pg_controlButton:hover:hover .cols span:nth-child(2) {
+.pg_controlButton.pg_active:hover .cols span:nth-child(2),
+.pg_controlButton.pg_active-newest:hover .cols span:nth-child(2),
+.pg_controlButton.pg_active-oldest:hover .cols span:nth-child(2) {
   display: none;
+}
+
+.pg_controlButton.pg_active .icon-L,
+.pg_controlButton.pg_active-newest .icon-L,
+.pg_controlButton.pg_active-oldest .icon-L {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%) hue-rotate(10deg);
 }
 
 .pg_searchWrapper {
@@ -3572,6 +4372,18 @@ body {
   color: #777;
 }
 
+@media (max-width: 768px) {
+  .pg_searchWrapper {
+    flex: 1;
+  }
+  .pg_searchInput {
+    width: 100%;
+  }
+  .pg_controlButton {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+}
 .pg_searchIcon {
   width: 30px;
 }
@@ -3606,7 +4418,6 @@ body {
   transform: rotateY(10deg);
   transform-style: preserve-3d;
   position: relative;
-  border: 2px solid red;
   /* Temporary border to see if it's rendered */
   background-color: rgba(255, 0, 0, 0.1);
   /* Light background to check visibility */
@@ -3620,31 +4431,67 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 216.55px;
   height: 300px;
   backface-visibility: hidden;
   background-size: cover;
   background-position: center;
-  background-color: #f00;
   /* Temporary solid color */
 }
 
+.colorLayer,
+.inner-layer,
+.outer-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+.colorLayer {
+  z-index: 0;
+  /* Behind everything */
+  background-color: #eead50;
+}
+
+.inner-layer {
+  z-index: 1;
+  /* On top */
+  width: 73%;
+  /* Your custom width */
+  height: 53%;
+  /* Your custom height */
+  left: 50%;
+  /* Move to center horizontally */
+  top: 60.5%;
+  /* Move to center vertically */
+  transform: translate(-50%, -50%);
+  /* Offset by half its size to truly center */
+  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
 .box--front {
-  transform: translate3d(-100px, -150px, 0) rotateY(0deg);
+  transform: translate3d(-100px, -150px, 8.3px) rotateY(0deg);
 }
 
 .box--back {
-  transform: translate3d(-100px, -150px, -16px) rotateY(180deg);
+  transform: translate3d(-100px, -150px, -24.3px) rotateY(180deg);
 }
 
 .box--side-left {
-  width: 16px;
-  transform: translate3d(-100px, -150px, -8px) rotateY(-90deg);
+  width: 32.78px;
+  height: 300px;
+  transform: translate3d(-116.2px, -150px, -8px) rotateY(-90deg);
 }
 
 .box--side-right {
-  width: 16px;
-  transform: translate3d(84px, -150px, -8px) rotateY(90deg);
+  width: 32.78px;
+  height: 300px;
+  transform: translate3d(99px, -150px, -8px) rotateY(90deg);
 }
 
 .pg_itemsGrid {
@@ -3657,24 +4504,33 @@ body {
   border-radius: 8px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .pg_itemsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
+  }
 }
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .pg_itemsGrid {
     grid-template-columns: 1fr;
+  }
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
   }
 }
 .pg_itemCard {
   border: 1px solid #153243;
-  border-radius: 8px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   background: #153243;
   position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
 .pg_itemCard:not(:nth-child(3n)) {
@@ -3764,73 +4620,6 @@ body {
   color: white;
 }
 
-.oneonesix {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.whirl-container {
-  width: 447px;
-  height: 662px;
-  perspective: 1200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.whirl-box-holder {
-  position: relative;
-  transform-style: preserve-3d;
-  width: 447px;
-  height: 662px;
-}
-
-.whirl-box {
-  position: absolute;
-  width: 447px;
-  height: 662px;
-  backface-visibility: hidden;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.whirl-front {
-  transform: translateZ(10px);
-}
-
-.whirl-back {
-  transform: rotateY(180deg) translateZ(10px);
-}
-
-.whirl-side-left {
-  width: 20px;
-  height: 662px;
-  transform: rotateY(-90deg) translateZ(223.5px);
-}
-
-.whirl-side-right {
-  width: 20px;
-  height: 662px;
-  transform: rotateY(90deg) translateZ(223.5px);
-}
-
-.destination-div {
-  margin-top: 830px;
-  width: 200px;
-  height: 200px;
-  background: #153243;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 300px;
-}
-
-/*---------------------------------------------------------------- */
 .wrapper3 {
   padding: 7px;
   background-color: #153243;
@@ -3843,16 +4632,6 @@ body {
   padding-bottom: 40px;
 }
 
-.hero-section3 {
-  padding: 20px 0;
-}
-
-.hero-image3 {
-  width: 50%;
-  display: block;
-  margin: auto;
-}
-
 .content-section3 {
   display: flex;
   justify-content: space-between;
@@ -3862,16 +4641,18 @@ body {
 
 .content-left3 {
   width: 45%;
-}
-
-.content-image3 {
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Ensure it contains its children */
 }
 
 .content-right3 {
   width: 50%;
   text-align: left;
   color: white;
+  font-size: 24px;
 }
 
 h1,
@@ -3903,13 +4684,12 @@ h2 {
 
 .readButton {
   position: relative;
-  /* Keep it fixed relative to viewport */
   float: right;
   padding: 20px 0px;
 }
 
 .feedback-section3 {
-  margin-top: 200px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
 }
@@ -3920,7 +4700,6 @@ h2 {
   padding: 20px;
   width: 1220px;
   height: 810px;
-  /* Fixed height for scrolling */
   overflow: hidden;
   display: flex;
 }
@@ -3930,13 +4709,15 @@ h2 {
   flex-grow: 1;
   height: 100%;
   padding-right: 20px;
-  /* Prevents content from getting cut off */
-  /* Hide scrollbar for different browsers */
-  /* Hide scrollbar but keep scrolling enabled */
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
   /* IE and Edge */
+}
+
+.feedback-list3::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
 }
 
 .feedback-entry3 {
@@ -3971,7 +4752,6 @@ h2 {
   margin-top: 10px;
 }
 
-/* Scroll Indicator Styles */
 .scroll-indicator {
   position: absolute;
   right: 10px;
@@ -3987,32 +4767,312 @@ h2 {
   height: 12px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
-  /* Light white for visibility */
   transition: background-color 0.3s ease;
 }
 
-/* Active dot turns orange */
 .scroll-dot.active {
   background-color: orange;
   transform: scale(1.2);
 }
 
-.body {
-  background-color: #153243;
+.product-box-container {
+  width: 100vw;
+  height: 100vh;
+  perspective: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-box-holder {
+  transform: rotateX(16deg) rotateY(0deg);
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+
+.product-box-holder > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.pb-color-layer {
+  z-index: 0;
+  background-color: #eead50;
+}
+
+.product-box--front {
+  width: 507.93px;
+  height: 700px;
+  position: absolute;
+  transform: translate3d(-250px, -375px, 18px);
+  /* Example for front face */
+}
+
+.product-box--back {
+  width: 507.93px;
+  height: 700px;
+  position: absolute;
+  transform: translate3d(-250px, -375px, -59px) rotateY(180deg);
+  /* Example for back face */
+}
+
+.product-box--side-left {
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
+}
+
+.product-box--side-right {
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
+}
+
+.product-box--top {
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+.product-box--bottom {
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  background-size: cover;
+}
+
+/* Styles for inner divs to fill their parent containers */
+.product-box--front > div,
+.product-box--back > div,
+.product-box--side-left > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pb-outer-layer,
+.pb-inner-layer {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.product-box--front .pb-outer-layer {
+  z-index: 0;
+}
+
+.product-box--back .pb-outer-layer {
+  z-index: 0;
+}
+
+/* Add this specific rule for side-left */
+.product-box--side-left .pb-outer-layer {
+  width: 100%;
+  /* 40px */
+  height: 100%;
+  /* 750px */
+  z-index: 0;
+  /* Matches other outer layers */
+}
+
+.product-box--front .pb-color-layer {
+  /* Or your color */
+  z-index: -1;
+  /* Behind all */
+}
+
+.product-box--front .pb-inner-layer {
+  width: 73%;
+  /* 250px */
+  height: 53%;
+  /* 375px */
+  left: 50%;
+  top: 60.5%;
+  transform: translate(-50%, -50%);
+  /* Center it */
+  z-index: 1;
+  /* On top */
+}
+
+@media (max-width: 1300px) {
+  .page-container3 {
+    width: 90%;
+  }
+  .content-section3 {
+    flex-direction: column;
+    align-items: center;
+  }
+  .content-left3,
+  .content-right3 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .content-right3 {
+    text-align: center;
+  }
+  .readButton {
+    float: none;
+    display: flex;
+    justify-content: center;
+  }
+  .product-box--front {
+    width: 406.344px;
+    height: 560px;
+    transform: translate3d(-200px, -300px, 14.4px);
+  }
+  .product-box--back {
+    width: 406.344px;
+    height: 560px;
+    transform: translate3d(-200px, -300px, -47.2px) rotateY(180deg);
+  }
+  .product-box--side-left {
+    width: 61.192px;
+    height: 560px;
+    transform: translate3d(-214.4px, -300px, 0) translate3d(-16px, 0, -16px) rotateY(-90deg);
+  }
+  .product-box--side-right {
+    width: 61.192px;
+    height: 560px;
+    transform: translate3d(-209.6px, -300px, 0) translate3d(384px, 0px, -16px) rotateY(90deg);
+    /* 480px × 0.8 */
+  }
+  .product-box--top {
+    width: 406.344px;
+    height: 61.192px;
+    transform: translate3d(-200px, -314.4px, 0) translate3d(0px, -16px, -16px) rotateX(90deg);
+  }
+  .product-box--bottom {
+    width: 406.344px;
+    height: 61.192px;
+    transform: translate3d(-200px, -354.4px, 0) translate3d(0px, 584px, -16px) rotateX(-90deg);
+  }
+  .feedback-box3 {
+    width: 100%;
+    height: 500px;
+  }
+}
+/* Small Screens (< 768px) */
+@media (max-width: 767px) {
+  .book3d-container {
+    width: 100vw;
+    height: 80vh;
+    perspective: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .page-container3 {
+    width: 95%;
+    padding-bottom: 20px;
+  }
+  .content-section3 {
+    margin-top: 20px;
+  }
+  .content-left3,
+  .content-right3 {
+    margin-bottom: 15px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+  .book3d-box-holder {
+    cursor: default;
+    /* Remove grab cursor on mobile */
+  }
+  .book3d-box--front {
+    width: 300px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, 0) rotateY(0deg);
+  }
+  .book3d-box--back {
+    width: 300px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px) rotateY(180deg);
+  }
+  .book3d-box--side-left {
+    width: 24px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px) rotateY(-90deg);
+  }
+  .book3d-box--side-right {
+    width: 24px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px) rotateY(90deg);
+  }
+  .book3d-box--top {
+    width: 300px;
+    height: 24px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px) rotateX(90deg);
+  }
+  .book3d-box--bottom {
+    width: 300px;
+    height: 24px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px) rotateX(-90deg);
+  }
+  .feedback-section3 {
+    margin-top: 30px;
+  }
+  .feedback-box3 {
+    width: 100%;
+    height: 400px;
+    padding: 10px;
+  }
+  .feedback-icon3 {
+    width: 30px;
+    height: 30px;
+  }
+  .feedback-details3 {
+    font-size: 0.9rem;
+  }
+  .scroll-indicator {
+    gap: 40px;
+  }
+  .scroll-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+.body3 {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+.body3::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari */
 }
 
 /* Fullscreen container */
 .webpage-container5 {
   position: relative;
+  background-color: #153243;
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* Each full viewport section */
 .full-section5 {
   width: 100%;
-  height: 1270px;
-  background-size: contain;
+  height: 100vh;
+  /* Changed to viewport height for responsiveness */
+  max-height: 1270px;
+  /* Maintain your max height */
+  background-size: cover;
+  /* Changed to cover for better responsiveness */
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #153243;
 }
 
 /* Scroll Indicator (Fixed at Top Left) */
@@ -4249,6 +5309,7 @@ h2 {
   justify-content: center;
   align-items: flex-end;
   /* Ensures the popup box sticks to the bottom */
+  z-index: 2000;
 }
 
 .popup-box {
@@ -4266,7 +5327,7 @@ h2 {
 }
 
 .popup-box p {
-  font-size: 48px;
+  font-size: clamp(24px, 5vw, 48px);
   color: white;
   font-family: "Aleo";
 }
@@ -4282,4 +5343,37 @@ h2 {
 
 .no-scroll {
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .full-section5 {
+    height: 80vh;
+    /* Adjust height for tablets */
+  }
+  .scroll-indicator5 {
+    top: 10px;
+    left: 10px;
+    padding: 8px;
+  }
+  .text-container-6 {
+    padding: 30px 10px;
+  }
+  .action-buttons,
+  .action-buttons8 {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+@media (max-width: 480px) {
+  .full-section5 {
+    height: 60vh;
+    /* Further adjust for mobile */
+  }
+  .user-input-textbox {
+    height: 150px;
+  }
+  .popup-box {
+    min-height: 50%;
+  }
 }/*# sourceMappingURL=products.css.map */

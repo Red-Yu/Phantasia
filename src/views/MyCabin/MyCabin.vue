@@ -29,7 +29,10 @@
 
         <div class="menu">
           <div class="backToHome_button">
-            <button @click="backToHome" class="btnLink white backToHome menuIn">
+            <button
+              @click="backToHome"
+              class="btnLink whiteForFrontPage backToHome menuIn"
+            >
               Back to home
             </button>
           </div>
@@ -73,6 +76,7 @@
                 src="../../Assets/Day/myCabin/character115x409_hover.png"
                 alt=""
                 class="character_hover"
+                @click="ToMyColset"
               />
 
               <img
@@ -129,6 +133,10 @@ const ToMyRewardCard = () => {
 
 const ToMyBookcase = () => {
   router.push("/MyCabin/MyBookcase");
+};
+
+const ToMyColset = () => {
+  router.push("/MyCabin/MyColset");
 };
 
 onMounted(() => {

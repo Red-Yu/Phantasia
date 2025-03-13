@@ -2,24 +2,9 @@
   <div class="modal-overlay" v-if="isVisible" @click="closeModal">
     <div class="modal-content" @click.stop>
       <div class="bgc"></div>
-      <button class="btm-close" @click="closeModal">關閉彈窗</button>
       <!-- mainContent -->
       <div class="mainContent PublishSuccess">
-        <div class="titleGroup">
-          <p class="top">
-            <span class="large">L</span>
-            <span class="middle">AUNCHED</span>
-          </p>
-          <p class="mid">
-            <span class="line"></span>
-            <span class="little">Is</span>
-            <span class="line"></span>
-          </p>
-          <p class="btm">
-            <span class="large">A</span>
-            <span class="middle">LREADY</span>
-          </p>
-        </div>
+        <TitleTemplate firstTitle="Launched" middleText="Is" secondTitle="Already" />
         <div class="btnGroup">
           <router-link class="backToCreate" to="/CreateProject" @click="closeModal">
             <div class="btnKey-L light">
@@ -64,6 +49,8 @@
 </template>
 
 <script setup>
+import TitleTemplate from "../../../components/TitleTemplate.vue";
+
 // 定義 props
 const props = defineProps({
   isVisible: {

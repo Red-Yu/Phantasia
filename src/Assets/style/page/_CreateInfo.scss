@@ -8,20 +8,54 @@
         align-items: center;
         justify-content: center;
         width: 40vw;
-        height: calc(100vh - 140px);
+        height: calc(100vh - 100px);
         background-color: $subGray;
         position: sticky;
         top: 0;
         left: 0;
+        // ------------------------------------------
+        // cover-save-preview
+        // ------------------------------------------
+        .cover-save-preview{
+            display: flex;
+            gap: 30px;
+            .side {
+                width: 220px;
+                height: 305px ;
+                background-color: #eead50;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                .coverImg{
+                  width: 220px;
+                  height: auto;
+                }
+            }
+            .User-preview{
+                position: absolute;
+                top: 95px;
+                left: 22px;
+                width: 175px;
+                height: 175px;
+                display: flex;
+                align-items: center;
+                justify-items: center;
+                overflow: hidden;
+                .customImg{
+                  width: auto;
+                  height: 100%;
+                  inline-size: -webkit-fill-available;
+                }
+              }
+        }
+        // 開啟 addCover 按鈕
         button{
             all: unset;
             position: absolute;
             bottom: 2vh;
         }
     }
-    .btnKey-M.light{
 
-    }
 
 // ==========================================
 // InfoInput 共用設定
@@ -66,6 +100,9 @@
                     @include check("Gray",50px)
                 }
             }
+            p{
+                @include FanwoodText-AG(16px,$subDark-gray)
+            }
         }
         span{
             width: 50px;
@@ -88,7 +125,7 @@
                 }
             }
             p{
-                color: $baseOrange;
+                @include FanwoodText-AG(16px,$baseOrange)
             }
         }
     }
@@ -100,14 +137,14 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 2vh;
-        .infoGroup{
-            .Group{
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                h3{
-                    margin-top: 50px; ;
-                }
+        .Group{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            h3{
+                margin-top: 50px;
+                @include Aleo-AG(16px,$baseBlue);
+                font-weight: 800;
             }
         }
         // 
@@ -119,9 +156,6 @@
                 display: flex;
                 gap: 10px;
                 opacity: 50%;
-                p{
-                    font-size: 20px;
-                }
             }
         }
         }   

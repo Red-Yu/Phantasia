@@ -1,19 +1,55 @@
 .AddCover {
+  width: 100%;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  .coverView {
-    width: 100%;
+  gap: 10px;
+  .coverView{
+    width: 400px;
+    height: 85vh;
     display: flex;
+    align-items: center;
     justify-content: center;
+    padding: 0 0 0 20px;
+    position: sticky;
+    left: 10px;
+    top: 0;
+  }
+  .coverSetting{
+    width: 100%;
+    margin-top: 80px;
+    padding: 0 10px 0 0;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 50px;
-    margin-top: 50px;
-    .side {
-      width: 230px;
-      height: 320px;
-      background-color: #eead50;
+  }
+  .side {
+    width: 220px;
+    height: 305px ;
+    background-color: #eead50;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    .coverImg{
+      width: 220px;
+      height: auto;
+    }
+  }
+  //frontSide
+  .User-preview{
+    position: absolute;
+    top: 95px;
+    left: 22px;
+    width: 175px;
+    height: 175px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    .customImg{
+      width: auto;
+      height: 100%;
+      inline-size: -webkit-fill-available;
     }
   }
 
@@ -25,12 +61,18 @@
     text-align: center;
     justify-content: center;
     p {
-      color: #eead50;
+      @include Aleo-AG(16px,$baseOrange);
+    }
+    h2{
+      @include FanwoodText-AG(24px,$baseBlue);
     }
   }
   .subtitle {
+    @include FanwoodText-Normal(16px,$baseBlue);
+    font-weight: 600;
     .spanBold {
-      color: #eead50;
+      @include Aleo-AG(16px,$baseOrange);
+      padding-left: 5px;
     }
   }
 
@@ -56,34 +98,22 @@
     // 樣式
     background-color: #dee2e6;
     border-radius: 10px;
-
     img {
       width: 80px;
       height: auto;
     }
-
-    button {
-      all: unset;
-      position: relative;
-      .btnKey-M light-border {
-        z-index: 1;
-        width: 260px;
-      }
-
-      input[type="file"] {
-        position: absolute;
-        top: 0;
-        z-index: 2;
-      }
-    }
   }
 
   // backCover
-  // .backCover{
-  // }
+  .backCover{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 
   // FinishBtn
   .FinishBtn {
     margin-bottom: 50px;
   }
+
 }

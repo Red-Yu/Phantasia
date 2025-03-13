@@ -1,0 +1,58 @@
+@charset "UTF-8";
+.backStageMenu {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+.backStageMenu .sidebar {
+  position: sticky;
+  left: 1vw;
+  top: 0;
+  max-width: 250px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: #153243 solid;
+  background-color: #f9faf9;
+}
+.backStageMenu .user {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: #153243 solid;
+}
+.backStageMenu .user .useImg {
+  width: 180px;
+  height: 180px;
+  border-radius: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: #153243 solid;
+}
+.backStageMenu .user .useImg .avatar {
+  width: 85%;
+  height: 85%;
+  border-radius: 80%;
+  background-color: #dee2e6;
+}
+.backStageMenu .user .tab-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-top: #153243 solid;
+}
+.backStageMenu .logout-container {
+  padding: 10px;
+  display: flex;
+  justify-content: center; /* 讓登出按鈕橫向置中 */
+}
+.backStageMenu main {
+  flex: 1;
+  padding: 20px;
+  z-index: 2;
+}
+
+/*# sourceMappingURL=backStageMenu.css.map */

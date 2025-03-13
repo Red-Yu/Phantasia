@@ -1,10 +1,108 @@
-header {
-  width: calc(100% - 40px);
-  height: 100px;
+//---------------------------------
+//設定都差不多 深色只有改邊框漢文字顏色
+//---------------------------------
+.headerLayout {
+  width: calc(100% - 20px); /* 內外框:2 + 內外框間距:8 = 10 *2 邊(不用算外框 box-sizing: border-box;)*/
+  height: 80px;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 100;
+  // 內部空間設定
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1vw;
+
+  // -------------------------
+  // logoGroup
+  // -------------------------
+  .logoGroup{
+    height: 78px;
+    width: 78px;
+    background-color: $baseBlue;
+    padding: 3px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    .textMaskBox{
+      position: absolute;
+      width: 90%;
+      height: 18px;
+      overflow: hidden;
+      bottom: 0;
+      .textMask{
+        position: relative;
+        width: calc(100px - 6px);
+      }
+      &::after{
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: $baseBlue;
+        mask-image: linear-gradient(to right, transparent, black);
+        opacity: 0;
+
+      }
+    }
+  }
+  @keyframes glowOnce {
+    0% { opacity: 50%; }
+    25% { opacity: 90%; } /* 變亮 */
+    50%{ opacity: 30%;}
+    100% { opacity: 100%; } /* 回到原本透明度 */
+  }
+  @keyframes reveal {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  .logoGroup:hover{
+    .stars{
+      animation: glowOnce 3s cubic-bezier(0.59, -0.12, 0.13, 1.14) ;
+    }
+    .textMaskBox::after {
+      opacity: 1; /* 讓方塊出現 */
+      animation: reveal 3s cubic-bezier(0.59, -0.12, 0.13, 1.14);
+    }
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.day {
+  /* 底色 */
   background-color: $subWhite;
   border-bottom: $baseBlue solid;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 100;
+
+  /* slogan */
+  .slogan{
+    @include FanwoodText-AG(20px,$baseBlue);
+    animation: fadeIn 1s ease forwards;
+  }
+}
+.night {
+  /* 底色 */
+  background-color: $baseBlue;
+  border-bottom: $subWhite solid;
+
+  /* slogan */
+  .slogan{
+    @include FanwoodText-AG(20px,$subWhite);
+    animation: fadeIn 1s ease forwards;
+  }
+
 }

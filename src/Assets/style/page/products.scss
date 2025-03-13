@@ -41,18 +41,30 @@
 
 //===============EEEE==================
 body {
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   height: auto;
-  //   margin: 0;
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
+  justify-content: flex-start;
+  /* Align content from the top */
+  align-items: stretch;
+  /* Stretch children to full width */
+  min-height: 100vh;
+  /* Ensure it’s at least full viewport height */
   background-color: #153243;
+  margin: 0;
 }
 
 .productsWrapper {
   background-color: #153243;
-  max-width: 1440px;
+  width: 100%;
+  /* Full width */
+  min-height: 100vh;
+  /* At least full viewport height */
+  display: flex;
+  flex-direction: column;
+  /* Stack children vertically */
   overflow: hidden;
+  /* Prevent overflow issues */
   padding: 7px;
 }
 
@@ -64,8 +76,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 600px;
-  border-bottom: 2px solid white;
+  height: 500px;
+
+  background-color: #153243;
 }
 
 .carousel {
@@ -98,37 +111,31 @@ body {
   /* justify-content: center; */
   align-items: center;
   position: relative;
-  right: 130px;
 }
 
-.item-image {
-  width: 100%;
-  /* Ensure it fills the container width */
-  height: 100%;
-  /* Ensure it fills the container height */
-  object-fit: contain;
-  /* Prevent cropping while maintaining aspect ratio */
-  border-radius: 10px;
-}
-
+// ================Chris修改====================
+//拿掉固定高度，新增padding-top跟padding-bottom
+// 改成用內容去撐開高度才不會內容太多時跑版
 .text-box-container {
-  width: 500px;
-  height: 300px;
-  padding-left: 90px;
-  padding-top: 60px;
+  width: 460px;
+  // height: 260px;
+  padding-left: 120px;
+  padding-right: 10px;
+  padding-top: 40px;
+  padding-bottom: 40px;
   background-color: #2a5670;
   color: white;
   border-radius: 10px;
   position: absolute;
-  top: 30px;
   left: 20px;
   z-index: 2;
   text-align: left;
   font-family: "Fanwood Text", sans-serif;
+  z-index: 1;
 }
 
 .text-box-container h1 {
-  font-size: 28px;
+  font-size: 30px;
   margin: 10px 0;
 }
 
@@ -138,7 +145,7 @@ body {
 }
 
 .text-box-container h3 {
-  font-size: 18px;
+  font-size: 16px;
   margin: 5px 0;
 }
 
@@ -149,12 +156,12 @@ body {
 }
 
 .left {
-  transform: translateX(-500px);
+  transform: translateX(-600px);
   z-index: 2;
 }
 
 .right {
-  transform: translateX(500px);
+  transform: translateX(600px);
   z-index: 2;
 }
 
@@ -164,13 +171,172 @@ body {
   z-index: 0;
 }
 
+@media (max-width: 916px) {
+  .carousel-container {
+    height: auto;
+    /* Adapt to content height */
+    padding-top: 80px;
+
+    /* Add padding instead of fixed height */
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* Adapt to content */
+  }
+
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* Ensures left & right spacing */
+    align-items: center;
+    /* Centers items vertically */
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+    height: 100%;
+  }
+
+  .carousel-item {
+    width: 150px;
+    height: 100%;
+    /* Fixed height for consistency */
+    right: 0;
+    // margin-left: 100px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+
+  .text-box-container {
+    width: 50%;
+    /* Take half of the container */
+    height: auto;
+    padding: 20px;
+    background-color: #2a5670;
+    color: white;
+    border-radius: 10px;
+    position: relative;
+    text-align: left;
+    font-family: "Fanwood Text", sans-serif;
+    flex: 1;
+  }
+
+  .text-box-container h1 {
+    font-size: 22px;
+    /* Slightly smaller */
+    margin: 5px 0;
+  }
+
+  .text-box-container h2 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .text-box-container h3 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+}
+
+@media (max-width: 550px) {
+  .carousel-container {
+    height: auto;
+    /* Adapt to content height */
+    padding-top: 80px;
+    padding-bottom: 50px;
+
+    /* Add padding instead of fixed height */
+  }
+
+  .carousel {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    /* Adapt to content */
+  }
+
+  .carousel-item-container.left,
+  .carousel-item-container.right {
+    display: none;
+    /* Completely remove non-active items from layout */
+  }
+
+  .carousel-item-container.active {
+    position: relative;
+    transform: none;
+    opacity: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    /* Ensures left & right spacing */
+    align-items: center;
+    /* Centers items vertically */
+    width: 100%;
+    max-width: 700px;
+    padding: 0 20px;
+    height: 100%;
+  }
+
+  .carousel-item {
+    width: 150px;
+    height: 100%;
+    /* Fixed height for consistency */
+    right: 0;
+    margin-left: 100px;
+    background-color: transparent;
+    /* Remove lightblue background */
+    flex: 1;
+  }
+
+  .text-box-container {
+    width: 50%;
+    /* Take half of the container */
+    height: auto;
+    padding: 20px;
+    background-color: #2a5670;
+    color: white;
+    border-radius: 10px;
+    position: relative;
+    text-align: left;
+    font-family: "Fanwood Text", sans-serif;
+    flex: 1;
+  }
+
+  .text-box-container h1 {
+    font-size: 22px;
+    /* Slightly smaller */
+    margin: 5px 0;
+  }
+
+  .text-box-container h2 {
+    font-size: 16px;
+    margin: 5px 0;
+  }
+
+  .text-box-container h3 {
+    font-size: 14px;
+    margin: 5px 0;
+  }
+}
+
 .buttons {
   display: flex;
   justify-content: space-between;
   width: 1200px;
-  margin-top: 20px;
   position: relative;
-  top: 180px;
 }
 
 .left-button,
@@ -196,6 +362,18 @@ body {
   /* Adjust the height as needed */
 }
 
+.buttonPlacer {
+  width: 100%;
+  height: auto;
+  background-color: #153243;
+  border-bottom: 2px solid white;
+  /* Remove border */
+  padding: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* ---------------------------------------------------------------------------- */
 .wrapper1 {
   width: 100%;
@@ -205,26 +383,31 @@ body {
   align-items: center;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  /* Use viewport height instead of percentage */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+}
+
 .sec {
   width: 100%;
   height: 100vh;
+  /* Full viewport height */
   position: relative;
   text-align: center;
-  background: url("../img/pics/productBg.png");
+  background: url("../img/pics/productBg.png") no-repeat center center;
+  background-size: cover;
+  /* Scales image to cover the section */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
-// header {
-//   width: 100%;
-//   height: 80px;
-//   background-color: grey;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
 
 .title {
   color: white;
@@ -263,10 +446,60 @@ body {
   font-family: "Aleo", sans-serif;
 }
 
+.aboutButton {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  justify-content: right;
+  position: relative;
+  display: flex;
+}
+
+@media (max-width: 964px) {
+  .sec {
+    height: auto;
+    min-height: 100vh;
+    padding: 20px;
+    flex-wrap: wrap;
+  }
+
+  .title {
+    padding-left: 0;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+
+  .title h1 {
+    font-size: 42px;
+    flex-wrap: wrap;
+  }
+
+  .title h3 {
+    font-size: 30px;
+    flex-wrap: wrap;
+  }
+
+  .x {
+    position: static;
+    margin-top: 20px;
+  }
+
+  .aboutButton {
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    position: relative;
+    display: flex;
+  }
+}
+
 /* ---------------------------------------------------------- */
 
 .pg_wrapper {
-  //   background-color: #153243;
+  background-color: #153243;
   margin: 0;
   padding: 0;
 }
@@ -316,13 +549,33 @@ body {
   align-items: center;
   gap: 8px;
   /* Space between text and icon */
-  padding: 8px 12px;
+  padding: 8px 18px;
   font-size: 18px;
+  white-space: nowrap;
 }
 
-.pg_controlButton:hover {
-  @include normalBtn($baseOrange);
+.pg_controlButton .icon-L {
+  transition: filter 0.3s ease-in-out;
 }
+
+/* Active button (clicked) effect */
+.pg_controlButton.pg_active,
+.pg_controlButton.pg_active-newest,
+.pg_controlButton.pg_active-oldest {
+  @include normalBtn($baseOrange);
+  /* Text changes color */
+}
+
+.pg_controlButton.pg_active .icon-L,
+.pg_controlButton.pg_active-newest .icon-L,
+.pg_controlButton.pg_active-oldest .icon-L {
+  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%)
+    hue-rotate(10deg);
+}
+
+// .pg_controlButton:hover {
+//   @include normalBtn($baseOrange);
+// }
 
 .pg_searchWrapper {
   position: relative;
@@ -363,6 +616,21 @@ body {
   color: #777;
 }
 
+@media (max-width: 768px) {
+  .pg_searchWrapper {
+    flex: 1;
+  }
+
+  .pg_searchInput {
+    width: 100%;
+  }
+
+  .pg_controlButton {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+}
+
 .pg_searchIcon {
   width: 30px;
 }
@@ -399,7 +667,6 @@ body {
   transform: rotateY(10deg);
   transform-style: preserve-3d;
   position: relative;
-  border: 2px solid red;
   /* Temporary border to see if it's rendered */
   background-color: rgba(255, 0, 0, 0.1);
   /* Light background to check visibility */
@@ -413,32 +680,79 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 200px;
+  width: 216.55px;
   height: 300px;
   backface-visibility: hidden;
   background-size: cover;
   background-position: center;
-  background-color: #f00;
+
   /* Temporary solid color */
 }
 
+.colorLayer,
+.inner-layer,
+.outer-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  // background-size: cover;
+  // background-position: center;
+
+  // =========================chris修改=========================
+  //讓圖片完整顯示不會被切到
+  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+.colorLayer {
+  z-index: 0;
+  /* Behind everything */
+  background-color: $baseOrange;
+}
+
+.inner-layer {
+  z-index: 1;
+  /* On top */
+  width: 73%;
+  /* Your custom width */
+  height: 53%;
+  /* Your custom height */
+  left: 50%;
+  /* Move to center horizontally */
+  top: 60.5%;
+  /* Move to center vertically */
+  transform: translate(-50%, -50%);
+  /* Offset by half its size to truly center */
+  // object-fit: contain;
+  // =========================chris修改=========================
+  //讓圖片完整顯示不會被切到
+  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
+// =========================chris修改=========================
+//修改數值讓書4面接合
 .box--front {
-  transform: translate3d(-100px, -150px, 0) rotateY(0deg);
+  transform: translate3d(-100px, -150px, 8.3px) rotateY(0deg);
 }
 
 .box--back {
-  transform: translate3d(-100px, -150px, -16px) rotateY(180deg);
+  transform: translate3d(-100px, -150px, -24.3px) rotateY(180deg);
 }
 
 .box--side-left {
-  width: 16px;
-
-  transform: translate3d(-100px, -150px, -8px) rotateY(-90deg);
+  width: 32.78px;
+  height: 300px;
+  transform: translate3d(-116.2px, -150px, -8px) rotateY(-90deg);
 }
 
 .box--side-right {
-  width: 16px;
-  transform: translate3d(84px, -150px, -8px) rotateY(90deg);
+  width: 32.78px;
+  height: 300px;
+
+  transform: translate3d(99px, -150px, -8px) rotateY(90deg);
 }
 
 .pg_itemsGrid {
@@ -451,27 +765,37 @@ body {
   border-radius: 8px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
   .pg_itemsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
+  }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .pg_itemsGrid {
     grid-template-columns: 1fr;
+  }
+
+  .box-holder:hover {
+    animation: none;
+    /* Disable animation on mobile */
   }
 }
 
 .pg_itemCard {
   border: 1px solid #153243;
-  border-radius: 8px;
   padding: 15px;
   display: flex;
   flex-direction: column;
   background: #153243;
-
   position: relative;
+  justify-content: center;
+  align-items: center;
 }
 
 .pg_itemCard:not(:nth-child(3n)) {
@@ -560,81 +884,8 @@ body {
   color: white;
 }
 
-.oneonesix {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.whirl-container {
-  width: 447px;
-  height: 662px;
-  perspective: 1200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.whirl-box-holder {
-  position: relative;
-  transform-style: preserve-3d;
-  width: 447px;
-  height: 662px;
-}
-
-.whirl-box {
-  position: absolute;
-  width: 447px;
-  height: 662px;
-  backface-visibility: hidden;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.whirl-front {
-  transform: translateZ(10px);
-}
-
-.whirl-back {
-  transform: rotateY(180deg) translateZ(10px);
-}
-
-.whirl-side-left {
-  width: 20px;
-  height: 662px;
-  transform: rotateY(-90deg) translateZ(223.5px);
-}
-
-.whirl-side-right {
-  width: 20px;
-  height: 662px;
-  transform: rotateY(90deg) translateZ(223.5px);
-}
-
-.destination-div {
-  margin-top: 830px;
-  width: 200px;
-  height: 200px;
-  background: #153243;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 300px;
-}
-
-/*---------------------------------------------------------------- */
-// header {
-//   width: 100%;
-//   height: 80px;
-//   background-color: grey;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
+// ----------------------------------------------------------------------------
+//
 
 .wrapper3 {
   padding: 7px;
@@ -648,16 +899,6 @@ body {
   padding-bottom: 40px;
 }
 
-.hero-section3 {
-  padding: 20px 0;
-}
-
-.hero-image3 {
-  width: 50%;
-  display: block;
-  margin: auto;
-}
-
 .content-section3 {
   display: flex;
   justify-content: space-between;
@@ -667,16 +908,18 @@ body {
 
 .content-left3 {
   width: 45%;
-}
-
-.content-image3 {
-  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  /* Ensure it contains its children */
 }
 
 .content-right3 {
   width: 50%;
   text-align: left;
   color: white;
+  font-size: 24px;
 }
 
 h1,
@@ -708,13 +951,12 @@ h2 {
 
 .readButton {
   position: relative;
-  /* Keep it fixed relative to viewport */
   float: right;
   padding: 20px 0px;
 }
 
 .feedback-section3 {
-  margin-top: 200px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
 }
@@ -725,7 +967,6 @@ h2 {
   padding: 20px;
   width: 1220px;
   height: 810px;
-  /* Fixed height for scrolling */
   overflow: hidden;
   display: flex;
 }
@@ -735,13 +976,15 @@ h2 {
   flex-grow: 1;
   height: 100%;
   padding-right: 20px;
-  /* Prevents content from getting cut off */
-  /* Hide scrollbar for different browsers */
-  /* Hide scrollbar but keep scrolling enabled */
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
   /* IE and Edge */
+}
+
+.feedback-list3::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, and Opera */
 }
 
 .feedback-entry3 {
@@ -776,7 +1019,6 @@ h2 {
   margin-top: 10px;
 }
 
-/* Scroll Indicator Styles */
 .scroll-indicator {
   position: absolute;
   right: 10px;
@@ -792,34 +1034,434 @@ h2 {
   height: 12px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.5);
-  /* Light white for visibility */
   transition: background-color 0.3s ease;
 }
 
-/* Active dot turns orange */
 .scroll-dot.active {
   background-color: orange;
   transform: scale(1.2);
 }
 
+.product-box-container {
+  width: 100vw;
+  height: 100vh;
+  perspective: 1500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-box-holder {
+  transform: rotateX(16deg) rotateY(0deg);
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+
+.product-box-holder > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.pb-color-layer {
+  z-index: 0;
+  background-color: $baseOrange;
+}
+
+.product-box--front {
+  width: 507.93px;
+  height: 700px;
+  position: absolute;
+  transform: translate3d(-250px, -375px, 18px);
+  /* Example for front face */
+}
+
+.product-box--back {
+  width: 507.93px;
+  height: 700px;
+  position: absolute;
+  transform: translate3d(-250px, -375px, -59px) rotateY(180deg);
+  /* Example for back face */
+  // background-color: palegoldenrod;
+}
+
+.product-box--side-left {
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px)
+    rotateY(-90deg);
+  // background-color: palegoldenrod;
+}
+
+.product-box--side-right {
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px)
+    rotateY(90deg);
+}
+
+.product-box--top {
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px)
+    rotateX(90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
+    no-repeat center center;
+  background-size: cover;
+}
+
+.product-box--bottom {
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px)
+    rotateX(-90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
+    no-repeat center center;
+  background-size: cover;
+}
+
+/* Styles for inner divs to fill their parent containers */
+.product-box--front > div,
+.product-box--back > div,
+.product-box--side-left > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.pb-outer-layer,
+.pb-inner-layer {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.product-box--front .pb-outer-layer {
+  z-index: 0;
+}
+
+.product-box--back .pb-outer-layer {
+  z-index: 0;
+}
+
+/* Add this specific rule for side-left */
+.product-box--side-left .pb-outer-layer {
+  width: 100%;
+  /* 40px */
+  height: 100%;
+  /* 750px */
+
+  z-index: 0;
+  /* Matches other outer layers */
+}
+
+.product-box--front .pb-color-layer {
+  /* Or your color */
+  z-index: -1;
+  /* Behind all */
+}
+
+.product-box--front .pb-inner-layer {
+  width: 73%;
+  /* 250px */
+  height: 53%;
+  /* 375px */
+  left: 50%;
+  top: 60.5%;
+  transform: translate(-50%, -50%);
+  /* Center it */
+  z-index: 1;
+  /* On top */
+}
+
+@media (max-width: 1300px) {
+  .page-container3 {
+    width: 90%;
+  }
+
+  .content-section3 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .content-left3,
+  .content-right3 {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .content-right3 {
+    text-align: center;
+  }
+
+  .readButton {
+    float: none;
+    display: flex;
+    justify-content: center;
+  }
+
+  // ====================Chris修改=====================
+  // 改成修正後的數值
+  // 直接*0.8後續要修改比較容易
+
+  .product-box--front {
+    width: 507.93px * 0.8;
+    height: 700px * 0.8;
+    transform: translate3d(-250px * 0.8, -375px * 0.8, 18px * 0.8);
+  }
+
+  .product-box--back {
+    width: 507.93px * 0.8;
+    height: 700px * 0.8;
+    transform: translate3d(-250px * 0.8, -375px * 0.8, -59px * 0.8)
+      rotateY(180deg);
+  }
+
+  .product-box--side-left {
+    width: 76.49px * 0.8;
+    height: 700px * 0.8;
+    transform: translate3d(-268px * 0.8, -375px * 0.8, 0)
+      translate3d(-20px * 0.8, 0, -20px * 0.8) rotateY(-90deg);
+  }
+
+  .product-box--side-right {
+    width: 76.49px * 0.8;
+    height: 700px * 0.8;
+    transform: translate3d(-262px * 0.8, -375px * 0.8, 0)
+      translate3d(480px * 0.8, 0px, -20px * 0.8) rotateY(90deg);
+    /* 480px × 0.8 */
+  }
+
+  .product-box--top {
+    width: 507.93px * 0.8;
+    height: 76.49px * 0.8;
+    transform: translate3d(-250px * 0.8, -393px * 0.8, 0)
+      translate3d(0px, -20px * 0.8, -20px * 0.8) rotateX(90deg);
+  }
+
+  .product-box--bottom {
+    width: 507.93px * 0.8;
+    height: 76.49px * 0.8;
+    transform: translate3d(-250px * 0.8, -443px * 0.8, 0)
+      translate3d(0px, 730px * 0.8, -20px * 0.8) rotateX(-90deg);
+  }
+
+  // .product-box--front {
+  //   width: 400px;
+  //   /* 500px × 0.8 */
+  //   height: 600px;
+  //   /* 750px × 0.8 */
+  //   transform: translate3d(-200px, -300px, 0);
+  //   /* -250px × 0.8, -375px × 0.8 */
+  // }
+
+  // .product-box--back {
+  //   width: 400px;
+  //   /* 500px × 0.8 */
+  //   height: 600px;
+  //   /* 750px × 0.8 */
+  //   transform: translate3d(-200px, -300px, -32px) rotateY(180deg);
+  //   /* -40px × 0.8 */
+  // }
+
+  // .product-box--side-left {
+  //   width: 32px;
+  //   /* 40px × 0.8 */
+  //   height: 600px;
+  //   /* 750px × 0.8 */
+  //   transform: translate3d(-200px, -300px, 0) translate3d(-16px, 0, -16px)
+  //     rotateY(-90deg);
+  //   /* -20px × 0.8 */
+  // }
+
+  // .product-box--side-right {
+  //   width: 32px;
+  //   /* 40px × 0.8 */
+  //   height: 600px;
+  //   /* 750px × 0.8 */
+  //   transform: translate3d(-200px, -300px, 0) translate3d(384px, 0, -16px)
+  //     rotateY(90deg);
+  //   /* 480px × 0.8 */
+  // }
+
+  // .product-box--top {
+  //   width: 400px;
+  //   /* 500px × 0.8 */
+  //   height: 32px;
+  //   /* 40px × 0.8 */
+  //   transform: translate3d(-200px, -300px, 0) translate3d(0, -16px, -16px)
+  //     rotateX(90deg);
+  // }
+
+  // .product-box--bottom {
+  //   width: 400px;
+  //   /* 500px × 0.8 */
+  //   height: 32px;
+  //   /* 40px × 0.8 */
+  //   transform: translate3d(-200px, -300px, 0) translate3d(0, 584px, -16px)
+  //     rotateX(-90deg);
+  //   /* 730px × 0.8 */
+  // }
+
+  .feedback-box3 {
+    width: 100%;
+    height: 500px;
+  }
+}
+
+/* Small Screens (< 768px) */
+@media (max-width: 767px) {
+  .book3d-container {
+    width: 100vw;
+    height: 80vh;
+    perspective: 1500px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .page-container3 {
+    width: 95%;
+    padding-bottom: 20px;
+  }
+
+  .content-section3 {
+    margin-top: 20px;
+  }
+
+  .content-left3,
+  .content-right3 {
+    margin-bottom: 15px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  .book3d-box-holder {
+    cursor: default;
+    /* Remove grab cursor on mobile */
+  }
+
+  .book3d-box--front {
+    width: 300px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, 0) rotateY(0deg);
+  }
+
+  .book3d-box--back {
+    width: 300px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px)
+      rotateY(180deg);
+  }
+
+  .book3d-box--side-left {
+    width: 24px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px)
+      rotateY(-90deg);
+  }
+
+  .book3d-box--side-right {
+    width: 24px;
+    height: 450px;
+    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px)
+      rotateY(90deg);
+  }
+
+  .book3d-box--top {
+    width: 300px;
+    height: 24px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px)
+      rotateX(90deg);
+  }
+
+  .book3d-box--bottom {
+    width: 300px;
+    height: 24px;
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px)
+      rotateX(-90deg);
+  }
+
+  .feedback-section3 {
+    margin-top: 30px;
+  }
+
+  .feedback-box3 {
+    width: 100%;
+    height: 400px;
+    padding: 10px;
+  }
+
+  .feedback-icon3 {
+    width: 30px;
+    height: 30px;
+  }
+
+  .feedback-details3 {
+    font-size: 0.9rem;
+  }
+
+  .scroll-indicator {
+    gap: 40px;
+  }
+
+  .scroll-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
 // ----------------------------------------------------------
 
-.body {
-  background-color: #153243;
+// body {
+//   background-color: #153243;
+//   margin: 0;
+//   /* Reset default margin */
+//   padding: 0;
+// }
+
+.body3 {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+
+  &::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari */
+  }
 }
 
 /* Fullscreen container */
 .webpage-container5 {
   position: relative;
+  background-color: #153243;
+  width: 100%;
+  min-height: 100vh;
 }
 
 /* Each full viewport section */
 .full-section5 {
   width: 100%;
-  height: 1270px;
-  background-size: contain;
+  height: 100vh;
+  /* Changed to viewport height for responsiveness */
+  max-height: 1270px;
+  /* Maintain your max height */
+  background-size: cover;
+  /* Changed to cover for better responsiveness */
   background-repeat: no-repeat;
   background-position: center;
+  background-color: #153243;
 }
 
 /* Scroll Indicator (Fixed at Top Left) */
@@ -1058,6 +1700,7 @@ h2 {
   justify-content: center;
   align-items: flex-end;
   /* Ensures the popup box sticks to the bottom */
+  z-index: 2000;
 }
 
 .popup-box {
@@ -1075,7 +1718,7 @@ h2 {
 }
 
 .popup-box p {
-  font-size: 48px;
+  font-size: clamp(24px, 5vw, 48px);
   color: white;
   font-family: "Aleo";
 }
@@ -1091,6 +1734,45 @@ h2 {
 
 .no-scroll {
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .full-section5 {
+    height: 80vh;
+    /* Adjust height for tablets */
+  }
+
+  .scroll-indicator5 {
+    top: 10px;
+    left: 10px;
+    padding: 8px;
+  }
+
+  .text-container-6 {
+    padding: 30px 10px;
+  }
+
+  .action-buttons,
+  .action-buttons8 {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .full-section5 {
+    height: 60vh;
+    /* Further adjust for mobile */
+  }
+
+  .user-input-textbox {
+    height: 150px;
+  }
+
+  .popup-box {
+    min-height: 50%;
+  }
 }
 
 //============================================
