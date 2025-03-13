@@ -18,7 +18,20 @@
         <router-view> </router-view>
       </main>
       <!-- 頁面共用尾部 -->
-      <footer></footer>
+        <footer class="footer">
+        <ul class="footer-menu">
+          <li
+            v-for="(item, index) in menuItems"
+            :key="index"
+            :style="{ '--line-width': getLineWidth(index) }"
+          >
+            <a :href="item.link">{{ item.name }}</a>
+          </li>
+        </ul>
+        <div class="footer-logo">
+         <img src="https://via.placeholder.com/80" alt="Phantasia Logo" />
+        </div>
+      </footer>
     </div>
   </div>
 </template>
