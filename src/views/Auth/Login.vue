@@ -1,54 +1,57 @@
 <template>
-  
-    <div class="modal-overlay" v-if="isVisible" @click="closeModal">
-      <div class="modal-content" @click.stop>
-        <div class="bgc"></div>
-        <!-- mainContent -->
-          <div class="lightbox-content">
-            <h1>Login</h1>
+  <div class="modal-overlay" v-if="isVisible" @click="closeModal">
+    <div class="modal-content" @click.stop>
+      <div class="bgc"></div>
+      <!-- mainContent -->
+      <div class="lightbox-content">
+        <h1>Login</h1>
 
-            <form @submit.prevent="login">
-              <label for="email">E-Mail</label>
-              <input 
-                type="email" 
-                v-model="email" 
-                placeholder="Please enter your e-mail." 
-                required 
-              />
+        <form @submit.prevent="login">
+          <label for="email">E-Mail</label>
+          <input
+            type="email"
+            v-model="email"
+            placeholder="Please enter your e-mail."
+            required
+          />
 
-              <label for="password">Password</label>
-              <input
-                type="password"
-                v-model="password"
-                placeholder="Please enter your password."
-                required
-              />
-              <div class="btn">
-                <button type="submit" class="btnKey-L dark">Submit</button>
-              </div>
-
-              <p class="gotoSingup">Don't have an account? 
-              <router-link to="/Signup">Sign up here.</router-link>
-              </p>
-
-              <div class="or">
-                <p>OR</p>
-              </div>
-
-              <div class="outsideContect">
-                  <a href="#">
-                      <img src="../../Assets/img/membercenter/facebook.svg" alt="FB">
-                  </a>
-                  <a href="#">
-                      <img src="../../Assets/img/membercenter/google.svg" alt="Google">
-                  </a>
-              </div>            
-            </form>
-
-            <p v-if="error">{{ error }}</p>
+          <label for="password">Password</label>
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Please enter your password."
+            required
+          />
+          <div class="btn">
+            <button type="submit" class="btnKey-L dark">Submit</button>
           </div>
+
+          <p class="gotoSingup">
+            Don't have an account?
+            <router-link to="/Signup">Sign up here.</router-link>
+          </p>
+
+          <div class="or">
+            <p>OR</p>
+          </div>
+
+          <div class="outsideContect">
+            <a href="#">
+              <img src="../../Assets/img/membercenter/facebook.svg" alt="FB" />
+            </a>
+            <a href="#">
+              <img
+                src="../../Assets/img/membercenter/google.svg"
+                alt="Google"
+              />
+            </a>
+          </div>
+        </form>
+
+        <p v-if="error">{{ error }}</p>
       </div>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -68,12 +71,8 @@ const error = ref("");
 const router = useRouter();
 
 // 用於控制光箱顯示與隱藏
-const isVisible = ref(true); 
+// const isVisible = ref(true);
 
-// 關閉光箱
-const closeModal = () => {
-  isVisible.value = false; 
-};
 // 定義 props
 const props = defineProps({
   isVisible: {
@@ -82,7 +81,13 @@ const props = defineProps({
   },
 });
 
+// 定義 emit 事件
+const emit = defineEmits(["close"]);
 
+// 關閉彈窗的方法
+const closeModal = () => {
+  emit("close");
+};
 
 // // 監聽來自父組件的 props 變化，當父組件傳遞 isVisible = true 時顯示光箱
 // const props = defineProps({
@@ -99,7 +104,7 @@ const login = async () => {
     await signInWithEmailAndPassword(auth, email.value, password.value);
     // 登入成功後關閉光箱
     isVisible.value = false;
-    alert('Login Successful!');
+    alert("Login Successful!");
   } catch (err) {
     error.value = `Login failed: ${err.message}`;
   }

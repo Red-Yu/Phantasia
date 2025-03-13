@@ -45,11 +45,23 @@
 
         <!-- 切換檢視模式按鈕 -->
         <div class="view-mode-buttons">
-          <button @click="viewMode = 'grid'" :class="{ active: viewMode === 'grid' }">
-            <img src="../../Assets/img/icon/dark_grid.png" class="button-icon" />
+          <button
+            @click="viewMode = 'grid'"
+            :class="{ active: viewMode === 'grid' }"
+          >
+            <img
+              src="../../Assets/img/icon/dark_grid.png"
+              class="button-icon"
+            />
           </button>
-          <button @click="viewMode = 'list'" :class="{ active: viewMode === 'list' }">
-            <img src="../../Assets/img/icon/dark_list.png" class="button-icon" />
+          <button
+            @click="viewMode = 'list'"
+            :class="{ active: viewMode === 'list' }"
+          >
+            <img
+              src="../../Assets/img/icon/dark_list.png"
+              class="button-icon"
+            />
           </button>
         </div>
       </div>

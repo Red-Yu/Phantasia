@@ -17,11 +17,7 @@ p {
   font-weight: 400;
   line-height: normal;
   font-variant: small-caps;
-  position: absolute;
-  /* transform: translate(-50%, -50%); */
-  bottom: 4%;
-  right: 7%;
-  z-index: 3000;
+
   pointer-events: auto;
 }
 
@@ -46,7 +42,40 @@ p {
   z-index: 2500;
 }
 
+.loading {
+  position: absolute;
+  z-index: 3000;
+  bottom: 4%;
+  right: 7%;
+}
+
+.start {
+  position: absolute;
+  z-index: 3000;
+  transform: translate(-50%, -50%);
+  top: 72%;
+  left: 50%;
+  display: flex;
+  gap: 40px;
+}
+
+.start p {
+  font-size: 40px;
+  text-shadow: 3px 3px 4px rgba(0, 79, 59, 0.8);
+}
+
 .start_btn {
+  cursor: pointer;
+}
+
+.Administrator {
+  position: absolute;
+  z-index: 3000;
+  bottom: 4%;
+  right: 4%;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 28px;
+  font-style: italic;
   cursor: pointer;
 }
 
@@ -109,6 +138,8 @@ p {
 </style>
 
 <template>
+  <Login :isVisible="isModalVisible" @close="closeModal" />
+
   <transition name="fade_Video">
     <div
       v-show="isRippleArea"
@@ -125,7 +156,14 @@ p {
   </div>
 
   <div v-if="isStart" class="loading-animation">
-    <p class="start_btn start" @click="startVideo">Start</p>
+    <div class="startWrapper start">
+      <p class="start_btn visitor" @click="startVideo">Visitor</p>
+      <p class="start_btn inhabitant" @click="openModal">Inhabitant</p>
+    </div>
+  </div>
+
+  <div v-if="isStart" class="loading-animation">
+    <p class="Administrator" @click="ToBackstage">Administrator</p>
   </div>
 
   <transition name="fade_Video">
@@ -143,11 +181,31 @@ p {
 <script setup>
 import { ref, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
+import Login from "../views/Auth/Login.vue";
+// import CreateNewProject from "../views/CreateProject/FullScreenModal/CreateNewProject.vue";
 
-// import "jquery.ripples";
-// import "lettering.js";
-// import "textillate";
-// import "animate.css";
+// ===========================
+// Login
+// ===========================
+// components 初始狀態
+const isModalVisible = ref(false);
+
+// 打開彈窗的方法
+const openModal = () => {
+  isModalVisible.value = true;
+  // $(".rippleArea").ripples("destroy");
+};
+
+// 關閉彈窗的方法
+const closeModal = () => {
+  isModalVisible.value = false;
+};
+
+import "jquery.ripples";
+import "lettering.js";
+import "textillate";
+import "animate.css";
+import CreateNewProject from "../views/CreateProject/FullScreenModal/CreateNewProject.vue";
 
 const router = useRouter();
 const isLoading = ref(true);
@@ -383,4 +441,8 @@ router.afterEach((to, from) => {
   // 重置標記，表示導航已經完成
   resetNavigationFlag();
 });
+
+const ToBackstage = () => {
+  router.push("/BKMember");
+};
 </script>
