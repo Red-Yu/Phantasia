@@ -11,9 +11,9 @@ import PhantasiaDay from "../views/PhantasiaDay.vue";
 import PhantasiaNight from "../views/PhantasiaNight.vue";
 import NightLayout from "../views/NightLayout.vue";
 
-import Login from "../views/Auth/Login.vue";
-import Signup from "../views/Auth/Signup.vue";
-import Success from "../views/Auth/Success.vue";
+// import Login from "../views/Auth/Login.vue";
+// import Signup from "../views/Auth/Signup.vue";
+// import Success from "../views/Auth/Success.vue";
 import UserManager from "../components/backStage/UserManager.vue";
 
 //==================因為下方使用懶加載，這段不需要====================
@@ -61,23 +61,23 @@ const router = createRouter({
 
     // ==========================登入相關==============================
 
-    {
-      path: "/login", //登入頁面  /login
-      name: "login",
-      component: Login,
-    },
+    // {
+    //   path: "/login", //登入頁面  /login
+    //   name: "login",
+    //   component: Login,
+    // },
 
-    {
-      path: "/signup", //登入頁面  /signup
-      name: "signup",
-      component: Signup,
-    },
+    // {
+    //   path: "/signup", //登入頁面  /signup
+    //   name: "signup",
+    //   component: Signup,
+    // },
 
-    {
-      path: "/success", //登入頁面  /success
-      name: "success",
-      component: Success,
-    },
+    // {
+    //   path: "/success", //登入頁面  /success
+    //   name: "success",
+    //   component: Success,
+    // },
 
     //===================個人頁面(書櫃、換裝、集點)=======================
     {
