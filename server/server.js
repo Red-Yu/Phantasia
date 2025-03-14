@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const multer = require("multer");
 const app = express();
 // const messageBoardRoutes = require('./routes/messageBoard');
 const loginRoutes = require("./routes/login");
@@ -12,6 +13,11 @@ app.use(express.json());
 app.use("/api/login", loginRoutes);
 app.use("/api/signup", signupRoutes);
 // app.use('/api/user', userRoutes);
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

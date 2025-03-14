@@ -1,112 +1,117 @@
-.member-center{
-// 變數
-$border: $baseBlue solid;
+.member-center {
+  // 變數
+  $border: $baseBlue solid;
 
-//--------------------------------
-// mixin Tab-btn
-//--------------------------------
-@mixin btnTab($basecolor, $subcolor, $fontsize) {
-  display: flex;
-  width: 100%;
-  border-bottom: $basecolor solid;
-  .text {
-    padding: 5px 10px;
-    color: $basecolor;
+  //--------------------------------
+  // mixin Tab-btn
+  //--------------------------------
+  @mixin btnTab($basecolor, $subcolor, $fontsize) {
+    display: flex;
     width: 100%;
-    font-size: $fontsize;
-  }
-  .tab-cross {
-    position: relative;
-    width: 40px;
-    border-left: $basecolor solid;
-    .cols {
-      @include cols(2px, $basecolor);
+    border-bottom: $basecolor solid;
+    .text {
+      padding: 5px 10px;
+      color: $basecolor;
+      width: 100%;
+      font-size: $fontsize;
     }
-    .rows {
-      @include rows(2px, $basecolor);
-    }
-  }
-  /* hover */
-  &:hover {
     .tab-cross {
       position: relative;
-      height: auto;
       width: 40px;
-      background-color: $basecolor;
+      border-left: $basecolor solid;
       .cols {
-        @include cols(2px, $subcolor);
-        transform: translateX(calc(4%));
-        span:nth-child(2) {
-          display: none;
-        }
+        @include cols(2px, $basecolor);
       }
       .rows {
-        @include rows(2px, $subcolor);
+        @include rows(2px, $basecolor);
+      }
+    }
+    /* hover */
+    &:hover {
+      .tab-cross {
+        position: relative;
+        height: auto;
+        width: 40px;
+        background-color: $basecolor;
+        .cols {
+          @include cols(2px, $subcolor);
+          transform: translateX(calc(4%));
+          span:nth-child(2) {
+            display: none;
+          }
+        }
+        .rows {
+          @include rows(2px, $subcolor);
+        }
       }
     }
   }
-}
 
-// 外層架構
-.sidebar {
-  position: sticky;
-  top: 0;
-  height: calc(100vh - 100px); /* header 80 + boder上下 20 */
-  margin-left: 1vw;
-  display: flex;
-  flex-direction: column;
-  max-width: 250px;
-  width: 100%;
-  border-left: $border;
-  border-right: $border;
-  background-color: $subWhite;
-  .user {
+  // 外層架構
+  .sidebar {
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 100px); /* header 80 + boder上下 20 */
+    margin-left: 1vw;
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
     width: 100%;
-    height: 250px;
-    padding: 20px;
+    border-left: $border;
+    border-right: $border;
+    background-color: $subWhite;
+    .user {
+      width: 100%;
+      height: 250px;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  // 內層物件
+  .useImg {
+    width: 100%;
+    height: 100%;
+    border-radius: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: $baseBlue solid;
+    .avatar {
+      width: 85%;
+      height: 85%;
+      border-radius: 80%;
+      background-color: $subGray;
+      overflow: hidden;
+      text-align: center;
+      .avaterImg {
+        position: relative;
+      }
+    }
   }
-}
 
-// 內層物件
-.useImg {
-  width: 100%;
-  height: 100%;
-  border-radius: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: $baseBlue solid;
-  .avatar {
-    width: 85%;
-    height: 85%;
-    border-radius: 80%;
-    background-color: $subGray;
+  .tab-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-top: $baseBlue solid;
   }
-}
 
-.tab-group {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  border-top: $baseBlue solid;
-}
-
-.btnTab {
-  @include btnTab($baseBlue, $subWhite, 20px);
-}
-
-.btnTab-click {
-  @include btnTab($baseBlue, $subWhite, 18px);
-  .text {
-    background-color: $baseBlue;
-    color: $subWhite;
+  .btnTab {
+    @include btnTab($baseBlue, $subWhite, 20px);
   }
-}
 
-.btnTab-list {
-  @include btnTab($baseBlue, $subWhite, 18px);
-}
+  .btnTab-click {
+    @include btnTab($baseBlue, $subWhite, 18px);
+    .text {
+      background-color: $baseBlue;
+      color: $subWhite;
+    }
+  }
+
+  .btnTab-list {
+    @include btnTab($baseBlue, $subWhite, 18px);
+  }
 }

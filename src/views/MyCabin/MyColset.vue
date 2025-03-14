@@ -4,8 +4,12 @@
 .box {
   height: 0;
   opacity: 0;
-  overflow: hidden; /* 隱藏溢出的內容 */
+  overflow: hidden;
   animation-fill-mode: forwards;
+}
+
+.saveBox {
+  opacity: 0;
 }
 
 /* 進場動畫 */
@@ -16,6 +20,15 @@
   }
   to {
     height: 250px;
+    opacity: 1;
+  }
+}
+
+@keyframes saveBoxFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
   }
 }
@@ -32,6 +45,15 @@
   }
 }
 
+@keyframes saveBoxFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 /* 顯示 box 時的樣式 */
 .box.show {
   opacity: 1;
@@ -39,11 +61,19 @@
   animation: boxFadeIn 0.4s forwards;
 }
 
+.saveBox.show {
+  animation: saveBoxFadeIn 0.4s forwards;
+}
+
 /* 隱藏 box 時的樣式 */
 .box.hide {
   opacity: 0;
   height: 0; /* 確保隱藏後的高度是 0 */
   animation: boxFadeOut 0.4s forwards;
+}
+
+.saveBox.hide {
+  animation: saveBoxFadeOut 0.4s forwards;
 }
 </style>
 
@@ -53,6 +83,8 @@
   <div class="blackWrapper">
     <div class="wrapper">
       <div class="positionArea">
+        <!-- 生成圖片預覽 -->
+        <!-- <img :src="finalImageDataURL" alt="Generated Image" /> -->
         <!-- ===================性別選單================== -->
         <transition name="fade" mode="out-in">
           <div
@@ -181,6 +213,24 @@
           </div>
         </transition>
 
+        <transition name="fade" mode="out-in">
+          <div
+            v-show="selectedBall !== null"
+            class="saveButton saveBox"
+            :class="{
+              show: selectedBall !== null,
+              hide: selectedBall === null,
+            }"
+          >
+            <button
+              v-show="isSaveButtonVisible"
+              class="saveButton btnKey-L dark"
+              @click="generateFinalImage"
+            >
+              Save
+            </button>
+          </div>
+        </transition>
         <!-- ====================背景圖片======================= -->
 
         <div class="main_container" ref="parallaxContainer">
@@ -278,6 +328,8 @@
             </div>
           </div>
 
+          <canvas ref="finalCanvas" style="display: none"></canvas>
+
           <!-- ===============ball=============== -->
           <div class="parallax-wrapper" data-depth="0.055">
             <div class="selectBall_1" @click="selectBall('gender')">
@@ -330,14 +382,44 @@
           </div>
         </div>
       </div>
+
+      <div class="myCabinContent">
+        <div class="slogon">
+          <h1 class="title1 flipInY">My Closet</h1>
+          <h6 class="title3 rollIn">
+            Try clicking the floating balls on the screen and see what happens!
+          </h6>
+        </div>
+        <div class="menu">
+          <div class="backToHome_button">
+            <button
+              @click="backToHome"
+              class="btnLink whiteForFrontPage backToHome menuIn"
+            >
+              Back to my cabin
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useUserAuthState } from "@/stores/userAuthState";
 
+import { auth, storage } from "@/firebase/firebaseConfig";
+import { getAuth, updateProfile } from "firebase/auth";
+import {
+  ref as firebaseRef,
+  uploadBytes,
+  getDownloadURL,
+} from "firebase/storage";
 import BlackCover from "../../components/BlackCover.vue";
+
+const router = useRouter();
 
 const maleHairImages = [
   { name: "Short Hair", url: "shortHair.png" },
@@ -403,9 +485,13 @@ const selectGender = (gender) => {
   if (gender === "male") {
     hairImages.value = maleHairImages;
     clothesImages.value = maleClothesImages;
+    selectedHairImage.value = 0;
+    selectedClothesImage.value = 0;
   } else {
     hairImages.value = femaleHairImages;
     clothesImages.value = femaleClothesImages;
+    selectedHairImage.value = 0;
+    selectedClothesImage.value = 0;
   }
 };
 
@@ -429,13 +515,122 @@ const selectMagicCircleImage = (index) => {
   selectedMagicCircleImage.value = index;
 };
 
+// Save按鈕
+const isSaveButtonVisible = ref(true);
+
 // 選擇球選單
 const selectBall = (optionArea) => {
   // 如果點擊的是相同的球，隱藏選單
+  // isSaveButtonVisible.value = true;
   if (selectedBall.value === optionArea) {
     selectedBall.value = null; // 隱藏選單
+    // isSaveButtonVisible.value = false;
   } else {
     selectedBall.value = optionArea; // 根據選中的球號設置
   }
+};
+
+// ==================使用canva生成圖片=================
+
+const finalImageDataURL = ref("");
+const finalCanvas = ref(null);
+
+const generateFinalImage = async () => {
+  const canvas = finalCanvas.value;
+  const ctx = canvas.getContext("2d");
+
+  // 設定 Canvas 大小，這裡假設是 500x500
+  canvas.width = 155;
+  canvas.height = 409;
+
+  // 加載圖片並繪製到 Canvas
+  const loadImage = (src) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => resolve(img);
+      img.onerror = (error) => reject(error);
+    });
+  };
+
+  const drawImages = async () => {
+    try {
+      // 加載選中的衣服和髮型圖片
+      const clothesImage = await loadImage(
+        `/MyColset/${clothesImages.value[selectedClothesImage.value].url}`
+      );
+      const hairImage = await loadImage(
+        `/MyColset/${hairImages.value[selectedHairImage.value].url}`
+      );
+
+      // 在 Canvas 上繪製圖片，注意順序
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空畫布
+      ctx.drawImage(clothesImage, 0, 0, canvas.width, canvas.height); // 繪製衣服
+      ctx.drawImage(hairImage, 0, 0, canvas.width, canvas.height); // 繪製髮型
+
+      // 生成 Base64 圖像
+      const dataURL = canvas.toDataURL("image/png");
+      console.log(dataURL); // 顯示生成的圖片，或進行後續操作，如上傳到 Firebase
+
+      // 更新 finalImageDataURL，顯示在頁面上
+      finalImageDataURL.value = dataURL;
+      uploadImage(dataURL);
+    } catch (error) {
+      console.error("圖片加載錯誤:", error);
+    }
+  };
+
+  drawImages();
+};
+
+const base64ToBlob = (base64) => {
+  const byteCharacters = atob(base64.split(",")[1]); // 解碼 Base64
+  const byteArrays = [];
+  for (let offset = 0; offset < byteCharacters.length; offset++) {
+    const byte = byteCharacters.charCodeAt(offset);
+    byteArrays.push(byte);
+  }
+  return new Blob([new Uint8Array(byteArrays)], { type: "image/png" });
+};
+
+const uploadImage = async (dataURL) => {
+  const imageBlob = base64ToBlob(dataURL); // 轉換為 Blob
+  const storageRef = firebaseRef(
+    storage,
+    `userAvatars/${auth.currentUser.uid}/avatar.png`
+  ); // 設定圖片路徑
+
+  // 使用 Pinia store
+  const userAuthState = useUserAuthState();
+
+  try {
+    // 檢查是否有當前使用者
+    const auth = getAuth(); // 使用 Firebase auth API
+    const user = auth.currentUser;
+
+    if (!user) {
+      throw new Error("User not logged in");
+    }
+
+    // 上傳圖片
+    const snapshot = await uploadBytes(storageRef, imageBlob);
+    const downloadURL = await getDownloadURL(snapshot.ref); // 獲取圖片 URL
+
+    // 更新 Firebase Authentication 的頭像 URL
+    await updateProfile(user, {
+      photoURL: downloadURL, // 更新頭像 URL
+    });
+
+    // 更新 Pinia store 中的 avatarURL
+    userAuthState.setAvatarURL(downloadURL);
+
+    console.log("Avatar updated successfully!");
+  } catch (error) {
+    console.error("Error uploading avatar:", error);
+  }
+};
+
+const backToHome = () => {
+  router.push("/MyCabin");
 };
 </script>

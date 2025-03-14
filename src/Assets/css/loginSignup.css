@@ -2008,6 +2008,10 @@ select {
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
+  overflow: hidden;
+}
+.ProjectMenu .user .useImg .avatar .avaterImg {
+  position: relative;
 }
 .ProjectMenu .user .useImg .tab-group {
   width: 100%;
@@ -2056,6 +2060,11 @@ select {
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
+  overflow: hidden;
+  text-align: center;
+}
+.member-center .useImg .avatar .avaterImg {
+  position: relative;
 }
 .member-center .tab-group {
   width: 100%;

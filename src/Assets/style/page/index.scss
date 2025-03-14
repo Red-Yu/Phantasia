@@ -51,6 +51,7 @@ button {
   // background-color: #e5ff00;
   overflow: hidden;
   z-index: 400;
+  // display: flex;
 }
 
 .parallax-wrapper {
@@ -820,11 +821,18 @@ button {
     margin-top: auto;
     margin-left: auto;
     pointer-events: auto;
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
+    font-family: "Fanwood Text";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-variant: small-caps;
 
     .backToHome {
       font-size: 26px;
       margin-top: 5px;
       font-style: italic;
+
       &::after {
         height: 3px;
       }
@@ -967,7 +975,7 @@ button {
 .selectBall_1 {
   @include imgCenter();
   left: 23%;
-  top: 18%;
+  top: 30%;
   // width: 10vw;
   height: 10vh;
   cursor: pointer;
@@ -977,8 +985,8 @@ button {
 
 .selectBall_2 {
   @include imgCenter();
-  left: 29%;
-  top: 39%;
+  left: 32%;
+  top: 43%;
   // width: 7vw;
   height: 7vh;
   cursor: pointer;
@@ -987,8 +995,8 @@ button {
 
 .selectBall_3 {
   @include imgCenter();
-  left: 36%;
-  top: 24%;
+  left: 37%;
+  top: 25%;
   // width: 5.5vw;
   height: 5.5vh;
   cursor: pointer;
@@ -1086,4 +1094,15 @@ button {
       font-size: 18px;
     }
   }
+}
+
+.saveButton {
+  // color: white;
+  z-index: 400;
+  pointer-events: auto;
+  position: absolute;
+  right: 24%;
+  bottom: 10%;
+  box-shadow: 0 0 15px rgb(255, 255, 255);
+  border: white solid 1px;
 }

@@ -253,8 +253,11 @@ import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
+import { useUserAuthState } from "@/stores/userAuthState";
+
 import BlackCover from "../components/BlackCover.vue";
 
+const userAuthState = useUserAuthState();
 const parallaxContainer = ref(null);
 const router = useRouter();
 
@@ -405,6 +408,11 @@ onMounted(() => {
 
   router.push(`/${day.value ? "day" : "night"}`);
 
+  // 預加載頭像
+  if (userAuthState.user) {
+    // 如果用戶已經登錄，則直接從 store 中獲取頭像 URL
+    userAuthState.avatarURL = userAuthState.user.photoURL;
+  }
   // =========textillate=========
 });
 

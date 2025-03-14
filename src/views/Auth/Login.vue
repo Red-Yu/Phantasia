@@ -66,10 +66,6 @@ import { ref } from "vue";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 
-const email = ref("");
-const password = ref("");
-const error = ref("");
-
 // 用於控制光箱顯示與隱藏
 // const isVisible = ref(true);
 
@@ -79,10 +75,19 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+
+  startVideoElement: {
+    type: Object, // 父組件傳遞的是影片元素的引用
+    required: true,
+  },
 });
 
 // 定義 emit 事件
-const emit = defineEmits(["close", "openSignup"]);
+const emit = defineEmits(["close", "openSignup", "login-success"]);
+
+const email = ref("");
+const password = ref("");
+const error = ref("");
 
 // 關閉彈窗
 const closeModal = () => {
@@ -107,9 +112,23 @@ const openSignup = () => {
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
-    // 登入成功後關閉光箱
-    isVisible.value = false;
     alert("Login Successful!");
+
+    // 清空表單數據
+    email.value = "";
+    password.value = "";
+    error.value = "";
+
+    // 切換到登入選單
+    emit("close");
+
+    // 發出登入成功事件
+    emit("login-success"); // 父組件將接收到這個事件，並將 isStart 設為 false
+
+    // 播放影片
+    if (props.startVideoElement) {
+      props.startVideoElement.play(); // 在登入成功後播放影片
+    }
   } catch (err) {
     error.value = `Login failed: ${err.message}`;
   }

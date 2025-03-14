@@ -143,6 +143,8 @@ p {
     :isVisible="isLoginVisible"
     @close="closeLogin"
     @openSignup="openSignup"
+    :startVideoElement="startVideoElement"
+    @login-success="handleLoginSuccess"
   />
 
   <!-- Signup Modal -->
@@ -252,6 +254,11 @@ const startVideo = () => {
   if (startVideoElement.value) {
     startVideoElement.value.play(); // 開始播放影片
   }
+};
+
+// 登入成功後，將 isStart 設為 false，隱藏啟動畫面
+const handleLoginSuccess = () => {
+  isStart.value = false; // 隱藏啟動畫面
 };
 
 // 處理影片播放進度
