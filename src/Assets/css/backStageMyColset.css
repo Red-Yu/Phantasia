@@ -1,0 +1,164 @@
+@charset "UTF-8";
+.bkTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 垂直對齊 */
+  padding: 10px 0; /* 設置內邊距，讓元素與邊緣保持一定距離 */
+}
+
+/* 按鈕 */
+.searchFunction {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.add {
+  margin-left: 10px;
+}
+
+input.search {
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #153243;
+  padding: 7px;
+  text-align: center;
+  align-items: center;
+}
+
+.searchIcon {
+  cursor: pointer;
+  color: #777;
+}
+
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+  background: #153243;
+  padding: 6px 12px;
+  border-radius: 10px;
+  margin-left: 2em;
+}
+
+.toggle-container span {
+  transition: color 0.3s ease;
+  opacity: 0.5;
+}
+
+.toggle-container .active {
+  opacity: 1;
+  color: white;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: black;
+  transition: 0.4s;
+  border-radius: 34px;
+  border: 2px solid white;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 1.5px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #EEAD50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/*會員資料表格*/
+table {
+  width: 100%;
+  border: 1px solid;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+table, th, tr, td {
+  text-align: center;
+  padding: 10px;
+}
+
+thead {
+  background-color: #153243;
+  color: #f9faf9;
+}
+
+tbody > tr:hover {
+  background-color: #dee2e6;
+}
+
+.preview-container {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* 頁碼 */
+.pagination {
+  text-align: center;
+}
+
+.pagination button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.pagination button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination button.active {
+  font-weight: bold;
+  background-color: #007bff;
+  color: white;
+}/*# sourceMappingURL=backStageMyColset.css.map */
