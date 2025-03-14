@@ -138,7 +138,19 @@ p {
 </style>
 
 <template>
-  <Login :isVisible="isModalVisible" @close="closeModal" />
+  <!-- Login Modal -->
+  <Login
+    :isVisible="isLoginVisible"
+    @close="closeLogin"
+    @openSignup="openSignup"
+  />
+
+  <!-- Signup Modal -->
+  <Signup
+    :isVisible="isSignupVisible"
+    @close="closeSignup"
+    @openLogin="openLogin"
+  />
 
   <transition name="fade_Video">
     <div
@@ -158,7 +170,7 @@ p {
   <div v-if="isStart" class="loading-animation">
     <div class="startWrapper start">
       <p class="start_btn visitor" @click="startVideo">Visitor</p>
-      <p class="start_btn inhabitant" @click="openModal">Inhabitant</p>
+      <p class="start_btn inhabitant" @click="openModal">Login</p>
     </div>
   </div>
 
@@ -182,30 +194,43 @@ p {
 import { ref, onMounted, nextTick } from "vue";
 import { useRouter } from "vue-router";
 import Login from "../views/Auth/Login.vue";
-// import CreateNewProject from "../views/CreateProject/FullScreenModal/CreateNewProject.vue";
+import Signup from "../views/Auth/Signup.vue";
 
-// ===========================
-// Login
-// ===========================
-// components 初始狀態
-const isModalVisible = ref(false);
+// 控制顯示登入與註冊彈窗
+const isLoginVisible = ref(false);
+const isSignupVisible = ref(false);
 
 // 打開彈窗的方法
 const openModal = () => {
-  isModalVisible.value = true;
+  isLoginVisible.value = true;
   // $(".rippleArea").ripples("destroy");
 };
 
+// 打開註冊彈窗的事件
+const openSignup = () => {
+  isLoginVisible.value = false;
+  isSignupVisible.value = true;
+};
+
+// 打開登入彈窗
+const openLogin = () => {
+  isLoginVisible.value = true;
+  isSignupVisible.value = false;
+};
+
 // 關閉彈窗的方法
-const closeModal = () => {
-  isModalVisible.value = false;
+const closeLogin = () => {
+  isLoginVisible.value = false;
+};
+
+const closeSignup = () => {
+  isSignupVisible.value = false;
 };
 
 import "jquery.ripples";
 import "lettering.js";
 import "textillate";
 import "animate.css";
-import CreateNewProject from "../views/CreateProject/FullScreenModal/CreateNewProject.vue";
 
 const router = useRouter();
 const isLoading = ref(true);
