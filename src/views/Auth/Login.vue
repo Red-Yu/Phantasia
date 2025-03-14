@@ -50,7 +50,7 @@
           </div>
         </form>
 
-        <p v-if="error">{{ error }}</p>
+        <p v-if="error" class="error-message">{{ error }}</p>
       </div>
     </div>
   </div>
@@ -87,11 +87,20 @@ const emit = defineEmits(["close", "openSignup"]);
 // 關閉彈窗
 const closeModal = () => {
   emit("close");
+
+  // 清空表單數據
+  email.value = "";
+  password.value = "";
+  error.value = "";
 };
 
 // 切換到註冊彈窗
 const openSignup = () => {
   emit("openSignup"); // 父組件中的 openSignup 會被觸發
+  // 清空表單數據
+  email.value = "";
+  password.value = "";
+  error.value = "";
 };
 
 // 登入功能

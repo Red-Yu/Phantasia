@@ -4134,4 +4134,8 @@ p,
 label,
 input {
   font-family: Fanwood Text;
+}
+
+.error-message {
+  color: red;
 }/*# sourceMappingURL=loginSignup.css.map */
