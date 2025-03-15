@@ -72,7 +72,7 @@
   import book5Image from '@/assets/img/menu/bookMemberCenter.png'
   import book6Image from '@/assets/img/menu/bookCreationCenter.svg'
   import logo from '@/assets/img/menu/logo.svg'
-import OpenCloseButton from "./BTN/OpenCloseButton.vue";
+  import OpenCloseButton from "./BTN/OpenCloseButton.vue";
     
   const isMenuOpen = ref(false);
     
@@ -124,12 +124,17 @@ import OpenCloseButton from "./BTN/OpenCloseButton.vue";
   /* 關閉按鈕樣式 */
   .bm-close-btn {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 28px;
+    right: 20px;
     cursor: pointer;
     z-index: 100001 !important;
   }
-  
+  @media screen and (max-width: 768px) {
+  .bm-close-btn {
+    top: 28px;
+    right: 12px;
+  }
+  }
   
   
   /* 選單覆蓋層 - 確保子元素的z-index可正常使用 */
@@ -257,7 +262,7 @@ import OpenCloseButton from "./BTN/OpenCloseButton.vue";
   }
   
   .bm-logo {
-    margin-top: 30px;
+    margin-top: 90px;
     text-align: center;
     max-height: 15vh;
     opacity: 0;
