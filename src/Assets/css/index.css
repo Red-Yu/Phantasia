@@ -1624,6 +1624,9 @@ button {
   min-width: 120px;
   pointer-events: auto;
 }
+.characterWrapper .avaterImg {
+  pointer-events: none;
+}
 
 .elfWrapper {
   position: absolute;

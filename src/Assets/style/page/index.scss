@@ -890,6 +890,10 @@ button {
   height: 50vh;
   min-width: 120px;
   pointer-events: auto;
+
+  .avaterImg {
+    pointer-events: none;
+  }
 }
 
 .elfWrapper {

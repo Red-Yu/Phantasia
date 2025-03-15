@@ -3,8 +3,6 @@
 /* test */
 </style>
 
-
-
 <template>
   <div class="blackWrapper">
     <div
@@ -68,10 +66,16 @@
                   />
                 </div>
                 <div class="avatar">
-                  <img
+                  <!-- <img
                     src="../../Assets/Day/rewardCard/avatar.png"
                     alt=""
                     class="avatar"
+                  /> -->
+                  <img
+                    class="avaterImg avatar"
+                    v-if="avatarURL"
+                    :src="avatarURL"
+                    alt="User Avatar"
                   />
                 </div>
               </div>
@@ -301,11 +305,36 @@
 //     });
 // });
 // ====================================
-import { onMounted, ref, nextTick } from "vue";
+import { onMounted, ref, nextTick, computed, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useUserAuthState } from "@/stores/userAuthState";
 
 const isVisible = ref(false);
 const router = useRouter();
+
+// 使用 Pinia store
+const userAuthState = useUserAuthState();
+const user = userAuthState.user; // 引用全域的用戶資料
+
+// 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
+const avatarURL = computed(() => {
+  return user && user.photoURL
+    ? user.photoURL
+    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回 null
+});
+
+// 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
+watch(
+  () => user?.photoURL,
+  async (newPhotoURL) => {
+    if (newPhotoURL) {
+      console.log("User avatar updated:", newPhotoURL);
+      // 等待下次 DOM 更新後再執行其他操作
+      await nextTick();
+      // 在此處處理需要在頭像更新後進行的其他操作
+    }
+  }
+);
 
 onMounted(() => {
   nextTick(() => {

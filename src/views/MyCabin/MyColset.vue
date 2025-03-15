@@ -683,28 +683,64 @@ const base64ToBlob = (base64) => {
   return new Blob([new Uint8Array(byteArrays)], { type: "image/png" });
 };
 
+// const uploadImage = async (dataURL) => {
+//   const imageBlob = base64ToBlob(dataURL); // 轉換為 Blob
+//   const storageRef = fsRef(
+//     storage,
+//     `userAvatars/${auth.currentUser.uid}/avatar.png`
+//   ); // 設定圖片路徑
+
+//   // 使用 Pinia store
+//   const userAuthState = useUserAuthState();
+
+//   try {
+//     // 檢查是否有當前使用者
+//     const auth = getAuth(); // 使用 Firebase auth API
+//     const user = auth.currentUser;
+
+//     if (!user) {
+//       throw new Error("User not logged in");
+//     }
+
+//     // 上傳圖片
+//     const snapshot = await uploadBytes(storageRef, imageBlob);
+//     const downloadURL = await getDownloadURL(snapshot.ref); // 獲取圖片 URL
+
+//     // 更新 Firebase Authentication 的頭像 URL
+//     await updateProfile(user, {
+//       photoURL: downloadURL, // 更新頭像 URL
+//     });
+
+//     // 更新 Pinia store 中的 avatarURL
+//     userAuthState.setAvatarURL(downloadURL);
+
+//     console.log("Avatar updated successfully!");
+//   } catch (error) {
+//     console.error("Error uploading avatar:", error);
+//   }
+// };
+
 const uploadImage = async (dataURL) => {
-  const imageBlob = base64ToBlob(dataURL); // 轉換為 Blob
-  const storageRef = fsRef(
-    storage,
-    `userAvatars/${auth.currentUser.uid}/avatar.png`
-  ); // 設定圖片路徑
-
-  // 使用 Pinia store
-  const userAuthState = useUserAuthState();
-
   try {
-    // 檢查是否有當前使用者
-    const auth = getAuth(); // 使用 Firebase auth API
-    const user = auth.currentUser;
+    // 使用 Firebase auth API
+    const auth = getAuth();
+    const user = auth.currentUser; // 獲取當前用戶
 
     if (!user) {
       throw new Error("User not logged in");
     }
 
+    // 轉換 Base64 為 Blob
+    const imageBlob = base64ToBlob(dataURL);
+
+    // 設定圖片儲存路徑
+    const storageRef = fsRef(storage, `userAvatars/${user.uid}/avatar.png`);
+
     // 上傳圖片
     const snapshot = await uploadBytes(storageRef, imageBlob);
-    const downloadURL = await getDownloadURL(snapshot.ref); // 獲取圖片 URL
+
+    // 獲取下載 URL
+    const downloadURL = await getDownloadURL(snapshot.ref);
 
     // 更新 Firebase Authentication 的頭像 URL
     await updateProfile(user, {
@@ -712,11 +748,13 @@ const uploadImage = async (dataURL) => {
     });
 
     // 更新 Pinia store 中的 avatarURL
+    const userAuthState = useUserAuthState();
     userAuthState.setAvatarURL(downloadURL);
 
     console.log("Avatar updated successfully!");
   } catch (error) {
-    console.error("Error uploading avatar:", error);
+    console.error("Error uploading avatar:", error.message);
+    // 如果用戶沒有登入，顯示提示或執行其他處理邏輯
   }
 };
 

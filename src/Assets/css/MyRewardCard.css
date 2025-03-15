@@ -171,8 +171,11 @@
 
 /* 左邊內容 */
 .avatar {
-  width: 100%;
   position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 75%;
 }
 
 /* 中間內文 */
