@@ -102,10 +102,17 @@
                 class="elf_hover"
                 @click="ToMyRewardCard"
               />
-              <img
+              <!-- <img
                 src="../../Assets/Day/myCabin/elf183x291.png"
                 alt=""
                 class="elf"
+              /> -->
+
+              <img
+                class="partnerImg"
+                v-if="partnerURL"
+                :src="partnerURL"
+                alt="User Partner"
               />
             </div>
           </div>
@@ -120,6 +127,8 @@ import { onMounted, ref, computed, watch } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import { useUserAuthState } from "@/stores/userAuthState";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase/firebaseConfig";
 import BlackCover from "../../components/BlackCover.vue";
 
 const parallaxContainer = ref(null);
@@ -132,8 +141,10 @@ const user = userAuthState.user; // 引用全域的用戶資料
 const avatarURL = computed(() => {
   return user && user.photoURL
     ? user.photoURL
-    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回 null
+    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回預設圖
 });
+
+const partnerURL = ref(null);
 
 // 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
 watch(
@@ -147,6 +158,28 @@ watch(
     }
   }
 );
+
+// 獲取小精靈圖片 URL
+const fetchPartnerImageURL = async () => {
+  if (user) {
+    const userDoc = doc(db, "users", user.uid); // 使用當前用戶的 UID 查詢 Firestore 文檔
+    try {
+      const docSnapshot = await getDoc(userDoc); // 獲取用戶資料
+      if (docSnapshot.exists()) {
+        const data = docSnapshot.data();
+        partnerURL.value = data.partnerURL || "/MyColset/Ollie.png"; // 設置小精靈圖片 URL
+      } else {
+        console.log("No such document!");
+        partnerURL.value = "/MyColset/Ollie.png"; // 如果沒有該文檔，設置為預設圖片
+      }
+    } catch (error) {
+      console.error("Error fetching partner image URL:", error);
+      partnerURL.value = "/MyColset/Ollie.png"; // 當發生錯誤時設置為預設圖片
+    }
+  } else {
+    partnerURL.value = "/MyColset/Ollie.png"; // 如果用戶未登錄，設置為預設圖片
+  }
+};
 
 const isSliding = ref(false);
 
@@ -171,6 +204,8 @@ const ToMyColset = () => {
 };
 
 onMounted(() => {
+  fetchPartnerImageURL();
+
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
     const scene = parallaxContainer.value;
@@ -183,5 +218,21 @@ onMounted(() => {
       scalarY: 6.5, // 垂直方向移動幅度是滑鼠移動的一半
     });
   }
+
+  $(".flipInY").textillate({
+    in: {
+      effect: "flipInY",
+      shuffle: true,
+      delay: 230,
+    },
+  });
+
+  $(".rollIn").textillate({
+    in: {
+      effect: "rollIn",
+      shuffle: true,
+      delay: 30,
+    },
+  });
 });
 </script>

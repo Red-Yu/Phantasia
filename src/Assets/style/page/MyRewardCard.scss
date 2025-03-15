@@ -1,3 +1,5 @@
+@import "../mixin/mixin";
+
 * {
   margin: 0;
   padding: 0;
@@ -19,6 +21,80 @@
   height: 100vh; /* 高度為螢幕高度 */
   overflow: hidden;
 }
+
+.myCabinContent {
+  @include imgCenter();
+  max-width: 1440px;
+  width: 100%;
+  z-index: 401;
+  padding: 30px 60px 30px 60px;
+  height: 100vh;
+  display: flex;
+  // border: lightgoldenrodyellow solid 2px;
+
+  .slogon {
+    width: 430px;
+    h1 {
+      color: #fff;
+      text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.6);
+      font-family: Aleo;
+      font-size: 54px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: 125%;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-decoration-thickness: 1.5px;
+      text-underline-offset: 15px;
+    }
+    h6 {
+      margin-top: 6px;
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+      font-family: Aleo;
+      font-size: 19px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+  }
+
+  .menu {
+    margin-top: auto;
+    margin-left: auto;
+    pointer-events: auto;
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
+    font-family: "Fanwood Text";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-variant: small-caps;
+
+    .backToHome {
+      font-size: 26px;
+      margin-top: 5px;
+      font-style: italic;
+      cursor: pointer;
+
+      &::after {
+        height: 3px;
+      }
+    }
+
+    .btnLink {
+      padding: 0;
+      opacity: 70%;
+      &:hover {
+        opacity: 100%;
+      }
+
+      &.active {
+        opacity: 1;
+      }
+    }
+  }
+}
+
 /* 背景圖 */
 .bg {
   position: relative;
@@ -73,7 +149,7 @@
   /* height: 100%; */
   /* min-width: 800px; */
   object-fit: contain;
-  z-index: 400;
+  z-index: 800;
 }
 
 @media (max-width: 1200px) {

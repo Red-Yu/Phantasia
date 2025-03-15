@@ -5,7 +5,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 export const useUserAuthState = defineStore("userAuthState", () => {
   const user = ref(null);
   const auth = getAuth(); // 獲取 auth 實例
-  const avatarURL = ref(null); // avatarURL 來儲存頭像
+  const avatarURL = ref(null); // 儲存頭像
+  const partnerURL = ref(null); // 儲存小精靈
 
   // 在 store 中監聽身份變化
   onBeforeMount(() => {
@@ -16,6 +17,7 @@ export const useUserAuthState = defineStore("userAuthState", () => {
       } else {
         user.value = null; // 用戶未登錄，清除用戶資料
         avatarURL.value = null; // 清除頭像
+        partnerURL.value = null; // 清除小精靈圖片
       }
     });
   });
@@ -23,6 +25,11 @@ export const useUserAuthState = defineStore("userAuthState", () => {
   // 更新頭像 URL
   const setAvatarURL = (url) => {
     avatarURL.value = url; // 更新頭像 URL
+  };
+
+  // 更新小精靈圖片 URL
+  const setPartnerURL = (url) => {
+    partnerURL.value = url; // 更新小精靈圖片 URL
   };
 
   // 監聽 user.photoURL 的變化，當用戶頭像更新時會更新狀態
@@ -44,5 +51,6 @@ export const useUserAuthState = defineStore("userAuthState", () => {
     user,
     avatarURL,
     setAvatarURL,
+    setPartnerURL,
   };
 });

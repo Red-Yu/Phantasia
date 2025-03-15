@@ -905,6 +905,10 @@ button {
   height: 23vh;
   min-width: 100px;
   pointer-events: auto;
+
+  .partnerImg {
+    pointer-events: none;
+  }
 }
 
 .character,
@@ -966,6 +970,7 @@ button {
   height: 30vh;
   min-width: 100px;
   pointer-events: auto;
+  z-index: 300;
 }
 
 .magicCircleWrapper {

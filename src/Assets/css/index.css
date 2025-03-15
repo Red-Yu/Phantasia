@@ -1637,6 +1637,9 @@ button {
   min-width: 100px;
   pointer-events: auto;
 }
+.elfWrapper .partnerImg {
+  pointer-events: none;
+}
 
 .character,
 .elf {
@@ -1703,6 +1706,7 @@ button {
   height: 30vh;
   min-width: 100px;
   pointer-events: auto;
+  z-index: 300;
 }
 
 .magicCircleWrapper {

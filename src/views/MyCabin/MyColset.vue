@@ -75,6 +75,38 @@
 .saveBox.hide {
   animation: saveBoxFadeOut 0.4s forwards;
 }
+
+.main_container::before {
+  content: "";
+  position: absolute;
+  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  transition: transform 1s ease;
+  z-index: 1;
+  animation: transformBackground 7s infinite;
+}
+
+@keyframes transformBackground {
+  0% {
+    transform: scale(1); /* 初始大小 */
+  }
+  25% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  50% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+  75% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  100% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+}
 </style>
 
 <template>
@@ -225,7 +257,7 @@
             <button
               v-show="isSaveButtonVisible"
               class="saveButton btnKey-L dark"
-              @click="generateFinalImage"
+              @click="generateAllImages"
             >
               Save
             </button>
@@ -328,7 +360,8 @@
             </div>
           </div>
 
-          <canvas ref="finalCanvas" style="display: none"></canvas>
+          <canvas ref="avatarCanvas" style="display: none"></canvas>
+          <canvas ref="partnerCanvas" style="display: none"></canvas>
 
           <!-- ===============ball=============== -->
           <div class="parallax-wrapper" data-depth="0.055">
@@ -420,6 +453,21 @@ const router = useRouter();
 
 onMounted(() => {
   loadUserSelection(); // 頁面加載時載入用戶選擇
+  $(".flipInY").textillate({
+    in: {
+      effect: "flipInY",
+      shuffle: true,
+      delay: 230,
+    },
+  });
+
+  $(".rollIn").textillate({
+    in: {
+      effect: "rollIn",
+      shuffle: true,
+      delay: 30,
+    },
+  });
 });
 
 const maleHairImages = [
@@ -528,6 +576,7 @@ const selectBall = (optionArea) => {
     // isSaveButtonVisible.value = false;
   } else {
     selectedBall.value = optionArea; // 根據選中的球號設置
+    isSaveButtonVisible.value = true;
   }
 };
 
@@ -618,14 +667,34 @@ const setDefaultSelections = () => {
 
 // ==================使用canva生成圖片=================
 
-const finalImageDataURL = ref("");
-const finalCanvas = ref(null);
-
-const generateFinalImage = async () => {
+const generateAllImages = async () => {
   selectedBall.value = null;
   isSaveButtonVisible.value = false;
 
-  const canvas = finalCanvas.value;
+  // 等待人物和小精靈圖片生成
+  const avatarDataURL = await generateCharacterImage();
+  const partnerDataURL = await generatePartnerImage();
+
+  // 確保兩張圖片的 Base64 字符串都有效
+  if (avatarDataURL && partnerDataURL) {
+    await uploadImages(avatarDataURL, partnerDataURL);
+    saveUserSelection(); // 儲存用戶選擇
+  } else {
+    console.error("無效的圖片 Base64 字符串");
+  }
+
+  saveUserSelection(); // 儲存用戶選擇
+};
+
+// const finalImageDataURL = ref("");
+const avatarCanvas = ref(null);
+
+// ========生成人物=======
+const generateCharacterImage = async () => {
+  // selectedBall.value = null;
+  // isSaveButtonVisible.value = false;
+
+  const canvas = avatarCanvas.value;
   const ctx = canvas.getContext("2d");
 
   // 設定 Canvas 大小，這裡假設是 500x500
@@ -642,35 +711,66 @@ const generateFinalImage = async () => {
     });
   };
 
-  const drawImages = async () => {
-    try {
-      // 加載選中的衣服和髮型圖片
-      const clothesImage = await loadImage(
-        `/MyColset/${clothesImages.value[selectedClothesImage.value].url}`
-      );
-      const hairImage = await loadImage(
-        `/MyColset/${hairImages.value[selectedHairImage.value].url}`
-      );
+  try {
+    // 加載選中的衣服和髮型圖片
+    const clothesImage = await loadImage(
+      `/MyColset/${clothesImages.value[selectedClothesImage.value].url}`
+    );
+    const hairImage = await loadImage(
+      `/MyColset/${hairImages.value[selectedHairImage.value].url}`
+    );
 
-      // 在 Canvas 上繪製圖片，注意順序
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空畫布
-      ctx.drawImage(clothesImage, 0, 0, canvas.width, canvas.height); // 繪製衣服
-      ctx.drawImage(hairImage, 0, 0, canvas.width, canvas.height); // 繪製髮型
+    // 清空畫布並繪製圖片
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // 生成 Base64 圖像
-      const dataURL = canvas.toDataURL("image/png");
-      console.log(dataURL); // 顯示生成的圖片，或進行後續操作，如上傳到 Firebase
+    ctx.drawImage(clothesImage, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(hairImage, 0, 0, canvas.width, canvas.height);
 
-      // 更新 finalImageDataURL，顯示在頁面上
-      finalImageDataURL.value = dataURL;
-      uploadImage(dataURL);
-      saveUserSelection(); // 儲存用戶選擇
-    } catch (error) {
-      console.error("圖片加載錯誤:", error);
-    }
+    // 生成 Base64 圖像並返回
+    return canvas.toDataURL("image/png");
+  } catch (error) {
+    console.error("圖片加載錯誤:", error);
+    return null;
+  }
+};
+
+// ========生成小精靈=======
+
+const partnerCanvas = ref(null);
+
+const generatePartnerImage = async () => {
+  const canvas = partnerCanvas.value;
+  const ctx = canvas.getContext("2d");
+
+  // 設定 Canvas 大小
+  canvas.width = 120;
+  canvas.height = 191;
+
+  // 加載圖片並繪製到 Canvas
+  const loadImage = (src) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = src;
+      img.onload = () => resolve(img);
+      img.onerror = (error) => reject(error);
+    });
   };
 
-  drawImages();
+  try {
+    const partnerImage = await loadImage(
+      `/MyColset/${partnerImages[selectedPartnerImage.value].url}`
+    );
+
+    // 清空畫布並繪製圖片
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(partnerImage, 0, 0, canvas.width, canvas.height);
+
+    // 生成 Base64 圖像並返回
+    return canvas.toDataURL("image/png");
+  } catch (error) {
+    console.error("圖片加載錯誤:", error);
+    return null;
+  }
 };
 
 const base64ToBlob = (base64) => {
@@ -683,44 +783,9 @@ const base64ToBlob = (base64) => {
   return new Blob([new Uint8Array(byteArrays)], { type: "image/png" });
 };
 
-// const uploadImage = async (dataURL) => {
-//   const imageBlob = base64ToBlob(dataURL); // 轉換為 Blob
-//   const storageRef = fsRef(
-//     storage,
-//     `userAvatars/${auth.currentUser.uid}/avatar.png`
-//   ); // 設定圖片路徑
+// =========上傳兩張圖片==========
 
-//   // 使用 Pinia store
-//   const userAuthState = useUserAuthState();
-
-//   try {
-//     // 檢查是否有當前使用者
-//     const auth = getAuth(); // 使用 Firebase auth API
-//     const user = auth.currentUser;
-
-//     if (!user) {
-//       throw new Error("User not logged in");
-//     }
-
-//     // 上傳圖片
-//     const snapshot = await uploadBytes(storageRef, imageBlob);
-//     const downloadURL = await getDownloadURL(snapshot.ref); // 獲取圖片 URL
-
-//     // 更新 Firebase Authentication 的頭像 URL
-//     await updateProfile(user, {
-//       photoURL: downloadURL, // 更新頭像 URL
-//     });
-
-//     // 更新 Pinia store 中的 avatarURL
-//     userAuthState.setAvatarURL(downloadURL);
-
-//     console.log("Avatar updated successfully!");
-//   } catch (error) {
-//     console.error("Error uploading avatar:", error);
-//   }
-// };
-
-const uploadImage = async (dataURL) => {
+const uploadImages = async (avatarDataURL, partnerDataURL) => {
   try {
     // 使用 Firebase auth API
     const auth = getAuth();
@@ -731,30 +796,51 @@ const uploadImage = async (dataURL) => {
     }
 
     // 轉換 Base64 為 Blob
-    const imageBlob = base64ToBlob(dataURL);
+    const avatarBlob = base64ToBlob(avatarDataURL);
+    const partnerBlob = base64ToBlob(partnerDataURL);
 
     // 設定圖片儲存路徑
-    const storageRef = fsRef(storage, `userAvatars/${user.uid}/avatar.png`);
+    const avatarStorageRef = fsRef(
+      storage,
+      `userAvatars/${user.uid}/avatar.png`
+    );
+    const partnerStorageRef = fsRef(
+      storage,
+      `userAvatars/${user.uid}/partner.png`
+    );
 
     // 上傳圖片
-    const snapshot = await uploadBytes(storageRef, imageBlob);
+    const avatarSnapshot = await uploadBytes(avatarStorageRef, avatarBlob);
+    const partnerSnapshot = await uploadBytes(partnerStorageRef, partnerBlob);
 
     // 獲取下載 URL
-    const downloadURL = await getDownloadURL(snapshot.ref);
+    const avatarURL = await getDownloadURL(avatarSnapshot.ref);
+    const partnerURL = await getDownloadURL(partnerSnapshot.ref);
 
     // 更新 Firebase Authentication 的頭像 URL
     await updateProfile(user, {
-      photoURL: downloadURL, // 更新頭像 URL
+      photoURL: avatarURL, // 更新頭像 URL
     });
 
-    // 更新 Pinia store 中的 avatarURL
-    const userAuthState = useUserAuthState();
-    userAuthState.setAvatarURL(downloadURL);
+    // 儲存 partnerURL 到 Firestore
+    await setDoc(doc(db, "users", user.uid), { partnerURL }, { merge: true });
 
-    console.log("Avatar updated successfully!");
+    console.log("Partner URL saved to Firestore:", partnerURL);
+
+    // 更新 Pinia store 中
+    const userAuthState = useUserAuthState();
+    userAuthState.setAvatarURL(avatarURL);
+    userAuthState.setPartnerURL(partnerURL);
+
+    console.log("Avatar and partner images updated successfully!");
+
+    // 這裡可以選擇是否要返回這兩個下載 URL 進行進一步處理
+    // return { avatarURL, partnerURL };
   } catch (error) {
-    console.error("Error uploading avatar:", error.message);
+    console.error("Error uploading avatar and partner images:", error.message);
     // 如果用戶沒有登入，顯示提示或執行其他處理邏輯
+    // 提供更詳細的錯誤信息
+    console.error(error);
   }
 };
 
