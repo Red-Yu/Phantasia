@@ -406,20 +406,21 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useUserAuthState } from "@/stores/userAuthState";
-
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, storage } from "@/firebase/firebaseConfig";
+import { db } from "@/firebase/firebaseConfig";
 import { getAuth, updateProfile } from "firebase/auth";
-import {
-  ref as firebaseRef,
-  uploadBytes,
-  getDownloadURL,
-} from "firebase/storage";
+import { ref as fsRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import BlackCover from "../../components/BlackCover.vue";
 
 const router = useRouter();
+
+onMounted(() => {
+  loadUserSelection(); // 頁面加載時載入用戶選擇
+});
 
 const maleHairImages = [
   { name: "Short Hair", url: "shortHair.png" },
@@ -530,12 +531,100 @@ const selectBall = (optionArea) => {
   }
 };
 
+// ==================儲存用戶選擇=================
+
+// 儲存用戶選擇
+const saveUserSelection = async () => {
+  const userId = auth.currentUser.uid; // 獲取用戶 ID
+  const userClosetDocRef = doc(db, "usersCloset", userId); // 目標文檔
+
+  // 用戶選擇的資料
+  const userClosetSelections = {
+    gender: selectedGender.value,
+    hair: selectedHairImage.value,
+    clothes: selectedClothesImage.value,
+    partner: selectedPartnerImage.value,
+    magicCircle: selectedMagicCircleImage.value,
+  };
+
+  try {
+    await setDoc(userClosetDocRef, userClosetSelections); // 儲存或更新選擇
+    console.log("User selection saved successfully");
+  } catch (error) {
+    console.error("Error saving user selection:", error);
+  }
+};
+
+// 讀取用戶選擇
+const loadUserSelection = async () => {
+  const user = auth.currentUser; // 獲取當前登錄用戶
+
+  if (!user) {
+    // 如果未登錄，直接返回預設值
+    console.log("User is not logged in, returning default selections.");
+    setDefaultSelections();
+    return;
+  }
+
+  const userId = user.uid;
+  const userClosetDocRef = doc(db, "usersCloset", userId); // 使用新的集合名稱
+
+  try {
+    const docSnap = await getDoc(userClosetDocRef);
+
+    if (docSnap.exists()) {
+      const userClosetSelections = docSnap.data();
+
+      // 根據讀取到的選擇更新頁面
+      selectedGender.value = userClosetSelections.gender;
+      selectedHairImage.value = userClosetSelections.hair;
+      selectedClothesImage.value = userClosetSelections.clothes;
+      selectedPartnerImage.value = userClosetSelections.partner;
+      selectedMagicCircleImage.value = userClosetSelections.magicCircle;
+
+      // 根據選擇更新髮型和衣服圖片
+      if (userClosetSelections.gender === "male") {
+        hairImages.value = maleHairImages;
+        clothesImages.value = maleClothesImages;
+      } else {
+        hairImages.value = femaleHairImages;
+        clothesImages.value = femaleClothesImages;
+      }
+    } else {
+      // 用戶有登錄但尚未儲存過資料，返回預設值
+      console.log("No user data found, returning default selections.");
+      setDefaultSelections();
+    }
+  } catch (error) {
+    console.error("Error reading user selection:", error);
+    // 出錯時也返回預設值
+    setDefaultSelections();
+  }
+};
+
+// 設置預設值
+const setDefaultSelections = () => {
+  // 設定預設值
+  selectedGender.value = "male"; // 預設為 male
+  selectedHairImage.value = 0; // 預設髮型選擇為 0
+  selectedClothesImage.value = 0; // 預設衣服選擇為 0
+  selectedPartnerImage.value = 0; // 預設伴侶選擇為 0
+  selectedMagicCircleImage.value = 0; // 預設魔法圈選擇為 0
+
+  // 根據預設性別更新髮型和衣服圖片
+  hairImages.value = maleHairImages; // 預設髮型圖片為 maleHairImages
+  clothesImages.value = maleClothesImages; // 預設衣服圖片為 maleClothesImages
+};
+
 // ==================使用canva生成圖片=================
 
 const finalImageDataURL = ref("");
 const finalCanvas = ref(null);
 
 const generateFinalImage = async () => {
+  selectedBall.value = null;
+  isSaveButtonVisible.value = false;
+
   const canvas = finalCanvas.value;
   const ctx = canvas.getContext("2d");
 
@@ -575,6 +664,7 @@ const generateFinalImage = async () => {
       // 更新 finalImageDataURL，顯示在頁面上
       finalImageDataURL.value = dataURL;
       uploadImage(dataURL);
+      saveUserSelection(); // 儲存用戶選擇
     } catch (error) {
       console.error("圖片加載錯誤:", error);
     }
@@ -595,7 +685,7 @@ const base64ToBlob = (base64) => {
 
 const uploadImage = async (dataURL) => {
   const imageBlob = base64ToBlob(dataURL); // 轉換為 Blob
-  const storageRef = firebaseRef(
+  const storageRef = fsRef(
     storage,
     `userAvatars/${auth.currentUser.uid}/avatar.png`
   ); // 設定圖片路徑
