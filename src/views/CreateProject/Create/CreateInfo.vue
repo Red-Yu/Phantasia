@@ -7,7 +7,7 @@
     <div class="bookCover">
       <!-- AddCover 預覽畫面 -->
       <div class="cover-save-preview">
-        <div class="side frontSide" :style="{ backgroundColor: coverSetting.color }">
+        <!-- <div class="side frontSide" :style="{ backgroundColor: coverSetting.color }">
           <div v-if="coverSetting.UserCoverImageUrl" class="User-preview">
             <img
               class="customImg"
@@ -19,7 +19,7 @@
         </div>
         <div class="side backSide" :style="{ backgroundColor: coverSetting.color }">
           <img class="coverImg" src="../../../Assets/img/book/封底.png" alt="" />
-        </div>
+        </div> -->
       </div>
       <!-- btn: AddCover -->
       <button class="addCover" @click="openModal">

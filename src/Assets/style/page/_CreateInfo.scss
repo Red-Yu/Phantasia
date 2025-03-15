@@ -48,6 +48,46 @@
                 }
               }
         }
+        // .product-box-container{
+        //     $size:0.6;
+        //     .product-box--front {
+        //         width: 507.93px * $size;
+        //         height: 700px * $size;
+        //         transform: translate3d(-250px * $size, -375px * $size, 18px * $size);
+        //       }
+        //       .product-box--back {
+        //         width: 507.93px * $size;
+        //         height: 700px * $size;
+        //         transform: translate3d(-250px * $size, -375px * $size, -59px * $size)
+        //           rotateY(180deg);
+        //       }
+        //       .product-box--side-left {
+        //         width: 76.49px * $size;
+        //         height: 700px * $size;
+        //         transform: translate3d(-268px * $size, -375px * $size, 0)
+        //           translate3d(-20px * $size, 0, -20px * $size) rotateY(-90deg);
+        //       }
+        //       .product-box--side-right {
+        //         width: 76.49px * $size;
+        //         height: 700px * $size;
+        //         transform: translate3d(-262px * $size, -375px * $size, 0)
+        //           translate3d(480px * $size, 0px, -20px * $size) rotateY(90deg);
+        //         /* 480px × $size */
+        //       }
+        //       .product-box--top {
+        //         width: 507.93px * $size;
+        //         height: 76.49px * $size;
+        //         transform: translate3d(-250px * $size, -393px * $size, 0)
+        //           translate3d(0px, -20px * $size, -20px * $size) rotateX(90deg);
+        //       }
+            
+        //       .product-box--bottom {
+        //         width: 507.93px * $size;
+        //         height: 76.49px * $size;
+        //         transform: translate3d(-250px * $size, -443px * $size, 0)
+        //           translate3d(0px, 730px * $size, -20px * $size) rotateX(-90deg);
+        //       }
+        // }
         // 開啟 addCover 按鈕
         button{
             all: unset;
