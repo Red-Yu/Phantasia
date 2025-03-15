@@ -7,8 +7,8 @@
 <template>
   <div>
     <div id="info">
-      <a href="" target="_blank" rel="noopener"></a>
-      <!-- css3d - periodic table. -->
+      <a href="https://threejs.org" target="_blank" rel="noopener"></a>
+      
     </div>
     <div id="container" ref="container"></div>
 
@@ -33,7 +33,7 @@ import {
 import * as TWEEN from "@tweenjs/tween.js";
 
 
-export default {
+export default { 
   name: "Book",
   data() {
     return {
@@ -42,6 +42,10 @@ export default {
       scene: null,
       renderer: null,
       controls: null,
+      animationId: null, // 修改1
+      handleMouseMove: null, //修改2
+      handleMouseFollow: null, //修改3
+      onWindowResize: null, //修改4
       objects: [], // 存儲場景中的 3D 物件
       targets: { table: [], sphere: [], helix: [], grid: [] }, // 不同佈局的目標位置
       table: [
@@ -911,7 +915,7 @@ export default {
     // 以下對應原本 body 最後兩個 <script>：滑鼠移動產生星星特效、魔杖跟隨效果
     // ------------------------------------------------------------------
     // 星星特效
-    document.addEventListener("mousemove", (event) => {
+    this.handleMouseMove = (event) => {
       const star = document.createElement("div");
       star.className = "star";
       const size = Math.random() * 5 + 2;
@@ -929,9 +933,10 @@ export default {
         star.style.opacity = "0";
         setTimeout(() => star.remove(), 1000);
       }, 1000);
-    });
+    };
+    document.addEventListener("mousemove", this.handleMouseMove);
 
-    // 魔杖跟隨滑鼠
+    // 魔法棒效果
     const wand = document.createElement("div");
     wand.className = "wand";
     document.body.appendChild(wand);
@@ -945,7 +950,7 @@ export default {
     // 以下對應原本 body 裡的 document.addEventListener("mousedown", ...) 監聽器
     // 主要是關閉按鈕功能
     // ------------------------------------------------------------------
-    document.addEventListener("mousedown", (event) => {
+    this.handleMouseDown = (event) => {
       const elements = document.getElementsByClassName("close-btn");
       for (let i = 0; i < elements.length; i++) {
         const closeBtn = elements[i];
@@ -974,20 +979,31 @@ export default {
           break;
         }
       }
-    });
+    };
+    document.addEventListener("mousedown", this.handleMouseDown);
   },
-  unmounted() {
-    // 移除全域樣式
-    this.removeGlobalStyles();
 
-    // 清理事件監聽器
-    window.removeEventListener("resize", this.onWindowResize);
+  beforeUnmount() { // 組件卸載前的生命週期鉤子
 
-    // 移除魔杖元素
-    const wandElement = document.querySelector(".wand");
-    if (wandElement) {
-      wandElement.remove();
-    }
+  this.removeGlobalStyles(); // 移除全域樣式
+
+  // 清理事件監聽器
+  window.removeEventListener("resize", this.onWindowResize);
+  window.onbeforeunload = null; // 移除頁面離開事件監聽器
+
+  // 移除魔法效果
+  const wandElement = document.querySelector(".wand"); 
+  if (wandElement) { 
+    wandElement.remove();
+  }
+  // 移除星星特效
+  const start = document.querySelectorAll(".star"); 
+  start.forEach((star) => star.remove());
+  // 移除滑鼠移動事件監聽器 
+  document.removeEventListener("mousemove", this.handleMouseMove);
+  document.removeEventListener("mousedown", this.handleMouseDown);
+  
   },
+  
 };
 </script>
