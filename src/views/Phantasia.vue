@@ -58,9 +58,69 @@
 <template>
   <Preload />
 
+  <!-- ===================登入彈窗===================== -->
+
+  <!-- Login Modal -->
+  <Login
+    :isVisible="isLoginVisible"
+    @close="closeLogin"
+    @openSignup="openSignup"
+    :startVideoElement="startVideoElement"
+    @login-success="handleLoginSuccess"
+  />
+
+  <!-- Signup Modal -->
+  <Signup
+    :isVisible="isSignupVisible"
+    @close="closeSignup"
+    @openLogin="openLogin"
+  />
+
   <!-- ===================首頁共用組件(前景)===================== -->
 
   <BlackCover />
+  <div class="textContent">
+    <!-- =====log out===== -->
+    <div v-if="islogIn" class="logOutmenuButton">
+      <div class="menuAvatar" @click="ToMemberCenter">
+        <img
+          class="avaterImg"
+          v-if="avatarURL"
+          :src="avatarURL"
+          alt="User Avatar"
+        />
+      </div>
+      <div class="btnLink white loginInfo" @click="ToMemberCenter">
+        <p>
+          Hi, {{ user && user.email ? user.email.split("@")[0] : "Visitor" }} !
+        </p>
+        <!-- <p>Hi,Chris!</p> -->
+      </div>
+      <div class="btnLink white" @click="logout">
+        <p>Log Out</p>
+        <div class="icon-M">
+          <div class="white-setting"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====log in===== -->
+    <div v-if="islogOut" class="logInmenuButton">
+      <div class="menuAvatar">
+        <img
+          class="avaterImg"
+          src="/MyColset/character115x409.png"
+          alt="User Avatar"
+        />
+      </div>
+      <div class="btnLink white loginInfo" @click="openModal">
+        <p>Log In</p>
+        <!-- <div class="icon-M">
+          <div class="white-edit"></div>
+        </div> -->
+      </div>
+    </div>
+  </div>
 
   <div class="blackWrapper">
     <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
@@ -249,15 +309,34 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue";
+import {
+  onMounted,
+  ref,
+  computed,
+  watch,
+  onBeforeUnmount,
+  nextTick,
+} from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
 import { useUserAuthState } from "@/stores/userAuthState";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import BlackCover from "../components/BlackCover.vue";
+import Login from "./Auth/Login.vue";
+import Signup from "./Auth/Signup.vue";
 
+// 登入按鈕選單
+const islogIn = ref(false);
+const islogOut = ref(null);
+
+// 初始化Firebase身份驗證
+const auth = getAuth();
+
+// 使用 Pinia store
 const userAuthState = useUserAuthState();
+const user = userAuthState.user; // 引用全域的用戶資料
+
 const parallaxContainer = ref(null);
 const router = useRouter();
 
@@ -345,7 +424,37 @@ const updateImagePaths = (newDayNight) => {
 };
 //===============================================
 
-// 監控 day_night 的變化
+// 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
+const avatarURL = computed(() => {
+  return user && user.photoURL
+    ? user.photoURL
+    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回預設圖
+});
+
+// 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
+watch(
+  () => user?.photoURL,
+  async (newPhotoURL) => {
+    if (newPhotoURL) {
+      console.log("User avatar updated:", newPhotoURL);
+
+      // 使用 nextTick 確保在 Vue 完成 DOM 更新後執行操作
+      await nextTick(() => {
+        // 更新 avatarURL，使得圖片重新渲染
+        avatarURL.value = newPhotoURL;
+      });
+    }
+  }
+);
+
+// 登出方法
+const logout = async () => {
+  await userAuthState.logout(); // 呼叫 store 中的 logout 方法
+  // router.push("/"); // 登出後重定向到登入頁面
+  // window.location.reload();
+};
+
+// 監控 day_night 的變化=========================
 watch(day_night, (newDayNight) => {
   updateImagePaths(newDayNight); // 當 day_night 改變時更新圖片路徑
 });
@@ -413,7 +522,18 @@ onMounted(() => {
     // 如果用戶已經登錄，則直接從 store 中獲取頭像 URL
     userAuthState.avatarURL = userAuthState.user.photoURL;
   }
-  // =========textillate=========
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // 用戶已登入
+      islogIn.value = true;
+      islogOut.value = false;
+    } else {
+      // 用戶未登入
+      islogIn.value = false;
+      islogOut.value = true;
+    }
+  });
 });
 
 // ========保持過場影片加載(避免過場卡頓)==========
@@ -435,6 +555,41 @@ onBeforeUnmount(() => {
   clearInterval(intervalId); // 清除 interval
 });
 
+// =================登入彈窗====================
+
+// 控制顯示登入與註冊彈窗
+const isLoginVisible = ref(false);
+const isSignupVisible = ref(false);
+
+// 打開彈窗的方法
+const openModal = () => {
+  isLoginVisible.value = true;
+  // $(".rippleArea").ripples("destroy");
+};
+
+// 打開註冊彈窗的事件
+const openSignup = () => {
+  isLoginVisible.value = false;
+  isSignupVisible.value = true;
+};
+
+// 打開登入彈窗
+const openLogin = () => {
+  isLoginVisible.value = true;
+  isSignupVisible.value = false;
+};
+
+// 關閉彈窗的方法
+const closeLogin = () => {
+  isLoginVisible.value = false;
+};
+
+const closeSignup = () => {
+  isSignupVisible.value = false;
+};
+
+// ==========================================
+
 // ========router.push==========
 
 const ToCabin = () => {
@@ -451,5 +606,9 @@ const ToAbout = () => {
   setTimeout(() => {
     router.push("/About");
   }, 450);
+};
+
+const ToMemberCenter = () => {
+  router.push("/MemberCenter");
 };
 </script>
