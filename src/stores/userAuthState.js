@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, onBeforeMount, watch, nextTick } from "vue";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const useUserAuthState = defineStore("userAuthState", () => {
   const user = ref(null);
@@ -47,25 +47,10 @@ export const useUserAuthState = defineStore("userAuthState", () => {
     }
   );
 
-  // 登出方法
-  const logout = async () => {
-    try {
-      await signOut(auth); // 使用 Firebase 的 signOut 方法登出
-      user.value = null; // 清除 store 中的用戶資料
-      avatarURL.value = null; // 清除頭像
-      partnerURL.value = null; // 清除小精靈圖片
-      console.log("User successfully logged out");
-    } catch (error) {
-      console.error("Error during logout:", error);
-    }
-  };
-
   return {
     user,
     avatarURL,
-    partnerURL,
     setAvatarURL,
     setPartnerURL,
-    logout,
   };
 });

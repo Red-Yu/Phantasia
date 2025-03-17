@@ -92,10 +92,17 @@ button:active {
 
 <template>
   <div>
+<<<<<<< HEAD
     <!-- <div id="info">
       <a href="https://threejs.org" target="_blank" rel="noopener">three.js</a>
       css3d - periodic table.
     </div> -->
+=======
+    <div id="info">
+      <a href="" target="_blank" rel="noopener"></a>
+      <!-- css3d - periodic table. -->
+    </div>
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
     <div id="container" ref="container"></div>
     <div id="menu">
       <!-- 使用 Vue 的 @click 綁定方法來監聽按鈕點擊事件，觸發不同佈局轉換 -->
@@ -116,6 +123,10 @@ import {
 } from "three/addons/renderers/CSS3DRenderer.js";
 import * as TWEEN from "@tweenjs/tween.js";
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
 export default {
   name: "Book",
   data() {
@@ -1073,8 +1084,11 @@ export default {
     }
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
    
 >>>>>>> 8b8f7630dc868f804e94eca9d936444b5410361a
+=======
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
 };
 </script>

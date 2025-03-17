@@ -58,27 +58,10 @@
 <template>
   <Preload />
 
-  <!-- ===================登入彈窗===================== -->
-
-  <!-- Login Modal -->
-  <Login
-    :isVisible="isLoginVisible"
-    @close="closeLogin"
-    @openSignup="openSignup"
-    :startVideoElement="startVideoElement"
-    @login-success="handleLoginSuccess"
-  />
-
-  <!-- Signup Modal -->
-  <Signup
-    :isVisible="isSignupVisible"
-    @close="closeSignup"
-    @openLogin="openLogin"
-  />
-
   <!-- ===================首頁共用組件(前景)===================== -->
 
   <BlackCover />
+<<<<<<< HEAD
   <div class="textContent">
     <!-- =====log out===== -->
     <div v-if="islogIn" class="logOutmenuButton">
@@ -120,6 +103,8 @@
       </div>
     </div>
   </div>
+=======
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
 
   <div class="blackWrapper">
     <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
@@ -313,25 +298,23 @@ import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
 import { useUserAuthState } from "@/stores/userAuthState";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import BlackCover from "../components/BlackCover.vue";
+<<<<<<< HEAD
 import Login from "./Auth/Login.vue";
 import Signup from "./Auth/Signup.vue";
 import { db } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
+=======
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
 
-// 登入按鈕選單
-const islogIn = ref(false);
-const islogOut = ref(null);
-
-// 初始化Firebase身份驗證
-const auth = getAuth();
-
-// 使用 Pinia store
 const userAuthState = useUserAuthState();
+<<<<<<< HEAD
 const userName = ref("");
 const avatarURL = ref("");
 
+=======
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
 const parallaxContainer = ref(null);
 const router = useRouter();
 
@@ -419,6 +402,7 @@ const updateImagePaths = (newDayNight) => {
 };
 //===============================================
 
+<<<<<<< HEAD
 // 登出方法
 const logout = async () => {
   await userAuthState.logout(); // 呼叫 store 中的 logout 方法
@@ -427,6 +411,9 @@ const logout = async () => {
 };
 
 // 監控 day_night 的變化=========================
+=======
+// 監控 day_night 的變化
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
 watch(day_night, (newDayNight) => {
   updateImagePaths(newDayNight); // 當 day_night 改變時更新圖片路徑
 });
@@ -494,6 +481,7 @@ onMounted(() => {
     // 如果用戶已經登錄，則直接從 store 中獲取頭像 URL
     userAuthState.avatarURL = userAuthState.user.photoURL;
   }
+<<<<<<< HEAD
 
   onAuthStateChanged(auth, async (user) => {
     // 將回調設為 async 函數
@@ -523,6 +511,9 @@ onMounted(() => {
       avatarURL.value = "/MyColset/character115x409.png";
     }
   });
+=======
+  // =========textillate=========
+>>>>>>> e6f19a4f6819e4a08000f396bad56b6421069321
 });
 
 // ========保持過場影片加載(避免過場卡頓)==========
@@ -544,41 +535,6 @@ onBeforeUnmount(() => {
   clearInterval(intervalId); // 清除 interval
 });
 
-// =================登入彈窗====================
-
-// 控制顯示登入與註冊彈窗
-const isLoginVisible = ref(false);
-const isSignupVisible = ref(false);
-
-// 打開彈窗的方法
-const openModal = () => {
-  isLoginVisible.value = true;
-  // $(".rippleArea").ripples("destroy");
-};
-
-// 打開註冊彈窗的事件
-const openSignup = () => {
-  isLoginVisible.value = false;
-  isSignupVisible.value = true;
-};
-
-// 打開登入彈窗
-const openLogin = () => {
-  isLoginVisible.value = true;
-  isSignupVisible.value = false;
-};
-
-// 關閉彈窗的方法
-const closeLogin = () => {
-  isLoginVisible.value = false;
-};
-
-const closeSignup = () => {
-  isSignupVisible.value = false;
-};
-
-// ==========================================
-
 // ========router.push==========
 
 const ToCabin = () => {
@@ -595,9 +551,5 @@ const ToAbout = () => {
   setTimeout(() => {
     router.push("/About");
   }, 450);
-};
-
-const ToMemberCenter = () => {
-  router.push("/MemberCenter");
 };
 </script>

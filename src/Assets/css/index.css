@@ -813,53 +813,6 @@ button {
   z-index: 1;
 }
 
-.textContent {
-  position: relative;
-  max-width: 1440px;
-  width: 100%;
-  height: 100%;
-}
-.textContent .logOutmenuButton .loginInfo:hover::after {
-  width: 0;
-}
-.textContent .logOutmenuButton,
-.textContent .logInmenuButton {
-  display: flex;
-  position: absolute;
-  top: 10px;
-  right: 2.5%;
-  z-index: 400;
-  gap: 5px;
-  cursor: pointer;
-}
-.textContent .logOutmenuButton p,
-.textContent .logInmenuButton p {
-  font-variant: small-caps;
-  font-size: 17px;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
-  letter-spacing: 1.2px;
-}
-.textContent .logOutmenuButton .menuAvatar,
-.textContent .logInmenuButton .menuAvatar {
-  width: 30px;
-  height: 30px;
-  border: white solid 1.5px;
-  border-radius: 50%;
-  background-color: #999999;
-  overflow: hidden;
-}
-.textContent .logOutmenuButton .menuAvatar .avaterImg,
-.textContent .logInmenuButton .menuAvatar .avaterImg {
-  display: flex;
-  justify-self: center;
-  transform: scale(0.2);
-  transform-origin: top center;
-}
-.textContent .logOutmenuButton .btnLink,
-.textContent .logInmenuButton .btnLink {
-  gap: 3px;
-}
-
 .blackWrapper {
   background-color: black;
 }
