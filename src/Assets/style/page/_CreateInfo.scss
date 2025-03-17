@@ -9,7 +9,7 @@
         justify-content: center;
         width: 40vw;
         height: calc(100vh - 100px);
-        background-color: $subGray;
+        background-color: $baseBlue;
         position: sticky;
         top: 0;
         left: 0;
@@ -17,77 +17,187 @@
         // cover-save-preview
         // ------------------------------------------
         .cover-save-preview{
+            width: 100%;
+            height: 100%;
+            perspective: 1500px;
             display: flex;
-            gap: 30px;
-            .side {
-                width: 220px;
-                height: 305px ;
-                background-color: #eead50;
-                align-items: center;
-                justify-content: center;
-                position: relative;
-                .coverImg{
-                  width: 220px;
-                  height: auto;
-                }
-            }
-            .User-preview{
+            justify-content: center;
+            align-items: center;
+            // 設定書本外框的 3D 旋轉效果與拖曳狀態
+            .product-box-holder {
+                transform: rotateX(16deg) rotateY(0deg);
+                transform-style: preserve-3d;
+                cursor: grab;
+                animation: bookFloat 15s ease-in-out infinite alternate; // 預設開啟動畫
+
+            // 書本內的所有子元素通用設定
+            div {
                 position: absolute;
-                top: 95px;
-                left: 22px;
-                width: 175px;
-                height: 175px;
-                display: flex;
-                align-items: center;
-                justify-items: center;
-                overflow: hidden;
-                .customImg{
-                  width: auto;
-                  height: 100%;
-                  inline-size: -webkit-fill-available;
+                top: 0;
+                left: 0;
+                backface-visibility: hidden; // 隱藏背面以防止錯誤顯示
+            }
+            }
+            // 書本顏色層（基礎背景色）
+            .pb-color-layer {
+                z-index: 0;
+                background-color: $baseOrange;
+            } 
+
+            // 書本前側
+            .product-box--front {
+                width: 507.93px;
+                height: 700px;
+                position: absolute;
+                transform: translate3d(-250px, -375px, 18px);
+            }
+            // 書本背面
+            .product-box--back {
+                width: 507.93px;
+                height: 700px;
+                position: absolute;
+                transform: translate3d(-250px, -375px, -59px) rotateY(180deg);
+            }
+            // 書本左側（書脊）
+            .product-box--side-left {
+                width: 76.49px;
+                height: 700px;
+                transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px)
+                  rotateY(-90deg);
+                // background-color: palegoldenrod;
+            }
+            // 書本右側
+            .product-box--side-right {
+                width: 76.49px;
+                height: 700px;
+                transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px)
+                  rotateY(90deg);
+            }
+            // 書本上側（頂部）
+            .product-box--top {
+                width: 507.93px;
+                height: 76.49px;
+                transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px)
+                    rotateX(90deg);
+                background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
+                    no-repeat center center;
+                background-size: cover;
+            }
+            // 書本下側（底部）
+            .product-box--bottom {
+                width: 507.93px;
+                height: 76.49px;
+                transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px)
+                    rotateX(-90deg);
+                background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
+                    no-repeat center center;
+                background-size: cover;
+            }
+            
+            // 書本各側的內部層設定（統一樣式）
+            .product-box--front > div,
+            .product-box--back > div,
+            .product-box--side-left > div {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            // 書本外部與內部圖片的通用設定
+            .pb-outer-layer,
+            .pb-inner-layer {
+                background-size: contain;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            // 內部圖片適應不同大小
+            .customImg{
+                width: auto;
+                height: 100%;
+                inline-size: -webkit-fill-available;
+            }
+            // 各個側面外層設定（設定不同層級）
+            .product-box--front .pb-outer-layer {
+                z-index: 0; 
+            }
+
+            .product-box--back .pb-outer-layer {
+                z-index: 0;
+            }
+            // 書本左側（書脊）外部層
+            .product-box--side-left .pb-outer-layer {
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            }
+            // 書本前側顏色層
+            .product-box--front .pb-color-layer {
+            z-index: -1;
+            }
+            // 書本內頁（內層）
+            .product-box--front .pb-inner-layer {
+            width: 73%;
+            height: 53%;
+            left: 50%;
+            top: 60.5%;
+            transform: translate(-50%, -50%);
+            z-index: 1; // 顯示在最上層
+            }
+            // ------ 書本尺寸縮放版本------
+
+            $size:0.6; // 定義縮放比例
+
+            .product-box--front {
+            width: 507.93px * $size;
+            height: 700px * $size;
+            transform: translate3d(-250px * $size, -375px * $size, 18px * $size);
+            }
+            .product-box--back {
+            width: 507.93px * $size;
+            height: 700px * $size;
+            transform: translate3d(-250px * $size, -375px * $size, -59px * $size)
+                rotateY(180deg);
+            }
+            .product-box--side-left {
+            width: 76.49px * $size;
+            height: 700px * $size;
+            transform: translate3d(-268px * $size, -375px * $size, 0)
+                translate3d(-20px * $size, 0, -20px * $size) rotateY(-90deg);
+            }
+            .product-box--side-right {
+            width: 76.49px * $size;
+            height: 700px * $size;
+            transform: translate3d(-262px * $size, -375px * $size, 0)
+                translate3d(480px * $size, 0px, -20px * $size) rotateY(90deg);
+            /* 480px × $size */
+            }
+            .product-box--top {
+            width: 507.93px * $size;
+            height: 76.49px * $size;
+            transform: translate3d(-250px * $size, -393px * $size, 0)
+                translate3d(0px, -20px * $size, -20px * $size) rotateX(90deg);
+            }
+        
+            .product-box--bottom {
+            width: 507.93px * $size;
+            height: 76.49px * $size;
+            transform: translate3d(-250px * $size, -443px * $size, 0)
+                translate3d(0px, 730px * $size, -20px * $size) rotateX(-90deg);
+            }
+
+            @keyframes bookFloat {
+                0% {
+                  transform: rotateX(10deg) rotateY(-45deg) rotateZ(5deg);
+                }
+                50% {
+                  transform: rotateX(20deg) rotateY(45deg) rotateZ(0deg);
+                }
+                100% {
+                  transform: rotateX(10deg) rotateY(-45deg) rotateZ(-5deg);
                 }
               }
         }
-        // .product-box-container{
-        //     $size:0.6;
-        //     .product-box--front {
-        //         width: 507.93px * $size;
-        //         height: 700px * $size;
-        //         transform: translate3d(-250px * $size, -375px * $size, 18px * $size);
-        //       }
-        //       .product-box--back {
-        //         width: 507.93px * $size;
-        //         height: 700px * $size;
-        //         transform: translate3d(-250px * $size, -375px * $size, -59px * $size)
-        //           rotateY(180deg);
-        //       }
-        //       .product-box--side-left {
-        //         width: 76.49px * $size;
-        //         height: 700px * $size;
-        //         transform: translate3d(-268px * $size, -375px * $size, 0)
-        //           translate3d(-20px * $size, 0, -20px * $size) rotateY(-90deg);
-        //       }
-        //       .product-box--side-right {
-        //         width: 76.49px * $size;
-        //         height: 700px * $size;
-        //         transform: translate3d(-262px * $size, -375px * $size, 0)
-        //           translate3d(480px * $size, 0px, -20px * $size) rotateY(90deg);
-        //         /* 480px × $size */
-        //       }
-        //       .product-box--top {
-        //         width: 507.93px * $size;
-        //         height: 76.49px * $size;
-        //         transform: translate3d(-250px * $size, -393px * $size, 0)
-        //           translate3d(0px, -20px * $size, -20px * $size) rotateX(90deg);
-        //       }
-            
-        //       .product-box--bottom {
-        //         width: 507.93px * $size;
-        //         height: 76.49px * $size;
-        //         transform: translate3d(-250px * $size, -443px * $size, 0)
-        //           translate3d(0px, 730px * $size, -20px * $size) rotateX(-90deg);
-        //       }
-        // }
         // 開啟 addCover 按鈕
         button{
             all: unset;

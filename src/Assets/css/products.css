@@ -3075,42 +3075,154 @@ select {
   justify-content: center;
   width: 40vw;
   height: calc(100vh - 100px);
-  background-color: #dee2e6;
+  background-color: #153243;
   position: sticky;
   top: 0;
   left: 0;
 }
 .createInfo .bookCover .cover-save-preview {
+  width: 100%;
+  height: 100%;
+  perspective: 1500px;
   display: flex;
-  gap: 30px;
-}
-.createInfo .bookCover .cover-save-preview .side {
-  width: 220px;
-  height: 305px;
-  background-color: #eead50;
-  align-items: center;
   justify-content: center;
-  position: relative;
-}
-.createInfo .bookCover .cover-save-preview .side .coverImg {
-  width: 220px;
-  height: auto;
-}
-.createInfo .bookCover .cover-save-preview .User-preview {
-  position: absolute;
-  top: 95px;
-  left: 22px;
-  width: 175px;
-  height: 175px;
-  display: flex;
   align-items: center;
-  justify-items: center;
-  overflow: hidden;
 }
-.createInfo .bookCover .cover-save-preview .User-preview .customImg {
+.createInfo .bookCover .cover-save-preview .product-box-holder {
+  transform: rotateX(16deg) rotateY(0deg);
+  transform-style: preserve-3d;
+  cursor: grab;
+  animation: bookFloat 15s ease-in-out infinite alternate;
+}
+.createInfo .bookCover .cover-save-preview .product-box-holder div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+.createInfo .bookCover .cover-save-preview .pb-color-layer {
+  z-index: 0;
+  background-color: #eead50;
+}
+.createInfo .bookCover .cover-save-preview .product-box--front {
+  width: 507.93px;
+  height: 700px;
+  position: absolute;
+  transform: translate3d(-250px, -375px, 18px);
+}
+.createInfo .bookCover .cover-save-preview .product-box--back {
+  width: 507.93px;
+  height: 700px;
+  position: absolute;
+  transform: translate3d(-250px, -375px, -59px) rotateY(180deg);
+}
+.createInfo .bookCover .cover-save-preview .product-box--side-left {
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
+}
+.createInfo .bookCover .cover-save-preview .product-box--side-right {
+  width: 76.49px;
+  height: 700px;
+  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
+}
+.createInfo .bookCover .cover-save-preview .product-box--top {
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  background-size: cover;
+}
+.createInfo .bookCover .cover-save-preview .product-box--bottom {
+  width: 507.93px;
+  height: 76.49px;
+  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  background-size: cover;
+}
+.createInfo .bookCover .cover-save-preview .product-box--front > div,
+.createInfo .bookCover .cover-save-preview .product-box--back > div,
+.createInfo .bookCover .cover-save-preview .product-box--side-left > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.createInfo .bookCover .cover-save-preview .pb-outer-layer,
+.createInfo .bookCover .cover-save-preview .pb-inner-layer {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.createInfo .bookCover .cover-save-preview .customImg {
   width: auto;
   height: 100%;
   inline-size: -webkit-fill-available;
+}
+.createInfo .bookCover .cover-save-preview .product-box--front .pb-outer-layer {
+  z-index: 0;
+}
+.createInfo .bookCover .cover-save-preview .product-box--back .pb-outer-layer {
+  z-index: 0;
+}
+.createInfo .bookCover .cover-save-preview .product-box--side-left .pb-outer-layer {
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+.createInfo .bookCover .cover-save-preview .product-box--front .pb-color-layer {
+  z-index: -1;
+}
+.createInfo .bookCover .cover-save-preview .product-box--front .pb-inner-layer {
+  width: 73%;
+  height: 53%;
+  left: 50%;
+  top: 60.5%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.createInfo .bookCover .cover-save-preview .product-box--front {
+  width: 304.758px;
+  height: 420px;
+  transform: translate3d(-150px, -225px, 10.8px);
+}
+.createInfo .bookCover .cover-save-preview .product-box--back {
+  width: 304.758px;
+  height: 420px;
+  transform: translate3d(-150px, -225px, -35.4px) rotateY(180deg);
+}
+.createInfo .bookCover .cover-save-preview .product-box--side-left {
+  width: 45.894px;
+  height: 420px;
+  transform: translate3d(-160.8px, -225px, 0) translate3d(-12px, 0, -12px) rotateY(-90deg);
+}
+.createInfo .bookCover .cover-save-preview .product-box--side-right {
+  width: 45.894px;
+  height: 420px;
+  transform: translate3d(-157.2px, -225px, 0) translate3d(288px, 0px, -12px) rotateY(90deg);
+  /* 480px × $size */
+}
+.createInfo .bookCover .cover-save-preview .product-box--top {
+  width: 304.758px;
+  height: 45.894px;
+  transform: translate3d(-150px, -235.8px, 0) translate3d(0px, -12px, -12px) rotateX(90deg);
+}
+.createInfo .bookCover .cover-save-preview .product-box--bottom {
+  width: 304.758px;
+  height: 45.894px;
+  transform: translate3d(-150px, -265.8px, 0) translate3d(0px, 438px, -12px) rotateX(-90deg);
+}
+@keyframes bookFloat {
+  0% {
+    transform: rotateX(10deg) rotateY(-45deg) rotateZ(5deg);
+  }
+  50% {
+    transform: rotateX(20deg) rotateY(45deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(10deg) rotateY(-45deg) rotateZ(-5deg);
+  }
 }
 .createInfo .bookCover button {
   all: unset;
