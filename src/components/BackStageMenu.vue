@@ -8,6 +8,12 @@ const toggleClosetMenu = () => {
   isClosetOpen.value = !isClosetOpen.value; // 切換狀態
 };
 
+// 點擊其他選單時，強制收起衣櫃管理子選單
+const closeClosetMenu = () => {
+  isClosetOpen.value = false;
+};
+
+
 const changeStyle = () => {};
 
 
@@ -34,17 +40,17 @@ const changeStyle = () => {};
         <TabButton
           text="會員管理"
           to="/BKMember"
-          @click="changeStyle"
+          @click="closeClosetMenu"
         />
         <TabButton 
           text="商品管理" 
           to="/BKMember/BKProduct" 
-          @click="changeStyle"
+          @click="closeClosetMenu"
         />
         <TabButton 
           text="資訊管理" 
           to="/BKMember/BKInfo" 
-          @click="changeStyle"
+          @click="closeClosetMenu"
         />
         <!-- 衣櫃管理 按鈕 -->
         <div @click="toggleClosetMenu">
