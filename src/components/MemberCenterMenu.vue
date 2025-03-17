@@ -89,9 +89,7 @@ const user = userAuthState.user; // 引用全域的用戶資料
 
 // 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
 const avatarURL = computed(() => {
-  return user && user.photoURL
-    ? user.photoURL
-    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回預設圖
+  return user && user.photoURL ? user.photoURL : null; // 如果沒有 photoURL 則返回 null
 });
 
 // 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新

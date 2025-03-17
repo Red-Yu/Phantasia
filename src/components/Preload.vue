@@ -198,8 +198,6 @@ import { useRouter } from "vue-router";
 import Login from "../views/Auth/Login.vue";
 import Signup from "../views/Auth/Signup.vue";
 
-// =================登入彈窗====================
-
 // 控制顯示登入與註冊彈窗
 const isLoginVisible = ref(false);
 const isSignupVisible = ref(false);
@@ -231,8 +229,6 @@ const closeSignup = () => {
   isSignupVisible.value = false;
 };
 
-// ==========================================
-
 import "jquery.ripples";
 import "lettering.js";
 import "textillate";
@@ -260,7 +256,7 @@ const startVideo = () => {
   }
 };
 
-// 登入成功後，隱藏啟動畫面
+// 登入成功後，將 isStart 設為 false，隱藏啟動畫面
 const handleLoginSuccess = () => {
   isStart.value = false; // 隱藏啟動畫面
 };
