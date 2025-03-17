@@ -1,28 +1,112 @@
 <style scoped>
-@import "../../Assets/css/myBookcase.css";
+/* #menu 及 #container 為固定佈局 */
+/* TEST3 */
+#menu {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+#container {
+  position: fixed;
+}
+
+/* 元件的主要元素 */
+:deep(.element) {
+  width: 130px;
+  height: 160px;
+  box-shadow: 0px 0px 12px rgba(0, 255, 250, 0.5);
+  border: 3px solid rgba(127, 255, 255, 0.25);
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  line-height: normal;
+  cursor: default;
+  /* background-color: rgba(0, 127, 127,0.725); */
+}
+:deep(.element:hover) {
+  box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+  border: 1px solid rgba(127, 255, 255, 0.75);
+}
+:deep(.element .number) {
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  font-size: 12px;
+  color: rgba(127, 255, 255, 0.75);
+}
+:deep(.element .symbol) {
+  position: absolute;
+  top: 40px;
+  left: 0px;
+  right: 0px;
+  font-size: 60px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.95);
+}
+:deep(.element .details) {
+  position: absolute;
+  bottom: 15px;
+  left: 0px;
+  right: 0px;
+  font-size: 12px;
+  color: rgba(127, 255, 255, 0.75);
+}
+
+/* 按鈕樣式 */
+button {
+  color: rgba(127, 255, 255, 0.75);
+  background: transparent;
+  outline: 1px solid rgba(127, 255, 255, 0.75);
+  border: 0px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: rgba(0, 255, 255, 0.5);
+}
+button:active {
+  color: #000000;
+  background-color: rgba(0, 255, 255, 0.75);
+}
+
+/* 關閉按鈕樣式 */
+:deep(.close-btn) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  cursor: pointer;
+  background-color: rgba(0, 217, 255, 0.564);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+}
+:deep(.close-btn-d-none) {
+  display: none;
+}
 </style>
-
-
 
 <template>
   <div>
-    <div id="info">
-      <a href="https://threejs.org" target="_blank" rel="noopener"></a>
-      
-    </div>
+    <!-- <div id="info">
+      <a href="https://threejs.org" target="_blank" rel="noopener">three.js</a>
+      css3d - periodic table.
+    </div> -->
     <div id="container" ref="container"></div>
-
     <div id="menu">
-      <button class="btnKey-M dark" @click="handleClick('helix', false)">HELIX</button>      
-      <button class="btnKey-M dark" @click="handleClick('table', true)">EDIT</button>
-      <button class="btnKey-M dark" @click="handleClick('sphere', false)">SPHERE</button>
-      <button class="btnKey-M dark" @click="handleClick('grid', false)">GRID</button>
-
-   
+      <!-- 使用 Vue 的 @click 綁定方法來監聽按鈕點擊事件，觸發不同佈局轉換 -->
+      <button @click="handleClick('helix', false)">HELIX</button>
+      <button @click="handleClick('table', true)">TABLE</button>
+      <button @click="handleClick('sphere', false)">SPHERE</button>
+      <button @click="handleClick('grid', false)">GRID</button>
     </div>
   </div>
 </template>
-   <!-- //使用 Vue 的 @click 綁定方法來監聽按鈕點擊事件，觸發不同佈局轉換 --> 
+
 <script>
 import * as THREE from "three";
 import { TrackballControls } from "three/addons/controls/TrackballControls.js";
@@ -32,8 +116,7 @@ import {
 } from "three/addons/renderers/CSS3DRenderer.js";
 import * as TWEEN from "@tweenjs/tween.js";
 
-
-export default { 
+export default {
   name: "Book",
   data() {
     return {
@@ -42,516 +125,512 @@ export default {
       scene: null,
       renderer: null,
       controls: null,
-      animationId: null, // 修改1
-      handleMouseMove: null, //修改2
-      handleMouseFollow: null, //修改3
-      onWindowResize: null, //修改4
       objects: [], // 存儲場景中的 3D 物件
       targets: { table: [], sphere: [], helix: [], grid: [] }, // 不同佈局的目標位置
       table: [
         "path_to_image1",
-        "3333",
-        "Book Tiatle",
+        "3-6",
+        "D03",
         3,
         6,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "3-3",
+        "A03",
         3,
+        3,
+        "path_to_image3",
+        "11-3",
+        "A11",
+        11,
         3,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "12-3",
+        "A12",
         12,
         3,
         "path_to_image5",
-        "",
+        "5-3",
         "A05",
         5,
         3,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "6-3",
+        "A06",
         6,
         3,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "7-3",
+        "A07",
         7,
         3,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "8-3",
+        "A08",
         8,
         3,
         "path_to_image1",
-        "",
-        "Book Tiatle",
-        9,
-        3,
-        "path_to_image1",
-        "",
-        "Book Tiatle",
+        "10-3",
+        "D10",
         10,
         3,
         "path_to_image2",
-        "",
-        "Book Tiatle",
-        11,
+        "9-3",
+        "A09",
+        9,
         3,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "1-3",
+        "A01",
         1,
         3,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "2-3",
+        "A02",
         2,
         3,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "13-3",
+        "A13",
         13,
         3,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "14-3",
+        "A14",
         14,
         3,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "15-3",
+        "A15",
         15,
         3,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "16-3",
+        "A16",
         16,
         3,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "17-3",
+        "A17",
         17,
         3,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "18-3",
+        "A18",
         18,
         3,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "1-4",
+        "B01",
         1,
         4,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "2-4",
+        "B02",
         2,
         4,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "3-4",
+        "B03",
         3,
         4,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "4-4",
+        "B04",
         4,
         4,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "5-4",
+        "B05",
         5,
         4,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "6-4",
+        "B06",
         6,
         4,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "7-4",
+        "B07",
         7,
         4,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "8-4",
+        "B08",
         8,
         4,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "9-4",
+        "B09",
         9,
         4,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "10-4",
+        "B10",
         10,
         4,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "11-4",
+        "B11",
         11,
         4,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "12-4",
+        "B12",
         12,
         4,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "13-4",
+        "B13",
         13,
         4,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "14-4",
+        "B14",
         14,
         4,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "15-4",
+        "B15",
         15,
         4,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "16-4",
+        "B16",
         16,
         4,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "17-4",
+        "B17",
         17,
         4,
         "path_to_image3",
-        "",
-        " Book Tiatle",
+        "18-4",
+        "B18",
         18,
         4,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "1-5",
+        "C01",
         1,
         5,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "2-5",
+        "C02",
         2,
         5,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "3-5",
+        "C03",
         3,
         5,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "4-5",
+        "C04",
         4,
         5,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "5-5",
+        "C05",
         5,
         5,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "6-5",
+        "C06",
         6,
         5,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "7-5",
+        "C07",
         7,
         5,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "8-5",
+        "C08",
         8,
         5,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "9-5",
+        "C09",
         9,
         5,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "10-5",
+        "C10",
         10,
         5,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "11-5",
+        "C11",
         11,
         5,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "12-5",
+        "C12",
         12,
         5,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "13-5",
+        "C13",
         13,
         5,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "14-5",
+        "C14",
         14,
         5,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "15-5",
+        "C15",
         15,
         5,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "16-5",
+        "C16",
         16,
         5,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "17-5",
+        "C17",
         17,
         5,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "18-5",
+        "C18",
         18,
         5,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "1-6",
+        "D01",
         1,
         6,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "2-6",
+        "D02",
         2,
         6,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "4-9",
+        "F04",
         4,
         9,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "5-9",
+        "F05",
         5,
         9,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "6-9",
+        "F06",
         6,
         9,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "7-9",
+        "F07",
         7,
         9,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "8-9",
+        "F08",
         8,
         9,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "9-9",
+        "F09",
         9,
         9,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "10-9",
+        "F10",
         10,
         9,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "11-9",
+        "F11",
         11,
         9,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "12-9",
+        "F12",
         12,
         9,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "13-9",
+        "F13",
         13,
         9,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "14-9",
+        "F14",
         14,
         9,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "15-9",
+        "F15",
         15,
         9,
         "path_to_image5",
-        "",
-        "",
+        "16-9",
+        "F16",
         16,
         9,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "4-3",
+        "A04",
         4,
         3,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "3-9",
+        "F03",
         3,
         9,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "4-6",
+        "D04",
         4,
         6,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "5-6",
+        "D05",
         5,
         6,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "6-6",
+        "D06",
         6,
         6,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "7-6",
+        "D07",
         7,
         6,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "8-6",
+        "D08",
         8,
         6,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "9-6",
+        "D09",
         9,
         6,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "10-6",
+        "D10",
         10,
         6,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "11-6",
+        "D11",
         11,
         6,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "12-6",
+        "D12",
         12,
         6,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "13-6",
+        "D13",
         13,
         6,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "14-6",
+        "D14",
         14,
         6,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "15-6",
+        "D15",
         15,
         6,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "16-6",
+        "D16",
         16,
         6,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "17-6",
+        "D17",
         17,
         6,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "18-6",
+        "D18",
         18,
         6,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "4-10",
+        "G04",
         4,
         10,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "5-10",
+        "G05",
         5,
         10,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "6-10",
+        "G06",
         6,
         10,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "7-10",
+        "G07",
         7,
         10,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "8-10",
+        "G08",
         8,
         10,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "9-10",
+        "D09",
         9,
         10,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "10-10",
+        "G10",
         10,
         10,
         "path_to_image8",
-        "",
-        "Book Tiatle",
+        "11-10",
+        "G11",
         11,
         10,
         "path_to_image1",
-        "",
-        "Book Tiatle",
+        "12-10",
+        "G12",
         12,
         10,
         "path_to_image2",
-        "",
-        "Book Tiatle",
+        "13-10",
+        "G13",
         13,
         10,
         "path_to_image3",
-        "",
-        "Book Tiatle",
+        "14-10",
+        "G14",
         14,
         10,
         "path_to_image4",
-        "",
-        "Book Tiatle",
+        "15-10",
+        "G15",
         15,
         10,
         "path_to_image5",
-        "",
-        "Book Tiatle",
+        "16-10",
+        "G16",
         16,
         10,
         "path_to_image6",
-        "",
-        "Book Tiatle",
+        "4-3",
+        "A04",
         4,
         3,
         "path_to_image7",
-        "",
-        "Book Tiatle",
+        "3-10",
+        "G03",
         3,
         10,
       ],
@@ -838,8 +917,8 @@ export default {
           background-color: rgb(25, 25, 25);
           color: #fff;
           overscroll-behavior: none;
-          width: 100%;
-          height: 100vh;
+          width: 1440px;
+          height: 800px;
           background-repeat: no-repeat;
           background-size: cover;
           background-position: center center;
@@ -915,7 +994,7 @@ export default {
     // 以下對應原本 body 最後兩個 <script>：滑鼠移動產生星星特效、魔杖跟隨效果
     // ------------------------------------------------------------------
     // 星星特效
-    this.handleMouseMove = (event) => {
+    document.addEventListener("mousemove", (event) => {
       const star = document.createElement("div");
       star.className = "star";
       const size = Math.random() * 5 + 2;
@@ -933,10 +1012,9 @@ export default {
         star.style.opacity = "0";
         setTimeout(() => star.remove(), 1000);
       }, 1000);
-    };
-    document.addEventListener("mousemove", this.handleMouseMove);
+    });
 
-    // 魔法棒效果
+    // 魔杖跟隨滑鼠
     const wand = document.createElement("div");
     wand.className = "wand";
     document.body.appendChild(wand);
@@ -950,7 +1028,7 @@ export default {
     // 以下對應原本 body 裡的 document.addEventListener("mousedown", ...) 監聽器
     // 主要是關閉按鈕功能
     // ------------------------------------------------------------------
-    this.handleMouseDown = (event) => {
+    document.addEventListener("mousedown", (event) => {
       const elements = document.getElementsByClassName("close-btn");
       for (let i = 0; i < elements.length; i++) {
         const closeBtn = elements[i];
@@ -979,31 +1057,20 @@ export default {
           break;
         }
       }
-    };
-    document.addEventListener("mousedown", this.handleMouseDown);
+    });
   },
+  unmounted() {
+    // 移除全域樣式
+    this.removeGlobalStyles();
 
-  beforeUnmount() { // 組件卸載前的生命週期鉤子
+    // 清理事件監聽器
+    window.removeEventListener("resize", this.onWindowResize);
 
-  this.removeGlobalStyles(); // 移除全域樣式
-
-  // 清理事件監聽器
-  window.removeEventListener("resize", this.onWindowResize);
-  window.onbeforeunload = null; // 移除頁面離開事件監聽器
-
-  // 移除魔法效果
-  const wandElement = document.querySelector(".wand"); 
-  if (wandElement) { 
-    wandElement.remove();
-  }
-  // 移除星星特效
-  const start = document.querySelectorAll(".star"); 
-  start.forEach((star) => star.remove());
-  // 移除滑鼠移動事件監聽器 
-  document.removeEventListener("mousemove", this.handleMouseMove);
-  document.removeEventListener("mousedown", this.handleMouseDown);
-  
+    // 移除魔杖元素
+    const wandElement = document.querySelector(".wand");
+    if (wandElement) {
+      wandElement.remove();
+    }
   },
-  
 };
 </script>
