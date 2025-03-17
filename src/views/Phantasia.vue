@@ -91,9 +91,8 @@
         />
       </div>
       <div class="btnLink white loginInfo" @click="ToMemberCenter">
-        <p>
-          Hi, {{ user && user.email ? user.email.split("@")[0] : "Visitor" }} !
-        </p>
+        <p v-if="userName">Hi, {{ userName }} !</p>
+        <p v-else>Hi, Visitor !</p>
         <!-- <p>Hi,Chris!</p> -->
       </div>
       <div class="btnLink white" @click="logout">
@@ -309,14 +308,7 @@
 </template>
 
 <script setup>
-import {
-  onMounted,
-  ref,
-  computed,
-  watch,
-  onBeforeUnmount,
-  nextTick,
-} from "vue";
+import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
@@ -325,6 +317,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import BlackCover from "../components/BlackCover.vue";
 import Login from "./Auth/Login.vue";
 import Signup from "./Auth/Signup.vue";
+import { db } from "../firebase/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 
 // 登入按鈕選單
 const islogIn = ref(false);
@@ -335,7 +329,8 @@ const auth = getAuth();
 
 // 使用 Pinia store
 const userAuthState = useUserAuthState();
-const user = userAuthState.user; // 引用全域的用戶資料
+const userName = ref("");
+const avatarURL = ref("");
 
 const parallaxContainer = ref(null);
 const router = useRouter();
@@ -424,29 +419,6 @@ const updateImagePaths = (newDayNight) => {
 };
 //===============================================
 
-// 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
-const avatarURL = computed(() => {
-  return user && user.photoURL
-    ? user.photoURL
-    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回預設圖
-});
-
-// 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
-watch(
-  () => user?.photoURL,
-  async (newPhotoURL) => {
-    if (newPhotoURL) {
-      console.log("User avatar updated:", newPhotoURL);
-
-      // 使用 nextTick 確保在 Vue 完成 DOM 更新後執行操作
-      await nextTick(() => {
-        // 更新 avatarURL，使得圖片重新渲染
-        avatarURL.value = newPhotoURL;
-      });
-    }
-  }
-);
-
 // 登出方法
 const logout = async () => {
   await userAuthState.logout(); // 呼叫 store 中的 logout 方法
@@ -523,15 +495,32 @@ onMounted(() => {
     userAuthState.avatarURL = userAuthState.user.photoURL;
   }
 
-  onAuthStateChanged(auth, (user) => {
+  onAuthStateChanged(auth, async (user) => {
+    // 將回調設為 async 函數
     if (user) {
       // 用戶已登入
       islogIn.value = true;
       islogOut.value = false;
+
+      // 獲取用戶資料
+      try {
+        const userDoc = await getDoc(doc(db, "users", user.uid)); // 使用 await 獲取資料
+        if (userDoc.exists()) {
+          userName.value = userDoc.data().name; // 更新用戶名稱
+        } else {
+          console.log("No such document!");
+        }
+      } catch (error) {
+        console.log("Error getting document:", error);
+      }
+      // 更新頭像 URL
+      avatarURL.value = user.photoURL || "/MyColset/character115x409.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
     } else {
       // 用戶未登入
       islogIn.value = false;
       islogOut.value = true;
+      userName.value = ""; // 清空用戶名稱
+      avatarURL.value = "/MyColset/character115x409.png";
     }
   });
 });
