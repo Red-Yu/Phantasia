@@ -30,6 +30,60 @@ button {
   z-index: 1;
 }
 
+.textContent {
+  position: relative;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+
+  .logOutmenuButton {
+    // opacity: 0;
+
+    .loginInfo {
+      &:hover::after {
+        width: 0;
+      }
+    }
+  }
+
+  .logOutmenuButton,
+  .logInmenuButton {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 2.5%;
+    z-index: 400;
+    gap: 5px;
+    cursor: pointer;
+
+    p {
+      font-variant: small-caps;
+      font-size: 17px;
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+      letter-spacing: 1.2px;
+    }
+
+    .menuAvatar {
+      width: 30px;
+      height: 30px;
+      border: white solid 1.5px;
+      border-radius: 50%;
+      background-color: $subDark-gray;
+      overflow: hidden;
+      .avaterImg {
+        display: flex;
+        justify-self: center;
+        transform: scale(0.2);
+        transform-origin: top center;
+      }
+    }
+
+    .btnLink {
+      gap: 3px;
+    }
+  }
+}
+
 .blackWrapper {
   background-color: black;
 }
@@ -51,6 +105,7 @@ button {
   // background-color: #e5ff00;
   overflow: hidden;
   z-index: 400;
+  // display: flex;
 }
 
 .parallax-wrapper {
@@ -820,11 +875,18 @@ button {
     margin-top: auto;
     margin-left: auto;
     pointer-events: auto;
+    text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
+    font-family: "Fanwood Text";
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-variant: small-caps;
 
     .backToHome {
       font-size: 26px;
       margin-top: 5px;
       font-style: italic;
+
       &::after {
         height: 3px;
       }
@@ -882,6 +944,10 @@ button {
   height: 50vh;
   min-width: 120px;
   pointer-events: auto;
+
+  .avaterImg {
+    pointer-events: none;
+  }
 }
 
 .elfWrapper {
@@ -893,6 +959,10 @@ button {
   height: 23vh;
   min-width: 100px;
   pointer-events: auto;
+
+  .partnerImg {
+    pointer-events: none;
+  }
 }
 
 .character,
@@ -954,6 +1024,7 @@ button {
   height: 30vh;
   min-width: 100px;
   pointer-events: auto;
+  z-index: 300;
 }
 
 .magicCircleWrapper {
@@ -967,7 +1038,7 @@ button {
 .selectBall_1 {
   @include imgCenter();
   left: 23%;
-  top: 18%;
+  top: 30%;
   // width: 10vw;
   height: 10vh;
   cursor: pointer;
@@ -977,8 +1048,8 @@ button {
 
 .selectBall_2 {
   @include imgCenter();
-  left: 29%;
-  top: 39%;
+  left: 32%;
+  top: 43%;
   // width: 7vw;
   height: 7vh;
   cursor: pointer;
@@ -987,8 +1058,8 @@ button {
 
 .selectBall_3 {
   @include imgCenter();
-  left: 36%;
-  top: 24%;
+  left: 37%;
+  top: 25%;
   // width: 5.5vw;
   height: 5.5vh;
   cursor: pointer;
@@ -1086,4 +1157,15 @@ button {
       font-size: 18px;
     }
   }
+}
+
+.saveButton {
+  // color: white;
+  z-index: 400;
+  pointer-events: auto;
+  position: absolute;
+  right: 24%;
+  bottom: 10%;
+  box-shadow: 0 0 15px rgb(255, 255, 255);
+  border: white solid 1px;
 }

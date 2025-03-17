@@ -4,7 +4,14 @@
     <div class="sidebar">
       <div class="user">
         <div class="useImg">
-          <div class="avatar"></div>
+          <div class="avatar">
+            <img
+              class="avaterImg"
+              v-if="avatarURL"
+              :src="avatarURL"
+              alt="User Avatar"
+            />
+          </div>
         </div>
       </div>
 
@@ -67,13 +74,31 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue"; // 添加 watch 引入
+import { ref, watch, onMounted } from "vue"; // 添加 watch 引入
 import { useRouter, useRoute } from "vue-router"; // 添加 useRoute 引入
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import "@/assets/css/main.css";
 
 const router = useRouter();
 const route = useRoute();
 
+const auth = getAuth();
+const avatarURL = ref("");
+
+onMounted(() => {
+  onAuthStateChanged(auth, async (user) => {
+    // 將回調設為 async 函數
+    if (user) {
+      // 更新頭像 URL
+      avatarURL.value = user.photoURL || "/MyColset/character115x409.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+    } else {
+      avatarURL.value = "/MyColset/character115x409.png";
+    }
+  });
+});
+
+// 設置選單和頁面路徑等
 const SUBSCRIPTION_PLAN_INDEX = 1;
 const MY_PLAN_SUB_INDEX = 0;
 

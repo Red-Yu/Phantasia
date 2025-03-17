@@ -3,14 +3,31 @@
 /* test */
 </style>
 
-
-
 <template>
   <div class="blackWrapper">
     <div
       class="wrap"
       :style="{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.8s' }"
     >
+      <div class="myCabinContent">
+        <div class="slogon">
+          <h1 class="title1 flipInY">Reward card</h1>
+          <h6 class="title3 rollIn">
+            Try clicking the Reward card and see how many points you’ve earned!
+          </h6>
+        </div>
+        <div class="menu">
+          <div class="backToHome_button">
+            <button
+              @click="backToHome"
+              class="btnLink whiteForFrontPage backToHome menuIn"
+            >
+              Back to my cabin
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- 背景圖 -->
       <div class="bg"></div>
       <!-- 集點卡 -->
@@ -68,10 +85,16 @@
                   />
                 </div>
                 <div class="avatar">
-                  <img
+                  <!-- <img
                     src="../../Assets/Day/rewardCard/avatar.png"
                     alt=""
                     class="avatar"
+                  /> -->
+                  <img
+                    class="avaterImg avatar"
+                    v-if="avatarURL"
+                    :src="avatarURL"
+                    alt="User Avatar"
                   />
                 </div>
               </div>
@@ -301,17 +324,58 @@
 //     });
 // });
 // ====================================
-import { onMounted, ref, nextTick } from "vue";
+import { onMounted, ref, nextTick, computed, watch } from "vue";
 import { useRouter } from "vue-router";
+import { useUserAuthState } from "@/stores/userAuthState";
 
 const isVisible = ref(false);
 const router = useRouter();
+
+// 使用 Pinia store
+const userAuthState = useUserAuthState();
+const user = userAuthState.user; // 引用全域的用戶資料
+
+// 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
+const avatarURL = computed(() => {
+  return user && user.photoURL
+    ? user.photoURL
+    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回 null
+});
+
+// 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
+watch(
+  () => user?.photoURL,
+  async (newPhotoURL) => {
+    if (newPhotoURL) {
+      console.log("User avatar updated:", newPhotoURL);
+      // 等待下次 DOM 更新後再執行其他操作
+      await nextTick();
+      // 在此處處理需要在頭像更新後進行的其他操作
+    }
+  }
+);
 
 onMounted(() => {
   nextTick(() => {
     setTimeout(() => {
       isVisible.value = true; // 0.8秒後觸發 opacity 變化
     }, 200); // 延遲 0.8 秒
+  });
+
+  $(".flipInY").textillate({
+    in: {
+      effect: "flipInY",
+      shuffle: true,
+      delay: 170,
+    },
+  });
+
+  $(".rollIn").textillate({
+    in: {
+      effect: "rollIn",
+      shuffle: true,
+      delay: 40,
+    },
   });
 });
 
@@ -350,4 +414,8 @@ $(function () {
     }, 600); // 關閉背面延遲時間
   });
 });
+
+const backToHome = () => {
+  router.push("/MyCabin");
+};
 </script>

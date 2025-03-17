@@ -30,6 +30,8 @@ button {
   max-width: 35vw;
   width: 100%;
   height: 70vh;
+  min-height: 450px;
+
   border-radius: 2px;
   overflow: hidden;
   position: relative;
@@ -64,14 +66,28 @@ button {
     }
   }
 }
+
+.modal-content.signUp {
+  height: 80vh;
+  min-height: 500px;
+
+  .lightbox-content {
+    height: 80vh;
+    min-height: 500px;
+    top: 49%;
+  }
+}
+
 /* 光箱內容 */
 .lightbox-content {
   // width: 40%;
   max-width: 30vw;
   width: 100%;
   height: 70vh;
+  min-height: 450px;
+
   position: fixed;
-  top: 50%;
+  top: 51%;
   left: 50%;
   transform: translate(-50%, -50%); /* 確保光箱正中央 */
   z-index: 1000;
@@ -115,7 +131,7 @@ button[type="submit"]:hover {
 div.btn {
   display: flex;
   justify-content: center;
-  padding-top: 8px;
+  padding-top: 12px;
 }
 
 // 錯誤提示
@@ -142,7 +158,7 @@ div.btn {
 
 // 分隔方式
 div.or {
-  padding: 5px;
+  padding: 8px;
   display: flex; /* 使每個 <a> 具有 flex 屬性 */
   justify-content: center; /* 讓圖片居中 */
 
@@ -168,8 +184,13 @@ div.or {
 
 p.gotoSingup,
 p.gotoLogin {
-  padding-top: 15px;
+  padding-top: 12px;
   padding-bottom: 10px;
+}
+
+.signup {
+  color: rgb(22, 101, 185);
+  cursor: pointer;
 }
 
 .lightbox-content > h1 {
@@ -182,4 +203,8 @@ p,
 label,
 input {
   font-family: Fanwood Text;
+}
+
+.error-message {
+  color: red;
 }

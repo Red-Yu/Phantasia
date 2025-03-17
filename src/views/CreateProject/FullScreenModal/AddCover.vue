@@ -106,22 +106,6 @@ const closeModal = () => {
   emit("close");
 };
 
-// //-----------------------------
-// // 封面上傳父層顯示
-// //-----------------------------
-// const UserCoverImageUrl = ref(null);
-
-// //-----------------------------
-// // backCover
-// //-----------------------------
-// // 原始默認背景色
-// const color = ref("#EEAD50");
-
-// // 更新颜色的方法
-// const updateColor = (newColor) => {
-//   color.value = newColor;
-// };
-
 //-----------------------------
 // 監聽圖片上傳並暫存 Pinia
 //-----------------------------
@@ -132,8 +116,8 @@ const coverSetting = useCoverStore();
 //   coverSetting.setImageUrl(imageUrl);
 // };
 
-// 監聽顏色變更，存入 Pinia
-const updateColor = (newColor) => {
-  coverSetting.setColor(newColor);
-};
+// // 監聽顏色變更，存入 Pinia
+// const updateColor = (newColor) => {
+//   coverSetting.setColor(newColor);
+// };
 </script>

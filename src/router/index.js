@@ -11,9 +11,9 @@ import PhantasiaDay from "../views/PhantasiaDay.vue";
 import PhantasiaNight from "../views/PhantasiaNight.vue";
 import NightLayout from "../views/NightLayout.vue";
 
-import Login from "../views/Auth/Login.vue";
-import Signup from "../views/Auth/Signup.vue";
-import Success from "../views/Auth/Success.vue";
+// import Login from "../views/Auth/Login.vue";
+// import Signup from "../views/Auth/Signup.vue";
+// import Success from "../views/Auth/Success.vue";
 import UserManager from "../components/backStage/UserManager.vue";
 
 //==================因為下方使用懶加載，這段不需要====================
@@ -61,23 +61,23 @@ const router = createRouter({
 
     // ==========================登入相關==============================
 
-    {
-      path: "/login", //登入頁面  /login
-      name: "login",
-      component: Login,
-    },
+    // {
+    //   path: "/login", //登入頁面  /login
+    //   name: "login",
+    //   component: Login,
+    // },
 
-    {
-      path: "/signup", //登入頁面  /signup
-      name: "signup",
-      component: Signup,
-    },
+    // {
+    //   path: "/signup", //登入頁面  /signup
+    //   name: "signup",
+    //   component: Signup,
+    // },
 
-    {
-      path: "/success", //登入頁面  /success
-      name: "success",
-      component: Success,
-    },
+    // {
+    //   path: "/success", //登入頁面  /success
+    //   name: "success",
+    //   component: Success,
+    // },
 
     //===================個人頁面(書櫃、換裝、集點)=======================
     {
@@ -280,6 +280,26 @@ const router = createRouter({
           path: "BKProduct", //商品管理  /BKMember/BKProduct
           name: "BackstageProduct",
           component: () => import("@/views/Backstage/BackstageProduct.vue"),
+        },
+        {
+          path: "BKMyColsetHair", //髮型管理  /BKMember/BKMyColsetHair
+          name: "BackstageMyColsetHair",
+          component: () => import("@/views/Backstage/BackstageMyColsetHair.vue"),
+        },
+        {
+          path: "BKMyColsetClothes", //服裝管理  /BKMember/BKMyColsetClothes
+          name: "BackstageMyColsetClothes",
+          component: () => import("@/views/Backstage/BackstageMyColsetClothes.vue"),
+        },
+        {
+          path: "BKMyColsetPartner", //精靈管理  /BKMember/BKMyColsetPartner
+          name: "BackstageMyColsetPartner",
+          component: () => import("@/views/Backstage/BackstageMyColsetPartner.vue"),
+        },
+        {
+          path: "BKMyColsetMagicCircle", //魔法陣管理  /BKMember/BKMyColsetMagicCircle
+          name: "BackstageMyColsetMagicCircle",
+          component: () => import("@/views/Backstage/BackstageMyColsetMagicCircle.vue"),
         },
       ],
     },
