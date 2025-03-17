@@ -10,6 +10,7 @@
     Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -38,6 +39,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -68,6 +70,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -96,6 +99,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -126,6 +130,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -144,6 +149,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -172,6 +178,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -202,6 +209,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -230,6 +238,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -260,6 +269,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -278,6 +288,7 @@
 
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -313,6 +324,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -348,6 +360,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -383,6 +396,7 @@
 }
 .btnLink.whiteForFrontPage {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -799,6 +813,53 @@ button {
   z-index: 1;
 }
 
+.textContent {
+  position: relative;
+  max-width: 1440px;
+  width: 100%;
+  height: 100%;
+}
+.textContent .logOutmenuButton .loginInfo:hover::after {
+  width: 0;
+}
+.textContent .logOutmenuButton,
+.textContent .logInmenuButton {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  right: 2.5%;
+  z-index: 400;
+  gap: 5px;
+  cursor: pointer;
+}
+.textContent .logOutmenuButton p,
+.textContent .logInmenuButton p {
+  font-variant: small-caps;
+  font-size: 17px;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+  letter-spacing: 1.2px;
+}
+.textContent .logOutmenuButton .menuAvatar,
+.textContent .logInmenuButton .menuAvatar {
+  width: 30px;
+  height: 30px;
+  border: white solid 1.5px;
+  border-radius: 50%;
+  background-color: #999999;
+  overflow: hidden;
+}
+.textContent .logOutmenuButton .menuAvatar .avaterImg,
+.textContent .logInmenuButton .menuAvatar .avaterImg {
+  display: flex;
+  justify-self: center;
+  transform: scale(0.2);
+  transform-origin: top center;
+}
+.textContent .logOutmenuButton .btnLink,
+.textContent .logInmenuButton .btnLink {
+  gap: 3px;
+}
+
 .blackWrapper {
   background-color: black;
 }
@@ -842,7 +903,8 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 100%;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   transition: transform 0.1s ease-out;
   transition: opacity 0.6s ease-out;
 }
@@ -1622,6 +1684,9 @@ button {
   min-width: 100px;
   pointer-events: auto;
 }
+.elfWrapper .partnerImg {
+  pointer-events: none;
+}
 
 .character,
 .elf {
@@ -1688,6 +1753,7 @@ button {
   height: 30vh;
   min-width: 100px;
   pointer-events: auto;
+  z-index: 300;
 }
 
 .magicCircleWrapper {

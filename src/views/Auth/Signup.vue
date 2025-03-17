@@ -1,20 +1,28 @@
 <template>
   <!-- <div class="modal-overlay" > -->
   <div class="modal-overlay" v-if="isVisible" @click="closeModal">
-    <div class="modal-content" @click.stop>
+    <div class="modal-content signUp" @click.stop>
       <div class="bgc"></div>
       <!-- mainContent -->
       <div class="lightbox-content">
         <h1>Sign Up</h1>
 
         <form @submit.prevent="signup">
-          <!-- <label for="username">Name</label>
+          <label for="username">Name</label>
           <input
             type="text"
             v-model="name"
             placeholder="Please enter your name."
             required
-          /> -->
+          />
+
+          <label for="birthday">Birthday</label>
+          <input
+            type="date"
+            v-model="birthday"
+            placeholder="Please enter your birthday."
+            required
+          />
 
           <label for="email">E-Mail</label>
           <input
@@ -74,9 +82,12 @@
 
 <script setup>
 import { ref } from "vue";
-import { auth } from "../../firebase/firebaseConfig";
+import { db, auth } from "../../firebase/firebaseConfig";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
+const name = ref("");
+const birthday = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
@@ -100,7 +111,22 @@ const signup = async () => {
   }
 
   try {
-    await createUserWithEmailAndPassword(auth, email.value, password.value);
+    // 使用 Firebase Authentication 創建用戶帳號
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+    const user = userCredential.user;
+
+    // 使用返回的 uid 儲存額外的用戶資料到 Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      name: name.value,
+      birthday: birthday.value,
+      email: email.value,
+      // 你可以在這裡儲存更多的資料
+    });
+
     // 註冊成功後顯示提示
     alert("Registration Successful!");
 
@@ -109,6 +135,8 @@ const signup = async () => {
     password.value = "";
     confirmPassword.value = "";
     errorMessage.value = "";
+    name.value = "";
+    birthday.value = "";
 
     // 切換到登入選單
     emit("openLogin");

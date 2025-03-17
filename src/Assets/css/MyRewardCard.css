@@ -23,6 +23,75 @@
   overflow: hidden;
 }
 
+.myCabinContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 1440px;
+  width: 100%;
+  z-index: 401;
+  padding: 30px 60px 30px 60px;
+  height: 100vh;
+  display: flex;
+}
+.myCabinContent .slogon {
+  width: 430px;
+}
+.myCabinContent .slogon h1 {
+  color: #fff;
+  text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.6);
+  font-family: Aleo;
+  font-size: 54px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 125%;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 15px;
+}
+.myCabinContent .slogon h6 {
+  margin-top: 6px;
+  color: #fff;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+  font-family: Aleo;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.myCabinContent .menu {
+  margin-top: auto;
+  margin-left: auto;
+  pointer-events: auto;
+  text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
+  font-family: "Fanwood Text";
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-variant: small-caps;
+}
+.myCabinContent .menu .backToHome {
+  font-size: 26px;
+  margin-top: 5px;
+  font-style: italic;
+  cursor: pointer;
+}
+.myCabinContent .menu .backToHome::after {
+  height: 3px;
+}
+.myCabinContent .menu .btnLink {
+  padding: 0;
+  opacity: 70%;
+}
+.myCabinContent .menu .btnLink:hover {
+  opacity: 100%;
+}
+.myCabinContent .menu .btnLink.active {
+  opacity: 1;
+}
+
 /* 背景圖 */
 .bg {
   position: relative;
@@ -73,8 +142,9 @@
   /* width: 100%; */
   /* height: 100%; */
   /* min-width: 800px; */
-  object-fit: contain;
-  z-index: 400;
+  -o-object-fit: contain;
+     object-fit: contain;
+  z-index: 800;
 }
 
 @media (max-width: 1200px) {
@@ -255,7 +325,8 @@
   height: 100px;
   background-color: rgb(51, 59, 122);
   opacity: 70%;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+  -webkit-clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+          clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
   margin: 10px;
 }
 
