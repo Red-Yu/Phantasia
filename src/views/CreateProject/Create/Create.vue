@@ -18,8 +18,14 @@
           <h3 class="subTitle">Drafts</h3>
         </div>
       </div>
-      <div class="MenuContent">
-        <CreateMenuContent />
+      <div class="CreateMenuContent">
+        <Accordion
+          v-for="accordionItem in accordionItems"
+          :key="accordionItem"
+          :title="accordionItem.title"
+        >
+          <component :is="accordionItem.content" />
+        </Accordion>
       </div>
     </div>
     <!-- 主要內容區域 -->
@@ -58,9 +64,11 @@
 <script setup>
 import { ref } from "vue";
 import { useTemplateStore } from "@/stores/template";
+import Accordion from "../../../components/BTN/Accordion.vue";
+import AccordionTemplate from "../../../components/BTN/AccordionTemplate.vue";
+import AccordionText from "../../../components/BTN/AccordionText.vue";
 
 import CheckBox from "../../../components/Input/CheckBox.vue";
-import CreateMenuContent from "./CreateMenuContent.vue";
 import CreateCanvas from "./CreateCanvas.vue";
 
 // 使用 Pinia store
@@ -94,4 +102,10 @@ const toggleFunction = () => {
 const togglePageView = () => {
   isRightClose.value = !isRightClose.value;
 };
+
+// 左側邊欄的手風情內容
+const accordionItems = ref([
+  { title: "Template", content: AccordionTemplate },
+  { title: "Text", content: AccordionText },
+]);
 </script>
