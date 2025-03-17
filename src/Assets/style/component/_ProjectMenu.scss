@@ -1,7 +1,7 @@
 // 變數
 $border: $baseBlue solid;
 
-.ProjectMenu{
+.ProjectMenu {
   width: 100%;
   display: flex;
   gap: 10px;
@@ -49,6 +49,10 @@ $border: $baseBlue solid;
         height: 85%;
         border-radius: 80%;
         background-color: $subGray;
+        overflow: hidden;
+        .avaterImg {
+          position: relative;
+        }
       }
       .tab-group {
         width: 100%;

@@ -2008,6 +2008,10 @@ select {
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
+  overflow: hidden;
+}
+.ProjectMenu .user .useImg .avatar .avaterImg {
+  position: relative;
 }
 .ProjectMenu .user .useImg .tab-group {
   width: 100%;
@@ -2056,6 +2060,11 @@ select {
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
+  overflow: hidden;
+  text-align: center;
+}
+.member-center .useImg .avatar .avaterImg {
+  position: relative;
 }
 .member-center .tab-group {
   width: 100%;
@@ -3358,6 +3367,38 @@ tbody > tr:hover {
   top: 0;
   left: 0;
 }
+.createInfo .bookCover .cover-save-preview {
+  display: flex;
+  gap: 30px;
+}
+.createInfo .bookCover .cover-save-preview .side {
+  width: 220px;
+  height: 305px;
+  background-color: #eead50;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.createInfo .bookCover .cover-save-preview .side .coverImg {
+  width: 220px;
+  height: auto;
+}
+.createInfo .bookCover .cover-save-preview .User-preview {
+  position: absolute;
+  top: 95px;
+  left: 22px;
+  width: 175px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  overflow: hidden;
+}
+.createInfo .bookCover .cover-save-preview .User-preview .customImg {
+  width: auto;
+  height: 100%;
+  inline-size: -webkit-fill-available;
+}
 .createInfo .bookCover button {
   all: unset;
   position: absolute;
@@ -3588,6 +3629,7 @@ tbody > tr:hover {
   height: 380px;
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
+  position: relative;
 }
 .Create .CreateCanvas .canvasGroup .saveCanvas {
   margin-top: 10px;
@@ -3811,7 +3853,7 @@ tbody > tr:hover {
   width: 220px;
   height: auto;
 }
-.AddCover .parent-preview {
+.AddCover .User-preview {
   position: absolute;
   top: 95px;
   left: 22px;
@@ -3822,7 +3864,7 @@ tbody > tr:hover {
   justify-items: center;
   overflow: hidden;
 }
-.AddCover .parent-preview .customImg {
+.AddCover .User-preview .customImg {
   width: auto;
   height: 100%;
   inline-size: -webkit-fill-available;
@@ -3949,6 +3991,7 @@ button {
   max-width: 35vw;
   width: 100%;
   height: 70vh;
+  min-height: 450px;
   border-radius: 2px;
   overflow: hidden;
   position: relative;
@@ -3982,13 +4025,24 @@ button {
   z-index: 2;
 }
 
+.modal-content.signUp {
+  height: 80vh;
+  min-height: 500px;
+}
+.modal-content.signUp .lightbox-content {
+  height: 80vh;
+  min-height: 500px;
+  top: 49%;
+}
+
 /* 光箱內容 */
 .lightbox-content {
   max-width: 30vw;
   width: 100%;
   height: 70vh;
+  min-height: 450px;
   position: fixed;
-  top: 50%;
+  top: 51%;
   left: 50%;
   transform: translate(-50%, -50%); /* 確保光箱正中央 */
   z-index: 1000;
@@ -4032,7 +4086,7 @@ button[type=submit]:hover {
 div.btn {
   display: flex;
   justify-content: center;
-  padding-top: 8px;
+  padding-top: 12px;
 }
 
 .error {
@@ -4057,7 +4111,7 @@ div.btn {
 }
 
 div.or {
-  padding: 5px;
+  padding: 8px;
   display: flex; /* 使每個 <a> 具有 flex 屬性 */
   justify-content: center; /* 讓圖片居中 */
 }
@@ -4082,8 +4136,13 @@ div.or ::after {
 
 p.gotoSingup,
 p.gotoLogin {
-  padding-top: 15px;
+  padding-top: 12px;
   padding-bottom: 10px;
+}
+
+.signup {
+  color: rgb(22, 101, 185);
+  cursor: pointer;
 }
 
 .lightbox-content > h1 {
@@ -4096,4 +4155,8 @@ p,
 label,
 input {
   font-family: Fanwood Text;
+}
+
+.error-message {
+  color: red;
 }/*# sourceMappingURL=loginSignup.css.map */

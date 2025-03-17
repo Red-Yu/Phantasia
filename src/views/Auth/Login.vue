@@ -28,7 +28,9 @@
 
           <p class="gotoSingup">
             Don't have an account?
-            <router-link to="/Signup">Sign up here.</router-link>
+            <a class="signup" href="#" @click.prevent="openSignup"
+              >Sign up here.</a
+            >
           </p>
 
           <div class="or">
@@ -48,7 +50,7 @@
           </div>
         </form>
 
-        <p v-if="error">{{ error }}</p>
+        <p v-if="error" class="error-message">{{ error }}</p>
       </div>
     </div>
   </div>
@@ -61,14 +63,8 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
-
-const email = ref("");
-const password = ref("");
-const error = ref("");
-const router = useRouter();
 
 // 用於控制光箱顯示與隱藏
 // const isVisible = ref(true);
@@ -79,32 +75,60 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+
+  startVideoElement: {
+    type: Object, // 父組件傳遞的是影片元素的引用
+    required: true,
+  },
 });
 
 // 定義 emit 事件
-const emit = defineEmits(["close"]);
+const emit = defineEmits(["close", "openSignup", "login-success"]);
 
-// 關閉彈窗的方法
+const email = ref("");
+const password = ref("");
+const error = ref("");
+
+// 關閉彈窗
 const closeModal = () => {
   emit("close");
+
+  // 清空表單數據
+  email.value = "";
+  password.value = "";
+  error.value = "";
 };
 
-// // 監聽來自父組件的 props 變化，當父組件傳遞 isVisible = true 時顯示光箱
-// const props = defineProps({
-//   isVisible: Boolean,
-// });
-
-// watch(() => props.isVisible, (newValue) => {
-//   isVisible.value = newValue; // 根據父組件傳遞的值來控制光箱顯示與否
-// });
+// 切換到註冊彈窗
+const openSignup = () => {
+  emit("openSignup"); // 父組件中的 openSignup 會被觸發
+  // 清空表單數據
+  email.value = "";
+  password.value = "";
+  error.value = "";
+};
 
 // 登入功能
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
-    // 登入成功後關閉光箱
-    isVisible.value = false;
     alert("Login Successful!");
+
+    // 清空表單數據
+    email.value = "";
+    password.value = "";
+    error.value = "";
+
+    // 切換到登入選單
+    emit("close");
+
+    // 發出登入成功事件
+    emit("login-success"); // 父組件將接收到這個事件，並將 isStart 設為 false
+
+    // 播放影片
+    if (props.startVideoElement) {
+      props.startVideoElement.play(); // 在登入成功後播放影片
+    }
   } catch (err) {
     error.value = `Login failed: ${err.message}`;
   }

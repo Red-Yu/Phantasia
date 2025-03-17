@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -20,6 +21,7 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const storage = getStorage(app);
 
 const firebaseServices = {
   database,
@@ -32,7 +34,7 @@ const firebaseServices = {
 console.log("Firebase Initialized:", app);
 
 export default firebaseServices;
-export { auth, db };
+export { auth, db, storage };
 
 //使用方法請參照以下.vue檔
 //src>views>test>firebaseDatabaseTest.vue

@@ -1561,6 +1561,12 @@ button {
   margin-top: auto;
   margin-left: auto;
   pointer-events: auto;
+  text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
+  font-family: "Fanwood Text";
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-variant: small-caps;
 }
 .myCabinContent .menu .backToHome {
   font-size: 26px;
@@ -1618,6 +1624,9 @@ button {
   min-width: 120px;
   pointer-events: auto;
 }
+.characterWrapper .avaterImg {
+  pointer-events: none;
+}
 
 .elfWrapper {
   position: absolute;
@@ -1627,6 +1636,9 @@ button {
   height: 23vh;
   min-width: 100px;
   pointer-events: auto;
+}
+.elfWrapper .partnerImg {
+  pointer-events: none;
 }
 
 .character,
@@ -1694,6 +1706,7 @@ button {
   height: 30vh;
   min-width: 100px;
   pointer-events: auto;
+  z-index: 300;
 }
 
 .magicCircleWrapper {
@@ -1712,7 +1725,7 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   left: 23%;
-  top: 18%;
+  top: 30%;
   height: 10vh;
   cursor: pointer;
   pointer-events: auto;
@@ -1723,8 +1736,8 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  left: 29%;
-  top: 39%;
+  left: 32%;
+  top: 43%;
   height: 7vh;
   cursor: pointer;
   pointer-events: auto;
@@ -1735,8 +1748,8 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  left: 36%;
-  top: 24%;
+  left: 37%;
+  top: 25%;
   height: 5.5vh;
   cursor: pointer;
   pointer-events: auto;
@@ -1829,4 +1842,14 @@ button {
 }
 .myColsetContent .optionArea .magicCircle {
   font-size: 18px;
+}
+
+.saveButton {
+  z-index: 400;
+  pointer-events: auto;
+  position: absolute;
+  right: 24%;
+  bottom: 10%;
+  box-shadow: 0 0 15px rgb(255, 255, 255);
+  border: white solid 1px;
 }/*# sourceMappingURL=index.css.map */
