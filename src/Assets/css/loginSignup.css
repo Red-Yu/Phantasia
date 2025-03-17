@@ -2414,6 +2414,7 @@ select {
   flex-direction: column;
   border: #153243 solid;
   background-color: #f9faf9;
+  cursor: pointer;
 }
 .backStageMenu .user {
   width: 100%;
