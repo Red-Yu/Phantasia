@@ -30,6 +30,7 @@ $border: $baseBlue solid;
     // padding-bottom: 50px;
 
     // justify-content: space-between; 
+    cursor: pointer;
   }
   // user 物件
   .user {
@@ -79,4 +80,20 @@ $border: $baseBlue solid;
     padding: 20px;
     z-index: 2;
   }
+}
+// 子選單
+.sub-menu {
+  padding-left: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.sub-item {
+  padding-left: 10px; /* 讓子選單內縮 */
+  border-left: 5px solid #153243; /* 左側顏色區分 */
+  background-color: #f5f5f5; 
+}
+
+.sub-item:hover {
+  background-color: #e0e0e0; /* 滑鼠懸停效果 */
+  border-left-color: #153243; /* 滑鼠懸停時改變左側顏色 */
 }
