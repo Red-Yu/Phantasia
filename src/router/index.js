@@ -281,6 +281,26 @@ const router = createRouter({
           name: "BackstageProduct",
           component: () => import("@/views/Backstage/BackstageProduct.vue"),
         },
+        {
+          path: "BKMyColsetHair", //髮型管理  /BKMember/BKMyColsetHair
+          name: "BackstageMyColsetHair",
+          component: () => import("@/views/Backstage/BackstageMyColsetHair.vue"),
+        },
+        {
+          path: "BKMyColsetClothes", //服裝管理  /BKMember/BKMyColsetClothes
+          name: "BackstageMyColsetClothes",
+          component: () => import("@/views/Backstage/BackstageMyColsetClothes.vue"),
+        },
+        {
+          path: "BKMyColsetPartner", //精靈管理  /BKMember/BKMyColsetPartner
+          name: "BackstageMyColsetPartner",
+          component: () => import("@/views/Backstage/BackstageMyColsetPartner.vue"),
+        },
+        {
+          path: "BKMyColsetMagicCircle", //魔法陣管理  /BKMember/BKMyColsetMagicCircle
+          name: "BackstageMyColsetMagicCircle",
+          component: () => import("@/views/Backstage/BackstageMyColsetMagicCircle.vue"),
+        },
       ],
     },
 

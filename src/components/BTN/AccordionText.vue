@@ -1,11 +1,39 @@
+<script setup>
+import { ref, watch } from "vue";
+import { eventBus } from "@/utils/eventBus"; // 引入 mitt 事件總線
+import { ColorPicker } from "vue3-colorpicker";
+import "vue3-colorpicker/style.css";
+
+const fontFamily = ref("Arial");
+const fontSize = ref("16");
+const fontWidth = ref("400");
+const textAlign = ref("left");
+const alignItems = ref("end");
+const fontColor = ref("#000000"); // 預設顏色為黑色
+
+// 當用戶變更字體樣式時，發送事件
+const updateTextStyle = () => {
+  eventBus.emit("updateTextStyle", {
+    fontFamily: fontFamily.value,
+    fontSize: fontSize.value + "px",
+    fontWeight: fontWidth.value,
+    textAlign: textAlign.value,
+    alignItems: alignItems.value,
+    color: fontColor.value, // 傳遞顏色
+  });
+};
+watch(fontColor, updateTextStyle);
+</script>
+
 <template>
   <div class="AccordionText">
     <div class="TextStyle">
       <div class="inputBox Typography">
-        <select class="OtherInput" name="age">
+        <select v-model="fontFamily" @change="updateTextStyle" class="OtherInput">
           <option value="placeholder" class="placeholder">Typography</option>
-          <option value="12">5-12</option>
-          <option value="16">12-16</option>
+          <option value="Arial">Arial</option>
+          <option value="Helvetica">Helvetica</option>
+          <option value="Times New Roman">Times New Roman</option>
         </select>
         <div class="selectIcon">
           <div class="cross">
@@ -21,10 +49,16 @@
       </div>
       <div class="secondRow">
         <div class="inputBox fontSize">
-          <select class="OtherInput" name="age">
+          <select v-model="fontSize" @change="updateTextStyle" class="OtherInput">
             <option value="16">16</option>
-            <option value="17">17</option>
             <option value="18">18</option>
+            <option value="20">20</option>
+            <option value="22">22</option>
+            <option value="24">24</option>
+            <option value="26">26</option>
+            <option value="28">28</option>
+            <option value="30">30</option>
+            <option value="32">32</option>
           </select>
           <div class="selectIcon">
             <div class="cross">
@@ -39,15 +73,12 @@
           </div>
         </div>
         <div class="inputBox fontWidth">
-          <select class="OtherInput" name="age">
-            <option value="thin">Thin</option>
-            <option value="bold">ExtraLight</option>
-            <option value="Light">Light</option>
-            <option value="Regular">Regular</option>
-            <option value="Medium">Medium</option>
-            <option value="SemiBold">SemiBold</option>
-            <option value="Bold">Bold</option>
-            <option value="Block">Block</option>
+          <select v-model="fontWidth" @change="updateTextStyle" class="OtherInput">
+            <option value="100">Thin</option>
+            <option value="300">Regular</option>
+            <option value="400">Medium</option>
+            <option value="600">Bold</option>
+            <option value="800">Block</option>
           </select>
           <div class="selectIcon">
             <div class="cross">
@@ -63,27 +94,78 @@
         </div>
       </div>
       <div class="thirdRow">
-        <div class="format text-align-center">
+        <button
+          @click="
+            textAlign = 'center';
+            updateTextStyle();
+          "
+          class="format text-align-center"
+        >
           <img src="../../Assets/img/icon/text-align-center.png" alt="" />
-        </div>
-        <div class="format text-align-end">
+        </button>
+        <button
+          @click="
+            textAlign = 'end';
+            updateTextStyle();
+          "
+          class="format text-align-end"
+        >
           <img src="../../Assets/img/icon/text-align-end.png" alt="" />
-        </div>
-        <div class="format text-align-start">
+        </button>
+        <button
+          @click="
+            textAlign = 'start';
+            updateTextStyle();
+          "
+          class="format text-align-start"
+        >
           <img src="../../Assets/img/icon/text-align-start.png" alt="" />
-        </div>
-        <div class="format text-align-justify">
+        </button>
+        <button
+          @click="
+            textAlign = 'justify';
+            updateTextStyle();
+          "
+          class="format text-align-justify"
+        >
           <img src="../../Assets/img/icon/text-align-justify.png" alt="" />
-        </div>
-        <div class="format justify-content-center">
+        </button>
+        <button
+          @click="
+            alignItems = 'center';
+            updateTextStyle();
+          "
+          class="format justify-content-center"
+        >
           <img src="../../Assets/img/icon/justify-content-center.png" alt="" />
-        </div>
-        <div class="format justify-content-end">
+        </button>
+        <button
+          @click="
+            alignItems = 'end';
+            updateTextStyle();
+          "
+          class="format justify-content-end"
+        >
           <img src="../../Assets/img/icon/justify-content-end.png" alt="" />
-        </div>
-        <div class="format justify-content-start">
+        </button>
+        <button
+          @click="
+            alignItems = 'start';
+            updateTextStyle();
+          "
+          class="format justify-content-start"
+        >
           <img src="../../Assets/img/icon/justify-content-start.png" alt="" />
-        </div>
+        </button>
+      </div>
+      <div class="fourRow">
+        <ColorPicker
+          is-widget
+          picker-type="chrome"
+          disable-alpha
+          disableHistory
+          v-model:pureColor="fontColor"
+        />
       </div>
     </div>
   </div>

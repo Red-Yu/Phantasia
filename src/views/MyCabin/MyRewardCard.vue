@@ -9,6 +9,25 @@
       class="wrap"
       :style="{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.8s' }"
     >
+      <div class="myCabinContent">
+        <div class="slogon">
+          <h1 class="title1 flipInY">Reward card</h1>
+          <h6 class="title3 rollIn">
+            Try clicking the Reward card and see how many points you’ve earned!
+          </h6>
+        </div>
+        <div class="menu">
+          <div class="backToHome_button">
+            <button
+              @click="backToHome"
+              class="btnLink whiteForFrontPage backToHome menuIn"
+            >
+              Back to my cabin
+            </button>
+          </div>
+        </div>
+      </div>
+
       <!-- 背景圖 -->
       <div class="bg"></div>
       <!-- 集點卡 -->
@@ -342,6 +361,22 @@ onMounted(() => {
       isVisible.value = true; // 0.8秒後觸發 opacity 變化
     }, 200); // 延遲 0.8 秒
   });
+
+  $(".flipInY").textillate({
+    in: {
+      effect: "flipInY",
+      shuffle: true,
+      delay: 170,
+    },
+  });
+
+  $(".rollIn").textillate({
+    in: {
+      effect: "rollIn",
+      shuffle: true,
+      delay: 40,
+    },
+  });
 });
 
 $(function () {
@@ -379,4 +414,8 @@ $(function () {
     }, 600); // 關閉背面延遲時間
   });
 });
+
+const backToHome = () => {
+  router.push("/MyCabin");
+};
 </script>

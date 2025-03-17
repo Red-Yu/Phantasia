@@ -102,10 +102,17 @@
                 class="elf_hover"
                 @click="ToMyRewardCard"
               />
-              <img
+              <!-- <img
                 src="../../Assets/Day/myCabin/elf183x291.png"
                 alt=""
                 class="elf"
+              /> -->
+
+              <img
+                class="partnerImg"
+                v-if="partnerURL"
+                :src="partnerURL"
+                alt="User Partner"
               />
             </div>
           </div>
@@ -116,37 +123,68 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch } from "vue";
+import { onMounted, ref } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
-import { useUserAuthState } from "@/stores/userAuthState";
+// import { useUserAuthState } from "@/stores/userAuthState";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from "../../firebase/firebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
 import BlackCover from "../../components/BlackCover.vue";
 
 const parallaxContainer = ref(null);
 const router = useRouter();
+const auth = getAuth();
 // 使用 Pinia store
-const userAuthState = useUserAuthState();
-const user = userAuthState.user; // 引用全域的用戶資料
+// const userAuthState = useUserAuthState();
+// const user = userAuthState.user; // 引用全域的用戶資料
 
-// 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
-const avatarURL = computed(() => {
-  return user && user.photoURL
-    ? user.photoURL
-    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回 null
-});
+const partnerURL = ref("");
+const avatarURL = ref("");
+
+// // 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
+// const avatarURL = computed(() => {
+//   return user && user.photoURL
+//     ? user.photoURL
+//     : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回預設圖
+// });
 
 // 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
-watch(
-  () => user?.photoURL,
-  async (newPhotoURL) => {
-    if (newPhotoURL) {
-      console.log("User avatar updated:", newPhotoURL);
-      // 等待下次 DOM 更新後再執行其他操作
-      await nextTick();
-      // 在此處處理需要在頭像更新後進行的其他操作
-    }
-  }
-);
+// watch(
+//   () => user?.photoURL,
+//   async (newPhotoURL) => {
+//     if (newPhotoURL) {
+//       console.log("User avatar updated:", newPhotoURL);
+//       // 等待下次 DOM 更新後再執行其他操作
+//       await nextTick();
+//       // 在此處處理需要在頭像更新後進行的其他操作
+//     }
+//   }
+// );
+
+// 獲取小精靈圖片 URL
+// const fetchPartnerImageURL = async () => {
+//   if (user) {
+//     const userDoc = doc(db, "users", user.uid); // 使用當前用戶的 UID 查詢 Firestore 文檔
+//     try {
+//       const docSnapshot = await getDoc(userDoc); // 獲取用戶資料
+//       if (docSnapshot.exists()) {
+//         const data = docSnapshot.data();
+//         partnerURL.value = data.partnerURL || "/MyColset/Ollie.png"; // 設置小精靈圖片 URL
+//       } else {
+//         console.log("No such document!");
+//         partnerURL.value = "/MyColset/Ollie.png"; // 如果沒有該文檔，設置為預設圖片
+//       }
+//     } catch (error) {
+//       console.error("Error fetching partner image URL:", error);
+//       partnerURL.value = "/MyColset/Ollie.png"; // 當發生錯誤時設置為預設圖片
+//     }
+//   } else {
+//     partnerURL.value = "/MyColset/Ollie.png"; // 如果用戶未登錄，設置為預設圖片
+//   }
+// };
+
+// =========================================
 
 const isSliding = ref(false);
 
@@ -183,5 +221,47 @@ onMounted(() => {
       scalarY: 6.5, // 垂直方向移動幅度是滑鼠移動的一半
     });
   }
+
+  $(".flipInY").textillate({
+    in: {
+      effect: "flipInY",
+      shuffle: true,
+      delay: 230,
+    },
+  });
+
+  $(".rollIn").textillate({
+    in: {
+      effect: "rollIn",
+      shuffle: true,
+      delay: 30,
+    },
+  });
+
+  // ===============獲取用戶圖片===============
+
+  onAuthStateChanged(auth, async (user) => {
+    // 將回調設為 async 函數
+    if (user) {
+      // 獲取用戶資料
+      try {
+        const userDoc = await getDoc(doc(db, "users", user.uid)); // 使用 await 獲取資料
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          partnerURL.value = userData.partnerURL || "/MyColset/Ollie.png";
+        } else {
+          console.log("No such document!");
+        }
+      } catch (error) {
+        console.log("Error getting document:", error);
+      }
+      // 更新頭像 URL
+      avatarURL.value = user.photoURL || "/MyColset/character115x409.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+    } else {
+      // 用戶未登入
+      avatarURL.value = "/MyColset/character115x409.png";
+      partnerURL.value = "/MyColset/Ollie.png";
+    }
+  });
 });
 </script>
