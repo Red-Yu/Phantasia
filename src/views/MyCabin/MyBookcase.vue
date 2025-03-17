@@ -1004,6 +1004,6 @@ export default {
   document.removeEventListener("mousedown", this.handleMouseDown);
   
   },
-  
+   
 };
 </script>
