@@ -1072,5 +1072,9 @@ export default {
       wandElement.remove();
     }
   },
+<<<<<<< HEAD
+=======
+   
+>>>>>>> 8b8f7630dc868f804e94eca9d936444b5410361a
 };
 </script>
