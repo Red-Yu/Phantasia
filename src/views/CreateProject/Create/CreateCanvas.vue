@@ -25,7 +25,7 @@
       }"
     >
       <div class="canvas" v-for="(template, i) in templateStore.templates" :key="i">
-        <component :is="template" />
+          <component :is="template" />
       </div>
       <!-- BTN - saveCanvas -->
       <router-link to="./Create/CreateInfo">
@@ -72,4 +72,5 @@ const zoomIn = throttle(() => {
 const zoomOut = throttle(() => {
   if (zoomLevel.value > 50) zoomLevel.value -= 10;
 }, 1000);
+
 </script>

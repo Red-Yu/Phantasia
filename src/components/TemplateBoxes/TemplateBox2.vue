@@ -1,9 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineEmits, defineProps } from "vue";
 import { gsap } from "gsap";
 import CreateTextInput from "../Input/CreateTextInput.vue";
-// import { eventBus } from "@/utils/eventBus"; // 引入 mitt 事件總線
-
 // ====================
 // 檔案上傳
 // ====================
@@ -28,16 +26,16 @@ const onImageUpload = (event, type) => {
   const file = event.target.files[0];
   if (file && validateFileType(file)) {
     // 釋放之前的 URL，避免記憶體累積
-    if (type === "bgc" && bgcImageUrl.value) {
+    if (type == "bgc" && bgcImageUrl.value) {
       URL.revokeObjectURL(bgcImageUrl.value);
-    } else if (type === "object" && objectImageUrl.value) {
+    } else if (type == "object" && objectImageUrl.value) {
       URL.revokeObjectURL(objectImageUrl.value);
     }
 
     // JavaScript API，建立本地檔案的臨時 URL
-    if (type === "bgc") {
+    if (type == "bgc") {
       bgcImageUrl.value = URL.createObjectURL(file);
-    } else if (type === "object") {
+    } else if (type == "object") {
       objectImageUrl.value = URL.createObjectURL(file);
     }
   } else {
@@ -53,6 +51,7 @@ const triggerFileInput = (type) => {
     objectFileInputRef.value.click();
   }
 };
+
 
 // ====================
 // 動畫效果
@@ -82,9 +81,7 @@ onMounted(() => {
   });
   // 字體動畫;
 });
-// ====================
-// 字體監聽 來自 `AccordionText.vue` 的字體變更事件
-// ====================
+
 </script>
 
 <template>
@@ -92,16 +89,21 @@ onMounted(() => {
   <!-- 背景 -->
   <div ref="templateRef" class="templateBgc">
     <div class="BgcTipBox" v-show="!bgcImageUrl">
-      <p>上傳 1920px * 1080px 大小的 gif, jpeg, png</p>
+      <p>
+        <div>Files support JPEG, JPG, PNG, and GIF</div>
+        <div>with a maximum size of <span>2MB</span> and a recommended image ratio of <span>16:9</span> </div>
+      </p>
       <input ref="bgcFileInputRef" type="file" @change="onImageUpload($event, 'bgc')" />
     </div>
-    <img class="bgc" :src="bgcImageUrl" @click="triggerFileInput('bgc')" />
+    <img class="bgc" v-show="bgcImageUrl" :src="bgcImageUrl" @click="triggerFileInput('bgc')" />
   </div>
   <!-- 物件 -->
   <div ref="box" class="templateObject shape">
     <div class="ObjectTipBox" v-show="!objectImageUrl">
-      <span>Upload a JPG/PNG Max 2MB</span>
-      <span>at 1:1 for best quality</span>
+      <p>
+        <div>Files support <br>JPEG, JPG, PNG, and GIF</div>
+        <div>recommended image ratio of <span>1:1</span> </div>
+      </p>
       <input
         id="please"
         type="file"
@@ -132,10 +134,9 @@ onMounted(() => {
   bottom: 0;
 }
 .editor {
-  width: 300px;
+  width: 250px;
   position: absolute;
   top: 100px;
-  right: 20px;
+  right: 50px;
 }
 </style>
-placeholder
