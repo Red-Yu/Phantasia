@@ -90,7 +90,7 @@ const scrollEffect = () => {
           entry.target.classList.add("active");
         } else {
           entry.target.classList.remove("active");
-        }
+        }  
       });
     },
     { threshold: 0.5 } // 進入視野 50% 時觸發
