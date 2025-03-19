@@ -1,6 +1,9 @@
 <template>
-  <div class="footer">
+  <div class="footer container">
     <div class="container">
+      
+      <SnowParticles />
+
       <div class="accordion">
         <!-- 按鈕改為直向排列 -->
         <button
@@ -12,6 +15,15 @@
           {{ item.label }}
         </button>
       </div>
+
+      <!-- <button @click="isMenuOpen = !isMenuOpen"></button>
+<!--  -->
+      <!-- <teleport to="body">
+        <div class="bm-menu-overlay" :class="{ 'bm-visible': isMenuOpen }">
+          <div v-for="n in 10" :key="n" class="snowflake" :style="{ '--i': n }"></div>
+        </div>
+      </teleport> -->
+
 
       <!-- LOGO -->
 
@@ -28,9 +40,18 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import SnowParticles from '@/components/SnowParticles.vue';
 
 // 使用 Vue Router
 const router = useRouter();
+
+// 傳入參數 showParticles
+const props = defineProps({
+  showParticles: {
+    type: Boolean,
+    default: true,
+  },
+});
 
 // 定義按鈕選單
 const menuItems = ref([
@@ -40,6 +61,9 @@ const menuItems = ref([
   { label: "Create", link: "/CreateProject" },
   { label: "MemberCenter", link: "/MemberCenter" },
 ]);
+
+const isMenuOpen = ref(false);
+
 // 回首頁
 const backToHome = () => {
   setTimeout(() => {
@@ -69,7 +93,7 @@ const scrollEffect = () => {
         }
       });
     },
-    { threshold: 0.5 } // 進入視野 80% 時觸發
+    { threshold: 0.5 } // 進入視野 50% 時觸發
   );
 
   buttons.forEach((button) => observer.observe(button));
@@ -84,6 +108,7 @@ onMounted(() => {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
+
 .container {
   width: 100%;
   margin: 0 auto;
@@ -93,11 +118,14 @@ onMounted(() => {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+  z-index: 9990 !important;
 }
+
 /* 按鈕直向排列 */
 .accordion {
   width: 80vw;
-  margin: 0 auto;
+  margin: 0 auto; 
   display: block; /* 讓每個按鈕獨立成一行 */
 }
 @keyframes fadeIn {
@@ -182,6 +210,8 @@ button.active {
   mask-image: linear-gradient(to right, transparent, #153243);
   opacity: 0;
 }
+
+
 @keyframes glowOnce {
   0% {
     opacity: 50%;
@@ -196,6 +226,19 @@ button.active {
     opacity: 100%;
   } /* 回到原本透明度 */
 }
+
+@keyframes bm-floating-particles {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 55px 55px;
+  }
+  100% {
+    background-position: 110px 110px;
+  }
+}
+
 @keyframes reveal {
   0% {
     transform: translateX(-100%);
