@@ -16,13 +16,6 @@
         </button>
       </div>
 
-      <!-- <button @click="isMenuOpen = !isMenuOpen"></button>
-<!--  -->
-      <!-- <teleport to="body">
-        <div class="bm-menu-overlay" :class="{ 'bm-visible': isMenuOpen }">
-          <div v-for="n in 10" :key="n" class="snowflake" :style="{ '--i': n }"></div>
-        </div>
-      </teleport> -->
 
 
       <!-- LOGO -->
@@ -90,7 +83,7 @@ const scrollEffect = () => {
           entry.target.classList.add("active");
         } else {
           entry.target.classList.remove("active");
-        }
+        }  
       });
     },
     { threshold: 0.5 } // 進入視野 50% 時觸發
