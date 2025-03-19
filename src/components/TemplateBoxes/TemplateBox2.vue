@@ -1,49 +1,56 @@
 <script setup>
-import { ref, onMounted, defineEmits, defineProps } from "vue";
+import { ref, onMounted, defineEmits, defineProps, watch } from "vue";
 import { gsap } from "gsap";
 import CreateTextInput from "../Input/CreateTextInput.vue";
-// ====================
-// 檔案上傳
-// ====================
-const templateRef = ref(null);
-const box = ref(null);
 
-// 分開存放圖片 URL
-const bgcImageUrl = ref(null); // 背景圖片
-const objectImageUrl = ref(null); // 物件圖片
+// 1️⃣ **定義 props，接收 `templateStore` 來的數據**
+const props = defineProps({
+  imageUrl: String, // 背景圖片
+  objectUrl: String, // 物件圖片
+  text: String, // 文字
+});
 
+// 2️⃣ **定義 emits，讓上傳的圖片 & 文字能回傳到 `templateStore`**
+const emit = defineEmits(["updateData"]);
+
+// 3️⃣ **使用 ref 儲存圖片狀態**
+const bgcImageUrl = ref(props.imageUrl || null);
+const objectImageUrl = ref(props.objectUrl || null);
+
+// 讓 Vue 監聽 props 變化，確保父層 `templateStore` 資料變更時能同步更新
+watch(() => props.imageUrl, (newUrl) => {
+  bgcImageUrl.value = newUrl;
+});
+watch(() => props.objectUrl, (newUrl) => {
+  objectImageUrl.value = newUrl;
+});
+
+// 4️⃣ **處理檔案上傳**
 const bgcFileInputRef = ref(null);
 const objectFileInputRef = ref(null);
 
-// 定義圖片上傳類別
 const validateFileType = (file) => {
   const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
   return allowedTypes.includes(file.type);
 };
 
-// 處理圖片上傳（接收 type 來判斷是哪個上傳框）
 const onImageUpload = (event, type) => {
   const file = event.target.files[0];
   if (file && validateFileType(file)) {
-    // 釋放之前的 URL，避免記憶體累積
-    if (type == "bgc" && bgcImageUrl.value) {
-      URL.revokeObjectURL(bgcImageUrl.value);
-    } else if (type == "object" && objectImageUrl.value) {
-      URL.revokeObjectURL(objectImageUrl.value);
-    }
+    const imageUrl = URL.createObjectURL(file);
 
-    // JavaScript API，建立本地檔案的臨時 URL
     if (type == "bgc") {
-      bgcImageUrl.value = URL.createObjectURL(file);
+      bgcImageUrl.value = imageUrl;
+      emit("updateData", { imageUrl }); // 🚀 **通知 `templateStore` 更新**
     } else if (type == "object") {
-      objectImageUrl.value = URL.createObjectURL(file);
+      objectImageUrl.value = imageUrl;
+      emit("updateData", { objectUrl: imageUrl }); // 🚀 **通知 `templateStore` 更新**
     }
   } else {
     alert("請上傳有效的圖片檔案 (png, jpeg, jpg, gif)");
   }
 };
 
-// 讓點擊背景圖片時，打開上傳框
 const triggerFileInput = (type) => {
   if (type === "bgc") {
     bgcFileInputRef.value.click();
@@ -52,40 +59,38 @@ const triggerFileInput = (type) => {
   }
 };
 
-
-// ====================
-// 動畫效果
-// ====================
+// 5️⃣ **動畫效果**
+const templateRef = ref(null);
+const box = ref(null);
 
 onMounted(() => {
-  // 引入動畫
   gsap.fromTo(
     templateRef.value,
     { opacity: 0, y: -50 },
     { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
   );
-  // 物件動畫
+
   gsap.to(box.value, {
     duration: 1.5,
-    delay: 1.0, // 這個動畫會比前面的晚 1 秒開始
-    x: 50, // 向右移動
-    y: -60, // 向上移動
+    delay: 1.0,
+    x: 50,
+    y: -60,
     width: 240,
     height: 240,
-    borderRadius: "0%", // 變成方形
+    borderRadius: "0%",
     ease: "power2.out",
     onUpdate: function () {
-      const scale = this.progress() * 100; // 取得動畫進度
-      box.value.style.clipPath = `circle(${scale}% at center)`; // 使用 clip-path 遮罩
+      const scale = this.progress() * 100;
+      box.value.style.clipPath = `circle(${scale}% at center)`;
     },
   });
-  // 字體動畫;
 });
 
+// 產生唯一 ID，確保不同的 cloned `template.vue` 內部的 `CreateTextInput` 不會共用 ID
+const generateId = () => `template-${Math.random().toString(36).substr(2, 9)}`;
 </script>
 
 <template>
-  <!-- 外層還有一個 canvas -->
   <!-- 背景 -->
   <div ref="templateRef" class="templateBgc">
     <div class="BgcTipBox" v-show="!bgcImageUrl">
@@ -115,20 +120,15 @@ onMounted(() => {
   </div>
   <!-- 文字 -->
   <div class="templateText editor">
-    <CreateTextInput />
+    <CreateTextInput :templateId="generateId()" />
   </div>
 </template>
-
-<style>
-/* template 共用版面配置 ==> CreateTemplate.scss */
-@import "@/Assets/css/main.css";
-</style>
 
 <style scoped>
 .shape {
   width: 60px;
   height: 60px;
-  clip-path: circle(0% at center); /* 初始遮罩為最小 */
+  clip-path: circle(0% at center);
   position: absolute;
   left: 0;
   bottom: 0;

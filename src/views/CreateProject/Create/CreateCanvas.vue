@@ -25,7 +25,11 @@
       }"
     >
       <div class="canvas" v-for="(template, i) in templateStore.templates" :key="i">
-          <component :is="template" />
+        <component
+          :is="template.component"
+          v-bind="template.data"
+          @updateData="updateTemplateData(i, $event)"
+        />
       </div>
       <!-- BTN - saveCanvas -->
       <router-link to="./Create/CreateInfo">
@@ -73,4 +77,16 @@ const zoomOut = throttle(() => {
   if (zoomLevel.value > 50) zoomLevel.value -= 10;
 }, 1000);
 
+// =================
+// 監聽子組件 updateData 事件
+// =================
+const updateTemplateData = (index, newData) => {
+  console.log("更新的索引:", index, "更新的資料:", newData);
+
+  // 更新對應的 template.data
+  templateStore.templates[index].data = {
+    ...templateStore.templates[index].data,
+    ...newData,
+  };
+};
 </script>

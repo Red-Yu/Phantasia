@@ -41,9 +41,8 @@
         <div class="modelView" v-for="(template, i) in templateStore.templates" :key="i">
           <div class="modelContent">
             <!-- 顯示縮小版的 template -->
-
             <div class="canvasPreview" :style="getPreviewStyle()">
-              <component :is="template" />
+              <component :is="template.component" v-bind="template.data" />
               <button
                 class="remove-btn"
                 @click="removeTemplate(i)"
@@ -53,6 +52,7 @@
               </button>
             </div>
           </div>
+
           <p>{{ i + 1 }}</p>
           <!-- 顯示遞增的編號 -->
         </div>
