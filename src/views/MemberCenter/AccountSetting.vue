@@ -448,6 +448,7 @@
             placeholder="Please enter"
             class="form-input"
             v-model="newPassword"
+            @input="checkPasswordLength"
           />
           <div class="i" @click="showNewPassword = !showNewPassword">
             <div class="dark-view" :class="{ closed: showNewPassword }"></div>
@@ -518,6 +519,26 @@ const errors = reactive({
   confirmPassword: ""
 });
 
+// 檢查密碼長度
+const checkPasswordLength = () => {
+  if (newPassword.value.trim() !== "" && newPassword.value.length < 6) {
+    errors.newPassword = "Password must be at least 6 characters";
+  } else {
+    errors.newPassword = "";
+  }
+};
+
+// 檢查密碼是否匹配
+const checkPasswordMatch = () => {
+  if (confirmPassword.value.trim() !== "" && newPassword.value !== confirmPassword.value) {
+    errors.confirmPassword = "Passwords do not match";
+  } else {
+    errors.confirmPassword = "";
+  }
+};
+
+
+
 // 驗證表單
 const validateForm = () => {
   let isValid = true;
@@ -584,12 +605,6 @@ const handlePasswordChange = async () => {
     return;
   }
   
-  // 在提交前檢查密碼長度
-  if (newPassword.value.length < 6) {
-    errors.newPassword = "Password must be at least 6 characters";
-    return;
-  }
-
   isLoading.value = true;
   successMessage.value = "";
   errorMessage.value = "";
@@ -616,7 +631,7 @@ const handlePasswordChange = async () => {
     confirmPassword.value = "";
     
   } catch (error) {
-    console.error("Error changing password:", error);
+    console.error("Error changing password:", error.code, error.message);
     
     // 處理特定錯誤
     switch (error.code) {
@@ -632,8 +647,21 @@ const handlePasswordChange = async () => {
       case "auth/invalid-credential":
         errors.oldPassword = "The old password is incorrect";
         break;
+      case "auth/too-many-requests":
+        errorMessage.value = "Too many unsuccessful attempts. Please try again later.";
+        break;
+      case "auth/network-request-failed":
+        errorMessage.value = "Network error. Please check your internet connection.";
+        break;
       default:
-        errorMessage.value = `Error (${error.code}): ${error.message}`;
+        // 清理錯誤訊息，使其更友好
+        let cleanErrorMessage = error.message || "An error occurred";
+        // 移除 Firebase 前綴
+        cleanErrorMessage = cleanErrorMessage.replace("Firebase: ", "");
+        // 移除錯誤代碼
+        cleanErrorMessage = cleanErrorMessage.replace(/\(auth\/.*\)/, "");
+        
+        errorMessage.value = cleanErrorMessage;
     }
   } finally {
     isLoading.value = false;
