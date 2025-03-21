@@ -143,11 +143,7 @@
       </div>
       <div class="pg_mainContainer">
         <div class="pg_itemsGrid">
-          <div
-            v-for="product in paginatedProducts"
-            :key="product.id"
-            class="pg_itemCard"
-          >
+          <div v-for="product in paginatedProducts" :key="product.id" class="pg_itemCard">
             <div class="container" @click="goToProductPage(product.id)">
               <div class="box-holder">
                 <div class="box box--front">
@@ -516,9 +512,7 @@ const totalPages = computed(() => {
 });
 
 const dateSortLabel = computed(() => {
-  return dateSortOrder.value === "newest"
-    ? "Newest to Oldest"
-    : "Oldest to Newest";
+  return dateSortOrder.value === "newest" ? "Newest to Oldest" : "Oldest to Newest";
 });
 
 const toggleDateSort = () => {

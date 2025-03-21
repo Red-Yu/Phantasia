@@ -55,24 +55,22 @@
           </div>
           <hr class="info-divider3" />
           <p>
-            In a forgotten era, Perciliurs Khan was a cunning and fearless
-            warrior who led an army of exiles against the tyrannical Empire of
-            Velmont. Born into poverty and cast out for a crime he didn’t
-            commit, Perciliurs rose to power through his unmatched intellect and
-            charisma, uniting outlaws, farmers, and forgotten tribes under his
-            banner. His legend was cemented when he allegedly tamed the mythical
-            shadow beast, Xarnath, using only his voice, making him invincible
-            in battle. <br /><br />
-            The story tells of his greatest feat: a daring raid on the Imperial
-            Vault, where he stole the fabled Amulet of Aeons, said to control
-            time itself. With it, he turned the tide of war, liberating his
-            people and carving his name into history. However, as whispers of
-            his power grew, some questioned if Perciliurs Khan truly existed or
-            if he was a myth, crafted to inspire hope in dark times.
+            In a forgotten era, Perciliurs Khan was a cunning and fearless warrior who led
+            an army of exiles against the tyrannical Empire of Velmont. Born into poverty
+            and cast out for a crime he didn’t commit, Perciliurs rose to power through
+            his unmatched intellect and charisma, uniting outlaws, farmers, and forgotten
+            tribes under his banner. His legend was cemented when he allegedly tamed the
+            mythical shadow beast, Xarnath, using only his voice, making him invincible in
+            battle. <br /><br />
+            The story tells of his greatest feat: a daring raid on the Imperial Vault,
+            where he stole the fabled Amulet of Aeons, said to control time itself. With
+            it, he turned the tide of war, liberating his people and carving his name into
+            history. However, as whispers of his power grew, some questioned if Perciliurs
+            Khan truly existed or if he was a myth, crafted to inspire hope in dark times.
             <br /><br />
-            The tale ends with a mysterious twist: a traveler in the present day
-            uncovers a hidden artifact—an ancient blade inscribed with the words
-            “Khan will rise again.”
+            The tale ends with a mysterious twist: a traveler in the present day uncovers
+            a hidden artifact—an ancient blade inscribed with the words “Khan will rise
+            again.”
           </p>
 
           <div class="info-group3">
@@ -86,33 +84,47 @@
             Publication Date: Melinda Wenner<br />
             Language: English
           </p>
-          <section class="readButton">
-            <div class="btnKey-L light" @click="goToProductReadPage">
-              <p>READ NOW</p>
-              <div class="icon-L">
-                <div class="white-cross">
-                  <div class="cols">
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div class="rows">
-                    <span></span>
+          <div class="readButtons">
+            <section class="readButtonL">
+              <div class="btnKey-L light" @click="goToProductReadPage">
+                <p>READ NOW</p>
+                <div class="icon-L">
+                  <div class="white-cross">
+                    <div class="cols">
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div class="rows">
+                      <span></span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+            <section class="readButtonR">
+              <div class="btnKey-L light" @click="goToProductReadPage">
+                <p>ADD TO SHELF</p>
+                <div class="icon-L">
+                  <div class="white-cross">
+                    <div class="cols">
+                      <span></span>
+                      <span></span>
+                    </div>
+                    <div class="rows">
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
         </div>
       </section>
 
       <section class="feedback-section3">
         <div class="feedback-box3">
           <!-- Scrollable Review List -->
-          <div
-            ref="feedbackList"
-            class="feedback-list3"
-            @scroll="updateActiveDot"
-          >
+          <div ref="feedbackList" class="feedback-list3" @scroll="updateActiveDot">
             <div
               v-for="(comment, index) in comments"
               :key="index"
@@ -208,8 +220,7 @@ const feedbackList = ref(null);
 const updateActiveDot = () => {
   if (!feedbackList.value) return;
   const list = feedbackList.value;
-  const scrollPercentage =
-    list.scrollTop / (list.scrollHeight - list.clientHeight);
+  const scrollPercentage = list.scrollTop / (list.scrollHeight - list.clientHeight);
   activeDot.value = Math.floor(scrollPercentage * 10); // Maps to 0-9 for 10 comments
 };
 
