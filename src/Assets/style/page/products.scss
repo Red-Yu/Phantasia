@@ -63,7 +63,7 @@ body {
   display: flex;
   flex-direction: column;
   /* Stack children vertically */
-  overflow: hidden;
+  // overflow: hidden;
   /* Prevent overflow issues */
   padding: 7px;
 }
@@ -388,9 +388,9 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100vh;
+  // height: 100vh;
   /* Use viewport height instead of percentage */
-  overflow-x: hidden;
+  // overflow-x: hidden;
   /* Prevent horizontal scrolling */
 }
 
