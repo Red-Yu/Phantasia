@@ -30,7 +30,7 @@
       </div>
     </div>
   </div>
-  <!-- ============================================================== -->
+  <!-- Carousel Section -->
   <div class="carousel-container">
     <div class="carousel">
       <div
@@ -47,7 +47,7 @@
         <!-- Carousel Item -->
         <div class="carousel-item">
           <div class="box box--front">
-            <div class="colorLayer"></div>
+            <div class="colorLayer" :style="{ backgroundColor: product.colorCode }"></div>
             <div
               class="inner-layer"
               :style="{ backgroundImage: `url(${product.innerCoverImage})` }"
@@ -61,15 +61,14 @@
 
         <div class="text-box-container">
           <h2>{{ product.author }}</h2>
-          <!-- Subtitle -->
           <h1>{{ product.name }}</h1>
-          <!-- Title -->
           <h3>{{ product.description }}</h3>
-          <!-- Description -->
         </div>
       </div>
     </div>
   </div>
+
+  <!-- end of carousel -->
   <div class="buttonPlacer">
     <div class="buttons">
       <button @click="prev" class="left-button">
@@ -80,7 +79,7 @@
       </button>
     </div>
   </div>
-  <!-- ======================================================== -->
+  <!-- Product Grid Section -->
   <div class="pg_wrapper">
     <div class="pg_sortWrapper">
       <div class="pg_controlsBar">
@@ -91,7 +90,6 @@
           :class="['pg_controlButton ', { pg_active: currentSort === key }]"
         >
           {{ label }}
-
           <div class="icon-L">
             <div class="white-cross">
               <div class="cols">
@@ -127,7 +125,6 @@
             </div>
           </div>
         </button>
-
         <div class="pg_searchWrapper">
           <input
             type="text"
@@ -151,12 +148,13 @@
           <div class="container" @click="goToProductPage(product.id)">
             <div class="box-holder">
               <div class="box box--front">
-                <div class="colorLayer"></div>
+                <div
+                  class="colorLayer"
+                  :style="{ backgroundColor: product.colorCode || 'orange' }"
+                ></div>
                 <div
                   class="inner-layer"
-                  :style="{
-                    backgroundImage: `url(${product.innerCoverImage})`,
-                  }"
+                  :style="{ backgroundImage: `url(${product.innerCoverImage})` }"
                 ></div>
                 <div
                   class="outer-layer"
@@ -164,19 +162,23 @@
                 ></div>
               </div>
               <div class="box box--back">
-                <div class="colorLayer"></div>
+                <div
+                  class="colorLayer"
+                  :style="{ backgroundColor: product.colorCode || 'orange' }"
+                ></div>
                 <div
                   class="outer-layer"
                   :style="{ backgroundImage: `url(${product.backImage})` }"
                 ></div>
               </div>
               <div class="box box--side-left">
-                <div class="colorLayer"></div>
+                <div
+                  class="colorLayer"
+                  :style="{ backgroundColor: product.colorCode || 'orange' }"
+                ></div>
                 <div
                   class="outer-layer"
-                  :style="{
-                    backgroundImage: `url(${product.sideLeftImage})`,
-                  }"
+                  :style="{ backgroundImage: `url(${product.sideLeftImage})` }"
                 ></div>
               </div>
               <div
@@ -189,7 +191,6 @@
           <h3 class="pg_itemTitle">{{ product.name }}</h3>
         </div>
       </div>
-
       <div class="pg_paginationBar">
         <button
           @click="changePage(currentPage - 1)"
@@ -225,24 +226,34 @@ import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter } from "vue-router";
-import coverImage from "@/assets/img/pics/cover.png";
-import backImage from "@/assets/img/pics/backCover.png";
-import sideLeftImage from "@/assets/img/pics/spine.png";
-import sideRightImage from "@/assets/img/pics/2paper.png";
-import innerCoverImage from "@/assets/img/pics/bookImg_2.png";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
+
+// Firebase Config
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+};
+
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
-
 const router = useRouter();
 
-// --- Scroll Animation Logic ---
+// Scroll Animation Logic
 const secSection = ref(null);
 const aboutButtonSection = ref(null);
 const scrollContainer = ref(null);
-// Animation state
 let isAnimating = false;
 
-// Debounce utility to limit calls to once every 300ms
 function debounce(func, wait) {
   let timeout;
   return function (...args) {
@@ -251,9 +262,8 @@ function debounce(func, wait) {
   };
 }
 
-// Scroll handler with animation control
 const handleFullScroll = debounce((direction) => {
-  if (isAnimating) return; // Prevent new animations while one is running
+  if (isAnimating) return;
   isAnimating = true;
 
   const targetSection =
@@ -263,21 +273,97 @@ const handleFullScroll = debounce((direction) => {
     gsap.to(window, {
       scrollTo: {
         y: targetSection.getBoundingClientRect().top + window.scrollY,
-        autoKill: true, // Allow user scrolling to interrupt
+        autoKill: true,
       },
       duration: 1,
       ease: "power2.inOut",
-      overwrite: "auto", // Kill overlapping animations
+      overwrite: "auto",
       onComplete: () => {
-        isAnimating = false; // Reset when animation completes
+        isAnimating = false;
       },
     });
   }
-}, 300); // 300ms debounce
+}, 300);
 
-// Setup ScrollTrigger on mount
+// Product Logic
+const products = ref([]);
+
+// Fetch Firestore and Storage Data
+const fetchFirestoreData = async () => {
+  try {
+    const fetchedProducts = [];
+
+    // Step 1: Fetch all books from "books" collection
+    const booksCollectionRef = collection(db, "books");
+    const querySnapshot = await getDocs(booksCollectionRef);
+
+    if (querySnapshot.empty) {
+      console.warn("No documents found in 'books' collection");
+      products.value = []; // Empty array if no data
+      return;
+    }
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      fetchedProducts.push({
+        id: doc.id, // Firebase-generated ID
+        name: data.title,
+        author: data.author,
+        colorCode: data.colorCode,
+        innerCoverImage: data.imagePath, // Map imagePath to innerCoverImage
+        dateAdded: data.dateAdded,
+        ageGroup: data.ageGroup,
+        description: data.description,
+        userId: data.userId, // Optional, if needed
+      });
+    });
+
+    // Step 2: Fetch fixed image URLs from Storage
+    const fixedImages = {
+      coverImage: await getDownloadURL(
+        storageRef(storage, "images/common/cover.png")
+      ).catch((error) => {
+        console.error("Error fetching cover.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      }),
+      backImage: await getDownloadURL(
+        storageRef(storage, "images/common/backCover.png")
+      ).catch((error) => {
+        console.error("Error fetching backCover.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      }),
+      sideLeftImage: await getDownloadURL(
+        storageRef(storage, "images/common/spine.png")
+      ).catch((error) => {
+        console.error("Error fetching spine.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      }),
+      sideRightImage: await getDownloadURL(
+        storageRef(storage, "images/common/2paper.png")
+      ).catch((error) => {
+        console.error("Error fetching 2paper.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      }),
+    };
+
+    // Step 3: Combine fetched products with fixed images
+    products.value = fetchedProducts.map((product) => ({
+      ...product,
+      ...fixedImages,
+    }));
+
+    console.log("Fetched products from Firestore:", products.value);
+  } catch (error) {
+    console.error("Error in fetchFirestoreData:", error);
+    products.value = []; // Empty array on error
+  }
+};
+
+// Mount Hook
 onMounted(async () => {
-  await nextTick(); // Ensure DOM is rendered
+  await fetchFirestoreData();
+  console.log("Products after fetch:", products.value); // Debug here
+  await nextTick();
 
   if (!secSection.value || !aboutButtonSection.value) {
     console.error("Refs not found:", secSection.value, aboutButtonSection.value);
@@ -286,38 +372,34 @@ onMounted(async () => {
 
   ScrollTrigger.create({
     trigger: secSection.value,
-    start: "top top", // When top of secSection hits top of viewport
-    end: "bottom top", // When bottom of secSection hits top of viewport
+    start: "top top",
+    end: "bottom top",
     onEnter: () => handleFullScroll("down"),
     onEnterBack: () => handleFullScroll("up"),
-    once: false, // Allow repeated triggers
-    // markers: true, // Uncomment for debugging trigger points
+    once: false,
   });
 });
 
-// --- Product Listing Logic ---
-// Navigation to product page
-const goToProductPage = (productId) => {
-  router.push(`/Products/${productId}`);
-};
-
-// Carousel-related variables (potentially unused in current setup)
-const activeIndex = ref(1);
-
-const prevIndex = computed(
-  () => (activeIndex.value - 1 + products.length) % products.length
+// Carousel Logic
+const activeIndex = ref(1); // Start at 1 as per the new carousel code
+const prevIndex = computed(() =>
+  products.value.length
+    ? (activeIndex.value - 1 + products.value.length) % products.value.length
+    : 0
 );
-const nextIndex = computed(() => (activeIndex.value + 1) % products.length);
+const nextIndex = computed(() =>
+  products.value.length ? (activeIndex.value + 1) % products.value.length : 0
+);
 
 const prev = () => {
-  activeIndex.value = prevIndex.value;
+  if (products.value.length) activeIndex.value = prevIndex.value;
 };
 
 const next = () => {
-  activeIndex.value = nextIndex.value;
+  if (products.value.length) activeIndex.value = nextIndex.value;
 };
 
-// Product listing variables
+// Product Listing Variables
 const currentSort = ref("all");
 const dateSortOrder = ref("newest");
 const searchQuery = ref("");
@@ -331,222 +413,8 @@ const sortOptions = {
   hot: "Hot",
 };
 
-const products = [
-  {
-    id: 1,
-    name: "Wooden Blocks",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-01-15",
-    ageGroup: "1-6",
-    description:
-      "1A wonderful wooden block set that enh1A wonderful wooden block set that enh1A wonderful wooden block set that enh1A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 2,
-    name: "Science Kit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-01",
-    ageGroup: "7-12",
-    description:
-      "2A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 3,
-    name: "Meth Kit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-13",
-    ageGroup: "1-6",
-    description:
-      "3A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 4,
-    name: "Meat Kit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-22",
-    ageGroup: "7-12",
-    description:
-      "4A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 5,
-    name: "Leg Kit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-03-22",
-    ageGroup: "1-6",
-    description:
-      "5A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 6,
-    name: "Booden Wlocks",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-01-15",
-    ageGroup: "1-6",
-    description:
-      "6A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 7,
-    name: "Kcience Sit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-01",
-    ageGroup: "7-12",
-    description:
-      "7A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 8,
-    name: "Keth Mit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-13",
-    ageGroup: "1-6",
-    description:
-      "8A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 9,
-    name: "Leat Nit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-22",
-    ageGroup: "7-12",
-    description:
-      "9A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 10,
-    name: "Legssss JJt",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-03-22",
-    ageGroup: "1-6",
-    description:
-      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 11,
-    name: "Dooden Locks",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-01-15",
-    ageGroup: "1-6",
-    description:
-      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 12,
-    name: "Yience Uit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-01",
-    ageGroup: "7-12",
-    description:
-      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 13,
-    name: "Metheeaad",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-13",
-    ageGroup: "1-6",
-    description:
-      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 14,
-    name: "Seeeeeeetttyyyaa",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-02-22",
-    ageGroup: "7-12",
-    description:
-      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-  {
-    id: 15,
-    name: "Peg Sit",
-    author: "Nick Denchfield",
-    coverImage: coverImage,
-    innerCoverImage: innerCoverImage,
-    backImage: backImage,
-    sideLeftImage: sideLeftImage,
-    sideRightImage: sideRightImage,
-    dateAdded: "2024-03-22",
-    ageGroup: "1-6",
-    description:
-      "A wonderful wooden block set that enhances creativity and motor skills for young children.",
-  },
-];
-
-// Computed properties for product filtering and pagination
 const filteredProducts = computed(() => {
-  let result = [...products];
+  let result = [...products.value];
 
   switch (currentSort.value) {
     case "newest":
@@ -556,7 +424,7 @@ const filteredProducts = computed(() => {
       result.sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded));
       break;
     case "age1_6":
-      result = result.filter((p) => p.ageGroup === "1-6");
+      result = result.filter((p) => p.ageGroup === "1-6" || p.ageGroup === "1~6");
       break;
     case "age7_12":
       result = result.filter((p) => p.ageGroup === "7-12");
@@ -581,14 +449,14 @@ const paginatedProducts = computed(() => {
 });
 
 const totalPages = computed(() => {
-  return Math.ceil(filteredProducts.value.length / itemsPerPage);
+  return Math.ceil(filteredProducts.value.length / itemsPerPage) || 1;
 });
 
 const dateSortLabel = computed(() => {
   return dateSortOrder.value === "newest" ? "Newest to Oldest" : "Oldest to Newest";
 });
 
-// Methods for product interactions
+// Methods
 const toggleDateSort = () => {
   dateSortOrder.value = dateSortOrder.value === "newest" ? "oldest" : "newest";
   currentSort.value = dateSortOrder.value;
@@ -596,10 +464,14 @@ const toggleDateSort = () => {
 
 const sortProducts = (criteria) => {
   if (criteria !== "newest" && criteria !== "oldest") {
-    dateSortOrder.value = "newest"; // Reset dateSortOrder when a non-date sort is selected
+    dateSortOrder.value = "newest";
   }
   currentSort.value = criteria;
   currentPage.value = 1;
+};
+
+const goToProductPage = (productId) => {
+  router.push(`/Products/${productId}`);
 };
 
 const purchase = (product) => {

@@ -4293,6 +4293,7 @@ body {
   justify-content: right;
   position: relative;
   display: flex;
+  background-color: #153243;
 }
 
 @media (max-width: 964px) {
@@ -4572,7 +4573,6 @@ body {
 .colorLayer {
   z-index: 0;
   /* Behind everything */
-  background-color: #eead50;
 }
 
 .inner-layer {
@@ -4630,18 +4630,10 @@ body {
   .pg_itemsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .box-holder:hover {
-    animation: none;
-    /* Disable animation on mobile */
-  }
 }
 @media (max-width: 768px) {
   .pg_itemsGrid {
     grid-template-columns: 1fr;
-  }
-  .box-holder:hover {
-    animation: none;
-    /* Disable animation on mobile */
   }
 }
 .pg_itemCard {
