@@ -208,3 +208,30 @@ input {
 .error-message {
   color: red;
 }
+
+
+// 登入成功
+.loginSuccess , .signupSuccess{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh !important;
+  // width: 80%;
+}
+.loginSuccess h2 {
+  font-family: Aleo;
+  color: $baseBlue;
+  font-size: 2.2rem;
+  margin: 25px 0;
+}
+.signupSuccess h2{
+  font-family: Aleo;
+  color: $baseBlue;
+  font-size: 2.1rem;
+  // margin: 25px 0;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}

@@ -54,6 +54,14 @@
       </div>
     </div>
   </div>
+
+  <SuccessModal
+    v-if="isSuccessModalVisible"
+    class="success-modal"
+    :isVisible="isSuccessModalVisible"
+    @close="isSuccessModalVisible = false"
+   />
+
 </template>
 
 <style scoped>
@@ -65,6 +73,7 @@
 import { ref } from "vue";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
+import SuccessModal from "../Auth/LoginSuccess.vue";
 
 // 用於控制光箱顯示與隱藏
 // const isVisible = ref(true);
@@ -85,9 +94,11 @@ const props = defineProps({
 // 定義 emit 事件
 const emit = defineEmits(["close", "openSignup", "login-success"]);
 
+// 定義狀態
 const email = ref("");
 const password = ref("");
 const error = ref("");
+const isSuccessModalVisible = ref(false);
 
 // 關閉彈窗
 const closeModal = () => {
@@ -112,7 +123,23 @@ const openSignup = () => {
 const login = async () => {
   try {
     await signInWithEmailAndPassword(auth, email.value, password.value);
-    alert("Login Successful!");
+    // alert("Login Successful!");
+    // 顯示成功提示語光箱
+    isSuccessModalVisible.value = true; 
+
+    // 設置定時器，3秒後關閉成功彈窗
+    // setTimeout(() => {
+    //   isSuccessModalVisible.value = false;
+    // }, 3000);
+    setTimeout(() => {
+      const modal = document.querySelector('.success-modal');
+      if (modal) {
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          isSuccessModalVisible.value = false;
+        }, 1000); // Match the duration of the CSS transition
+      }
+    }, 2000); // Start fade-out after 2 seconds
 
     // 清空表單數據
     email.value = "";
