@@ -9,8 +9,8 @@
     <section class="Successfulmessage">
       <div class="details-list">
         <p>Thank you for subscribing! We are delighted to provide you with enhanced services. Below are some important details; please read them carefully:</p>
-        <p>Subscription Period: Your subscription will start on {{ formattedStartDate }}, and end on {{ formattedEndDate }}.</p>
-        <p>Subscription Plan: {{ subscriptionDetails.planType }}</p>
+        <p>Subscription Period: Your subscription will start on <span class="dynamic-value">{{ formattedStartDate }}</span>, and end on <span class="dynamic-value">{{ formattedEndDate }}</span>.</p>
+        <p>Subscription Plan: <span class="dynamic-value">{{ subscriptionDetails.planType }}</span></p>
         <p>Auto-Renewal: To ensure uninterrupted access to our services, your subscription will automatically renew upon expiration. 
         Please keep your payment information up to date.</p>
         <p>Change or Cancel Subscription: To modify your subscription plan or cancel your subscription, please go to "Member Center" ➡ "Subscription Plan" and follow the instructions.</p>
@@ -40,7 +40,7 @@
 import AnimatedTitle from '@/components/MemberCenterAnimatedTitle.vue';
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getDatabase, ref as dbRef, get } from "firebase/database";
+import { getFirestore, doc, getDoc, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const route = useRoute();
@@ -127,12 +127,14 @@ onMounted(async () => {
         const userSubSnapshot = await get(userSubRef);
         
         if (userSubSnapshot.exists()) {
-          const subData = userSubSnapshot.val();
-          subscriptionDetails.value = {
-            startDate: subData.startDate,
-            endDate: subData.endDate,
-            planType: subData.planType
+          const subData = userSubSnapshot.data().subscription;
+          if (subData) {
+            subscriptionDetails.value = {
+              startDate: subData.startDate,
+              endDate: subData.endDate,
+              planType: subData.planType
           };
+        }
         }
       }
     } else {
@@ -180,5 +182,10 @@ onMounted(async () => {
 
 .Successfulmessage .details-list {
   text-align: left;    /* 文字靠左 */
+}
+
+.Successfulmessage .details-list p .dynamic-value {
+  color: #EEAD50; 
+
 }
 </style>
