@@ -42,16 +42,16 @@
         <div class="inputBox language">
           <p>language</p>
           <select class="OtherInput" name="language" v-model="language">
-            <option value="en">English</option>
-            <option value="zh">Chinese</option>
-            <option value="es">Spanish</option>
-            <option value="fr">French</option>
-            <option value="de">German</option>
-            <option value="ja">Japanese</option>
-            <option value="ko">Korean</option>
-            <option value="ru">Russian</option>
-            <option value="it">Italian</option>
-            <option value="pt">Portuguese</option>
+            <option value="English">English</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Spanish">Spanish</option>
+            <option value="French">French</option>
+            <option value="German">German</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Korean">Korean</option>
+            <option value="Russian">Russian</option>
+            <option value="Italian">Italian</option>
+            <option value="Portuguese">Portuguese</option>
           </select>
           <div class="selectIcon">
             <div class="cross">
@@ -71,8 +71,8 @@
             <!-- <option value="5">3-5</option>
             <option value="12">5-12</option>
             <option value="16">12-16</option> -->
-            <option value="6">1-6</option>
-            <option value="12">7-12</option>
+            <option value="1~6">1-6</option>
+            <option value="7~12">7-12</option>
           </select>
           <div class="selectIcon">
             <div class="cross">
