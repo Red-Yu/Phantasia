@@ -89,6 +89,7 @@
           :src="avatarURL"
           alt="User Avatar"
         />
+        <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
       </div>
       <div class="btnLink white loginInfo" @click="ToMemberCenter">
         <p v-if="userName">Hi, {{ userName }} !</p>
@@ -108,9 +109,10 @@
       <div class="menuAvatar">
         <img
           class="avaterImg"
-          src="/MyColset/character115x409.png"
+          src="../Assets/Day/myColset/avatarDefault.png"
           alt="User Avatar"
         />
+        <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
       </div>
       <div class="btnLink white loginInfo" @click="openModal">
         <p>Log In</p>
@@ -514,13 +516,14 @@ onMounted(() => {
         console.log("Error getting document:", error);
       }
       // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/character115x409.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      avatarURL.value =
+        user.photoURL || "../Assets/Day/myColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
     } else {
       // 用戶未登入
       islogIn.value = false;
       islogOut.value = true;
       userName.value = ""; // 清空用戶名稱
-      avatarURL.value = "/MyColset/character115x409.png";
+      avatarURL.value = "../Assets/Day/myColset/avatarDefault.png";
     }
   });
 });

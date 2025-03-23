@@ -80,14 +80,27 @@
     align-items: center;
     border: $baseBlue solid;
     .avatar {
+      position: relative;
       width: 85%;
       height: 85%;
       border-radius: 80%;
       background-color: $subGray;
       overflow: hidden;
       text-align: center;
+      .avaterBg {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.45);
+        opacity: 0.9;
+        // transform-origin: top left;
+      }
       .avaterImg {
+        z-index: 100;
         position: relative;
+        transform: scale(0.57);
+        transform-origin: top left;
       }
     }
   }

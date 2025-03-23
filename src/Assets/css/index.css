@@ -10,6 +10,7 @@
     Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -38,6 +39,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -68,6 +70,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -96,6 +99,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -126,6 +130,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -144,6 +149,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -172,6 +178,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -202,6 +209,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -230,6 +238,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -260,6 +269,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -278,6 +288,7 @@
 
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -313,6 +324,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -348,6 +360,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -383,6 +396,7 @@
 }
 .btnLink.whiteForFrontPage {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -827,6 +841,7 @@ button {
 }
 .textContent .logOutmenuButton .menuAvatar,
 .textContent .logInmenuButton .menuAvatar {
+  position: relative;
   width: 30px;
   height: 30px;
   border: white solid 1.5px;
@@ -834,11 +849,21 @@ button {
   background-color: #999999;
   overflow: hidden;
 }
+.textContent .logOutmenuButton .menuAvatar .avaterBg,
+.textContent .logInmenuButton .menuAvatar .avaterBg {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.08);
+}
 .textContent .logOutmenuButton .menuAvatar .avaterImg,
 .textContent .logInmenuButton .menuAvatar .avaterImg {
+  position: relative;
+  z-index: 100;
   display: flex;
   justify-self: center;
-  transform: scale(0.2);
+  transform: scale(0.1);
   transform-origin: top center;
 }
 .textContent .logOutmenuButton .btnLink,
@@ -889,7 +914,8 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 100%;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   transition: transform 0.1s ease-out;
   transition: opacity 0.6s ease-out;
 }
@@ -1884,4 +1910,8 @@ button {
   bottom: 10%;
   box-shadow: 0 0 15px rgb(255, 255, 255);
   border: white solid 1px;
+}
+
+.MyColsetBase {
+  animation: flickerEffect 8s infinite;
 }/*# sourceMappingURL=index.css.map */

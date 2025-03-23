@@ -64,16 +64,26 @@ button {
     }
 
     .menuAvatar {
+      position: relative;
       width: 30px;
       height: 30px;
       border: white solid 1.5px;
       border-radius: 50%;
       background-color: $subDark-gray;
       overflow: hidden;
+      .avaterBg {
+        position: absolute;
+        z-index: 3;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.08);
+      }
       .avaterImg {
+        position: relative;
+        z-index: 100;
         display: flex;
         justify-self: center;
-        transform: scale(0.2);
+        transform: scale(0.1);
         transform-origin: top center;
       }
     }
@@ -1168,4 +1178,8 @@ button {
   bottom: 10%;
   box-shadow: 0 0 15px rgb(255, 255, 255);
   border: white solid 1px;
+}
+
+.MyColsetBase {
+  animation: flickerEffect 8s infinite;
 }

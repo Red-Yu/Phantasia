@@ -81,7 +81,7 @@
   position: absolute;
   background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png);
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
   height: 100vh;
@@ -268,6 +268,11 @@
         <div class="main_container" ref="parallaxContainer">
           <div class="parallax-wrapper" data-depth="0.04">
             <img
+              src="../../Assets/Day/myColset/MyColsetBaseDark.jpg"
+              alt=""
+              class="MyColsetBaseDark"
+            />
+            <img
               src="../../Assets/Day/myColset/MyColsetBase.jpg"
               alt=""
               class="MyColsetBase"
@@ -282,11 +287,11 @@
               alt=""
               class="characterLight"
             />
-            <img
+            <!-- <img
               src="../../Assets/Day/myColset/elf_light.png"
               alt=""
               class="elfLight"
-            />
+            /> -->
           </div>
 
           <div class="parallax-wrapper" data-depth="0.07">
@@ -473,33 +478,26 @@ onMounted(() => {
 const maleHairImages = [
   { name: "Short Hair", url: "shortHair.png" },
   { name: "Mid-length Hair", url: "mid-lengthHair.png" },
-  { name: "Curly Hair", url: "curly-hair.png" },
-  { name: "Bald", url: "bald.png" },
-  { name: "Bald", url: "bald.png" },
-  { name: "Bald", url: "bald.png" },
+  { name: "Black Short Hair", url: "blackShortHair.png" },
 ];
 
 const femaleHairImages = [
-  { name: "Ponytail", url: "Ponytail.png" },
+  { name: "Ponytail", url: "ponytail.png" },
   { name: "Curly Hair", url: "curlyHair.png" },
-  { name: "Curly Hair", url: "curly-hair.png" },
-  { name: "Long", url: "Long.png" },
-  { name: "Long", url: "Long.png" },
-  { name: "Long", url: "Long.png" },
 ];
 
 const maleClothesImages = [
-  { name: "Blue Coat", url: "blueCoat.png" },
   { name: "Red Robe", url: "redRobe.png" },
-  { name: "Shirt", url: "Shirt.png" },
-  { name: "Shirt", url: "Shirt.png" },
+  { name: "Blue Coat", url: "blueCoat.png" },
+  { name: "Blue Robe", url: "blueRobe.png" },
+  { name: "Purple Coat", url: "purpleCoat.png" },
 ];
 
 const femaleClothesImages = [
-  { name: "Black Coat", url: "blaceCoat.png" },
-  { name: "Red Robe", url: "redRobe.png" },
-  { name: "Shirt", url: "Shirt.png" },
-  { name: "Shirt", url: "Shirt.png" },
+  { name: "Black Robe", url: "blackRobe.png" },
+  { name: "Blue Coat", url: "blueCoat.png" },
+  { name: "Blue Robe", url: "blueRobe.png" },
+  { name: "Purple Coat", url: "purpleCoat.png" },
 ];
 
 const partnerImages = [
@@ -698,8 +696,8 @@ const generateCharacterImage = async () => {
   const ctx = canvas.getContext("2d");
 
   // 設定 Canvas 大小，這裡假設是 500x500
-  canvas.width = 155;
-  canvas.height = 409;
+  canvas.width = 300;
+  canvas.height = 791;
 
   // 加載圖片並繪製到 Canvas
   const loadImage = (src) => {
