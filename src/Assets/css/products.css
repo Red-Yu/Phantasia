@@ -3994,6 +3994,11 @@ body {
   text-align: left;
   font-family: "Fanwood Text", sans-serif;
   z-index: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+  /* Prevent text from overflowing */
 }
 
 .text-box-container h1 {
@@ -4037,12 +4042,13 @@ body {
   .carousel-container {
     height: auto;
     /* Adapt to content height */
-    padding-top: 80px;
+    padding-top: 100px;
+    padding-bottom: 100px;
     /* Add padding instead of fixed height */
   }
   .carousel {
-    width: 100%;
-    max-width: 500px;
+    width: 400px;
+    height: 300px;
     height: auto;
     /* Adapt to content */
   }
@@ -4062,8 +4068,7 @@ body {
     align-items: center;
     /* Centers items vertically */
     width: 100%;
-    max-width: 700px;
-    padding: 0 20px;
+    padding: 0 50px;
     height: 100%;
   }
   .carousel-item {
@@ -4076,9 +4081,9 @@ body {
     flex: 1;
   }
   .text-box-container {
-    width: 50%;
+    width: 200px;
     /* Take half of the container */
-    height: auto;
+    height: 300px;
     padding: 20px;
     background-color: #2a5670;
     color: white;
@@ -4106,8 +4111,8 @@ body {
   .carousel-container {
     height: auto;
     /* Adapt to content height */
-    padding-top: 80px;
-    padding-bottom: 50px;
+    padding-top: 180px;
+    padding-bottom: 150px;
     /* Add padding instead of fixed height */
   }
   .carousel {
