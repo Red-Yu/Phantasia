@@ -1740,6 +1740,12 @@ button {
     width: 17.5vw;
   }
 }
+.myClosetWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+}
+
 .characterChangeClothesWrapper {
   position: absolute;
   top: 50%;
@@ -1777,6 +1783,54 @@ button {
   z-index: 1;
 }
 
+.MyColsetLightScale {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s ease;
+  animation: transformBackground 7s infinite;
+}
+
+@keyframes transformBackground {
+  0% {
+    transform: scale(1); /* 初始大小 */
+  }
+  25% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  50% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+  75% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  100% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+}
+.ballLight1,
+.ballLight2,
+.ballLight3,
+.ballLight4,
+.ballLight5 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0.4;
+  transition: opacity 0.3s ease-out;
+}
+.ballLight1:hover,
+.ballLight2:hover,
+.ballLight3:hover,
+.ballLight4:hover,
+.ballLight5:hover {
+  opacity: 0.7;
+}
+
 .selectBall_1 {
   position: absolute;
   top: 50%;
@@ -1785,8 +1839,12 @@ button {
   left: 23%;
   top: 30%;
   height: 10vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight1 {
+  left: 23%;
+  top: 30%;
+  height: 16.5vh;
 }
 
 .selectBall_2 {
@@ -1797,8 +1855,12 @@ button {
   left: 32%;
   top: 43%;
   height: 7vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight2 {
+  left: 32%;
+  top: 43%;
+  height: 11vh;
 }
 
 .selectBall_3 {
@@ -1809,8 +1871,12 @@ button {
   left: 37%;
   top: 25%;
   height: 5.5vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight3 {
+  left: 37%;
+  top: 25%;
+  height: 9.5vh;
 }
 
 .selectBall_4 {
@@ -1821,8 +1887,12 @@ button {
   left: 65%;
   top: 29%;
   height: 6.5vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight4 {
+  left: 65%;
+  top: 29%;
+  height: 11vh;
 }
 
 .selectBall_5 {
@@ -1833,10 +1903,90 @@ button {
   left: 75%;
   top: 37%;
   height: 9vh;
-  cursor: pointer;
-  pointer-events: auto;
 }
 
+.ballLight5 {
+  left: 75%;
+  top: 37%;
+  height: 15vh;
+}
+
+.ballPosition1 {
+  animation: ballBounce1 4.5s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition2 {
+  animation: ballBounce2 5s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition3 {
+  animation: ballBounce3 4s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition4 {
+  animation: ballBounce4 4s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition5 {
+  animation: ballBounce5 6.5s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+/* 上下浮動的 keyframes 動畫 */
+@keyframes ballBounce1 {
+  0% {
+    transform: translateY(12px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(12px);
+  }
+}
+@keyframes ballBounce2 {
+  0% {
+    transform: translateY(8px);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+  100% {
+    transform: translateY(8px);
+  }
+}
+@keyframes ballBounce3 {
+  0% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(2px);
+  }
+}
+@keyframes ballBounce4 {
+  0% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
+@keyframes ballBounce5 {
+  0% {
+    transform: translateY(16px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(16px);
+  }
+}
 .myColsetContent {
   position: absolute;
   top: 50%;

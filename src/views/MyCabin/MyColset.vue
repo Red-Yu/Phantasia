@@ -79,7 +79,7 @@
 .main_container::before {
   content: "";
   position: absolute;
-  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png);
+  /* background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png); */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -264,7 +264,8 @@
           </div>
         </transition>
         <!-- ====================背景圖片======================= -->
-
+        <canvas ref="avatarCanvas" style="display: none"></canvas>
+        <canvas ref="partnerCanvas" style="display: none"></canvas>
         <div class="main_container" ref="parallaxContainer">
           <div class="parallax-wrapper" data-depth="0.04">
             <img
@@ -282,6 +283,13 @@
               alt=""
               class="MyColsetLight"
             />
+            <div class="MyColsetLightScale">
+              <img
+                src="../../Assets/Day/myColset/MyColsetLight.png"
+                alt=""
+                class="MyColsetLight"
+              />
+            </div>
             <img
               src="../../Assets/Day/myColset/characterLight.png"
               alt=""
@@ -365,12 +373,20 @@
             </div>
           </div>
 
-          <canvas ref="avatarCanvas" style="display: none"></canvas>
-          <canvas ref="partnerCanvas" style="display: none"></canvas>
-
           <!-- ===============ball=============== -->
-          <div class="parallax-wrapper" data-depth="0.055">
-            <div class="selectBall_1" @click="selectBall('gender')">
+          <div class="parallax-wrapper ballPosition1">
+            <div
+              class="parallax-wrapper ballLight1"
+              data-depth="0.2"
+              @click="selectBall('gender')"
+            >
+              <img
+                src="../../Assets/Day/myColset/ball_light.png"
+                alt=""
+                class="ball_light"
+              />
+            </div>
+            <div class="parallax-wrapper selectBall_1" data-depth="0.2">
               <img
                 src="../../Assets/Day/myColset/ball_1_76x76.png"
                 alt=""
@@ -379,8 +395,15 @@
             </div>
           </div>
 
-          <div class="parallax-wrapper" data-depth="0.055">
-            <div class="selectBall_2" @click="selectBall('hair')">
+          <div class="parallax-wrapper ballPosition2" data-depth="0.3">
+            <div class="ballLight2" @click="selectBall('hair')">
+              <img
+                src="../../Assets/Day/myColset/ball_light.png"
+                alt=""
+                class="ball_light"
+              />
+            </div>
+            <div class="selectBall_2">
               <img
                 src="../../Assets/Day/myColset/ball_2_60x60.png"
                 alt=""
@@ -389,8 +412,16 @@
             </div>
           </div>
 
-          <div class="parallax-wrapper" data-depth="0.055">
-            <div class="selectBall_3" @click="selectBall('clothes')">
+          <div class="parallax-wrapper ballPosition3" data-depth="0.2">
+            <div class="ballLight3">
+              <img
+                src="../../Assets/Day/myColset/ball_light.png"
+                alt=""
+                class="ball_light"
+                @click="selectBall('clothes')"
+              />
+            </div>
+            <div class="selectBall_3">
               <img
                 src="../../Assets/Day/myColset/ball_3_43x43.png"
                 alt=""
@@ -399,8 +430,16 @@
             </div>
           </div>
 
-          <div class="parallax-wrapper" data-depth="0.055">
-            <div class="selectBall_4" @click="selectBall('partner')">
+          <div class="parallax-wrapper ballPosition4" data-depth="0.4">
+            <div class="ballLight4">
+              <img
+                src="../../Assets/Day/myColset/ball_light.png"
+                alt=""
+                class="ball_light"
+                @click="selectBall('partner')"
+              />
+            </div>
+            <div class="selectBall_4">
               <img
                 src="../../Assets/Day/myColset/ball_4_56x56.png"
                 alt=""
@@ -409,8 +448,16 @@
             </div>
           </div>
 
-          <div class="parallax-wrapper" data-depth="0.055">
-            <div class="selectBall_5" @click="selectBall('magicCircle')">
+          <div class="parallax-wrapper ballPosition5" data-depth="0.5">
+            <div class="ballLight5">
+              <img
+                src="../../Assets/Day/myColset/ball_light.png"
+                alt=""
+                class="ball_light"
+                @click="selectBall('magicCircle')"
+              />
+            </div>
+            <div class="selectBall_5">
               <img
                 src="../../Assets/Day/myColset/ball_5_88x88.png"
                 alt=""
@@ -445,6 +492,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import { useUserAuthState } from "@/stores/userAuthState";
 import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -455,8 +503,23 @@ import { ref as fsRef, uploadBytes, getDownloadURL } from "firebase/storage";
 import BlackCover from "../../components/BlackCover.vue";
 
 const router = useRouter();
+const parallaxContainer = ref(null);
 
 onMounted(() => {
+  // 確保 DOM 內容加載完成後執行 Parallax 初始化
+  if (parallaxContainer.value) {
+    // 初始化 Parallax 實例
+    const scene = parallaxContainer.value;
+    const parallaxInstance = new Parallax(scene, {
+      relativeInput: true, // 啟用相對滑鼠位置偏移
+      hoverOnly: true, // 只在滑鼠懸停時啟動 Parallax
+      originY: 0,
+      originX: 0.8,
+      scalarX: 5.5, // 水平方向移動幅度是滑鼠移動的一半
+      scalarY: 6.5, // 垂直方向移動幅度是滑鼠移動的一半
+    });
+  }
+
   loadUserSelection(); // 頁面加載時載入用戶選擇
   $(".flipInY").textillate({
     in: {
