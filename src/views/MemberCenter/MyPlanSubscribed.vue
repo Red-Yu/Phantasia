@@ -44,8 +44,13 @@
 
 .user-details {
   margin-bottom: 30px;
-  font-family: "Fanwood Text", serif;
-  font-size: 20px;
+
+  font-family: "Fanwood Text";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 2px;
   color: #153243;
 
   .detail-item {
@@ -53,8 +58,15 @@
     border-bottom: 1px dotted #7a7a7a;
 
     .label {
-      color: #999999;
+      color: #284163;
       margin-left: 10px;
+      font-size: 18px;
+      font-family: Aleo;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
     }
   }
 }
@@ -277,17 +289,17 @@
           <div class="user-details">
             <div class="detail-item">
               <img :src="feather" alt="feather" />
-              <span class="label">Plan</span>
+              <span class="label">PLAN</span>
             </div>
             <span class="value">{{ currentSubscription.planType }}</span>
             <div class="detail-item">
               <img :src="feather" alt="feather" />
-              <span class="label">Subscription Period</span>
+              <span class="label">SUBSCRIPTION PERIOD</span>
             </div>
             <span class="value">From{{ currentSubscription.startDate }} to {{ currentSubscription.endDate }}</span>
             <div class="detail-item">
               <img :src="feather" alt="feather" />
-              <span class="label">Next Renewal Date</span>
+              <span class="label">NEXT RENEWAL DATE</span>
             </div>
             <span class="value">{{ currentSubscription.nextRenewalDate }}</span>
           </div>
