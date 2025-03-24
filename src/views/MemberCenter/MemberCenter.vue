@@ -216,7 +216,7 @@ h1 {
     <h1>My Stamp Count</h1>
     <div class="stamp-container">
       <img :src="stamp" alt="stamp" />
-      <div class="stepnumber">99</div>
+      <div class="stepnumber">{{points}}</div>
     </div>
     <div class="page-link">
       <p style="font-size: 20px">Go To My Page</p>
