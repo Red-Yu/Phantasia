@@ -276,6 +276,58 @@ const subscriptionStartDate = ref("");
 const subscriptionEndDate = ref("");
 const nextRenewalDate = ref("");
 
+// 格式化日期函數
+const formatDate = (date) => {
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+};
+
+// 計算結束日期的函數
+const calculateEndDate = (startDate, planType) => {
+  const start = new Date(startDate);
+  const end = new Date(start);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      end.setMonth(start.getMonth() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Quarterly Plan":
+      end.setMonth(start.getMonth() + 3);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Annual Plan":
+      end.setFullYear(start.getFullYear() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+  }
+  
+  return end;
+};
+
+// 計算下次續約日期的函數
+const calculateNextRenewalDate = (startDate, planType) => {
+  const start = new Date(startDate);
+  const nextRenewal = new Date(start);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      nextRenewal.setMonth(start.getMonth() + 1);
+      break;
+    case "Quarterly Plan":
+      nextRenewal.setMonth(start.getMonth() + 3);
+      break;
+    case "Annual Plan":
+      nextRenewal.setFullYear(start.getFullYear() + 1);
+      break;
+  }
+  
+  return nextRenewal;
+};
+
 // 在組件加載時獲取用戶資料
 onMounted(async () => {
   const user = auth.currentUser;
@@ -306,44 +358,19 @@ onMounted(async () => {
       if (!querySnapshot.empty) {
         const latestOrder = querySnapshot.docs[0].data();
         const startDate = new Date(latestOrder.startDate);
-        
-        // 根據訂閱類型計算結束日期
-        let endDate = new Date(startDate);
-        switch(latestOrder.planType) {
-          case "Monthly Plan":
-            endDate.setMonth(startDate.getMonth() + 1);
-            endDate.setDate(startDate.getDate() - 1);
-            break;
-          case "Quarterly Plan":
-            endDate.setMonth(startDate.getMonth() + 3);
-            endDate.setDate(startDate.getDate() - 1);
-            break;
-          case "Annual Plan":
-            endDate.setFullYear(startDate.getFullYear() + 1);
-            endDate.setDate(startDate.getDate() - 1);
-            break;
-        }
+        const endDate = calculateEndDate(startDate, latestOrder.planType);
+        const renewalDate = calculateNextRenewalDate(startDate, latestOrder.planType);
+
+        console.log('Start Date:', startDate);
+        console.log('End Date:', endDate);
+        console.log('Renewal Date:', renewalDate);
 
         hasActiveSubscription.value = true;
-        subscriptionPlanType.value = latestOrder.planType;
+        subscriptionPlanType.value = `${latestOrder.planType} Plan`;
         
-        subscriptionStartDate.value = startDate.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        });
-
-        subscriptionEndDate.value = endDate.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        });
-
-        nextRenewalDate.value = endDate.toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        });
+        subscriptionStartDate.value = formatDate(startDate);
+        subscriptionEndDate.value = formatDate(endDate);
+        nextRenewalDate.value = formatDate(renewalDate);
 
       } else {
         hasActiveSubscription.value = false;
@@ -355,12 +382,11 @@ onMounted(async () => {
   }
 });
 
-
 const handleManageSubscription = () => {
   router.push("/MemberCenter/MyPlanSubscribed").then(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // 使用平滑滾動
+      behavior: "smooth",
     });
   });
 };
@@ -369,7 +395,7 @@ const handleExploreSubscription = () => {
   router.push("/MemberCenter/MyPlanVisitor").then(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // 使用平滑滾動
+      behavior: "smooth",
     });
   });
 };
