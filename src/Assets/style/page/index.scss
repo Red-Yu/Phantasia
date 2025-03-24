@@ -37,8 +37,6 @@ button {
   height: 100%;
 
   .logOutmenuButton {
-    // opacity: 0;
-
     .loginInfo {
       &:hover::after {
         width: 0;
@@ -55,6 +53,17 @@ button {
     z-index: 400;
     gap: 5px;
     cursor: pointer;
+
+    .filter {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      // backdrop-filter: blur(10px);
+      border-radius: 20px;
+      filter: blur(4px);
+    }
 
     p {
       font-variant: small-caps;
@@ -357,6 +366,7 @@ button {
   top: 10%;
   left: 42%;
   // background-color: #fff;
+  cursor: pointer;
 }
 
 .hoverAreaSkyCity:hover + .skyCity {
@@ -373,6 +383,7 @@ button {
   height: 40vh;
   bottom: 5%;
   left: 45%;
+  cursor: pointer;
   // background-color: #fff;
 }
 
@@ -382,6 +393,8 @@ button {
   height: 20vh;
   bottom: 3%;
   left: 30%;
+  cursor: pointer;
+
   // background-color: yellow;
 }
 
@@ -416,6 +429,8 @@ button {
   height: 22vh;
   bottom: 3%;
   right: 13%;
+  cursor: pointer;
+
   // background-color: #fff;
 }
 
@@ -570,6 +585,8 @@ button {
   height: 30vh;
   top: 28%;
   left: 29.5%;
+  cursor: pointer;
+
   // background-color: #fff;
 }
 
@@ -587,6 +604,8 @@ button {
   height: 40vh;
   top: 40%;
   right: 28.5%;
+  cursor: pointer;
+
   // background-color: #fff;
 }
 

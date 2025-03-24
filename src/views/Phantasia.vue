@@ -82,6 +82,7 @@
   <div class="textContent">
     <!-- =====log out===== -->
     <div v-if="islogIn" class="logOutmenuButton">
+      <div class="filter"></div>
       <div class="menuAvatar" @click="ToMemberCenter">
         <img
           class="avaterImg"
@@ -106,6 +107,8 @@
 
     <!-- =====log in===== -->
     <div v-if="islogOut" class="logInmenuButton">
+      <div class="filter"></div>
+
       <div class="menuAvatar">
         <img
           class="avaterImg"
