@@ -10,12 +10,13 @@
           <div class="product-box-container">
             <div class="product-box-holder" ref="bookHolder">
               <div class="product-box--front">
-                <div class="pb-color-layer"></div>
+                <div
+                  class="pb-color-layer"
+                  :style="{ backgroundColor: product.colorCode }"
+                ></div>
                 <div
                   class="pb-inner-layer"
-                  :style="{
-                    backgroundImage: `url(${product.innerCoverImage})`,
-                  }"
+                  :style="{ backgroundImage: `url(${product.innerCoverImage})` }"
                 ></div>
                 <div
                   class="pb-outer-layer"
@@ -23,14 +24,20 @@
                 ></div>
               </div>
               <div class="product-box--back">
-                <div class="pb-color-layer"></div>
+                <div
+                  class="pb-color-layer"
+                  :style="{ backgroundColor: product.colorCode }"
+                ></div>
                 <div
                   class="pb-outer-layer"
                   :style="{ backgroundImage: `url(${product.backImage})` }"
                 ></div>
               </div>
               <div class="product-box--side-left">
-                <div class="pb-color-layer"></div>
+                <div
+                  class="pb-color-layer"
+                  :style="{ backgroundColor: product.colorCode }"
+                ></div>
                 <div
                   class="pb-outer-layer"
                   :style="{ backgroundImage: `url(${product.sideLeftImage})` }"
@@ -46,32 +53,15 @@
           </div>
         </div>
         <div class="content-right3">
-          <h1>The Legend of Perciliurs Khan</h1>
-          <h2>“Perciliurs Khan, the man, the legend!”</h2>
+          <h1>{{ product.title }}</h1>
+          <h2>{{ product.subtitle }}</h2>
 
           <div class="info-group3">
             <span class="info-icon3">🔹</span>
             <span class="info-heading3">Brief Introduction</span>
           </div>
           <hr class="info-divider3" />
-          <p>
-            In a forgotten era, Perciliurs Khan was a cunning and fearless warrior who led
-            an army of exiles against the tyrannical Empire of Velmont. Born into poverty
-            and cast out for a crime he didn’t commit, Perciliurs rose to power through
-            his unmatched intellect and charisma, uniting outlaws, farmers, and forgotten
-            tribes under his banner. His legend was cemented when he allegedly tamed the
-            mythical shadow beast, Xarnath, using only his voice, making him invincible in
-            battle. <br /><br />
-            The story tells of his greatest feat: a daring raid on the Imperial Vault,
-            where he stole the fabled Amulet of Aeons, said to control time itself. With
-            it, he turned the tide of war, liberating his people and carving his name into
-            history. However, as whispers of his power grew, some questioned if Perciliurs
-            Khan truly existed or if he was a myth, crafted to inspire hope in dark times.
-            <br /><br />
-            The tale ends with a mysterious twist: a traveler in the present day uncovers
-            a hidden artifact—an ancient blade inscribed with the words “Khan will rise
-            again.”
-          </p>
+          <p>{{ product.description }}</p>
 
           <div class="info-group3">
             <span class="info-icon3">🔹</span>
@@ -79,10 +69,8 @@
           </div>
           <hr class="info-divider3" />
           <p>
-            Author : Melinda Wenner<br />
-            Illustrator: Ho Hsueh-Yi<br />
-            Publication Date: Melinda Wenner<br />
-            Language: English
+            Author: {{ product.author }}<br />
+            Date Added: {{ product.dateAdded }}<br />
           </p>
           <div class="readButtons">
             <section class="readButtonL">
@@ -102,7 +90,7 @@
               </div>
             </section>
             <section class="readButtonR">
-              <div class="btnKey-L light" @click="goToProductReadPage">
+              <div class="btnKey-L light" @click="addToShelf">
                 <p>ADD TO SHELF</p>
                 <div class="icon-L">
                   <div class="white-cross">
@@ -123,8 +111,7 @@
 
       <section class="feedback-section3">
         <div class="feedback-box3">
-          <!-- Scrollable Review List -->
-          <div ref="feedbackList" class="feedback-list3" @scroll="updateActiveDot">
+          <div ref="feedbackList" class="feedback-list3">
             <div
               v-for="(comment, index) in comments"
               :key="index"
@@ -145,8 +132,6 @@
               <hr class="feedback-divider3" />
             </div>
           </div>
-
-          <!-- Custom Dot Scroll Indicator -->
           <div class="scroll-indicator">
             <span
               v-for="(dot, index) in 10"
@@ -163,36 +148,89 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
-import coverImage from "@/assets/img/pics/cover.png";
-import backImage from "@/assets/img/pics/backCover.png";
-import sideLeftImage from "@/assets/img/pics/spine.png";
-import sideRightImage from "@/assets/img/pics/2paper.png";
-import innerCoverImage from "@/assets/img/pics/bookImg_2.png";
+import { useRouter, useRoute } from "vue-router";
+import { doc, getDoc } from "firebase/firestore";
+import { ref as storageRef, getDownloadURL } from "firebase/storage";
+import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path to your Firebase config
 
-// Router for navigation
+// Router and Route setup
 const router = useRouter();
-const destinationRef = ref(null); // Reference for a DOM element (e.g., content-left3)
+const route = useRoute();
+const bookId = route.params.id; // e.g., "abc123xyz"
 
-// Product data
-const product = ref({
-  id: 1,
-  name: "Wooden Blocks",
-  author: "Nick Denchfield",
-  coverImage: coverImage,
-  innerCoverImage: innerCoverImage,
-  backImage: backImage,
-  sideLeftImage: sideLeftImage,
-  sideRightImage: sideRightImage,
-  dateAdded: "2024-01-15",
-  ageGroup: "1-6",
-  description:
-    "A wonderful wooden block set that enhances creativity and motor skills for young children.",
+// Reactive product data
+const product = ref({});
+
+// Fetch book data and images on mount
+onMounted(async () => {
+  try {
+    // Fetch book data from Firestore
+    const bookRef = doc(db, "books", bookId);
+    const bookSnap = await getDoc(bookRef);
+
+    if (bookSnap.exists()) {
+      const bookData = { id: bookSnap.id, ...bookSnap.data() };
+      product.value = bookData;
+      product.value.innerCoverImage = bookData.imagePath; // Use imagePath as innerCoverImage
+
+      //  Fetch fixed image URLs from Firebase Storage with individual error handling
+      product.value.coverImage = await getDownloadURL(
+        storageRef(storage, "images/common/cover.png")
+      ).catch((error) => {
+        console.error("Error fetching cover.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      });
+      product.value.backImage = await getDownloadURL(
+        storageRef(storage, "images/common/backCover.png")
+      ).catch((error) => {
+        console.error("Error fetching backCover.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      });
+      product.value.sideLeftImage = await getDownloadURL(
+        storageRef(storage, "images/common/spine.png")
+      ).catch((error) => {
+        console.error("Error fetching spine.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      });
+      product.value.sideRightImage = await getDownloadURL(
+        storageRef(storage, "images/common/2paper.png")
+      ).catch((error) => {
+        console.error("Error fetching 2paper.png:", error);
+        return "https://via.placeholder.com/150"; // Fallback placeholder
+      });
+    } else {
+      console.error("No such book found!");
+      // Optionally redirect or show an error
+    }
+  } catch (error) {
+    console.error("Error fetching book or images:", error);
+  }
+
+  // Event listeners for feedback and book dragging
+  if (feedbackList.value) {
+    feedbackList.value.addEventListener("scroll", updateActiveDot);
+  }
+  if (bookHolder.value) {
+    bookHolder.value.addEventListener("mousedown", bookStartDragging);
+    document.addEventListener("mousemove", bookDrag);
+    document.addEventListener("mouseup", bookStopDragging);
+    bookHolder.value.addEventListener("touchstart", bookTouchStart);
+    document.addEventListener("touchmove", bookTouchMove);
+    document.addEventListener("touchend", bookTouchEnd);
+  }
 });
 
 // Navigation function
-const goToProductReadPage = (productId) => {
-  router.push(`/Products/${productId}/read`);
+const goToProductReadPage = () => {
+  if (product.value.id) {
+    router.push(`/Products/${product.value.id}/read`);
+  }
+};
+
+// Placeholder for adding to shelf
+const addToShelf = () => {
+  console.log(`Adding book ${product.value.id} to shelf`);
+  // Implement Firestore update or other logic here
 };
 
 // Comments for feedback list
@@ -289,33 +327,15 @@ const bookTouchEnd = () => {
   bookIsDragging.value = false;
 };
 
-// Lifecycle hooks for event listeners
-onMounted(() => {
-  if (feedbackList.value) {
-    feedbackList.value.addEventListener("scroll", updateActiveDot);
-  }
-
-  if (bookHolder.value) {
-    bookHolder.value.addEventListener("mousedown", bookStartDragging);
-    document.addEventListener("mousemove", bookDrag);
-    document.addEventListener("mouseup", bookStopDragging);
-
-    bookHolder.value.addEventListener("touchstart", bookTouchStart);
-    document.addEventListener("touchmove", bookTouchMove);
-    document.addEventListener("touchend", bookTouchEnd);
-  }
-});
-
+// Cleanup event listeners on unmount
 onUnmounted(() => {
   if (feedbackList.value) {
     feedbackList.value.removeEventListener("scroll", updateActiveDot);
   }
-
   if (bookHolder.value) {
     bookHolder.value.removeEventListener("mousedown", bookStartDragging);
     document.removeEventListener("mousemove", bookDrag);
     document.removeEventListener("mouseup", bookStopDragging);
-
     bookHolder.value.removeEventListener("touchstart", bookTouchStart);
     document.removeEventListener("touchmove", bookTouchMove);
     document.removeEventListener("touchend", bookTouchEnd);
