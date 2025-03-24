@@ -111,9 +111,10 @@
     </div>
     <div class="actionButtonWrapper8">
       <div class="action-buttons8">
-        <div @click="submitData" class="action-button8 btnKey-L light">
+        <div @click="addPoint" class="action-button8 btnKey-L light">
           <p>COLLECT YOUR STAMPS</p>
         </div>
+        <p>目前點數: {{ points }}</p>
         <div @click="saveData" class="action-button8 btnLink light">
           <p>Back to shop</p>
           <div class="icon-L">
@@ -156,6 +157,12 @@
 <script>
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import axios from "axios";
+
+import { db } from "@/firebase/firebaseConfig"; 
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+// import Login from "../../views/Auth/Login.vue";
+
 
 export default {
   setup() {
@@ -286,10 +293,45 @@ export default {
       }
     };
 
+
+    //集點
+    const auth = getAuth();
+    const userID = ref(null);
+    const points = ref(0);
+
+    const fetchPoints = async (uid) => {
+      if (!uid) return;
+      const userRef = doc(db, 'users', uid);
+      const userSnap = await getDoc(userRef);
+      if (userSnap.exists()) {
+        points.value = userSnap.data().points || 0;
+      } else {
+        await setDoc(userRef, { points: 0 });
+      }
+    };
+
+    const addPoint = async () => {
+      if (!userID.value) return;
+      const userRef = doc(db, 'users', userID.value);
+      await updateDoc(userRef, {
+        points: points.value + 1
+      });
+      points.value++;
+    };
+
+
     // Lifecycle Hooks
     onMounted(() => {
       window.addEventListener("scroll", handleScroll);
       window.addEventListener("scroll", updateActiveDot);
+
+      //辨識為會員才在資料庫紀錄點數
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          userID.value = user.uid;
+          fetchPoints(user.uid);
+        }
+      });
     });
 
     onUnmounted(() => {
@@ -317,6 +359,8 @@ export default {
       charCount,
       saveData,
       submitData,
+      points, 
+      addPoint,
     };
   },
 };
