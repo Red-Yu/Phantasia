@@ -154,7 +154,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path
-import { collection, addDoc } from "firebase/firestore"; // Add Firestore imports
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 
 // Route setup
 const route = useRoute();
@@ -162,19 +162,32 @@ const bookId = route.params.id; // e.g., "abc123xyz"
 // Reactive data
 const avatarURL = ref("/MyColset/character115x409.png");
 const userId = ref(null); // Store authenticated user ID
+const isSubscribed = ref(false); // Subscription status
 
 // Popup logic
 const showPopup = ref(false);
 
-// Firebase Auth setup
+// Firebase Auth setup and subscription check
 const auth = getAuth();
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (user) {
     avatarURL.value = user.photoURL || "/MyColset/character115x409.png";
-    userId.value = user.uid; // Store user ID
+    userId.value = user.uid;
+
+    // Check subscription status in Firestore
+    const ordersQuery = query(
+      collection(db, "orders"),
+      where("userId", "==", userId.value)
+    );
+    const querySnapshot = await getDocs(ordersQuery);
+    isSubscribed.value = querySnapshot.docs.some((doc) => {
+      const endDate = new Date(doc.data().endDate);
+      return endDate > new Date(); // Active subscription if endDate is in the future
+    });
   } else {
     avatarURL.value = "/MyColset/character115x409.png";
-    userId.value = null; // No user logged in
+    userId.value = null;
+    isSubscribed.value = false; // Not logged in, so not subscribed
   }
 });
 
@@ -282,7 +295,13 @@ const handleScroll = () => {
   if (showPopup.value) return;
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-  if (scrollTop / scrollHeight >= 0.95) {
+  const scrollPercentage = scrollTop / scrollHeight;
+
+  // Show popup if not logged in OR logged in but not subscribed, at 95% scroll
+  if (
+    scrollPercentage >= 0.55 &&
+    (!userId.value || (userId.value && !isSubscribed.value))
+  ) {
     showPopup.value = true;
     document.body.style.overflow = "hidden";
   }
