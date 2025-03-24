@@ -18,6 +18,8 @@ $border: $baseBlue solid;
     max-width: 250px;
     width: 100%;
     height: 50vh;
+    min-height: 320px;
+
     // 內容排版
     display: flex;
     flex-direction: column;
@@ -73,6 +75,7 @@ $border: $baseBlue solid;
         display: flex;
         flex-direction: column;
         border-top: $baseBlue solid;
+        cursor: pointer;
       }
     }
   }

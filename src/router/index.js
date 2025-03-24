@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { nextTick } from "vue";
 // import Preload from "../components/Preload.vue";
 
 import DayLayout from "../views/DayLayout.vue";
@@ -284,22 +285,26 @@ const router = createRouter({
         {
           path: "BKMyColsetHair", //髮型管理  /BKMember/BKMyColsetHair
           name: "BackstageMyColsetHair",
-          component: () => import("@/views/Backstage/BackstageMyColsetHair.vue"),
+          component: () =>
+            import("@/views/Backstage/BackstageMyColsetHair.vue"),
         },
         {
           path: "BKMyColsetClothes", //服裝管理  /BKMember/BKMyColsetClothes
           name: "BackstageMyColsetClothes",
-          component: () => import("@/views/Backstage/BackstageMyColsetClothes.vue"),
+          component: () =>
+            import("@/views/Backstage/BackstageMyColsetClothes.vue"),
         },
         {
           path: "BKMyColsetPartner", //精靈管理  /BKMember/BKMyColsetPartner
           name: "BackstageMyColsetPartner",
-          component: () => import("@/views/Backstage/BackstageMyColsetPartner.vue"),
+          component: () =>
+            import("@/views/Backstage/BackstageMyColsetPartner.vue"),
         },
         {
           path: "BKMyColsetMagicCircle", //魔法陣管理  /BKMember/BKMyColsetMagicCircle
           name: "BackstageMyColsetMagicCircle",
-          component: () => import("@/views/Backstage/BackstageMyColsetMagicCircle.vue"),
+          component: () =>
+            import("@/views/Backstage/BackstageMyColsetMagicCircle.vue"),
         },
       ],
     },
@@ -330,6 +335,19 @@ const router = createRouter({
       component: () => import("@/views/test/firebaseDatabaseTest.vue"),
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // 如果有 savedPosition（即返回上一頁或前進頁面），則返回它
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      // 沒有 savedPosition 時，滾動到最上方
+      return new Promise((resolve) => {
+        nextTick(() => {
+          resolve({ top: 0 });
+        });
+      });
+    }
+  },
 });
 
 export default router;
