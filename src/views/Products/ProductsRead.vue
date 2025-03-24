@@ -44,11 +44,7 @@
     <div class="user-input-wrapper">
       <div class="user-input-container">
         <div class="feedback-content37">
-          <img
-            src="../../Assets/img/pics/Acc icon.png"
-            alt="Feedback Icon"
-            class="feedback-icon37"
-          />
+          <img :src="avatarURL" alt="User Avatar" class="feedback-icon37" />
           <div class="feedback-details37">
             <div class="feedback-stars37">
               <span
@@ -69,8 +65,8 @@
 
         <div class="reviewText">
           <p>
-            Kindly note that your comments will be publicly visible, so please
-            post responsibly.
+            Kindly note that your comments will be publicly visible, so please post
+            responsibly.
           </p>
         </div>
 
@@ -80,7 +76,7 @@
             v-model="userInput"
             placeholder="Enter your feedback..."
           ></textarea>
-          <span class="char-counter">{{ charCount }}/1000</span>
+          <span class="char-counter">{{ charCount }}/100</span>
         </div>
         <div class="actionButtonWrapper">
           <div class="action-buttons">
@@ -153,171 +149,183 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
-import axios from "axios";
+import { useRoute } from "vue-router";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path
+import { collection, addDoc } from "firebase/firestore"; // Add Firestore imports
 
-export default {
-  setup() {
-    // Popup logic
-    const showPopup = ref(false);
+// Route setup
+const route = useRoute();
+const bookId = route.params.id; // e.g., "abc123xyz"
+// Reactive data
+const avatarURL = ref("/MyColset/character115x409.png");
+const userId = ref(null); // Store authenticated user ID
 
-    const preventScrollAction = (event) => {
-      if (showPopup.value) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    };
+// Popup logic
+const showPopup = ref(false);
 
-    const handleScroll = () => {
-      if (showPopup.value) return; // Prevent scroll handling when popup is active
+// Firebase Auth setup
+const auth = getAuth();
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    avatarURL.value = user.photoURL || "/MyColset/character115x409.png";
+    userId.value = user.uid; // Store user ID
+  } else {
+    avatarURL.value = "/MyColset/character115x409.png";
+    userId.value = null; // No user logged in
+  }
+});
 
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
+// Star rating logic
+const totalStars7 = 5;
+const currentRating7 = ref(0);
+const hoverRating7 = ref(0);
+const userInput = ref("");
 
-      if (scrollTop / scrollHeight >= 0.95) {
-        showPopup.value = true;
-        document.body.style.overflow = "hidden"; // Disable scroll when popup appears
-      }
-    };
+// Load from sessionStorage on mount
+onMounted(() => {
+  const savedData = sessionStorage.getItem(`feedback-${bookId}`);
+  if (savedData) {
+    const { rating, feedback } = JSON.parse(savedData);
+    currentRating7.value = rating || 0;
+    userInput.value = feedback || "";
+  }
+  // Existing scroll event listeners
+  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", updateActiveDot);
+});
 
-    const closePopup = () => {
-      showPopup.value = false;
-      document.body.style.overflow = "";
-    };
-
-    const confirmAction = () => {
-      alert("Confirmed!");
-      closePopup();
-    };
-
-    // Scroll-related logic
-    const sections = ref([
-      { image: new URL("@/assets/img/pics/one.png", import.meta.url).href },
-      { image: new URL("@/assets/img/pics/two.png", import.meta.url).href },
-    ]);
-    const dots = ref(new Array(10).fill(null));
-    const activeDot = ref(0);
-
-    const scrollToPosition = (index, event) => {
-      if (showPopup.value) {
-        event.preventDefault(); // Prevent scrolling action if popup is visible
-        return; // Stop executing further code
-      }
-
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const scrollTo = (scrollHeight / 9) * index;
-
-      // Scroll smoothly to the calculated position
-      window.scrollTo({ top: scrollTo, behavior: "smooth" });
-    };
-
-    const updateActiveDot = () => {
-      if (showPopup.value) return; // Prevents updating the scroll indicator when popup is active
-
-      const scrollTop = window.scrollY;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      activeDot.value = Math.min(
-        9,
-        Math.floor((scrollTop / scrollHeight) * 10)
-      );
-    };
-
-    const scrollToTop = (event) => {
-      if (showPopup.value) {
-        preventScrollAction(event); // Block scroll action if popup is active
-        return;
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    // Star rating logic
-    const totalStars7 = 5;
-    const currentRating7 = ref(0);
-    const hoverRating7 = ref(0);
-
-    const hoverStar7 = (star7) => {
-      hoverRating7.value = star7;
-    };
-
-    const resetHover7 = () => {
-      hoverRating7.value = 0;
-    };
-
-    const setRating7 = (star7) => {
-      currentRating7.value = star7;
-    };
-
-    // Character Counter Logic
-    const userInput = ref("");
-    const charCount = computed(() => userInput.value.length);
-
-    watch(userInput, (newValue) => {
-      if (newValue.length > 1000) {
-        userInput.value = newValue.slice(0, 1000);
-      }
-    });
-
-    // Save and Submit logic
-    const saveData = () => {
-      localStorage.setItem(
-        "userFeedback",
-        JSON.stringify({
-          feedback: userInput.value,
-          rating: currentRating7.value,
-        })
-      );
-      alert("Your feedback has been saved locally.");
-    };
-
-    const submitData = async () => {
-      const feedbackData = {
-        feedback: userInput.value,
-        rating: currentRating7.value,
-      };
-      try {
-        await axios.post("your-backend-api-url", feedbackData);
-        alert("Your feedback has been submitted.");
-      } catch (error) {
-        alert("An error occurred while submitting your feedback.");
-      }
-    };
-
-    // Lifecycle Hooks
-    onMounted(() => {
-      window.addEventListener("scroll", handleScroll);
-      window.addEventListener("scroll", updateActiveDot);
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", updateActiveDot);
-      document.body.style.overflow = "";
-    });
-
-    return {
-      showPopup,
-      closePopup,
-      confirmAction,
-      sections,
-      dots,
-      activeDot,
-      scrollToPosition,
-      scrollToTop,
-      totalStars7,
-      currentRating7,
-      hoverRating7,
-      hoverStar7,
-      resetHover7,
-      setRating7,
-      userInput,
-      charCount,
-      saveData,
-      submitData,
-    };
-  },
+const hoverStar7 = (star7) => {
+  hoverRating7.value = star7;
 };
+
+const resetHover7 = () => {
+  hoverRating7.value = 0;
+};
+
+const setRating7 = (star7) => {
+  currentRating7.value = star7;
+  saveToSessionStorage(); // Save rating immediately when set
+};
+
+// Character Counter Logic
+const charCount = computed(() => userInput.value.length);
+
+watch(userInput, (newValue) => {
+  if (newValue.length > 100) {
+    userInput.value = newValue.slice(0, 100);
+  }
+  saveToSessionStorage(); // Save comment as user types
+});
+
+// Session Storage Functions
+const saveToSessionStorage = () => {
+  sessionStorage.setItem(
+    `feedback-${bookId}`,
+    JSON.stringify({
+      rating: currentRating7.value,
+      feedback: userInput.value,
+    })
+  );
+};
+
+const saveData = () => {
+  saveToSessionStorage();
+  alert("Your feedback has been saved temporarily.");
+};
+
+const submitData = async () => {
+  if (!userId.value) {
+    alert("Please log in to submit your feedback.");
+    return;
+  }
+
+  const feedbackData = {
+    text: userInput.value,
+    rating: currentRating7.value,
+    userId: userId.value,
+    bookId: bookId,
+    timestamp: new Date().toISOString(),
+  };
+  try {
+    await addDoc(collection(db, "comments"), feedbackData);
+    alert("Your feedback has been submitted to Firestore.");
+
+    // Clear sessionStorage and reset form after submission
+    sessionStorage.removeItem(`feedback-${bookId}`);
+    currentRating7.value = 0;
+    userInput.value = "";
+  } catch (error) {
+    console.error("Error submitting feedback to Firestore:", error);
+    alert("An error occurred while submitting your feedback.");
+  }
+};
+
+// Existing Scroll-related logic (unchanged)
+const sections = ref([
+  { image: new URL("@/assets/img/pics/one.png", import.meta.url).href },
+  { image: new URL("@/assets/img/pics/two.png", import.meta.url).href },
+]);
+const dots = ref(new Array(10).fill(null));
+const activeDot = ref(0);
+
+const preventScrollAction = (event) => {
+  if (showPopup.value) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+};
+
+const handleScroll = () => {
+  if (showPopup.value) return;
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  if (scrollTop / scrollHeight >= 0.95) {
+    showPopup.value = true;
+    document.body.style.overflow = "hidden";
+  }
+};
+
+const closePopup = () => {
+  showPopup.value = false;
+  document.body.style.overflow = "";
+};
+
+const confirmAction = () => {
+  alert("Confirmed!");
+  closePopup();
+};
+
+const scrollToPosition = (index, event) => {
+  if (showPopup.value) {
+    event.preventDefault();
+    return;
+  }
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollTo = (scrollHeight / 9) * index;
+  window.scrollTo({ top: scrollTo, behavior: "smooth" });
+};
+
+const updateActiveDot = () => {
+  if (showPopup.value) return;
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  activeDot.value = Math.min(9, Math.floor((scrollTop / scrollHeight) * 10));
+};
+
+const scrollToTop = (event) => {
+  if (showPopup.value) {
+    preventScrollAction(event);
+    return;
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("scroll", updateActiveDot);
+  document.body.style.overflow = "";
+});
 </script>

@@ -5305,8 +5305,18 @@ h2 {
 }
 
 .feedback-icon37 {
+  width: 60px;
+  /* Adjust size */
+  height: 60px;
+  border-radius: 50%;
+  /* Circular window */
+  -o-object-fit: cover;
+     object-fit: cover;
+  /* Ensures image fits */
+  -o-object-position: center top;
+     object-position: center top;
+  /* Shifts focus to the top of the image */
   margin-right: 10px;
-  /* Space between icon and stars */
 }
 
 .feedback-details37 {
