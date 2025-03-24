@@ -2,11 +2,10 @@
     <!-- 登入成功提示 -->
         <div class="modal-overlay" v-if="isVisible" @click="closeModal">
             <div class="modal-content successPrompt" @click.stop>
-            <div class="bgc"></div>
-            <!-- mainContent -->
-            <div class="lightbox-content successPrompt">
-                <h2>Login Successful!</h2>
-                <h2>Welcome to Phantasia.</h2>
+                <div class="bgc"></div>
+                <!-- mainContent -->
+                <div class="lightbox-content ">
+                    <h2>Registration Successful!</h2>
             </div>
             </div>
         </div>

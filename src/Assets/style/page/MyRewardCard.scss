@@ -1,4 +1,4 @@
-@import "../mixin/mixin";
+@import "../main";
 
 * {
   margin: 0;
@@ -255,7 +255,7 @@
 /* 中間內文 */
 .middle,
 .right {
-  background-color: #153243;
+  background-color: $subBlue;
   overflow: hidden;
 }
 
@@ -333,7 +333,7 @@
   position: relative;
   width: 100px;
   height: 100px;
-  background-color: rgb(51, 59, 122);
+  background-color: $subGray;
   opacity: 70%;
   clip-path: polygon(
     25% 0%,

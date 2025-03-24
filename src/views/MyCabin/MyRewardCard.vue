@@ -224,55 +224,61 @@
                   </p>
                 </div>
                 <div class="unlock">
-                  <div class="octagon">
-                    <img
-                      class="lock"
-                      src="../../Assets/Day/rewardCard/lock.png"
-                      alt="Lock"
-                    />
-                    <img class="real_dress" src="" alt="Real" />
-                  </div>
-                  <div class="octagon">
-                    <img
-                      class="lock"
-                      src="../../Assets/Day/rewardCard/lock.png"
-                      alt="Lock"
-                    />
-                    <img class="real_dress" src="" alt="Real" />
-                  </div>
-                  <div class="octagon">
-                    <img
-                      class="lock"
-                      src="../../Assets/Day/rewardCard/lock.png"
-                      alt="Lock"
-                    />
-                    <img class="real_dress" src="" alt="Real" />
-                  </div>
-                  <div class="octagon">
-                    <img
-                      class="lock"
-                      src="../../Assets/Day/rewardCard/lock.png"
-                      alt="Lock"
-                    />
-                    <img class="real_dress" src="" alt="Real" />
-                  </div>
-                  <div class="octagon">
-                    <img
-                      class="lock"
-                      src="../../Assets/Day/rewardCard/lock.png"
-                      alt="Lock"
-                    />
-                    <img class="real_dress" src="" alt="Real" />
-                  </div>
-                  <div class="octagon">
-                    <img
-                      class="lock"
-                      src="../../Assets/Day/rewardCard/lock.png"
-                      alt="Lock"
-                    />
-                    <img class="real_dress" src="" alt="Real" />
+                  <div v-for="octagon in unlockedOctagons" :key="octagon.id" class="octagon">
+                    <img v-if="!octagon.unlocked" src="../../Assets/Day/rewardCard/lock.png" alt="Lock" />
+                    <img v-else src="../../Assets/Day/rewardCard/key.png" alt="Key" class="real_dress" />
                   </div>
                 </div>
+                <!-- <div class="unlock">
+                  <div class="octagon">
+                    <img
+                      class="lock"
+                      src="../../Assets/Day/rewardCard/lock.png"
+                      alt="Lock"
+                    />
+                    <img class="real_dress" src="" alt="Real" />
+                  </div>
+                  <div class="octagon">
+                    <img
+                      class="lock"
+                      src="../../Assets/Day/rewardCard/lock.png"
+                      alt="Lock"
+                    />
+                    <img class="real_dress" src="" alt="Real" />
+                  </div>
+                  <div class="octagon">
+                    <img
+                      class="lock"
+                      src="../../Assets/Day/rewardCard/lock.png"
+                      alt="Lock"
+                    />
+                    <img class="real_dress" src="" alt="Real" />
+                  </div>
+                  <div class="octagon">
+                    <img
+                      class="lock"
+                      src="../../Assets/Day/rewardCard/lock.png"
+                      alt="Lock"
+                    />
+                    <img class="real_dress" src="" alt="Real" />
+                  </div>
+                  <div class="octagon">
+                    <img
+                      class="lock"
+                      src="../../Assets/Day/rewardCard/lock.png"
+                      alt="Lock"
+                    />
+                    <img class="real_dress" src="" alt="Real" />
+                  </div>
+                  <div class="octagon">
+                    <img
+                      class="lock"
+                      src="../../Assets/Day/rewardCard/lock.png"
+                      alt="Lock"
+                    />
+                    <img class="real_dress" src="" alt="Real" />
+                  </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -417,12 +423,36 @@ const circles = ref([
 ]);
 
 // 計算哪些圓圈應該變成印章
-const filledCircles = computed(() =>
-  circles.value.map((circle, index) => ({
+// const filledCircles = computed(() =>
+//   circles.value.map((circle, index) => ({
+//     ...circle,
+//     filled: index < points.value, // 只有小於 points 數的圓圈變成印章
+//   }))
+// );
+const filledCircles = computed(() => {
+  const modPoints = points.value % 10 || 10; // 讓滿10後重置
+  return circles.value.map((circle, index) => ({
     ...circle,
-    filled: index < points.value, // 只有小於 points 數的圓圈變成印章
-  }))
-);
+    filled: index < modPoints, // 當 index < modPoints 時顯示印章
+  }));
+});
+// 定義 6 個八角形框，預設為鎖
+const octagons = ref([
+  { id: 1, unlocked: false },
+  { id: 2, unlocked: false },
+  { id: 3, unlocked: false },
+  { id: 4, unlocked: false },
+  { id: 5, unlocked: false },
+  { id: 6, unlocked: false }
+]);
+
+// 計算哪些八角形應該變成鑰匙
+const unlockedOctagons = computed(() => {
+  return octagons.value.map((octagon, index) => ({
+    ...octagon,
+    unlocked: points.value >= (index + 1) * 5,
+  }));
+});
 
 const fetchPoints = async (uid) => {
   if (!uid) return;

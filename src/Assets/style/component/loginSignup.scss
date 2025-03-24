@@ -210,26 +210,35 @@ input {
 }
 
 
-// 登入成功
-.loginSuccess , .signupSuccess{
+// 登入註冊成功
+.modal-content.successPrompt {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh !important;
-  // width: 80%;
+  height: 30vh ;
+
+  .lightbox-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh ;
+
+  }
 }
-.loginSuccess h2 {
+// .successPrompt{
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 30vh !important;
+//   // width: 80%;
+// }
+.successPrompt h2 {
   font-family: Aleo;
   color: $baseBlue;
   font-size: 2.2rem;
   margin: 25px 0;
 }
-.signupSuccess h2{
-  font-family: Aleo;
-  color: $baseBlue;
-  font-size: 2.1rem;
-  // margin: 25px 0;
-}
+
 
 .fade-out {
   opacity: 0;
