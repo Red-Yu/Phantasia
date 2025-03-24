@@ -72,17 +72,28 @@ const handleStartReading = () => {
   router.push('/Products'); // 導航到閱讀頁面，請根據實際路由調整
 };
 
+
 // 計算訂閱結束日期
 const calculateEndDate = (startDate, planType) => {
   const start = new Date(startDate);
   const end = new Date(start);
   
-  if (planType === 'Monthly Plan') {
-    end.setMonth(start.getMonth() + 1);
-  } else if (planType === 'Quarterly Plan') {
-    end.setMonth(start.getMonth() + 3);
-  } else if (planType === 'Annual Plan') {
-    end.setFullYear(start.getFullYear() + 1);
+  switch(planType) {
+    case "Monthly Plan":
+      end.setMonth(start.getMonth() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Quarterly Plan":
+      end.setMonth(start.getMonth() + 3);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Annual Plan":
+      end.setFullYear(start.getFullYear() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+    default:
+      end.setMonth(start.getMonth() + 1);
+      end.setDate(start.getDate() - 1);
   }
   
   return end.toISOString();
