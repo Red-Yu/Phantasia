@@ -2016,7 +2016,7 @@ select {
   z-index: 1;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.4);
+  transform: translate(-50%, -50%) scale(0.3);
 }
 .ProjectMenu .user .useImg .avatar .avaterImg {
   z-index: 100;
@@ -2080,7 +2080,7 @@ select {
   z-index: 1;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.45);
+  transform: translate(-50%, -50%) scale(0.34);
   opacity: 0.9;
 }
 .member-center .useImg .avatar .avaterImg {

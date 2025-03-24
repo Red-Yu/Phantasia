@@ -855,7 +855,7 @@ button {
   z-index: 3;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.08);
+  transform: translate(-50%, -50%) scale(0.25);
 }
 .textContent .logOutmenuButton .menuAvatar .avaterImg,
 .textContent .logInmenuButton .menuAvatar .avaterImg {
@@ -1780,7 +1780,6 @@ button {
   transform: translate(-50%, -50%);
   height: 85vh;
   min-width: 100px;
-  z-index: 1;
 }
 
 .MyColsetLightScale {
@@ -1912,22 +1911,37 @@ button {
 }
 
 .ballPosition1 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
   animation: ballBounce1 4.5s ease-in-out infinite; /* 上下浮動動畫 */
 }
 
 .ballPosition2 {
-  animation: ballBounce2 5s ease-in-out infinite; /* 上下浮動動畫 */
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  animation: ballBounce2 6s ease-in-out infinite; /* 上下浮動動畫 */
 }
 
 .ballPosition3 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
   animation: ballBounce3 4s ease-in-out infinite; /* 上下浮動動畫 */
 }
 
 .ballPosition4 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
   animation: ballBounce4 4s ease-in-out infinite; /* 上下浮動動畫 */
 }
 
 .ballPosition5 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
   animation: ballBounce5 6.5s ease-in-out infinite; /* 上下浮動動畫 */
 }
 
@@ -1945,13 +1959,13 @@ button {
 }
 @keyframes ballBounce2 {
   0% {
-    transform: translateY(8px);
+    transform: translateY(2px);
   }
   50% {
-    transform: translateY(-4px);
+    transform: translateY(-18px);
   }
   100% {
-    transform: translateY(8px);
+    transform: translateY(2px);
   }
 }
 @keyframes ballBounce3 {

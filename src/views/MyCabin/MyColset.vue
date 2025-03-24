@@ -132,12 +132,14 @@
             <div class="optionArea">
               <button
                 class="btnLink whiteForFrontPage"
+                :class="{ active: selectedGender === 'male' }"
                 @click="selectGender('male')"
               >
                 Male
               </button>
               <button
                 class="btnLink whiteForFrontPage"
+                :class="{ active: selectedGender === 'female' }"
                 @click="selectGender('female')"
               >
                 Female
@@ -160,6 +162,9 @@
             <div class="optionArea">
               <button
                 class="btnLink whiteForFrontPage"
+                :class="{
+                  active: selectedHairImage === index,
+                }"
                 v-for="(image, index) in hairImages"
                 :key="index"
                 @click="selectHairImage(index)"
@@ -185,6 +190,9 @@
             <div class="optionArea">
               <button
                 class="btnLink whiteForFrontPage"
+                :class="{
+                  active: selectedClothesImage === index,
+                }"
                 v-for="(image, index) in clothesImages"
                 :key="index"
                 @click="selectClothesImage(index)"
@@ -210,6 +218,9 @@
             <div class="optionArea">
               <button
                 class="btnLink whiteForFrontPage"
+                :class="{
+                  active: selectedPartnerImage === index,
+                }"
                 v-for="(image, index) in partnerImages"
                 :key="index"
                 @click="selectPartnerImage(index)"
@@ -235,6 +246,9 @@
             <div class="optionArea">
               <button
                 class="btnLink whiteForFrontPage magicCircle"
+                :class="{
+                  active: selectedMagicCircleImage === index,
+                }"
                 v-for="(image, index) in magicCircleImages"
                 :key="index"
                 @click="selectMagicCircleImage(index)"
@@ -302,6 +316,25 @@
             /> -->
           </div>
 
+          <!-------------- 魔法陣圖片 --------------->
+          <div class="parallax-wrapper" data-depth="0.055">
+            <div class="magicCircleWrapper">
+              <img
+                v-for="(image, index) in magicCircleImages"
+                :key="index"
+                v-show="selectedMagicCircleImage === index && image.url !== ''"
+                :src="`/MyColset/${image.url}`"
+                :alt="image.name"
+              />
+
+              <!-- <img
+                src="../../Assets/Day/myColset/magicCircle_1.png"
+                alt=""
+                class="magicCircle"
+              /> -->
+            </div>
+          </div>
+
           <div class="parallax-wrapper" data-depth="0.07">
             <div class="characterChangeClothesWrapper">
               <!-------------- 衣服圖片 --------------->
@@ -354,115 +387,102 @@
             </div>
           </div>
 
-          <!-------------- 魔法陣圖片 --------------->
-          <div class="parallax-wrapper" data-depth="0.055">
-            <div class="magicCircleWrapper">
-              <img
-                v-for="(image, index) in magicCircleImages"
-                :key="index"
-                v-show="selectedMagicCircleImage === index && image.url !== ''"
-                :src="`/MyColset/${image.url}`"
-                :alt="image.name"
-              />
-
-              <!-- <img
-                src="../../Assets/Day/myColset/magicCircle_1.png"
-                alt=""
-                class="magicCircle"
-              /> -->
-            </div>
-          </div>
-
           <!-- ===============ball=============== -->
-          <div class="parallax-wrapper ballPosition1">
-            <div
-              class="parallax-wrapper ballLight1"
-              data-depth="0.2"
-              @click="selectBall('gender')"
-            >
-              <img
-                src="../../Assets/Day/myColset/ball_light.png"
-                alt=""
-                class="ball_light"
-              />
-            </div>
-            <div class="parallax-wrapper selectBall_1" data-depth="0.2">
-              <img
-                src="../../Assets/Day/myColset/ball_1_76x76.png"
-                alt=""
-                class="ball_1"
-              />
+          <div class="parallax-wrapper" data-depth="0.5">
+            <div class="ballPosition1">
+              <div class="ballLight1" @click="selectBall('gender')">
+                <img
+                  src="../../Assets/Day/myColset/ball_light.png"
+                  alt=""
+                  class="ball_light"
+                />
+              </div>
+              <div class="selectBall_1">
+                <img
+                  src="../../Assets/Day/myColset/ball_1_76x76.png"
+                  alt=""
+                  class="ball_1"
+                />
+              </div>
             </div>
           </div>
 
-          <div class="parallax-wrapper ballPosition2" data-depth="0.3">
-            <div class="ballLight2" @click="selectBall('hair')">
-              <img
-                src="../../Assets/Day/myColset/ball_light.png"
-                alt=""
-                class="ball_light"
-              />
-            </div>
-            <div class="selectBall_2">
-              <img
-                src="../../Assets/Day/myColset/ball_2_60x60.png"
-                alt=""
-                class="ball_2"
-              />
-            </div>
-          </div>
-
-          <div class="parallax-wrapper ballPosition3" data-depth="0.2">
-            <div class="ballLight3">
-              <img
-                src="../../Assets/Day/myColset/ball_light.png"
-                alt=""
-                class="ball_light"
-                @click="selectBall('clothes')"
-              />
-            </div>
-            <div class="selectBall_3">
-              <img
-                src="../../Assets/Day/myColset/ball_3_43x43.png"
-                alt=""
-                class="ball_3"
-              />
+          <div class="parallax-wrapper" data-depth="0.3">
+            <div class="ballPosition2">
+              <div class="ballLight2" @click="selectBall('hair')">
+                <img
+                  src="../../Assets/Day/myColset/ball_light.png"
+                  alt=""
+                  class="ball_light"
+                />
+              </div>
+              <div class="selectBall_2">
+                <img
+                  src="../../Assets/Day/myColset/ball_2_60x60.png"
+                  alt=""
+                  class="ball_2"
+                />
+              </div>
             </div>
           </div>
 
-          <div class="parallax-wrapper ballPosition4" data-depth="0.4">
-            <div class="ballLight4">
-              <img
-                src="../../Assets/Day/myColset/ball_light.png"
-                alt=""
-                class="ball_light"
-                @click="selectBall('partner')"
-              />
-            </div>
-            <div class="selectBall_4">
-              <img
-                src="../../Assets/Day/myColset/ball_4_56x56.png"
-                alt=""
-                class="ball_4"
-              />
+          <div class="parallax-wrapper" data-depth="0.4">
+            <div class="ballPosition3">
+              <div class="ballLight3">
+                <img
+                  src="../../Assets/Day/myColset/ball_light.png"
+                  alt=""
+                  class="ball_light"
+                  @click="selectBall('clothes')"
+                />
+              </div>
+              <div class="selectBall_3">
+                <img
+                  src="../../Assets/Day/myColset/ball_3_43x43.png"
+                  alt=""
+                  class="ball_3"
+                />
+              </div>
             </div>
           </div>
 
-          <div class="parallax-wrapper ballPosition5" data-depth="0.5">
-            <div class="ballLight5">
-              <img
-                src="../../Assets/Day/myColset/ball_light.png"
-                alt=""
-                class="ball_light"
-                @click="selectBall('magicCircle')"
-              />
+          <div class="parallax-wrapper" data-depth="0.4">
+            <div class="ballPosition4">
+              <div class="ballLight4">
+                <img
+                  src="../../Assets/Day/myColset/ball_light.png"
+                  alt=""
+                  class="ball_light"
+                  @click="selectBall('partner')"
+                />
+              </div>
+              <div class="selectBall_4">
+                <img
+                  src="../../Assets/Day/myColset/ball_4_56x56.png"
+                  alt=""
+                  class="ball_4"
+                />
+              </div>
             </div>
-            <div class="selectBall_5">
-              <img
-                src="../../Assets/Day/myColset/ball_5_88x88.png"
-                alt=""
-                class="ball_5"
-              />
+          </div>
+
+          <div class="parallax-wrapper" data-depth="0.5">
+            <div class="ballPosition5">
+              <div class="ballLight5">
+                <img
+                  src="../../Assets/Day/myColset/ball_light.png"
+                  alt=""
+                  class="ball_light"
+                  @click="selectBall('magicCircle')"
+                />
+              </div>
+              <div class="selectBall_5">
+                <img
+                  src="../../Assets/Day/myColset/ball_5_88x88.png"
+                  alt=""
+                  class="ball_5"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -512,7 +532,7 @@ onMounted(() => {
     const scene = parallaxContainer.value;
     const parallaxInstance = new Parallax(scene, {
       relativeInput: true, // 啟用相對滑鼠位置偏移
-      hoverOnly: true, // 只在滑鼠懸停時啟動 Parallax
+      hoverOnly: false, // 只在滑鼠懸停時啟動 Parallax
       originY: 0,
       originX: 0.8,
       scalarX: 5.5, // 水平方向移動幅度是滑鼠移動的一半
@@ -550,8 +570,8 @@ const femaleHairImages = [
 ];
 
 const maleClothesImages = [
-  { name: "Red Robe", url: "redRobe.png" },
   { name: "Blue Coat", url: "blueCoat.png" },
+  { name: "Red Robe", url: "redRobe.png" },
   { name: "Blue Robe", url: "blueRobe.png" },
   { name: "Purple Coat", url: "purpleCoat.png" },
 ];
@@ -576,7 +596,6 @@ const magicCircleImages = [
   { name: "Rune of the Elements", url: "RuneOfTheElements.png" },
   { name: "Sigil of the Ancients", url: "SigilOfTheAncients.png" },
   { name: "Glyph of the Void", url: "GlyphOfTheVoid.png" },
-  { name: "Glyph of the Void2", url: "GlyphOfTheVoid2.png" },
 ];
 
 const selectedGender = ref("male");
