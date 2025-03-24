@@ -8,22 +8,6 @@
         <h1>Sign Up</h1>
 
         <form @submit.prevent="signup">
-          <label for="username">Name</label>
-          <input
-            type="text"
-            v-model="name"
-            placeholder="Please enter your name."
-            required
-          />
-
-          <label for="birthday">Birthday</label>
-          <input
-            type="date"
-            v-model="birthday"
-            placeholder="Please enter your birthday."
-            required
-          />
-
           <label for="email">E-Mail</label>
           <input
             type="email"
@@ -47,6 +31,22 @@
             v-model="confirmPassword"
             required
             placeholder="Please enter your password again."
+          />
+
+          <label for="username">Name</label>
+          <input
+            type="text"
+            v-model="name"
+            placeholder="Please enter your name."
+            required
+          />
+
+          <label for="birthday">Birthday</label>
+          <input
+            type="date"
+            v-model="birthday"
+            placeholder="Please enter your birthday."
+            required
           />
 
           <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -119,11 +119,19 @@ const signup = async () => {
     );
     const user = userCredential.user;
 
+    // 獲取當前註冊時間並格式化為 YYYY-MM-DD
+    const registrationDate = new Date();
+    const year = registrationDate.getFullYear();
+    const month = (registrationDate.getMonth() + 1).toString().padStart(2, "0"); // 確保月份是兩位數
+    const day = registrationDate.getDate().toString().padStart(2, "0"); // 確保日期是兩位數
+    const formattedDate = `${year}-${month}-${day}`; // 格式化為 YYYY-MM-DD
+
     // 使用返回的 uid 儲存額外的用戶資料到 Firestore
     await setDoc(doc(db, "users", user.uid), {
       name: name.value,
       birthday: birthday.value,
       email: email.value,
+      registrationDate: formattedDate,
       // 你可以在這裡儲存更多的資料
     });
 

@@ -70,7 +70,7 @@ onMounted(() => {
         <div @click="toggleClosetMenu">
           <TabButton
             text="衣櫃管理"
-            to="/BKMember/BKMyColsetClothes"
+            to="/BKMember/BKMyColsetHair"
             :class="{ active: isClosetOpen }"
           />
         </div>

@@ -519,14 +519,13 @@ onMounted(() => {
         console.log("Error getting document:", error);
       }
       // 更新頭像 URL
-      avatarURL.value =
-        user.photoURL || "../Assets/Day/myColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
     } else {
       // 用戶未登入
       islogIn.value = false;
       islogOut.value = true;
       userName.value = ""; // 清空用戶名稱
-      avatarURL.value = "../Assets/Day/myColset/avatarDefault.png";
+      avatarURL.value = "/MyColset/avatarDefault.png";
     }
   });
 });
