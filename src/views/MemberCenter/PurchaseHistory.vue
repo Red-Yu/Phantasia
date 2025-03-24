@@ -108,7 +108,8 @@ input[type="date"]:focus {
   border-top: 1px solid #153243; 
   padding: 10px;
   text-align: left; 
-  color: #153243; 
+  color: #153243;
+  width: 300px; 
 }
 
 .custom-table td:first-child {
@@ -116,13 +117,21 @@ input[type="date"]:focus {
 }
 
 .custom-table td:last-child {
-  border-left: none; 
+  border-left: none;
+  text-align: left;
+  padding-right: 70px; /* 與表頭保持相同的右側間距 */
 }
 
-.custom-table th:first-child, 
-.custom-table th:last-child {
+.custom-table th:first-child {
   background-color: #153243; 
   color: white;
+}
+
+.custom-table th:last-child {
+  background-color: #153243;
+  color: white;
+  text-align: left;
+
 }
 
 .custom-table tr{
@@ -149,7 +158,7 @@ input[type="date"]:focus {
         type="date" 
         v-model="startDate"
         :min="'2024-01-01'"
-        :max="endDate"
+        :max="new Date().toISOString().split('T')[0]"
       />
 
       <label>~</label>
@@ -158,7 +167,7 @@ input[type="date"]:focus {
         type="date" 
         v-model="endDate"
         :min="startDate"
-        :max="'endDate'"
+        :max="new Date().toISOString().split('T')[0]"
       />
 
       <img 
@@ -179,7 +188,10 @@ input[type="date"]:focus {
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(record, index) in purchaseRecords" :key="index">
+        <tr v-if="purchaseRecords.length === 0">
+          <td colspan="2" class="text-center">No purchase history found</td>
+        </tr>
+        <tr v-else v-for="(record, index) in purchaseRecords" :key="index">
           <td>{{ record.plan }}</td>
           <td>{{ record.date }}</td>
         </tr>
@@ -189,60 +201,112 @@ input[type="date"]:focus {
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
 import search from "@/assets/img/membercenter/search.svg"
 import AnimatedTitle from '@/components/MemberCenterAnimatedTitle.vue'
+import { getFirestore, collection, query, where, orderBy, getDocs } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+
+const db = getFirestore();
+const auth = getAuth();
 
 // 日期範圍
 const startDate = ref('')
 const endDate = ref('')
 
-// 選單狀態
-const menuStates = reactive({
-  subscription: false,
-  projects: false
-})
+// 訂單記錄
+const purchaseRecords = ref([])
 
-// 假資料 - 可以替換成真實的API調用
-const purchaseRecords = ref([
-  {
-    plan: 'Monthly Plan',
-    date: '2024/08/06~2024/09/05'
-  },
-  {
-    plan: 'Monthly Plan',
-    date: '2024/08/06~2024/09/05'
-  },
-  {
-    plan: 'Monthly Plan',
-    date: '2024/08/06~2024/09/05'
-  },
-  {
-    plan: 'Monthly Plan',
-    date: '2024/08/06~2024/09/05'
-  },
-  {
-    plan: 'Monthly Plan',
-    date: '2024/08/06~2024/09/05'
+// 格式化日期函數
+const formatDate = (startDate, endDate) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+  return `${start.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })} ~ ${end.toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' })}`;
+};
+
+// 載入歷史訂單
+const loadPurchaseHistory = async () => {
+  const user = auth.currentUser;
+  if (!user) return;
+
+  try {
+    const ordersRef = collection(db, "orders");
+    const q = query(
+      ordersRef, 
+      where("userId", "==", user.uid)
+    );
+
+    const querySnapshot = await getDocs(q);
+    
+    purchaseRecords.value = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      const startDate = new Date(data.startDate);
+      const endDate = calculateEndDate(startDate, data.planType);
+      
+      return {
+        plan: `${data.planType}`,
+        date: formatDate(startDate, endDate)
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching purchase history:", error);
   }
-])
+};
 
-// 子選單相關方法
-const toggleSubmenu = (menuId) => {
-  menuStates[menuId] = !menuStates[menuId]
-}
-
-const getSubmenuStyle = (menuId) => {
-  return {
-    height: menuStates[menuId] ? '100px' : '0',
-    overflow: 'hidden',
-    transition: 'height 0.3s ease'
+// 計算結束日期的函數
+const calculateEndDate = (startDate, planType) => {
+  const end = new Date(startDate);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      end.setMonth(startDate.getMonth() + 1);
+      end.setDate(startDate.getDate() - 1);
+      break;
+    case "Quarterly Plan":
+      end.setMonth(startDate.getMonth() + 3);
+      end.setDate(startDate.getDate() - 1);
+      break;
+    case "Annual Plan":
+      end.setFullYear(startDate.getFullYear() + 1);
+      end.setDate(startDate.getDate() - 1);
+      break;
   }
-}
+  
+  return end;
+};
 
 // 搜尋功能
-const searchDateRange = () => {
-  // 實作搜尋邏輯
-  console.log('Searching between', startDate.value, 'and', endDate.value)
-}
+const searchDateRange = async () => {
+  const user = auth.currentUser;
+  if (!user || !startDate.value || !endDate.value) return;
+
+  try {
+    const ordersRef = collection(db, "orders");
+    const q = query(
+      ordersRef, 
+      where("userId", "==", user.uid),
+      where("startDate", ">=", startDate.value),
+      where("startDate", "<=", endDate.value),
+      orderBy("startDate", "desc")
+    );
+
+    const querySnapshot = await getDocs(q);
+    
+    purchaseRecords.value = querySnapshot.docs.map(doc => {
+      const data = doc.data();
+      const start = new Date(data.startDate);
+      const end = calculateEndDate(start, data.planType);
+      
+      return {
+        plan: `${data.planType} Plan`,
+        date: formatDate(start, end)
+      };
+    });
+  } catch (error) {
+    console.error("Error searching purchase history:", error);
+  }
+};
+
+// 組件掛載時載入歷史訂單
+onMounted(loadPurchaseHistory);
 </script>

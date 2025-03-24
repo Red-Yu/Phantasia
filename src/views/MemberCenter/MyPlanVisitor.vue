@@ -265,7 +265,7 @@
               and the thrilling ending—you're just one step away!
             </p>
             <div class="btnKey-L light" @click="handleJoinNow">
-              <p>JOIN NOW</p>
+              <p >JOIN NOW</p>
               
               <div class="icon-L">
                 <div class="white-cross">
@@ -454,16 +454,84 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import step from "@/assets/img/membercenter/step.svg"
+import axios from 'axios'
+// 引入 Firestore 相關函數
+import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const router = useRouter();
 
-// 處理 JOIN NOW 按鈕點擊
-const handleJoinNow = () => {
-  router.push('/MemberCenter/SubscriptionStatus');
-};
+// 處理支付按鈕點擊
+const handleJoinNow = async () => {
+  // 檢查是否選擇了訂閱計劃和支付方式
+  if (!selectedPlan.value || !selectedPayment.value) {
+    alert('請選擇訂閱計劃和支付方式')
+    // 滾動到訂閱計劃區域讓用戶選擇
+    document.querySelector('.subscription-section').scrollIntoView({ 
+      behavior: 'smooth' 
+    })
+    return
+  }
+  
+  try {
+    // 取得當前登入用戶
+    const auth = getAuth();
+    const currentUser = auth.currentUser;
+    
+    if (!currentUser) {
+      alert('請先登入');
+      router.push('/login');
+      return;
+    }
+    
+    // 處理支付
+    const planDetails = plans.value.find(p => p.title === selectedPlan.value);
+    
+    // 生成唯一訂單 ID (使用時間戳)
+    const timestamp = new Date().getTime();
+    const orderId = `order_${timestamp}`;
+    
+    // 儲存訂單到 Firebase
+    const db = getFirestore();
+    await setDoc(doc(db, "orders", orderId), {
+      orderId,
+      userId: currentUser.uid,
+      userEmail: currentUser.email,
+      planType: selectedPlan.value,
+      amount: planDetails.price,
+      paymentMethod: selectedPayment.value,
+      status: 'pending', // 初始狀態為待支付
+      merchantTradeNo: `P${timestamp}`, // 記錄綠界使用的交易編號
+      createdAt: new Date().toISOString(),
+      startDate: new Date().toISOString()
+    });
+    
+    // 將訂單 ID 存到 localStorage，以便在支付後使用
+    localStorage.setItem('currentOrderId', orderId);
+    
+    // 呼叫後端 API 創建支付表單，傳遞訂單 ID
+    const response = await axios.post('/api/ecpay/create-payment', {
+      planType: selectedPlan.value,
+      amount: planDetails.price,
+      paymentMethod: selectedPayment.value,
+      orderId: orderId // 傳遞訂單 ID 到後端
+    });
+    
+    // 將 ECPay HTML 表單加入到頁面並自動提交
+    const formContainer = document.createElement('div')
+    formContainer.innerHTML = response.data.htmlForm
+    document.body.appendChild(formContainer)
+    
+    // 自動提交表單
+    document.querySelector('form[action*="ecpay"]').submit()
+  } catch (error) {
+    console.error('支付處理錯誤:', error)
+    alert('支付處理發生錯誤，請稍後再試')
+  }
+}
 
 // 訂閱計劃相關
 const selectedPlan = ref(null)
@@ -551,6 +619,16 @@ const formatCVC = (event) => {
 
 // 計算屬性
 const showCreditCardForm = computed(() => selectedPayment.value === 'CREDIT')
+
+// 檢查用戶是否已登入
+onMounted(() => {
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+  
+  if (!currentUser) {
+    console.log('用戶未登入，建議先登入');
+  }
+});
 
 // 定義 emit
 const emit = defineEmits(['plan-selected'])

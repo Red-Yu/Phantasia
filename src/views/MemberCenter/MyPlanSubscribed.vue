@@ -44,8 +44,13 @@
 
 .user-details {
   margin-bottom: 30px;
-  font-family: "Fanwood Text", serif;
-  font-size: 20px;
+
+  font-family: "Fanwood Text";
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 2px;
   color: #153243;
 
   .detail-item {
@@ -53,8 +58,15 @@
     border-bottom: 1px dotted #7a7a7a;
 
     .label {
-      color: #999999;
+      color: #284163;
       margin-left: 10px;
+      font-size: 18px;
+      font-family: Aleo;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
     }
   }
 }
@@ -277,19 +289,19 @@
           <div class="user-details">
             <div class="detail-item">
               <img :src="feather" alt="feather" />
-              <span class="label">Plan</span>
+              <span class="label">PLAN</span>
             </div>
-            <span class="value">Annual Subscription Plan</span>
+            <span class="value">{{ currentSubscription.planType }}</span>
             <div class="detail-item">
               <img :src="feather" alt="feather" />
-              <span class="label">Subscription Period</span>
+              <span class="label">SUBSCRIPTION PERIOD</span>
             </div>
-            <span class="value">From July 22, 2024, to July 21, 2025</span>
+            <span class="value">From{{ currentSubscription.startDate }} to {{ currentSubscription.endDate }}</span>
             <div class="detail-item">
               <img :src="feather" alt="feather" />
-              <span class="label">Next Renewal Date</span>
+              <span class="label">NEXT RENEWAL DATE</span>
             </div>
-            <span class="value">July 22, 2025</span>
+            <span class="value">{{ currentSubscription.nextRenewalDate }}</span>
           </div>
           <div class="cancel" @click="handleCancelSubscription">
             <p>Cancel Subscription</p>
@@ -378,13 +390,77 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import AnimatedTitle from '@/components/MemberCenterAnimatedTitle.vue'
 import feather from "@/assets/img/membercenter/feather.svg"
-import logo from "@/assets/img/membercenter/logo.svg"
+import { getFirestore, doc, getDoc, collection, query, where, orderBy, getDocs, limit } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const router = useRouter();
+const auth = getAuth();
+const db = getFirestore();
+
+// 訂閱資訊狀態
+const currentSubscription = ref({
+  planType: 'Unknown',
+  startDate: '',
+  endDate: '',
+  nextRenewalDate: ''
+});
+
+// 格式化日期函數
+const formatDate = (dateStr) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+};
+
+// 計算結束日期的函數
+const calculateEndDate = (startDate, planType) => {
+  const start = new Date(startDate);
+  const end = new Date(start);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      end.setMonth(start.getMonth() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Quarterly Plan":
+      end.setMonth(start.getMonth() + 3);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Annual Plan":
+      end.setFullYear(start.getFullYear() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+  }
+  
+  return end;
+};
+
+// 計算下次續約日期的函數
+const calculateNextRenewalDate = (startDate, planType) => {
+  const start = new Date(startDate);
+  const nextRenewal = new Date(start);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      nextRenewal.setMonth(start.getMonth() + 1);
+      break;
+    case "Quarterly Plan":
+      nextRenewal.setMonth(start.getMonth() + 3);
+      break;
+    case "Annual Plan":
+      nextRenewal.setFullYear(start.getFullYear() + 1);
+      break;
+  }
+  
+  return nextRenewal;
+};
 
 // 處理取消訂閱的點擊事件
 const handleCancelSubscription = () => {
@@ -394,7 +470,7 @@ const handleCancelSubscription = () => {
 // 響應式數據
 const selectedPlan = ref(null)
 const isHovered = ref(null)
-const showNotification = ref(false)  // 只需要定義一次
+const showNotification = ref(false)
 
 const plans = ref([
   {
@@ -413,6 +489,62 @@ const plans = ref([
     monthly: '8.33'
   }
 ])
+
+// 載入訂閱資訊
+onMounted(async () => {
+  try {
+    const user = auth.currentUser;
+    if (!user) {
+      console.error('用戶未登入');
+      return;
+    }
+
+    const ordersRef = collection(db, "orders");
+    const q = query(
+      ordersRef, 
+      where("userId", "==", user.uid),
+      where("status", "==", "pending"),
+      orderBy("createdAt", "desc"),
+      limit(1)
+    );
+
+    const querySnapshot = await getDocs(q);
+    
+    if (!querySnapshot.empty) {
+      const latestOrder = querySnapshot.docs[0].data();
+      const startDate = new Date(latestOrder.startDate);
+      const endDate = calculateEndDate(startDate, latestOrder.planType);
+
+      // 手動設置下次續約日期
+      let nextRenewalDate;
+      switch(latestOrder.planType) {
+        case "Monthly Plan":
+          nextRenewalDate = new Date(startDate);
+          nextRenewalDate.setMonth(startDate.getMonth() + 1);
+          break;
+        case "Quarterly Plan":
+          nextRenewalDate = new Date(startDate);
+          nextRenewalDate.setMonth(startDate.getMonth() + 3);
+          break;
+        case "Annual Plan":
+          // 明確設置為開始日期的下一年
+          nextRenewalDate = new Date(startDate.getFullYear() + 1, startDate.getMonth(), startDate.getDate());
+          break;
+      }
+
+      currentSubscription.value = {
+        planType: `${latestOrder.planType} Plan`,
+        startDate: formatDate(startDate),
+        endDate: formatDate(endDate),
+        nextRenewalDate: formatDate(nextRenewalDate)
+      };
+
+      selectedPlan.value = latestOrder.planType;
+    }
+  } catch (error) {
+    console.error('獲取訂閱詳情錯誤:', error);
+  }
+});
 
 // 訂閱計劃相關方法
 const togglePlan = (planTitle) => {

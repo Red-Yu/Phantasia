@@ -200,17 +200,33 @@ h1 {
   <div class="subscription-box">
     <h3>Current Subscription</h3>
     <div class="subscription-details">
-      <p>Annual Subscription Plan</p>
-      <p>Subscription Period: From July 22, 2024 to June 21, 2025</p>
-      <p>Next Renewal Date: June 22, 2025</p>
-      <div class="manage-link" @click="handleManageSubscription">
-        <p style="font-size: 20px">Manage Subscription Plans</p>
-        <div class="i">
-          <div class="dark-arrow"></div>
+      <!-- Conditional rendering for subscription -->
+      <template v-if="hasActiveSubscription">
+        <p>{{ subscriptionPlanType }}</p>
+        <p>Subscription Period: From {{ subscriptionStartDate }} to {{ subscriptionEndDate }}</p>
+        <p>Next Renewal Date: {{ nextRenewalDate }}</p>
+        <div class="manage-link" @click="handleManageSubscription">
+          <p style="font-size: 20px">Manage Subscription Plans</p>
+          <div class="i">
+            <div class="dark-arrow"></div>
+          </div>
         </div>
-      </div>
+      </template>
+      <template v-else>
+        <p class="no-subscription">
+          You're not subscribed yet! Explore our subscription plans and find the one that suits you best. 
+          Unlock exclusive content and begin your exciting reading journey today!
+        </p>
+        <div class="manage-link" @click="handleExploreSubscription">
+          <p style="font-size: 20px">Explore Subscription Plans</p>
+          <div class="i">
+            <div class="dark-arrow"></div>
+          </div>
+        </div>
+      </template>
     </div>
   </div>
+
 
   <div class="stamp-display">
     <h1>My Stamp Count</h1>
@@ -233,7 +249,16 @@ import stamp from "@/assets/img/membercenter/Frame 427319813.svg";
 import feather from "@/assets/img/membercenter/feather.svg";
 import { ref, onMounted } from "vue";
 import { db } from "../../firebase/firebaseConfig";
-import { doc, getDoc } from "firebase/firestore";
+import { 
+  doc, 
+  getDoc, 
+  collection, 
+  query, 
+  where, 
+  orderBy, 
+  getDocs, 
+  limit 
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const router = useRouter();
@@ -244,24 +269,115 @@ const userName = ref("");
 const userBirthday = ref("");
 const userEmail = ref("");
 
+// 訂閱相關資料
+const hasActiveSubscription = ref(false);
+const subscriptionPlanType = ref('');
+const subscriptionStartDate = ref("");
+const subscriptionEndDate = ref("");
+const nextRenewalDate = ref("");
+
+// 格式化日期函數
+const formatDate = (date) => {
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+};
+
+// 計算結束日期的函數
+const calculateEndDate = (startDate, planType) => {
+  const start = new Date(startDate);
+  const end = new Date(start);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      end.setMonth(start.getMonth() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Quarterly Plan":
+      end.setMonth(start.getMonth() + 3);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Annual Plan":
+      end.setFullYear(start.getFullYear() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+  }
+  
+  return end;
+};
+
+// 計算下次續約日期的函數
+const calculateNextRenewalDate = (startDate, planType) => {
+  const start = new Date(startDate);
+  const nextRenewal = new Date(start);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      nextRenewal.setMonth(start.getMonth() + 1);
+      break;
+    case "Quarterly Plan":
+      nextRenewal.setMonth(start.getMonth() + 3);
+      break;
+    case "Annual Plan":
+      nextRenewal.setFullYear(start.getFullYear() + 1);
+      break;
+  }
+  
+  return nextRenewal;
+};
+
 // 在組件加載時獲取用戶資料
 onMounted(async () => {
-  const user = auth.currentUser; // 獲取當前登錄用戶
+  const user = auth.currentUser;
 
   if (user) {
     try {
-      // 獲取用戶資料
-      const userDoc = await getDoc(doc(db, "users", user.uid)); // 使用 uid 獲取 Firestore 資料
+      // 獲取用戶基本資料
+      const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
         const userData = userDoc.data();
-        userName.value = userData.name || ""; // 設置用戶名稱
-        userBirthday.value = userData.birthday || ""; // 設置用戶生日
-        userEmail.value = userData.email || ""; // 設置用戶電子郵件
+        userName.value = userData.name || ""; 
+        userBirthday.value = userData.birthday || ""; 
+        userEmail.value = userData.email || ""; 
+      }
+
+      // 查詢訂閱訂單
+      const ordersRef = collection(db, "orders");
+      const q = query(
+        ordersRef, 
+        where("userId", "==", user.uid),
+        where("status", "==", "pending"),
+        orderBy("createdAt", "desc"),
+        limit(1)
+      );
+
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const latestOrder = querySnapshot.docs[0].data();
+        const startDate = new Date(latestOrder.startDate);
+        const endDate = calculateEndDate(startDate, latestOrder.planType);
+        const renewalDate = calculateNextRenewalDate(startDate, latestOrder.planType);
+
+        console.log('Start Date:', startDate);
+        console.log('End Date:', endDate);
+        console.log('Renewal Date:', renewalDate);
+
+        hasActiveSubscription.value = true;
+        subscriptionPlanType.value = `${latestOrder.planType} Plan`;
+        
+        subscriptionStartDate.value = formatDate(startDate);
+        subscriptionEndDate.value = formatDate(endDate);
+        nextRenewalDate.value = formatDate(renewalDate);
+
       } else {
-        console.log("No such document!");
+        hasActiveSubscription.value = false;
       }
     } catch (error) {
-      console.log("Error getting document:", error);
+      console.error("Error fetching user and subscription data:", error);
+      hasActiveSubscription.value = false;
     }
   }
 });
@@ -270,7 +386,16 @@ const handleManageSubscription = () => {
   router.push("/MemberCenter/MyPlanSubscribed").then(() => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth", // 使用平滑滾動
+      behavior: "smooth",
+    });
+  });
+};
+
+const handleExploreSubscription = () => {
+  router.push("/MemberCenter/MyPlanVisitor").then(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
     });
   });
 };
