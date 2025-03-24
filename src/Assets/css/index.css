@@ -832,6 +832,16 @@ button {
   gap: 5px;
   cursor: pointer;
 }
+.textContent .logOutmenuButton .filter,
+.textContent .logInmenuButton .filter {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  filter: blur(4px);
+}
 .textContent .logOutmenuButton p,
 .textContent .logInmenuButton p {
   font-variant: small-caps;
@@ -841,6 +851,7 @@ button {
 }
 .textContent .logOutmenuButton .menuAvatar,
 .textContent .logInmenuButton .menuAvatar {
+  position: relative;
   width: 30px;
   height: 30px;
   border: white solid 1.5px;
@@ -848,11 +859,21 @@ button {
   background-color: #999999;
   overflow: hidden;
 }
+.textContent .logOutmenuButton .menuAvatar .avaterBg,
+.textContent .logInmenuButton .menuAvatar .avaterBg {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.25);
+}
 .textContent .logOutmenuButton .menuAvatar .avaterImg,
 .textContent .logInmenuButton .menuAvatar .avaterImg {
+  position: relative;
+  z-index: 100;
   display: flex;
   justify-self: center;
-  transform: scale(0.2);
+  transform: scale(0.1);
   transform-origin: top center;
 }
 .textContent .logOutmenuButton .btnLink,
@@ -1114,6 +1135,7 @@ button {
   height: 40vh;
   top: 10%;
   left: 42%;
+  cursor: pointer;
 }
 
 .hoverAreaSkyCity:hover + .skyCity {
@@ -1134,6 +1156,7 @@ button {
   height: 40vh;
   bottom: 5%;
   left: 45%;
+  cursor: pointer;
 }
 
 .hoverAreaBoy2 {
@@ -1146,6 +1169,7 @@ button {
   height: 20vh;
   bottom: 3%;
   left: 30%;
+  cursor: pointer;
 }
 
 .hoverAreaBoy:hover + .boy {
@@ -1186,6 +1210,7 @@ button {
   height: 22vh;
   bottom: 3%;
   right: 13%;
+  cursor: pointer;
 }
 
 .hoverAreaBook:hover + .book {
@@ -1330,6 +1355,7 @@ button {
   height: 30vh;
   top: 28%;
   left: 29.5%;
+  cursor: pointer;
 }
 
 .hoverAreaLeftCastle:hover + .left_castle {
@@ -1350,6 +1376,7 @@ button {
   height: 40vh;
   top: 40%;
   right: 28.5%;
+  cursor: pointer;
 }
 
 .hoverAreaRightCastle:hover + .right_castle {
@@ -1729,6 +1756,12 @@ button {
     width: 17.5vw;
   }
 }
+.myClosetWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+}
+
 .characterChangeClothesWrapper {
   position: absolute;
   top: 50%;
@@ -1763,7 +1796,54 @@ button {
   transform: translate(-50%, -50%);
   height: 85vh;
   min-width: 100px;
-  z-index: 1;
+}
+
+.MyColsetLightScale {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s ease;
+  animation: transformBackground 7s infinite;
+}
+
+@keyframes transformBackground {
+  0% {
+    transform: scale(1); /* 初始大小 */
+  }
+  25% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  50% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+  75% {
+    transform: scaleX(1.1); /* 略微放大 */
+  }
+  100% {
+    transform: scale(1); /* 恢復到初始大小 */
+  }
+}
+.ballLight1,
+.ballLight2,
+.ballLight3,
+.ballLight4,
+.ballLight5 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0.4;
+  transition: opacity 0.3s ease-out;
+}
+.ballLight1:hover,
+.ballLight2:hover,
+.ballLight3:hover,
+.ballLight4:hover,
+.ballLight5:hover {
+  opacity: 0.7;
 }
 
 .selectBall_1 {
@@ -1774,8 +1854,12 @@ button {
   left: 23%;
   top: 30%;
   height: 10vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight1 {
+  left: 23%;
+  top: 30%;
+  height: 16.5vh;
 }
 
 .selectBall_2 {
@@ -1786,8 +1870,12 @@ button {
   left: 32%;
   top: 43%;
   height: 7vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight2 {
+  left: 32%;
+  top: 43%;
+  height: 11vh;
 }
 
 .selectBall_3 {
@@ -1798,8 +1886,12 @@ button {
   left: 37%;
   top: 25%;
   height: 5.5vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight3 {
+  left: 37%;
+  top: 25%;
+  height: 9.5vh;
 }
 
 .selectBall_4 {
@@ -1810,8 +1902,12 @@ button {
   left: 65%;
   top: 29%;
   height: 6.5vh;
-  cursor: pointer;
-  pointer-events: auto;
+}
+
+.ballLight4 {
+  left: 65%;
+  top: 29%;
+  height: 11vh;
 }
 
 .selectBall_5 {
@@ -1822,10 +1918,105 @@ button {
   left: 75%;
   top: 37%;
   height: 9vh;
-  cursor: pointer;
-  pointer-events: auto;
 }
 
+.ballLight5 {
+  left: 75%;
+  top: 37%;
+  height: 15vh;
+}
+
+.ballPosition1 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  animation: ballBounce1 4.5s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition2 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  animation: ballBounce2 6s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition3 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  animation: ballBounce3 4s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition4 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  animation: ballBounce4 4s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+.ballPosition5 {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  animation: ballBounce5 6.5s ease-in-out infinite; /* 上下浮動動畫 */
+}
+
+/* 上下浮動的 keyframes 動畫 */
+@keyframes ballBounce1 {
+  0% {
+    transform: translateY(12px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(12px);
+  }
+}
+@keyframes ballBounce2 {
+  0% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+  100% {
+    transform: translateY(2px);
+  }
+}
+@keyframes ballBounce3 {
+  0% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(2px);
+  }
+}
+@keyframes ballBounce4 {
+  0% {
+    transform: translateY(-20px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}
+@keyframes ballBounce5 {
+  0% {
+    transform: translateY(16px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(16px);
+  }
+}
 .myColsetContent {
   position: absolute;
   top: 50%;
@@ -1899,4 +2090,8 @@ button {
   bottom: 10%;
   box-shadow: 0 0 15px rgb(255, 255, 255);
   border: white solid 1px;
+}
+
+.MyColsetBase {
+  animation: flickerEffect 8s infinite;
 }/*# sourceMappingURL=index.css.map */

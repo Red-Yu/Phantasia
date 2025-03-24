@@ -11,6 +11,7 @@
               :src="avatarURL"
               alt="User Avatar"
             />
+            <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
           </div>
         </div>
       </div>
@@ -55,9 +56,9 @@ onMounted(() => {
     // 將回調設為 async 函數
     if (user) {
       // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/character115x409.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
     } else {
-      avatarURL.value = "/MyColset/character115x409.png";
+      avatarURL.value = "/MyColset/avatarDefault.png";
     }
   });
 });

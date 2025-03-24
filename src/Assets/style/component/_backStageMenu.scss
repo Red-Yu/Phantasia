@@ -1,11 +1,11 @@
 // 變數
-@import '../base/color';
+@import "../base/color";
 $border: $baseBlue solid;
 
-.backStageMenu{
-    width: 100%;
-    display: flex;
-    gap: 10px;
+.backStageMenu {
+  width: 100%;
+  display: flex;
+  gap: 10px;
 
   // -----------------------
   // sidebar架構
@@ -18,7 +18,7 @@ $border: $baseBlue solid;
     // 外觀
     max-width: 250px;
     width: 100%;
-    // height: 50vh;
+    height: 100vh;
     // 內容排版
     display: flex;
     flex-direction: column;
@@ -29,8 +29,7 @@ $border: $baseBlue solid;
     background-color: $subWhite;
     // padding-bottom: 50px;
 
-    // justify-content: space-between; 
-    cursor: pointer;
+    // justify-content: space-between;
   }
   // user 物件
   .user {
@@ -41,6 +40,7 @@ $border: $baseBlue solid;
     justify-content: center;
     align-items: center;
     border-bottom: $baseBlue solid;
+
     .useImg {
       width: 180px;
       height: 180px;
@@ -50,10 +50,28 @@ $border: $baseBlue solid;
       align-items: center;
       border: $baseBlue solid;
       .avatar {
+        position: relative;
+
         width: 85%;
         height: 85%;
         border-radius: 80%;
         background-color: $subGray;
+        overflow: hidden;
+        .avaterBg {
+          position: absolute;
+          z-index: 1;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scale(0.3);
+          // transform-origin: top left;
+        }
+        .avaterImg {
+          z-index: 100;
+
+          position: relative;
+          transform: scale(0.51);
+          transform-origin: top left;
+        }
       }
     }
     .tab-group {
@@ -61,13 +79,13 @@ $border: $baseBlue solid;
       display: flex;
       flex-direction: column;
       border-top: $baseBlue solid;
+      cursor: pointer;
     }
   }
   .logout-container {
     padding: 10px;
     display: flex;
     justify-content: center; /* 讓登出按鈕橫向置中 */
-    
   }
   // -----------------------
   // TabBTN 在 Component btn.scss
@@ -90,7 +108,7 @@ $border: $baseBlue solid;
 .sub-item {
   padding-left: 10px; /* 讓子選單內縮 */
   border-left: 5px solid #153243; /* 左側顏色區分 */
-  background-color: #f5f5f5; 
+  background-color: #f5f5f5;
 }
 
 .sub-item:hover {

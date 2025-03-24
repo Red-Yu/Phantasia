@@ -204,7 +204,8 @@ const bookStopDragging = () => {
   if (!bookHolder.value) return;
   bookIsDragging.value = false;
   bookHolder.value.style.cursor = "-webkit-grab";
-  bookHolder.value.style.animation = "bookFloat 15s ease-in-out infinite alternate"; // 重新啟動動畫
+  bookHolder.value.style.animation =
+    "bookFloat 15s ease-in-out infinite alternate"; // 重新啟動動畫
 };
 
 const bookTouchStart = (e) => {

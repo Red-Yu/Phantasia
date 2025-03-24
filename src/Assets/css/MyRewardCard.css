@@ -4311,12 +4311,11 @@ tbody > tr:hover {
 /* 背景圖 */
 .bg {
   position: relative;
-  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png), url(../../Assets/Day/rewardCard/rc_bg.png);
+  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png), url(../../Assets/Day/rewardCard/rc_bg.jpg);
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 .bg::before {
@@ -4324,7 +4323,7 @@ tbody > tr:hover {
   position: absolute;
   background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png);
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
   height: 100vh;

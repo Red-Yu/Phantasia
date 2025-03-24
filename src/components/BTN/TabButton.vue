@@ -28,3 +28,12 @@ const isActive = () => route.path === props.to;
     </div>
   </div>
 </template>
+
+<style scoped>
+.btnTab {
+  cursor: pointer;
+}
+.tab-cross {
+  cursor: pointer;
+}
+</style>
