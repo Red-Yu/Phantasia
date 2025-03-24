@@ -111,6 +111,51 @@
                 />
               </div>
               <div class="pointAll">
+      <!-- 第一組 5 個圓圈 -->
+                <div class="point_5">
+                  <div class="twicePoint">
+                    <div v-for="(circle, index) in filledCircles.slice(0, 2)" :key="circle.id" class="point">
+                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <span v-else>{{ index + 1 }}</span>
+                    </div>
+                  </div>
+                  <div class="oncePoint">
+                    <div class="point">
+                      <img v-if="filledCircles[2]?.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <span v-else>3</span>
+                    </div>
+                  </div>
+                  <div class="twicePoint">
+                    <div v-for="(circle, index) in filledCircles.slice(3, 5)" :key="circle.id" class="point">
+                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <span v-else>{{ index + 4 }}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- 第二組 5 個圓圈 -->
+                <div class="point_5">
+                  <div class="twicePoint">
+                    <div v-for="(circle, index) in filledCircles.slice(5, 7)" :key="circle.id" class="point">
+                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <span v-else>{{ index + 6 }}</span>
+                    </div>
+                  </div>
+                  <div class="oncePoint">
+                    <div class="point">
+                      <img v-if="filledCircles[7]?.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <span v-else>8</span>
+                    </div>
+                  </div>
+                  <div class="twicePoint">
+                    <div v-for="(circle, index) in filledCircles.slice(8, 10)" :key="circle.id" class="point">
+                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <span v-else>{{ index + 9 }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="pointAll">
                 <div class="point_5">
                   <div class="twicePoint">
                     <div class="point" id="point1">
@@ -157,7 +202,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <!-- 右內文 -->
@@ -328,6 +373,11 @@ import { onMounted, ref, nextTick, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserAuthState } from "@/stores/userAuthState";
 
+import { db } from "@/firebase/firebaseConfig"; 
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+
 const isVisible = ref(false);
 const router = useRouter();
 
@@ -355,6 +405,36 @@ watch(
   }
 );
 
+//設定中間點數引用資料庫
+const auth = getAuth();
+const userID = ref(null);
+const points = ref(0);
+
+// 定義 10 個不規則位置的圓圈
+const circles = ref([
+  { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 },
+  { id: 6 }, { id: 7 }, { id: 8 }, { id: 9 }, { id: 10 }
+]);
+
+// 計算哪些圓圈應該變成印章
+const filledCircles = computed(() =>
+  circles.value.map((circle, index) => ({
+    ...circle,
+    filled: index < points.value, // 只有小於 points 數的圓圈變成印章
+  }))
+);
+
+const fetchPoints = async (uid) => {
+  if (!uid) return;
+  const userRef = doc(db, 'users', uid);
+  const userSnap = await getDoc(userRef);
+  if (userSnap.exists()) {
+    points.value = userSnap.data().points || 0;
+  } else {
+    await setDoc(userRef, { points: 0 });
+  }
+};
+
 onMounted(() => {
   nextTick(() => {
     setTimeout(() => {
@@ -379,6 +459,15 @@ onMounted(() => {
   });
 });
 
+//中間點數參資料庫
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    userID.value = user.uid;
+    fetchPoints(user.uid);
+  }
+});
+
+//卡片打開關閉
 $(function () {
   console.log("jQuery loaded");
 
@@ -418,4 +507,7 @@ $(function () {
 const backToHome = () => {
   router.push("/MyCabin");
 };
+
+// return { points, filledCircles };
+
 </script>

@@ -280,6 +280,17 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 80%;
+  // height: 100%;
+}
+.point span {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .twicePoint {
   display: flex;
