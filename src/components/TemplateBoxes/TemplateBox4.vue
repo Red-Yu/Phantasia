@@ -3,32 +3,31 @@ import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch } from "vu
 import { gsap } from "gsap";
 import { eventBus } from "@/utils/eventBus";
 
-// 1️⃣ **定義 props，接收 templateStore 來的數據**
+// props = 接收 templateStore 來的數據
 const props = defineProps({
   imageUrl: String, // 背景圖片
   objectUrl: String, // 物件圖片
   text: String, // 文字
-  textStyle: Object, // 🎯 **確保 `props` 也能接收 `textStyle`**
+  textStyle: Object, // textStyle
+  isTemplateAlone: Boolean,
 });
 
-// 2️⃣ **定義 emits，讓上傳的圖片 & 文字能回傳到 templateStore**
+/* { 檔案回傳資料給 templateStore }
+update:modelValue 用於支援 v-model 雙向綁定
+updateData 用於回傳上傳的圖片與文字資料 */
+
 const emit = defineEmits(["updateData", "update:modelValue"]);
 
-// 3️⃣ **使用 ref 儲存圖片狀態**
-const bgcImageUrl = ref(props.imageUrl || null);
-const objectImageUrl = ref(props.objectUrl || null);
+// ===========================
+// 照片上傳功能 
+// ===========================
 
-// 讓 Vue 監聽 props 變化，確保父層 templateStore 資料變更時能同步更新
-watch(() => props.imageUrl, (newUrl) => {
-  bgcImageUrl.value = newUrl;
-});
-watch(() => props.objectUrl, (newUrl) => {
-  objectImageUrl.value = newUrl;
-});
-
-// 4️⃣ **處理檔案上傳**
+// 檔案上傳 (基本)
 const bgcFileInputRef = ref(null);
 const objectFileInputRef = ref(null);
+
+const bgcImageUrl = ref(props.imageUrl || null);    // 使用 ref 儲存圖片狀態
+const objectImageUrl = ref(props.objectUrl || null);
 
 const validateFileType = (file) => {
   const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
@@ -42,16 +41,17 @@ const onImageUpload = (event, type) => {
 
     if (type == "bgc") {
       bgcImageUrl.value = imageUrl;
-      emit("updateData", { imageUrl }); // 🚀 **通知 templateStore 更新**
+      emit("updateData", { imageUrl }); // 更新 templateStore
     } else if (type == "object") {
       objectImageUrl.value = imageUrl;
-      emit("updateData", { objectUrl: imageUrl }); // 🚀 **通知 templateStore 更新**
+      emit("updateData", { objectUrl: imageUrl }); // 更新 templateStore
     }
   } else {
     alert("請上傳有效的圖片檔案 (png, jpeg, jpg, gif)");
   }
 };
 
+// 點擊已上傳圖片重新開啟上傳功能
 const triggerFileInput = (type) => {
   if (type === "bgc") {
     bgcFileInputRef.value.click();
@@ -60,20 +60,109 @@ const triggerFileInput = (type) => {
   }
 };
 
-// 5️⃣ **動畫效果**
+// -----------------------
+// 檔案回傳資料給 templateStore 
+// -----------------------
+// Vue 監聽 props 變化，確保父層 templateStore 資料變更時能同步更新
+watch(() => props.imageUrl, (newUrl) => {
+  bgcImageUrl.value = newUrl;
+});
+watch(() => props.objectUrl, (newUrl) => {
+  objectImageUrl.value = newUrl;
+});
+
+
+// ===========================
+// 文字效果綁定 
+// ===========================
+
+// 初值設定
+const templateId = `template-${Math.random().toString(36).substr(2, 9)}`; // 產生唯一 ID，確保文字框互不干擾
+const textContent = ref(props.text || "Please enter text...");  // textContent 預設接收 props.text，確保能和 templateStore 連動
+const textStyle = ref(props.textStyle || {  // 定義 textStyle
+  fontFamily: "Arial",
+  fontSize: "20px",
+  fontWeight: "500",
+  textAlign: "center",
+  alignItems: "center",
+  color: "#153243",
+});
+
+// 更新到 templateStore
+const emitUpdatedData = () => {
+  emit("updateData", { text: textContent.value, textStyle: textStyle.value });
+};
+
+// ------- { 文字內容 } ------- 
+const updateTextContent = (event) => {
+  textContent.value = event.target.innerText;
+  emitUpdatedData();    // 即時同步輸入的內容數據
+};
+
+// 監聽輸入新內容(textContent)
+watch(textContent, (newVal, oldVal) => {
+  if (newVal !== oldVal) { // 先監聽有沒有變更在執行
+    emitUpdatedData();
+  }
+});
+
+// 監聽父層 (templateStore) 的變更能同步更新
+watch(() => props.text, (newText) => {
+  if (newText !== textContent.value) {
+    textContent.value = newText;
+  }
+});
+// ------- { 文字 Style } ------- 
+
+// 點擊文字框通知 `AccordionText.vue`
+const setActiveText = () => {
+  eventBus.emit("setActiveTextInput", templateId); // templateId 避免引響其他框框
+};
+
+// 監聽來自 `AccordionText.vue` 的事件，更新當前 templateId
+const updateStyle = (style) => {
+  textStyle.value = { ...style };
+  emitUpdatedData(); 
+};
+
+// 監聽 textStyle 新變化
+watch(textStyle, () => {
+  emitUpdatedData();
+}, { deep: true });
+
+// 監聽父層 (templateStore) 的變更能同步更新
+watch(() => props.textStyle, (newStyle) => {
+  if (newStyle !== textStyle.value) {
+    textStyle.value = newStyle;
+  }
+}, { deep: true });
+
+// 模板[載入]畫面 -> 監聽 (eventBus.on)"updateTextStyle" 事件 -> 執行 updateStyle 函式
+onMounted(() => {
+  eventBus.on(`updateTextStyle-${templateId}`, updateStyle);
+});
+// 模板[移除]畫面 -> 停止監聽 "updateTextStyle" 事件 -> 執行 updateStyle 函式
+onUnmounted(() => {
+  eventBus.off(`updateTextStyle-${templateId}`, updateStyle);
+});
+
+
+// ===========================
+// 動畫效果 
+// ===========================
 const templateRef = ref(null);
 const box = ref(null);
 
-onMounted(() => {
-  gsap.fromTo(
-    templateRef.value,
-    { opacity: 0, y: -50 },
-    { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
-  );
-
-  gsap.to(box.value, {
+// 動畫函數
+const templateAnimation = () => {
+  // box 動畫
+  gsap.fromTo(box.value,{
+    delay:3,
+    opacity: 0,
     duration: 1.5,
-    delay: 1.0,
+  },{ 
+    opacity: 1,
+    duration: 1.5,
     x: 50,
     y: -60,
     width: 240,
@@ -81,87 +170,33 @@ onMounted(() => {
     borderRadius: "0%",
     ease: "power2.out",
     onUpdate: function () {
-      const scale = this.progress() * 100;
-      box.value.style.clipPath = `circle(${scale}% at center)`;
+      if (box.value) {
+        const scale = this.progress() * 100;
+        box.value.style.clipPath = `circle(${scale}% at center)`;
+      }
     },
+  }
+  );
+};
+onMounted(() => {
+  // 初始加載時執行動畫
+  templateAnimation();
+  // console.log("原始狀況執行動畫");
+
+  // 監聽父層發送的事件，並重新執行動畫
+  eventBus.on("startTemplateAnimation", () => {
+    console.log("收到startTemplateAnimation，重新執行動畫");
+    templateAnimation();
   });
 });
 
-// 產生唯一 ID，確保不同 `template.vue` 內的文字框互不干擾
-const templateId = `template-${Math.random().toString(36).substr(2, 9)}`;
-
-// 讓 `textContent` 預設接收 `props.text`，確保能和 `templateStore` 連動
-const textContent = ref(props.text || "請輸入文字...");
-
-// **定義 `textStyle`，如果 `props.textStyle` 存在則使用它**
-const textStyle = ref(props.textStyle || {
-  fontFamily: "Arial",
-  fontSize: "16px",
-  fontWeight: "400",
-  textAlign: "start",
-  alignItems: "start",
-  color: "#000000",
-});
-
-// **更新文字內容**
-const updateTextContent = (event) => {
-  textContent.value = event.target.innerText;
-  emitUpdatedData(); // 🚀 **每次輸入時同步數據**
-};
-
-// **通知 `templateStore` 更新**
-const emitUpdatedData = () => {
-  emit("updateData", { text: textContent.value, textStyle: textStyle.value });
-};
-
-// 監聽 `textContent` 變化，確保所有變更都能同步更新到 `templateStore`
-watch(textContent, () => {
-  emitUpdatedData();
-});
-
-// 監聽 `textStyle` 變化，確保樣式變更時也能同步到 `templateStore`
-watch(textStyle, () => {
-  emitUpdatedData();
-}, { deep: true });
-
-// 監聽 `props.text`，確保 `templateStore` 的變更能同步更新
-watch(() => props.text, (newText) => {
-  if (newText !== textContent.value) {
-    textContent.value = newText;
-  }
-});
-
-// 監聽 `props.textStyle`，確保 `templateStore` 內樣式變更時同步更新
-watch(() => props.textStyle, (newStyle) => {
-  if (newStyle !== textStyle.value) {
-    textStyle.value = newStyle;
-  }
-}, { deep: true });
-
-// **當使用者點擊文字框時，通知 `AccordionText.vue` 目前選中的是這個 `templateId`**
-const setActiveText = () => {
-  eventBus.emit("setActiveTextInput", templateId);
-};
-
-// **監聽來自 `AccordionText.vue` 的事件，僅更新當前 `templateId` 的樣式**
-const updateStyle = (style) => {
-  textStyle.value = { ...style };
-  emitUpdatedData(); // 🎯 **每次更新樣式時，都確保同步到 `templateStore`**
-};
-
-onMounted(() => {
-  eventBus.on(`updateTextStyle-${templateId}`, updateStyle);
-});
-
-onUnmounted(() => {
-  eventBus.off(`updateTextStyle-${templateId}`, updateStyle);
-});
 </script>
 
 
 <template>
+<div class="template templateBox5" ref="templateRef">
   <!-- 背景 -->
-  <div ref="templateRef" class="templateBgc">
+  <div class="templateBgc">
     <div class="BgcTipBox" v-show="!bgcImageUrl">
       <p>
         <div>Files support JPEG, JPG, PNG, and GIF</div>
@@ -195,9 +230,10 @@ onUnmounted(() => {
     @blur="emitUpdatedData"
     :style="textStyle"
   >
-      <div class="p">{{ textContent }}</div>
+      <div style="width: 100%;">{{ textContent }}</div>
     </div>
   </div>
+</div>
 </template>
 
 <style scoped>
@@ -216,13 +252,14 @@ onUnmounted(() => {
   right: 50px;
 }
 .textEditorBox {
-  display: flex;
   width: 100%;
   min-height: 100px;
-  border: 1px dashed #153243;
   border-radius: 10px;
   padding: 10px;
   outline: none;
+}
+.textEditorBox:hover {
+  border: 2px solid #eead50;
 }
 .textEditorBox:focus {
   border: 2px solid #eead50;

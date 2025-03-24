@@ -1,3 +1,9 @@
+<style scoped>
+.modelsPreview {
+  pointer-events: none;
+}
+</style>
+
 <template>
   <div class="ModelBox A">
     <div class="model" @click="addTemplateBox(1)">

@@ -86,13 +86,11 @@ onMounted(() => {
     },
   });
 });
-
+// 5️⃣ **文字效果**
 // 產生唯一 ID，確保不同 `template.vue` 內的文字框互不干擾
 const templateId = `template-${Math.random().toString(36).substr(2, 9)}`;
-
 // 讓 `textContent` 預設接收 `props.text`，確保能和 `templateStore` 連動
 const textContent = ref(props.text || "請輸入文字...");
-
 // **定義 `textStyle`，如果 `props.textStyle` 存在則使用它**
 const textStyle = ref(props.textStyle || {
   fontFamily: "Arial",
@@ -103,15 +101,15 @@ const textStyle = ref(props.textStyle || {
   color: "#000000",
 });
 
-// **更新文字內容**
-const updateTextContent = (event) => {
-  textContent.value = event.target.innerText;
-  emitUpdatedData(); // 🚀 **每次輸入時同步數據**
-};
-
 // **通知 `templateStore` 更新**
 const emitUpdatedData = () => {
   emit("updateData", { text: textContent.value, textStyle: textStyle.value });
+};
+
+// ------- { 文字內容 } ------- 
+const updateTextContent = (event) => {
+  textContent.value = event.target.innerText;
+  emitUpdatedData(); // 🚀 **每次輸入時同步數據**
 };
 
 // 監聽 `textContent` 變化，確保所有變更都能同步更新到 `templateStore`
@@ -120,12 +118,6 @@ watch(textContent, (newVal, oldVal) => {
     emitUpdatedData();
   }
 });
-
-// 監聽 `textStyle` 變化，確保樣式變更時也能同步到 `templateStore`
-watch(textStyle, () => {
-  emitUpdatedData();
-}, { deep: true });
-
 // 監聽 `props.text`，確保 `templateStore` 的變更能同步更新
 watch(() => props.text, (newText) => {
   if (newText !== textContent.value) {
@@ -133,12 +125,7 @@ watch(() => props.text, (newText) => {
   }
 });
 
-// 監聽 `props.textStyle`，確保 `templateStore` 內樣式變更時同步更新
-watch(() => props.textStyle, (newStyle) => {
-  if (newStyle !== textStyle.value) {
-    textStyle.value = newStyle;
-  }
-}, { deep: true });
+// ------- { 文字 Style } ------- 
 
 // **當使用者點擊文字框時，通知 `AccordionText.vue` 目前選中的是這個 `templateId`**
 const setActiveText = () => {
@@ -150,6 +137,20 @@ const updateStyle = (style) => {
   textStyle.value = { ...style };
   emitUpdatedData(); // 🎯 **每次更新樣式時，都確保同步到 `templateStore`**
 };
+
+// 監聽 `textStyle` 變化，確保樣式變更時也能同步到 `templateStore`
+watch(textStyle, () => {
+  emitUpdatedData();
+}, { deep: true });
+
+
+// 監聽 `props.textStyle`，確保 `templateStore` 內樣式變更時同步更新
+watch(() => props.textStyle, (newStyle) => {
+  if (newStyle !== textStyle.value) {
+    textStyle.value = newStyle;
+  }
+}, { deep: true });
+
 
 onMounted(() => {
   eventBus.on(`updateTextStyle-${templateId}`, updateStyle);
@@ -197,7 +198,7 @@ onUnmounted(() => {
     @blur="emitUpdatedData"
     :style="textStyle"
   >
-      <div class="p">{{ textContent }}</div>
+      <div class="p" style="width: 100%;">{{ textContent }}</div>
     </div>
   </div>
 </template>

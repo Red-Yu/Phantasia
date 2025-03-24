@@ -29,9 +29,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vueuse/core": "^13.0.0",
     "gsap": "^3.12.7",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
+    "nanoid": "^5.1.5",
     "vite": "^4.4.6",
     "vue3-colorpicker": "^2.3.0"
   }

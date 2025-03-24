@@ -42,7 +42,11 @@
           <div class="modelContent">
             <!-- 顯示縮小版的 template -->
             <div class="canvasPreview" :style="getPreviewStyle()">
-              <component :is="template.component" v-bind="template.data" />
+              <component
+                :is="template.component"
+                v-bind="template.data"
+                mode="thumbnail"
+              />
               <button
                 class="remove-btn"
                 @click="removeTemplate(i)"
@@ -52,12 +56,39 @@
               </button>
             </div>
           </div>
-
           <p>{{ i + 1 }}</p>
           <!-- 顯示遞增的編號 -->
         </div>
       </div>
+      <div class="next-step-btn">
+        <button class="PreviewBtn" @click="openModal">
+          <div class="btnKey-M dark-border">
+            <p>PREVIEW</p>
+            <div class="icon-M">
+              <div class="dark-view"></div>
+            </div>
+          </div>
+        </button>
+        <!--  -->
+        <button class="SaveBtn">
+          <div class="btnKey-M dark">
+            <p>SAVE</p>
+            <div class="icon-M">
+              <div class="white-cross">
+                <div class="cols">
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="rows">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </button>
+      </div>
     </div>
+    <CreatePreview :isVisible="isModalVisible" modalId="CreatePreview"  @close="closeModal" />
   </div>
 </template>
 
@@ -67,13 +98,38 @@ import { useTemplateStore } from "@/stores/template";
 import Accordion from "../../../components/BTN/Accordion.vue";
 import AccordionTemplate from "../../../components/BTN/AccordionTemplate.vue";
 import AccordionText from "../../../components/BTN/AccordionText.vue";
-
 import CheckBox from "../../../components/Input/CheckBox.vue";
 import CreateCanvas from "./CreateCanvas.vue";
+import CreatePreview from "../FullScreenModal/CreatePreview.vue";
 
 // 使用 Pinia store
 const templateStore = useTemplateStore();
 
+// ====================
+// <!-- 左邊-Function  -->
+// ====================
+// 切換左側邊欄的收縮狀態
+const toggleFunction = () => {
+  isLeftClose.value = !isLeftClose.value;
+};
+// 左側邊欄的收縮狀態
+const isLeftClose = ref(false);
+
+// 左側邊欄的手風情內容
+const accordionItems = ref([
+  { title: "Template", content: AccordionTemplate },
+  { title: "Text", content: AccordionText },
+]);
+
+// ====================
+// 右側-PageView
+// ====================
+// 右側邊欄的收縮狀態
+const isRightClose = ref(false);
+// 切換右側邊欄的收縮狀態
+const togglePageView = () => {
+  isRightClose.value = !isRightClose.value;
+};
 // 用於縮放預覽樣式的函數
 function getPreviewStyle() {
   return {
@@ -81,31 +137,24 @@ function getPreviewStyle() {
     transformOrigin: "top left", // 縮放基準點，從左上角開始縮放
   };
 }
-
 // 刪除模板的函數
 function removeTemplate(i) {
   templateStore.removeTemplate(i); // 通過 Pinia store 刪除對應的 template
 }
+// ==================
+// preview 彈窗
+// ==================
+// components 初始狀態
+const isModalVisible = ref(false);
 
-// 左側邊欄的收縮狀態
-const isLeftClose = ref(false);
-
-// 右側邊欄的收縮狀態
-const isRightClose = ref(false);
-
-// 切換左側邊欄的收縮狀態
-const toggleFunction = () => {
-  isLeftClose.value = !isLeftClose.value;
+// 打開彈窗的方法
+const openModal = () => {
+  isModalVisible.value = true;
 };
 
-// 切換右側邊欄的收縮狀態
-const togglePageView = () => {
-  isRightClose.value = !isRightClose.value;
+// 關閉彈窗的方法
+const closeModal = () => {
+  isModalVisible.value = false;
 };
 
-// 左側邊欄的手風情內容
-const accordionItems = ref([
-  { title: "Template", content: AccordionTemplate },
-  { title: "Text", content: AccordionText },
-]);
 </script>

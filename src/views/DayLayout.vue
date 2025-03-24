@@ -11,9 +11,7 @@
 
     <!-- 子頁面顯示區域 -->
     <div class="wrapper">
-      <main>
-        <router-view> </router-view>
-      </main>
+      <router-view> </router-view>
       <!-- 頁面共用尾部 -->
     </div>
   </div>

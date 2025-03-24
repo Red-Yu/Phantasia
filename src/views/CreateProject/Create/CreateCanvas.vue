@@ -9,10 +9,10 @@
       </div>
       <div class="stepGroup">
         <div class="step">
-          <div class="last"></div>
+          <div class="last" @click="undo"></div>
         </div>
         <div class="step">
-          <div class="next"></div>
+          <div class="next" @click="redo"></div>
         </div>
       </div>
     </div>
@@ -28,53 +28,43 @@
         <component
           :is="template.component"
           v-bind="template.data"
+          :mode="main"
           @updateData="updateTemplateData(i, $event)"
         />
       </div>
-      <!-- BTN - saveCanvas -->
-      <router-link to="./Create/CreateInfo">
-        <div class="saveCanvas">
-          <div class="btnKey-M dark-border">
-            <p>SAVE</p>
-            <!-- cross (icon) :內層 class 同上(內部還有其他元素不要掉了)-->
-            <div class="icon-M">
-              <div class="dark-cross">
-                <div class="cols">
-                  <span></span>
-                  <span></span>
-                </div>
-                <div class="rows">
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </router-link>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref ,onMounted } from "vue";
 import { throttle } from "lodash";
 // 引入 template store
 import { useTemplateStore } from "@/stores/template";
 
+// =================
 // 使用 Pinia store
+// =================
 const templateStore = useTemplateStore();
+
+const undo = () => {
+  templateStore.undo();
+};
+const redo = () => {
+  templateStore.redo();
+};
 
 // =================
 // 縮放比例
 // =================
-const zoomLevel = ref(100);
+const zoomLevel = ref(90);
 // 放大
 const zoomIn = throttle(() => {
-  if (zoomLevel.value < 150) zoomLevel.value += 10;
+  if (zoomLevel.value < 120) zoomLevel.value += 5;
 }, 1000);
 // 縮小
 const zoomOut = throttle(() => {
-  if (zoomLevel.value > 50) zoomLevel.value -= 10;
+  if (zoomLevel.value > 50) zoomLevel.value -= 5;
 }, 1000);
 
 // =================

@@ -34,18 +34,6 @@ const updateTextStyle = () => {
 };
 
 watch(fontColor, updateTextStyle);
-
-// // 當用戶變更字體樣式時，發送事件
-// const updateTextStyle = () => {
-//   eventBus.emit("updateTextStyle", {
-//     fontFamily: fontFamily.value,
-//     fontSize: fontSize.value + "px",
-//     fontWeight: fontWidth.value,
-//     textAlign: textAlign.value,
-//     alignItems: alignItems.value,
-//     color: fontColor.value, // 傳遞顏色
-//   });
-// };
 </script>
 
 <template>

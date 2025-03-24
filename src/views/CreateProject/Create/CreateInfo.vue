@@ -91,7 +91,7 @@
       </button>
     </div>
     <!-- Props: AddCover -->
-    <AddCover :isVisible="isModalVisible" @close="closeModal" />
+    <AddCover :isVisible="isModalVisible" modalId="AddCover" @close="closeModal" />
     <!-- InfoInput  -->
     <div class="InfoInput">
       <div class="stepsGroup">
