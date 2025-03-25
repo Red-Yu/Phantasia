@@ -4872,10 +4872,15 @@ h2 {
   color: white;
 }
 
-.feedback-stars3 {
-  font-size: 14px;
-  color: rgb(255, 255, 255);
-  margin-bottom: 8px;
+.feedback-stars3 span {
+  font-size: 20px;
+  color: #ccc;
+  /* Unfilled stars */
+}
+
+.feedback-stars3 span.filled {
+  color: gold;
+  /* Filled stars */
 }
 
 .feedback-divider3 {

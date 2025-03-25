@@ -124,9 +124,15 @@
                   class="feedback-icon3"
                 />
                 <div class="feedback-details3">
-                  <div class="feedback-stars3">⭐⭐⭐⭐⭐</div>
-                  <p>{{ comment.line1 }}</p>
-                  <p>{{ comment.line2 }}</p>
+                  <div class="feedback-stars3">
+                    <span v-for="n in 5" :key="n" :class="{ filled: n <= comment.rating }"
+                      >★</span
+                    >
+                  </div>
+                  <p>{{ comment.text }}</p>
+                  <p>
+                    {{ comment.userName }} - {{ comment.timestamp.toLocaleDateString() }}
+                  </p>
                 </div>
               </div>
               <hr class="feedback-divider3" />
@@ -149,7 +155,7 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { ref as storageRef, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path to your Firebase config
 
@@ -158,10 +164,11 @@ const router = useRouter();
 const route = useRoute();
 const bookId = route.params.id; // e.g., "abc123xyz"
 
-// Reactive product data
+// Reactive product and comments data
 const product = ref({});
+const comments = ref([]); // Initialize as empty array instead of hardcoded comments
 
-// Fetch book data and images on mount
+// Fetch book data and comments on mount
 onMounted(async () => {
   try {
     // Fetch book data from Firestore
@@ -171,9 +178,9 @@ onMounted(async () => {
     if (bookSnap.exists()) {
       const bookData = { id: bookSnap.id, ...bookSnap.data() };
       product.value = bookData;
-      product.value.innerCoverImage = bookData.imagePath; // Use imagePath as innerCoverImage
+      product.value.innerCoverImage = bookData.imagePath;
 
-      //  Fetch fixed image URLs from Firebase Storage with individual error handling
+      // Fetch fixed image URLs from Firebase Storage with individual error handling
       product.value.coverImage = await getDownloadURL(
         storageRef(storage, "images/common/cover.png")
       ).catch((error) => {
@@ -200,10 +207,44 @@ onMounted(async () => {
       });
     } else {
       console.error("No such book found!");
-      // Optionally redirect or show an error
+    }
+
+    // Fetch comments from Firestore
+    const commentsQuery = query(
+      collection(db, "comments"),
+      where("bookId", "==", bookId)
+    );
+    const commentsSnapshot = await getDocs(commentsQuery);
+    comments.value = commentsSnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        text: data.text,
+        rating: data.rating,
+        userId: data.userId,
+        timestamp: new Date(data.timestamp), // Convert timestamp string to Date object
+      };
+    });
+
+    // Get unique userIds (emails) from comments
+    const userIds = [...new Set(comments.value.map((comment) => comment.userId))];
+
+    if (userIds.length > 0) {
+      // Fetch user data from the 'users' collection
+      const usersQuery = query(collection(db, "users"), where("__name__", "in", userIds));
+      const usersSnapshot = await getDocs(usersQuery);
+      const userMap = {};
+      usersSnapshot.forEach((doc) => {
+        userMap[doc.id] = doc.data().name; // Map userId (email) to name
+      });
+
+      // Attach userName to each comment
+      comments.value.forEach((comment) => {
+        comment.userName = userMap[comment.userId] || "Unknown"; // Fallback if name not found
+      });
     }
   } catch (error) {
-    console.error("Error fetching book or images:", error);
+    console.error("Error fetching book or comments:", error);
   }
 
   // Event listeners for feedback and book dragging
@@ -232,24 +273,6 @@ const addToShelf = () => {
   console.log(`Adding book ${product.value.id} to shelf`);
   // Implement Firestore update or other logic here
 };
-
-// Comments for feedback list
-const comments = ref([
-  {
-    line1:
-      "A thought-provoking masterpiece that challenges conventional wisdom with wit and charm.",
-    line2: "— Dr. Emily Carter",
-  },
-  { line1: "Loved it!", line2: "— Dr. Emily Carter" },
-  { line1: "Amazing quality.", line2: "— Dr. Emily Carter" },
-  { line1: "Fast shipping!", line2: "— Dr. Emily Carter" },
-  { line1: "Excellent service.", line2: "— Dr. Emily Carter" },
-  { line1: "Superb craftsmanship.", line2: "— Dr. Emily Carter" },
-  { line1: "Great value for money.", line2: "— Dr. Emily Carter" },
-  { line1: "Will buy again!", line2: "— Dr. Emily Carter" },
-  { line1: "Highly recommend.", line2: "— Dr. Emily Carter" },
-  { line1: "Perfect!", line2: "— Dr. Emily Carter" },
-]);
 
 // Feedback list scroll logic
 const activeDot = ref(0);
