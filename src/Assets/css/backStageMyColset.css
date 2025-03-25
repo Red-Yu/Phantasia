@@ -93,7 +93,7 @@ input.search {
 }
 
 input:checked + .slider {
-  background-color: #EEAD50;
+  background-color: #eead50;
 }
 
 input:checked + .slider:before {
@@ -108,7 +108,10 @@ table {
   margin: 10px 0;
 }
 
-table, th, tr, td {
+table,
+th,
+tr,
+td {
   text-align: center;
   padding: 10px;
 }
@@ -122,6 +125,13 @@ tbody > tr:hover {
   background-color: #dee2e6;
 }
 
+.deleteButton {
+  height: 120.33px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 垂直居中 */
+}
+
 .preview-container {
   width: 100px;
   height: 100px;
@@ -130,7 +140,6 @@ tbody > tr:hover {
   justify-content: center;
   border: 1px solid #ccc;
   border-radius: 8px;
-  overflow: hidden;
   margin: 0 auto;
 }
 
@@ -139,6 +148,11 @@ tbody > tr:hover {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.preview-image.hair {
+  -o-object-position: top;
+     object-position: top; /* 使圖片從頂部顯示 */
 }
 
 /* 頁碼 */
