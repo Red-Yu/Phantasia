@@ -60,8 +60,7 @@
     class="success-modal"
     :isVisible="isSuccessModalVisible"
     @close="isSuccessModalVisible = false"
-   />
-
+  />
 </template>
 
 <style scoped>
@@ -125,21 +124,22 @@ const login = async () => {
     await signInWithEmailAndPassword(auth, email.value, password.value);
     // alert("Login Successful!");
     // 顯示成功提示語光箱
-    isSuccessModalVisible.value = true; 
+    isSuccessModalVisible.value = true;
 
     // 設置定時器，3秒後關閉成功彈窗
     // setTimeout(() => {
     //   isSuccessModalVisible.value = false;
     // }, 3000);
+
     setTimeout(() => {
-      const modal = document.querySelector('.success-modal');
+      const modal = document.querySelector(".success-modal");
       if (modal) {
-        modal.classList.add('fade-out');
+        modal.classList.add("fade-out");
         setTimeout(() => {
           isSuccessModalVisible.value = false;
-        }, 1000); // Match the duration of the CSS transition
+        }, 1000);
       }
-    }, 2000); // Start fade-out after 2 seconds
+    }, 2000);
 
     // 清空表單數據
     email.value = "";

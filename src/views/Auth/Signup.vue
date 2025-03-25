@@ -69,16 +69,16 @@
           </p>
         </form>
 
-        <SuccessModal
-          v-if="isSuccessModalVisible"
-          class="success-modal"
-          :isVisible="isSuccessModalVisible"
-          @close="isSuccessModalVisible = false"
-        />
         <!-- <p v-if="error">{{ error }}</p> -->
       </div>
     </div>
   </div>
+  <SuccessModal
+    v-if="isSuccessModalVisible"
+    class="success-modal"
+    :isVisible="isSuccessModalVisible"
+    @close="isSuccessModalVisible = false"
+  />
 </template>
 
 <style scoped>
@@ -145,34 +145,34 @@ const signup = async () => {
 
     // 註冊成功後顯示提示
     // alert("Registration Successful!");
-    isSuccessModalVisible.value = true; 
-    console.log('isSuccessModalVisible:', isSuccessModalVisible.value);
-    
-// 
-    // 設置定時器，3秒後關閉成功彈窗
+    isSuccessModalVisible.value = true;
+    console.log("isSuccessModalVisible:", isSuccessModalVisible.value);
+
+    //
+    // 設置定時器，關閉成功彈窗
     setTimeout(() => {
-      const modal = document.querySelector('.success-modal');
+      const modal = document.querySelector(".success-modal");
       if (modal) {
-        modal.classList.add('fade-out');
+        modal.classList.add("fade-out");
         setTimeout(() => {
           isSuccessModalVisible.value = false;
-        }, 1000); 
+        }, 1000);
       }
-    }, 1000); 
+    }, 2000);
 
     // 設置定時器，3秒後切換到登入選單
     setTimeout(() => {
-        // 清空表單數據
-        email.value = "";
-        password.value = "";
-        confirmPassword.value = "";
-        errorMessage.value = "";
-        name.value = "";
-        birthday.value = "";
+      // 清空表單數據
+      email.value = "";
+      password.value = "";
+      confirmPassword.value = "";
+      errorMessage.value = "";
+      name.value = "";
+      birthday.value = "";
 
-        // 切換到登入選單
-        emit("openLogin");
-    }, 1000); 
+      // 切換到登入選單
+      emit("openLogin");
+    }, 1000);
   } catch (error) {
     // 處理 Firebase 錯誤
     errorMessage.value = `Error: ${error.message}`;
