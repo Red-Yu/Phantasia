@@ -4,10 +4,10 @@
 </style>
 
 <template>
-    <nav class="bkTitle">
-      <h2>後台服裝管理</h2>
-  
-      <div class="toggle-container btnKey-M dark">
+  <nav class="bkTitle">
+    <h2>後台服裝管理</h2>
+
+    <div class="toggle-container btnKey-M dark">
       <span :class="{ active: gender === '男' }">男</span>
       <label class="switch">
         <input type="checkbox" v-model="isFemale" />
@@ -15,108 +15,212 @@
       </label>
       <span :class="{ active: gender === '女' }">女</span>
     </div>
-      <button class="add">
-        <div class="btnKey-M dark">
-          <p>新增</p>
-          <div class="icon-M addIcon">
-                <div class="white-plus"></div>
+    <button class="add" @click="openModal">
+      <div class="btnKey-M dark">
+        <p>新增</p>
+        <div class="icon-M addIcon">
+          <div class="white-plus"></div>
+        </div>
+      </div>
+    </button>
+
+    <div class="searchFunction">
+      <input
+        class="search"
+        name="search"
+        type="text"
+        placeholder="輸入服裝編號或服裝名稱"
+      />
+      <div class="icon-M searchIcon">
+        <div class="dark-search"></div>
+      </div>
+    </div>
+  </nav>
+
+  <table class="member">
+    <thead>
+      <tr>
+        <th class="id">編號</th>
+        <th class="hairTitle">服裝</th>
+        <th class="renewDate">新增時間</th>
+        <th class="preview">預覽</th>
+        <th class="delete">刪除</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- 使用 v-for 渲染資料 -->
+      <tr v-for="(item, index) in clothingList" :key="index">
+        <td>{{ index + 1 }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.createdAt.toDate().toLocaleDateString() }}</td>
+        <td>
+          <div class="preview-container">
+            <img
+              :src="item.imageUrl"
+              alt="預覽"
+              class="preview-image clothes"
+            />
           </div>
-        </div>    
-      </button>
-  
-      <div class="searchFunction">
-        <input
-          class="search"
-          name="search"
-          type="text"
-          placeholder="輸入服裝編號或服裝名稱"
-        />
-        <div class="icon-M searchIcon">
-          <div class="dark-search"></div>
-        </div>
-      </div>
-    </nav>
-    <table class="member">
-        <thead>
-          <tr>
-            <th class="id">編號</th>
-            <th class="hairTitle">服裝</th>
-            <th class="state">上下架</th>
-            <th class="renewDate">最後更新時間</th>
-            <th class="preview">預覽</th>
-            <th class="delete">刪除</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>flower</td>
-            <td>
-                <div class="state-toggle">
-                    <span :class="{ active: state === '上架' }"></span>
-                    <label class="switch">
-                    <input type="checkbox" v-model="isOn" />
-                    <span class="slider"></span>
-                    </label>
-                    <span :class="{ active: state === '下架' }"></span>
-                </div>
-            </td>
-            <td>2025.03.14</td>
-            <td>
-                <div class="preview-container">
-                    <img src=""
-                    alt="預覽"
-                    class="preview-image"
-                    />
-                </div>
-            </td>
-            <td>刪除</td>
-          </tr>
-  
-    
-          
-          <!-- 使用 v-for 動態渲染每一行資料 -->
-          <!-- <tr v-for="user in users" :key="user.id">
-            <td>{{ user.id }}</td>
-            <td>{{ user.mail }}</td>
-            <td>{{ user.name }}</td>
-            <td>{{ user.phone }}</td>
-            <td>{{ user.plan }}</td>
-            <td>{{ user.registrationDate  }}</td>
-            <td><button @click="openLightbox(member)">MORE</button></td>
-          </tr> -->
-  
-  
-        </tbody>
-      </table>
-          <!-- MORE--Lightbox -->
-      <!-- <div id="lightbox" class="lightbox" v-if="showLightbox">
-        <div class="lightbox-content">
-          <h2>會員詳細資料</h2>
-          <p>姓名: {{ selectedMember.name }}</p>
-          <p>註冊日期: {{ selectedMember.registrationDate }}</p>
-          <p>電子郵件: {{ selectedMember.email }}</p>
-          <p>電話: {{ selectedMember.phone }}</p>
-          <p>地址: {{ selectedMember.address }}</p>
-        </div>
-      </div> -->
-  
-      <div class="pagination">
-        <button @click="prevPage" :disabled="currentPage === 1"> << </button>
-        <button v-for="page in totalPages" :key="page" 
-                :class="{ active: currentPage === page }"
-                @click="goToPage(page)">
-          {{ page }} / 
-        </button>
-        <button @click="nextPage" :disabled="currentPage === totalPages"> >> </button>
-      </div>
-  </template>
+        </td>
+        <td class="deleteButton">
+          <button
+            @click="deleteClothing(item.id, item.imageUrl)"
+            class="btnKey-M dark"
+          >
+            刪除
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button @click="prevPage" :disabled="currentPage === 1"><<</button>
+    <button
+      v-for="page in totalPages"
+      :key="page"
+      :class="{ active: currentPage === page }"
+      @click="goToPage(page)"
+    >
+      {{ page }} /
+    </button>
+    <button @click="nextPage" :disabled="currentPage === totalPages">>></button>
+  </div>
+
+  <!-- 彈窗 -->
+  <UploadImageLightBox
+    :isVisible="isUploadImageVisible"
+    @close="closeModal"
+    @uploadImage="uploadImage"
+  />
+</template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted, watch } from "vue";
+import UploadImageLightBox from "../../components/backStage/UploadImageLightBox.vue";
+import { storage, db } from "../../firebase/firebaseConfig";
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
+
+// 控制性別切換的狀態
 const isFemale = ref(false);
 const gender = computed(() => (isFemale.value ? "女" : "男"));
 
-const isOn = ref(false);
-const state = computed(() => (isOn.value ? "下架" : "上架"));
+// 儲存服裝資料
+const clothingList = ref([]);
+
+// 根據性別抓取資料
+const fetchClothingData = async () => {
+  const collectionName =
+    gender.value === "男" ? "MyClosetMaleClothing" : "MyClosetFemaleClothing"; // 根據性別選擇 Firestore 集合
+  const querySnapshot = await getDocs(collection(db, collectionName));
+
+  // 清空資料並加載新資料
+  clothingList.value = querySnapshot.docs.map((doc) => {
+    return { id: doc.id, ...doc.data() };
+  });
+};
+
+// 當頁面加載時獲取資料
+onMounted(() => {
+  fetchClothingData();
+});
+
+// 監聽 gender 的變化並重新抓取資料
+watch(gender, () => {
+  fetchClothingData();
+});
+
+// 控制彈窗顯示
+const isUploadImageVisible = ref(false);
+
+// 打開彈窗的方法
+const openModal = () => {
+  isUploadImageVisible.value = true;
+};
+
+// 關閉彈窗的方法
+const closeModal = () => {
+  isUploadImageVisible.value = false;
+};
+
+// 上傳圖片的邏輯
+const uploadImage = async ({ file, imageName }) => {
+  try {
+    if (!imageName || !file) {
+      alert("請選擇圖片並輸入名稱！");
+      return; // 確保圖片名稱和檔案都存在
+    }
+
+    // 判斷目前性別並構建路徑
+    const genderPath = gender.value === "男" ? "male" : "female"; // 使用 gender.value 取得性別的實際值
+    const storagePath = `myCloset/clothing/${genderPath}/${file.name}`; // 動態設置存儲路徑
+    const firestoreCollection =
+      gender.value === "男" ? "MyClosetMaleClothing" : "MyClosetFemaleClothing"; // 根據性別選擇 Firestore 集合
+
+    // 創建圖片儲存路徑
+    const imageRef = storageRef(storage, storagePath);
+
+    // 上傳圖片
+    await uploadBytes(imageRef, file);
+
+    // 獲取圖片的下載 URL
+    const downloadURL = await getDownloadURL(imageRef);
+
+    // 保存到 Firestore
+    await addDoc(collection(db, firestoreCollection), {
+      name: imageName,
+      fileName: file.name, // 儲存檔案的原始名稱
+      imageUrl: downloadURL,
+      createdAt: new Date(),
+    });
+
+    // 重新獲取資料
+    fetchClothingData();
+
+    alert("圖片上傳成功！");
+    closeModal(); // 關閉彈窗
+  } catch (error) {
+    console.error("圖片上傳失敗：", error);
+    alert("圖片上傳失敗");
+  }
+};
+
+const deleteClothing = async (clothingId, imageUrl) => {
+  try {
+    // 1. 刪除 Firestore 中的資料
+    const clothingDocRef = doc(
+      db,
+      gender.value === "男" ? "MyClosetMaleClothing" : "MyClosetFemaleClothing",
+      clothingId
+    );
+    await deleteDoc(clothingDocRef);
+    console.log("Firestore 資料已刪除");
+
+    // 2. 刪除 Storage 中的圖片
+    const imageRef = storageRef(storage, imageUrl); // 使用儲存的圖片 URL
+    await deleteObject(imageRef);
+    console.log("Storage 中的圖片已刪除");
+
+    // 3. 更新頁面上的資料
+    clothingList.value = clothingList.value.filter(
+      (item) => item.id !== clothingId
+    );
+    alert("刪除成功！");
+  } catch (error) {
+    console.error("刪除操作失敗：", error);
+    alert("刪除失敗！");
+  }
+};
 </script>

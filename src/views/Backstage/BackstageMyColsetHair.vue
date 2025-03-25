@@ -60,7 +60,12 @@
           </div>
         </td>
         <td class="deleteButton">
-          <button class="btnKey-M dark">刪除</button>
+          <button
+            @click="deleteHair(item.id, item.imageUrl)"
+            class="btnKey-M dark"
+          >
+            刪除
+          </button>
         </td>
       </tr>
     </tbody>
@@ -95,8 +100,15 @@ import {
   ref as storageRef,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } from "firebase/storage";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 // 控制性別切換的狀態
 const isFemale = ref(false);
@@ -170,15 +182,44 @@ const uploadImage = async ({ file, imageName }) => {
     // 保存到 Firestore
     await addDoc(collection(db, firestoreCollection), {
       name: imageName,
+      fileName: file.name, // 儲存檔案的原始名稱
       imageUrl: downloadURL,
       createdAt: new Date(),
     });
+
+    // 重新獲取資料
+    fetchHairData();
 
     alert("圖片上傳成功！");
     closeModal(); // 關閉彈窗
   } catch (error) {
     console.error("圖片上傳失敗：", error);
     alert("圖片上傳失敗");
+  }
+};
+
+const deleteHair = async (hairId, imageUrl) => {
+  try {
+    // 1. 刪除 Firestore 中的資料
+    const hairDocRef = doc(
+      db,
+      gender.value === "男" ? "MyClosetMaleHair" : "MyClosetFemaleHair",
+      hairId
+    );
+    await deleteDoc(hairDocRef);
+    console.log("Firestore 資料已刪除");
+
+    // 2. 刪除 Storage 中的圖片
+    const imageRef = storageRef(storage, imageUrl); // 使用儲存的圖片 URL
+    await deleteObject(imageRef);
+    console.log("Storage 中的圖片已刪除");
+
+    // 3. 更新頁面上的資料
+    hairList.value = hairList.value.filter((item) => item.id !== hairId);
+    alert("刪除成功！");
+  } catch (error) {
+    console.error("刪除操作失敗：", error);
+    alert("刪除失敗！");
   }
 };
 </script>

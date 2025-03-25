@@ -170,7 +170,7 @@ const handleUpload = () => {
       imageName.value = ""; // 清空圖片名稱
       imageUrl.value = null; // 清空圖片預覽 URL
       file.value = null; // 清空選擇的圖片
-    }, 2000);
+    }, 2500);
   } else {
     alert("請選擇圖片並輸入名稱");
   }
