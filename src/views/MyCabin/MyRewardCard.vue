@@ -226,7 +226,7 @@
                 <div class="unlock">
                   <div v-for="octagon in unlockedOctagons" :key="octagon.id" class="octagon">
                     <img v-if="!octagon.unlocked" src="../../Assets/Day/rewardCard/lock.png" alt="Lock" />
-                    <img v-else src="../../Assets/Day/rewardCard/key.png" alt="Key" class="real_dress" />
+                    <img v-else src="../../Assets/Day/rewardCard/gift.png" alt="Key" class="real_dress" />
                   </div>
                 </div>
                 <!-- <div class="unlock">

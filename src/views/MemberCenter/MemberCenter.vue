@@ -212,6 +212,7 @@ h1 {
     </div>
   </div>
 
+  <!-- 點數顯示區塊 -->
   <div class="stamp-display">
     <h1>My Stamp Count</h1>
     <div class="stamp-container">
@@ -243,6 +244,7 @@ const auth = getAuth();
 const userName = ref("");
 const userBirthday = ref("");
 const userEmail = ref("");
+const points = ref(0); // 新增用於存儲會員點數的變量
 
 // 在組件加載時獲取用戶資料
 onMounted(async () => {
@@ -257,6 +259,7 @@ onMounted(async () => {
         userName.value = userData.name || ""; // 設置用戶名稱
         userBirthday.value = userData.birthday || ""; // 設置用戶生日
         userEmail.value = userData.email || ""; // 設置用戶電子郵件
+        points.value = userData.points || 0; // 設置用戶點數
       } else {
         console.log("No such document!");
       }
