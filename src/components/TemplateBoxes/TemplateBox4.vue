@@ -1,15 +1,20 @@
 <script setup>
-import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch } from "vue";
-import { gsap } from "gsap";
+import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch, nextTick } from 'vue';
+import { gsap } from 'gsap';
 import { eventBus } from "@/utils/eventBus";
 
 // props = 接收 templateStore 來的數據
 const props = defineProps({
   imageUrl: String, // 背景圖片
-  objectUrl: String, // 物件圖片
+  objectUrlA: String, // 物件圖片
+  objectUrlB: String, // 物件圖片
   text: String, // 文字
   textStyle: Object, // textStyle
   isTemplateAlone: Boolean,
+  mode: {
+    type: String,
+    default: 'edit', // 外部傳入的 mode 控制 : edit|thumbnail|preview 
+  },
 });
 
 /* { 檔案回傳資料給 templateStore }
@@ -24,10 +29,12 @@ const emit = defineEmits(["updateData", "update:modelValue"]);
 
 // 檔案上傳 (基本)
 const bgcFileInputRef = ref(null);
-const objectFileInputRef = ref(null);
+const objectFileInputRefA = ref(null);
+const objectFileInputRefB = ref(null);
 
-const bgcImageUrl = ref(props.imageUrl || null);    // 使用 ref 儲存圖片狀態
-const objectImageUrl = ref(props.objectUrl || null);
+const bgcImageUrl = ref(props.imageUrl || null);
+const objectImageUrlA = ref(props.objectUrlA || null);
+const objectImageUrlB = ref(props.objectUrlB || null);
 
 const validateFileType = (file) => {
   const allowedTypes = ["image/png", "image/jpeg", "image/jpg", "image/gif"];
@@ -39,12 +46,15 @@ const onImageUpload = (event, type) => {
   if (file && validateFileType(file)) {
     const imageUrl = URL.createObjectURL(file);
 
-    if (type == "bgc") {
+    if (type === "bgc") {
       bgcImageUrl.value = imageUrl;
-      emit("updateData", { imageUrl }); // 更新 templateStore
-    } else if (type == "object") {
-      objectImageUrl.value = imageUrl;
-      emit("updateData", { objectUrl: imageUrl }); // 更新 templateStore
+      emit("updateData", { imageUrl });
+    } else if (type === "objectA") {
+      objectImageUrlA.value = imageUrl;
+      emit("updateData", { objectUrlA: imageUrl });
+    } else if (type === "objectB") {
+      objectImageUrlB.value = imageUrl;
+      emit("updateData", { objectUrlB: imageUrl });
     }
   } else {
     alert("請上傳有效的圖片檔案 (png, jpeg, jpg, gif)");
@@ -54,9 +64,11 @@ const onImageUpload = (event, type) => {
 // 點擊已上傳圖片重新開啟上傳功能
 const triggerFileInput = (type) => {
   if (type === "bgc") {
-    bgcFileInputRef.value.click();
-  } else if (type === "object") {
-    objectFileInputRef.value.click();
+    bgcFileInputRef.value?.click();
+  } else if (type === "objectA") {
+    objectFileInputRefA.value?.click();
+  } else if (type === "objectB") {
+    objectFileInputRefB.value?.click();
   }
 };
 
@@ -67,8 +79,11 @@ const triggerFileInput = (type) => {
 watch(() => props.imageUrl, (newUrl) => {
   bgcImageUrl.value = newUrl;
 });
-watch(() => props.objectUrl, (newUrl) => {
-  objectImageUrl.value = newUrl;
+watch(() => props.objectUrlA, (newUrl) => {
+  objectImageUrlA.value = newUrl;
+});
+watch(() => props.objectUrlB, (newUrl) => {
+  objectImageUrlB.value = newUrl;
 });
 
 
@@ -81,14 +96,14 @@ const templateId = `template-${Math.random().toString(36).substr(2, 9)}`; // 產
 const textContent = ref(props.text || "Please enter text...");  // textContent 預設接收 props.text，確保能和 templateStore 連動
 const textStyle = ref(props.textStyle || {  // 定義 textStyle
   fontFamily: "Arial",
-  fontSize: "20px",
-  fontWeight: "500",
+  fontSize: "30px",
+  fontWeight: "600",
   textAlign: "center",
   alignItems: "center",
   color: "#153243",
 });
 
-// 更新到 templateStore
+// 回傳到 templateStore
 const emitUpdatedData = () => {
   emit("updateData", { text: textContent.value, textStyle: textStyle.value });
 };
@@ -99,10 +114,12 @@ const updateTextContent = (event) => {
   emitUpdatedData();    // 即時同步輸入的內容數據
 };
 
-// 監聽輸入新內容(textContent)
-watch(textContent, (newVal, oldVal) => {
-  if (newVal !== oldVal) { // 先監聽有沒有變更在執行
-    emitUpdatedData();
+const textRef = ref(null);
+
+// 初始設定內容
+onMounted(() => {
+  if (textRef.value) {
+    textRef.value.innerText = textContent.value;
   }
 });
 
@@ -110,8 +127,13 @@ watch(textContent, (newVal, oldVal) => {
 watch(() => props.text, (newText) => {
   if (newText !== textContent.value) {
     textContent.value = newText;
+    // 同步更新至畫面內容 (textRef)
+    if (textRef.value && textRef.value.innerText !== newText) {
+      textRef.value.innerText = newText;
+    }
   }
 });
+
 // ------- { 文字 Style } ------- 
 
 // 點擊文字框通知 `AccordionText.vue`
@@ -122,7 +144,6 @@ const setActiveText = () => {
 // 監聽來自 `AccordionText.vue` 的事件，更新當前 templateId
 const updateStyle = (style) => {
   textStyle.value = { ...style };
-  emitUpdatedData(); 
 };
 
 // 監聽 textStyle 新變化
@@ -147,113 +168,168 @@ onUnmounted(() => {
 });
 
 
-// ===========================
-// 動畫效果 
-// ===========================
-const templateRef = ref(null);
-const box = ref(null);
 
-// 動畫函數
-const templateAnimation = () => {
-  // box 動畫
-  gsap.fromTo(box.value,{
-    delay:3,
-    opacity: 0,
-    duration: 1.5,
-  },{ 
-    opacity: 1,
-    duration: 1.5,
-    x: 50,
-    y: -60,
-    width: 240,
-    height: 240,
-    borderRadius: "0%",
-    ease: "power2.out",
-    onUpdate: function () {
-      if (box.value) {
-        const scale = this.progress() * 100;
-        box.value.style.clipPath = `circle(${scale}% at center)`;
+// ========================
+// 動畫效果
+// ========================
+// 定義物件 ref
+const templateRef = ref(null); // 模組本人
+const boxRefA = ref(null);  
+const boxRefB = ref(null);  
+
+// 根據 mode 控制動畫行為
+watch(
+  () => props.mode,
+  (newMode) => {
+    nextTick(() => {
+      if (!templateRef.value) return; // 確保 DOM 已經渲染完成
+
+      if (newMode === 'preview') {
+        const wrapperEl = templateRef.value?.parentElement; // 外層為 .modelPreview
+        if (!wrapperEl) return;
+
+        // 自定義動畫函式供外部觸發 , createPreview 呼叫他 
+        wrapperEl.__startInnerAnimation = () => {
+          gsap.set([boxRefA.value, boxRefB.value],{ x: 0 , y: 0 });
+          gsap.to([boxRefA.value, boxRefB.value], {
+            duration: 1,
+            y: -10,
+            repeat: 5,
+            yoyo:true,
+            ease: "sine.inOut"
+          });
+          const tl = gsap.timeline({delay:5}); // ✅ 要加這行
+          tl.to(boxRefA.value, { x: -40, y:-10, duration: 1.2, ease: 'power2.out' }, 0);
+          tl.to(boxRefB.value, { x: 40, y:-10, duration: 1.2, ease: 'power2.out' },0);  
+          // console.log('動畫函式已掛到 wrapper：', wrapperEl);
+      
+        }
       }
-    },
-  }
-  );
-};
-onMounted(() => {
-  // 初始加載時執行動畫
-  templateAnimation();
-  // console.log("原始狀況執行動畫");
-
-  // 監聽父層發送的事件，並重新執行動畫
-  eventBus.on("startTemplateAnimation", () => {
-    console.log("收到startTemplateAnimation，重新執行動畫");
-    templateAnimation();
-  });
-});
-
+      // 一般和縮圖：載入時立即播放動畫
+      if (newMode === 'edit' || newMode === 'thumbnail') {
+        gsap.set([boxRefA.value, boxRefB.value],{ x: 0 });
+        gsap.to([boxRefA.value, boxRefB.value], {
+          duration: 1,
+          y: -15,
+          repeat: 5,
+          yoyo:true,
+          ease: "sine.inOut"
+        });
+        const tl = gsap.timeline({delay:5}); // ✅ 要加這行
+        tl.to(boxRefA.value, { x: -40, y:-15, duration: 1.2, ease: 'power2.out' }, 0);
+        tl.to(boxRefB.value, { x: 40, y:-15, duration: 1.2, ease: 'power2.out' },0);  
+        tl.to([boxRefA.value, boxRefB.value],{ x: 0 ,y: 0 });
+      } 
+    });
+  },
+  { immediate: true }
+);
 </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 <template>
-<div class="template templateBox5" ref="templateRef">
-  <!-- 背景 -->
-  <div class="templateBgc">
-    <div class="BgcTipBox" v-show="!bgcImageUrl">
-      <p>
-        <div>Files support JPEG, JPG, PNG, and GIF</div>
-        <div>with a maximum size of
-        <span>2MB</span>and a recommended image ratio of <span>16:9</span></div>
-      </p>
-      <input ref="bgcFileInputRef" type="file" @change="onImageUpload($event, 'bgc')" />
-    </div>
-    <img class="bgc" v-show="bgcImageUrl" :src="bgcImageUrl" @click="triggerFileInput('bgc')" />
+  <div class="template template4" ref="templateRef">
+      <!-- 背景區塊 -->
+      <div ref="bgcRef" class="templateBgc">
+        <div class="BgcTipBox" v-show="!bgcImageUrl">
+          <div class="Tip-info">
+            <p>Files support JPEG, JPG, PNG, and GIF</p>
+            <p>with a maximum size of
+            <span>2MB</span>and a recommended image ratio of <span>16:9</span></p>
+          </div>
+          <input ref="bgcFileInputRef" type="file" @change="onImageUpload($event, 'bgc')" />
+        </div>
+        <img class="bgc" v-show="bgcImageUrl" :src="bgcImageUrl" @click="triggerFileInput('bgc')" />
+      </div>
+
+      <!-- 物件區塊 -->
+      <div ref="boxRefA" class="templateObject shapeA">
+        <div class="ObjectTipBox" v-show="!objectImageUrlA">
+          <div class="Tip-info">
+            <p>recommended <br>  image ratio of <span>2:1</span></p>
+          </div>
+          <input ref="objectFileInputRefA" type="file" @change="onImageUpload($event, 'objectA')" />
+        </div>
+        <img class="ObjectImg" :src="objectImageUrlA" @click="triggerFileInput('objectA')" />
+      </div>
+      <div ref="boxRefB" class="templateObject shapeB">
+        <div class="ObjectTipBox" v-show="!objectImageUrlB">
+          <div class="Tip-info">
+            <p>recommended <br> image ratio of <span>2:1</span></p>
+          </div>
+          <input ref="objectFileInputRefB" type="file" @change="onImageUpload($event, 'objectB')" />
+        </div>
+        <img class="ObjectImg" :src="objectImageUrlB" @click="triggerFileInput('objectB')" />
+      </div>
+      <!-- 文字區塊 -->
+      <div class="templateText editor">
+        <div 
+          class="textEditorBox" 
+          contenteditable="true" 
+          @focus="setActiveText" 
+          @input="updateTextContent" 
+          @blur="emitUpdatedData"
+          :style="textStyle"
+          ref="textRef"
+        ></div>
+      </div>
   </div>
-  
-  <!-- 物件 -->
-  <div ref="box" class="templateObject shape">
-    <div class="ObjectTipBox" v-show="!objectImageUrl">
-      <p>
-        <div>Files support <br>JPEG, JPG, PNG, and GIF</div>
-        <div>recommended image ratio of <span>1:1</span></div>
-      </p>
-      <input ref="objectFileInputRef" type="file" @change="onImageUpload($event, 'object')" />
-    </div>
-    <img class="ObjectImg" :src="objectImageUrl" @click="triggerFileInput('object')" />
-  </div>
-  
-  <!-- 文字 -->
-  <div class="templateText editor">
-    <div 
-    class="textEditorBox" 
-    contenteditable="true" 
-    @focus="setActiveText" 
-    @input="updateTextContent" 
-    @blur="emitUpdatedData"
-    :style="textStyle"
-  >
-      <div style="width: 100%;">{{ textContent }}</div>
-    </div>
-  </div>
-</div>
 </template>
 
+
+
+
+
+
+
+
+
+
+
+
+
 <style scoped>
-.shape {
-  width: 60px;
+.templateBgc .BgcTipBox {
+  width: 100%;
   height: 60px;
-  clip-path: circle(0% at center);
   position: absolute;
-  left: 0;
-  bottom: 0;
+  top: 320px;
+}
+.shapeA {
+  width: 200px;
+  height: 150px;
+  position: absolute;
+  left: 15px;
+  bottom: 80px;
+}
+.shapeB {
+  width: 200px;
+  height: 150px;
+  position: absolute;
+  right: 15px;
+  top: 20px;
 }
 .editor {
-  width: 250px;
+  width: 100%;
   position: absolute;
-  top: 100px;
-  right: 50px;
+  top: 30px;
 }
 .textEditorBox {
   width: 100%;
-  min-height: 100px;
+  min-height: 50px;
   border-radius: 10px;
   padding: 10px;
   outline: none;

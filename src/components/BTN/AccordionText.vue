@@ -141,33 +141,6 @@ watch(fontColor, updateTextStyle);
         >
           <img src="../../Assets/img/icon/text-align-justify.png" alt="" />
         </button>
-        <button
-          @click="
-            alignItems = 'center';
-            updateTextStyle();
-          "
-          class="format justify-content-center"
-        >
-          <img src="../../Assets/img/icon/justify-content-center.png" alt="" />
-        </button>
-        <button
-          @click="
-            alignItems = 'end';
-            updateTextStyle();
-          "
-          class="format justify-content-end"
-        >
-          <img src="../../Assets/img/icon/justify-content-end.png" alt="" />
-        </button>
-        <button
-          @click="
-            alignItems = 'start';
-            updateTextStyle();
-          "
-          class="format justify-content-start"
-        >
-          <img src="../../Assets/img/icon/justify-content-start.png" alt="" />
-        </button>
       </div>
       <div class="fourRow">
         <ColorPicker

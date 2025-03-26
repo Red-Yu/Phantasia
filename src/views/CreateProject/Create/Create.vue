@@ -46,6 +46,7 @@
                 :is="template.component"
                 v-bind="template.data"
                 mode="thumbnail"
+                style="pointer-events:none;"
               />
               <button
                 class="remove-btn"
@@ -70,7 +71,7 @@
           </div>
         </button>
         <!--  -->
-        <button class="SaveBtn">
+        <router-link to="/Create/CreateInfo"  class="SaveBtn">
           <div class="btnKey-M dark">
             <p>SAVE</p>
             <div class="icon-M">
@@ -85,7 +86,7 @@
               </div>
             </div>
           </div>
-        </button>
+        </router-link >
       </div>
     </div>
     <CreatePreview :isVisible="isModalVisible" modalId="CreatePreview"  @close="closeModal" />

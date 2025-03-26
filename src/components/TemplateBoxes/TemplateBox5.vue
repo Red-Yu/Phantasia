@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch } from "vue";
-import { gsap } from "gsap";
+import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch, nextTick } from 'vue';
+import { gsap } from 'gsap';
 import { eventBus } from "@/utils/eventBus";
 
 // props = 接收 templateStore 來的數據
@@ -10,6 +10,10 @@ const props = defineProps({
   text: String, // 文字
   textStyle: Object, // textStyle
   isTemplateAlone: Boolean,
+  mode: {
+    type: String,
+    default: 'edit', // 外部傳入的 mode 控制 : edit|thumbnail|preview 
+  },
 });
 
 /* { 檔案回傳資料給 templateStore }
@@ -81,14 +85,14 @@ const templateId = `template-${Math.random().toString(36).substr(2, 9)}`; // 產
 const textContent = ref(props.text || "Please enter text...");  // textContent 預設接收 props.text，確保能和 templateStore 連動
 const textStyle = ref(props.textStyle || {  // 定義 textStyle
   fontFamily: "Arial",
-  fontSize: "20px",
-  fontWeight: "500",
-  textAlign: "center",
-  alignItems: "center",
+  fontSize: "32px",
+  fontWeight: "600",
+  textAlign: "end",
+  alignItems: "end",
   color: "#153243",
 });
 
-// 更新到 templateStore
+// 回傳到 templateStore
 const emitUpdatedData = () => {
   emit("updateData", { text: textContent.value, textStyle: textStyle.value });
 };
@@ -99,10 +103,12 @@ const updateTextContent = (event) => {
   emitUpdatedData();    // 即時同步輸入的內容數據
 };
 
-// 監聽輸入新內容(textContent)
-watch(textContent, (newVal, oldVal) => {
-  if (newVal !== oldVal) { // 先監聽有沒有變更在執行
-    emitUpdatedData();
+const editableBox = ref(null);
+
+// 初始設定內容
+onMounted(() => {
+  if (editableBox.value) {
+    editableBox.value.innerText = textContent.value;
   }
 });
 
@@ -110,8 +116,13 @@ watch(textContent, (newVal, oldVal) => {
 watch(() => props.text, (newText) => {
   if (newText !== textContent.value) {
     textContent.value = newText;
+    // 同步更新至畫面內容 (editableBox)
+    if (editableBox.value && editableBox.value.innerText !== newText) {
+      editableBox.value.innerText = newText;
+    }
   }
 });
+
 // ------- { 文字 Style } ------- 
 
 // 點擊文字框通知 `AccordionText.vue`
@@ -122,7 +133,6 @@ const setActiveText = () => {
 // 監聽來自 `AccordionText.vue` 的事件，更新當前 templateId
 const updateStyle = (style) => {
   textStyle.value = { ...style };
-  emitUpdatedData(); 
 };
 
 // 監聽 textStyle 新變化
@@ -147,113 +157,182 @@ onUnmounted(() => {
 });
 
 
-// ===========================
-// 動畫效果 
-// ===========================
-const templateRef = ref(null);
-const box = ref(null);
 
-// 動畫函數
-const templateAnimation = () => {
-  // box 動畫
-  gsap.fromTo(box.value,{
-    delay:3,
-    opacity: 0,
-    duration: 1.5,
-  },{ 
-    opacity: 1,
-    duration: 1.5,
-    x: 50,
-    y: -60,
-    width: 240,
-    height: 240,
-    borderRadius: "0%",
-    ease: "power2.out",
-    onUpdate: function () {
-      if (box.value) {
-        const scale = this.progress() * 100;
-        box.value.style.clipPath = `circle(${scale}% at center)`;
+// ========================
+// 動畫效果
+// ========================
+// 定義物件 ref
+const templateRef = ref(null); // 模組本人
+const bgcRef = ref(null);  
+const WidthTipRef = ref(null);  
+
+
+// 根據 mode 控制動畫行為
+watch(
+  () => props.mode,
+  (newMode) => {
+    nextTick(() => {
+      if (!templateRef.value) return; // 確保 DOM 已經渲染完成
+
+      if (newMode === 'preview') {
+        const wrapperEl = templateRef.value?.parentElement; // 外層為 .modelPreview
+        if (!wrapperEl) return;
+
+        // 自定義動畫函式供外部觸發 , createPreview 呼叫他 
+        wrapperEl.__startInnerAnimation = () => {
+          gsap.set([bgcRef.value,WidthTipRef.value],{ x: 0 });
+          const tl = gsap.timeline({delay:3});
+          tl.to(bgcRef.value, { x: -400, duration: 1.2, ease: 'power2.out' });
+        };
+        // console.log('動畫函式已掛到 wrapper：', wrapperEl);
       }
-    },
-  }
-  );
-};
-onMounted(() => {
-  // 初始加載時執行動畫
-  templateAnimation();
-  // console.log("原始狀況執行動畫");
 
-  // 監聽父層發送的事件，並重新執行動畫
-  eventBus.on("startTemplateAnimation", () => {
-    console.log("收到startTemplateAnimation，重新執行動畫");
-    templateAnimation();
-  });
-});
-
+      // 一般和縮圖：載入時立即播放動畫
+      if (newMode === 'edit' || newMode === 'thumbnail') {
+        gsap.set([bgcRef.value,WidthTipRef.value],{ x: 0 });
+        const tl = gsap.timeline({delay:3});
+        tl.to(bgcRef.value, { x: -400, duration: 1.2, ease: 'power2.out' });
+      }
+    });
+  },
+  { immediate: true }
+);
 </script>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <template>
-<div class="template templateBox5" ref="templateRef">
-  <!-- 背景 -->
-  <div class="templateBgc">
-    <div class="BgcTipBox" v-show="!bgcImageUrl">
-      <p>
-        <div>Files support JPEG, JPG, PNG, and GIF</div>
-        <div>with a maximum size of
-        <span>2MB</span>and a recommended image ratio of <span>16:9</span></div>
-      </p>
-      <input ref="bgcFileInputRef" type="file" @change="onImageUpload($event, 'bgc')" />
+  <div class="template templateBox6" ref="templateRef">
+    <!-- 背景區塊 -->
+    <div class="templateBgc">
+      <div class="BgcTipBox" v-show="!bgcImageUrl">
+        <div class="Tip-info">
+          <p>Files support JPEG, JPG, PNG, and GIF</p>
+          <p>with a maximum size of
+          <span>2MB</span>and a recommended image ratio of <span>16:9</span></p>
+        </div>
+        <div class="bgcWidthTip" >
+          <div class="icon-M"><div class="dark-arrow"></div></div>
+          <div class="icon-M"><div class="dark-arrow"></div></div>
+        </div>
+        <input ref="bgcFileInputRef" type="file" @change="onImageUpload($event, 'bgc')" />
+      </div>
+      <img class="bgc" ref="bgcRef" v-show="bgcImageUrl" :src="bgcImageUrl" @click="triggerFileInput('bgc')" />
     </div>
-    <img class="bgc" v-show="bgcImageUrl" :src="bgcImageUrl" @click="triggerFileInput('bgc')" />
-  </div>
-  
-  <!-- 物件 -->
-  <div ref="box" class="templateObject shape">
-    <div class="ObjectTipBox" v-show="!objectImageUrl">
-      <p>
-        <div>Files support <br>JPEG, JPG, PNG, and GIF</div>
-        <div>recommended image ratio of <span>1:1</span></div>
-      </p>
-      <input ref="objectFileInputRef" type="file" @change="onImageUpload($event, 'object')" />
+
+    <!-- 物件區塊 -->
+    <div ref="boxRef" class="templateObject shape">
+      <div class="ObjectTipBox" v-show="!objectImageUrl">
+        <div class="Tip-info">
+          <p>recommended <br> image ratio of <span>1:1</span></p>
+        </div>
+        <input ref="objectFileInputRef" type="file" @change="onImageUpload($event, 'object')" />
+      </div>
+      <img class="ObjectImg" :src="objectImageUrl" @click="triggerFileInput('object')" />
     </div>
-    <img class="ObjectImg" :src="objectImageUrl" @click="triggerFileInput('object')" />
-  </div>
-  
-  <!-- 文字 -->
-  <div class="templateText editor">
-    <div 
-    class="textEditorBox" 
-    contenteditable="true" 
-    @focus="setActiveText" 
-    @input="updateTextContent" 
-    @blur="emitUpdatedData"
-    :style="textStyle"
-  >
-      <div style="width: 100%;">{{ textContent }}</div>
+
+    <!-- 文字區塊 -->
+    <div class="templateText editor">
+      <div 
+        class="textEditorBox" 
+        contenteditable="true" 
+        @focus="setActiveText" 
+        @input="updateTextContent" 
+        @blur="emitUpdatedData"
+        :style="textStyle"
+        ref="editableBox"
+      ></div>
     </div>
   </div>
-</div>
 </template>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style scoped>
 .shape {
-  width: 60px;
-  height: 60px;
-  clip-path: circle(0% at center);
+  width: 200px;
+  height: 200px;
   position: absolute;
-  left: 0;
-  bottom: 0;
+  left: 25px;
+  bottom: 30px;
 }
-.editor {
-  width: 250px;
+.templateBgc {
+  width: 1080px;
+  height: 380px;
+  .BgcTipBox {
+    width: 680px;
+    height: 100%;
+    .Tip-info{
+     height: 60px;
+    }  
+  }
+}
+.bgcWidthTip{
+  width: 100%;
+  height: 100px;
+  padding: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  pointer-events: none;
   position: absolute;
-  top: 100px;
-  right: 50px;
+  top: 200px;
+  right: -340px;
+  animation: bgcWidthTipAnimation 2s ease-in-out ;
+}
+.bgcWidthTip .dark-arrow{
+  width: 100px;
+  height: 100px;
+  opacity: 10%;
+  transform: rotatey(180deg);
+}
+
+@keyframes bgcWidthTipAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* 中間狀態 */
+    transform: translateX(-340px);
+  }
+}
+
+.editor {
+  min-width: 500px;
+  max-width: 600px;
+  position: absolute;
+  top: 80px;
+  right: 25px;
 }
 .textEditorBox {
   width: 100%;
-  min-height: 100px;
+  min-height: 60px;
   border-radius: 10px;
   padding: 10px;
   outline: none;

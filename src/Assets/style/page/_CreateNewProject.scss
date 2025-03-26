@@ -3,9 +3,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 40px 20px ;
     .project{
-        margin-top: 20px;
+        margin-top: 15px;
         width: calc(100%/2);
         height: 450px;
         background-color: $subWhite;
@@ -15,7 +15,6 @@
     input{
         all: initial;
         width: 400px;
-        padding: 10px;
         border-bottom: $baseBlue solid 1px;
         text-align: center;
     }

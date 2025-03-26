@@ -2514,13 +2514,12 @@ select {
 }
 .dayLayout .wrapper {
   width: calc(100% - 20px);
-  height: calc(100vh - 100px); /* 20邊框 + 80header */
+  height: calc(100vh - 100px); /* 10*2邊框 + 80header */
   position: absolute;
-  top: 10px;
+  top: 90px;
   left: 10px;
   right: 10px;
   bottom: 10px;
-  margin-top: 80px;
   overflow: auto;
   scrollbar-width: none;
   z-index: 200;
@@ -2624,7 +2623,9 @@ select {
   z-index: 3;
   top: 10px;
   bottom: 10px;
-  width: 100%;
+  left: 10px;
+  right: 10px;
+  width: calc(100% - 20px);
   overflow: auto;
   scrollbar-width: none;
   display: flex;
@@ -3533,25 +3534,41 @@ tbody > tr:hover {
 
 .Create {
   width: 100%;
+  height: calc(100vh - 100px);
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  overflow: auto;
+  scrollbar-width: none;
 }
 .Create .Function {
-  position: fixed;
+  position: sticky;
   top: 90px;
-  left: 10px;
+  left: 0;
+  top: 0;
   z-index: 3;
 }
 .Create .PageView {
-  position: fixed;
+  position: sticky;
   top: 90px;
-  right: 10px;
+  right: 0;
+  top: 0;
   z-index: 2;
 }
+.Create .main-content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  flex: 1;
+  top: 0;
+  z-index: 1;
+}
 .Create .CreateCanvas {
-  margin-top: 100px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .Create .CreateCanvas .FunctionBar {
   position: fixed;
@@ -3618,10 +3635,14 @@ tbody > tr:hover {
   background-position: center center;
 }
 .Create .CreateCanvas .canvasGroup {
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 100px;
+  padding-bottom: 30px;
 }
 .Create .CreateCanvas .canvasGroup .canvas {
   width: 680px;
@@ -3629,10 +3650,6 @@ tbody > tr:hover {
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
   position: relative;
-}
-.Create .CreateCanvas .canvasGroup .saveCanvas {
-  margin-top: 10px;
-  margin-bottom: 50px;
 }
 .Create .CreateMenu {
   display: flex;
@@ -3713,9 +3730,9 @@ tbody > tr:hover {
   gap: 10px;
 }
 .Create .Function .CreateMenuContent .model {
-  width: 102px;
+  width: 104px;
   height: 57px;
-  border-radius: 8px;
+  border-radius: 5px;
   border: #dee2e6 solid 1.5px;
   background-color: #f9faf9;
   overflow: hidden;
@@ -3757,8 +3774,8 @@ tbody > tr:hover {
   justify-content: space-between;
 }
 .Create .Function .CreateMenuContent .AccordionText .thirdRow .format {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border: #dee2e6 solid 1px;
   border-radius: 5px;
 }
@@ -3766,6 +3783,9 @@ tbody > tr:hover {
   width: 100%;
   height: auto;
   opacity: 50%;
+}
+.Create .Function .CreateMenuContent .AccordionText .thirdRow .format:focus img, .Create .Function .CreateMenuContent .AccordionText .thirdRow .format:hover img {
+  opacity: 100%;
 }
 .Create .Function .CreateMenuContent .AccordionText .fourRow {
   width: 100%;
@@ -3791,6 +3811,9 @@ tbody > tr:hover {
 }
 .Create .PageView .MenuContent {
   width: 100%;
+  flex: 1;
+  overflow: auto;
+  scrollbar-width: none;
   display: flex;
   flex-direction: column;
   padding: 20px 10px;
@@ -3813,7 +3836,7 @@ tbody > tr:hover {
   height: 95px;
   border: #dee2e6 solid;
   background-color: #f9faf9;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-bottom: 10px;
   overflow: hidden;
 }
@@ -3823,8 +3846,8 @@ tbody > tr:hover {
 }
 .Create .PageView .modelView .modelContent .canvasPreview .remove-btn {
   position: absolute;
-  top: 28px;
-  right: 43px;
+  top: 24px;
+  right: 55px;
   cursor: pointer;
   width: 16px;
   height: 16px;
@@ -3833,11 +3856,26 @@ tbody > tr:hover {
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  background-color: #dee2e6;
+  background-color: #153243;
   color: white;
+  z-index: 30;
 }
 .Create .PageView .modelView .modelContent .canvasPreview .remove-btn:hover {
-  background-color: #153243;
+  background-color: #eead50;
+}
+.Create .PageView .next-step-btn {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.Create .PageView .next-step-btn .btnKey-M {
+  width: 160px;
+  display: flex;
+  justify-content: center;
 }
 .Create .Function.close,
 .Create .PageView.close {
@@ -3860,16 +3898,20 @@ tbody > tr:hover {
 .Create .PageView.close .MenuContent {
   display: none;
 }
+.Create .Function.close .next-step-btn,
+.Create .PageView.close .next-step-btn {
+  display: none;
+}
 
 .CreateNewProject {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px 20px;
 }
 .CreateNewProject .project {
-  margin-top: 20px;
+  margin-top: 15px;
   width: 50%;
   height: 450px;
   background-color: #f9faf9;
@@ -3879,7 +3921,6 @@ tbody > tr:hover {
 .CreateNewProject input {
   all: initial;
   width: 400px;
-  padding: 10px;
   border-bottom: #153243 solid 1px;
   text-align: center;
 }
@@ -4040,12 +4081,46 @@ tbody > tr:hover {
   justify-content: center;
 }
 
+.mainContent {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  width: calc(100% - 20px);
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.CreatePreviewGroup {
+  align-items: center;
+  justify-content: center;
+}
+
+.modelBox {
+  width: 680px;
+  height: 380px;
+}
+
 .CreateImgInput .btnKey-M {
   font-family: "Fanwood Text";
   text-transform: capitalize;
   font-size: 16px;
   color: #153243;
   font-weight: 600;
+}
+
+.template {
+  width: 680px;
+  height: 380px;
+  position: relative;
+  overflow: hidden;
 }
 
 .templateBgc {
@@ -4056,32 +4131,32 @@ tbody > tr:hover {
 .templateBgc .BgcTipBox {
   width: 100%;
   height: 60px;
-  position: relative;
+  position: absolute;
   top: 0;
-  z-index: 30;
 }
-.templateBgc .BgcTipBox p {
+.templateBgc .BgcTipBox .Tip-info {
+  width: 100%;
+  height: 100%;
+  position: absolute; /* 擋 input */
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #dee2e6;
+  pointer-events: none;
+}
+.templateBgc .BgcTipBox .Tip-info p {
   font-family: "Fanwood Text";
   font-variant: small-caps;
   letter-spacing: 0.8px;
   font-size: 14px;
   color: #153243;
   font-weight: 600;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  background-color: #dee2e6;
-  pointer-events: none;
   line-height: 1.5;
 }
-.templateBgc .BgcTipBox p span {
+.templateBgc .BgcTipBox .Tip-info p span {
   color: #eead50;
   font-size: 16px;
 }
@@ -4096,7 +4171,6 @@ tbody > tr:hover {
   top: 0;
   left: 0;
   object-fit: cover;
-  z-index: 1;
 }
 
 .templateObject {
@@ -4106,24 +4180,34 @@ tbody > tr:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 .templateObject .ObjectTipBox {
   width: 100%;
   height: 100%;
-  position: relative;
   top: 0;
   left: 0;
-  border: #999999 1px solid;
   border-radius: 10px;
   overflow: hidden;
 }
-.templateObject .ObjectTipBox p {
-  font-family: "Fanwood Text";
-  font-variant: small-caps;
-  letter-spacing: 0.8px;
-  font-size: 14px;
-  color: #f9faf9;
-  font-weight: 600;
+.templateObject .ObjectTipBox::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: url("@/Assets/img/ImgeIcon.png");
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  background-color: #dee2e6;
+  border: #dee2e6 2px solid;
+  border-radius: 5px;
+}
+.templateObject .ObjectTipBox:hover::after {
+  display: none;
+}
+.templateObject .ObjectTipBox .Tip-info {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -4135,10 +4219,32 @@ tbody > tr:hover {
   justify-content: center;
   align-items: center;
   background-color: #153243;
+  border: #dee2e6 2px solid;
+  border-radius: 5px;
   pointer-events: none;
+}
+.templateObject .ObjectTipBox .Tip-info::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  background-image: url("@/Assets/img/icon/white_click.png");
+  background-size: cover;
+  background-position: center center;
+  position: absolute;
+  right: 25px;
+  bottom: 15px;
+  opacity: 50%;
+}
+.templateObject .ObjectTipBox .Tip-info p {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  letter-spacing: 0.8px;
+  font-size: 16px;
+  color: #f9faf9;
+  font-weight: 600;
   line-height: 1.5;
 }
-.templateObject .ObjectTipBox p span {
+.templateObject .ObjectTipBox .Tip-info p span {
   color: #eead50;
   font-size: 16px;
 }
