@@ -55,14 +55,12 @@
         <div class="content-right3">
           <h1>{{ product.title }}</h1>
           <h2>{{ product.subtitle }}</h2>
-
           <div class="info-group3">
             <span class="info-icon3">🔹</span>
             <span class="info-heading3">Brief Introduction</span>
           </div>
           <hr class="info-divider3" />
           <p>{{ product.description }}</p>
-
           <div class="info-group3">
             <span class="info-icon3">🔹</span>
             <span class="info-heading3">Information</span>
@@ -108,7 +106,7 @@
           </div>
         </div>
       </section>
-
+      <div class="commentTitle"><h1>Comments</h1></div>
       <section class="feedback-section3">
         <div class="feedback-box3">
           <div ref="feedbackList" class="feedback-list3">
@@ -119,9 +117,10 @@
             >
               <div class="feedback-content3">
                 <img
-                  src="../../Assets/img/pics/Acc icon.png"
-                  alt="Feedback Icon"
-                  class="feedback-icon3"
+                  :src="comment.userAvatar"
+                  alt="User Avatar"
+                  class="feedback-icon3 feedback-icon37"
+                  @error="handleImageError"
                 />
                 <div class="feedback-details3">
                   <div class="feedback-stars3">
@@ -167,6 +166,10 @@ const bookId = route.params.id; // e.g., "abc123xyz"
 // Reactive product and comments data
 const product = ref({});
 const comments = ref([]); // Initialize as empty array instead of hardcoded comments
+
+const handleImageError = (event) => {
+  event.target.src = "/MyColset/character115x409.png"; // Fallback image path
+};
 
 // Fetch book data and comments on mount
 onMounted(async () => {
@@ -233,20 +236,29 @@ onMounted(async () => {
       // Fetch user data from the 'users' collection
       const usersQuery = query(collection(db, "users"), where("__name__", "in", userIds));
       const usersSnapshot = await getDocs(usersQuery);
+
+      // Create a map of userId to user data
       const userMap = {};
       usersSnapshot.forEach((doc) => {
-        userMap[doc.id] = doc.data().name; // Map userId (email) to name
+        userMap[doc.id] = {
+          name: doc.data().name || "Unknown",
+          photoURL: doc.data().photoURL || "/MyColset/character115x409.png",
+        };
       });
 
-      // Attach userName to each comment
+      // Attach userName and userAvatar to each comment
       comments.value.forEach((comment) => {
-        comment.userName = userMap[comment.userId] || "Unknown"; // Fallback if name not found
+        const user = userMap[comment.userId] || {
+          name: "Unknown",
+          photoURL: "/MyColset/character115x409.png",
+        };
+        comment.userName = user.name;
+        comment.userAvatar = user.photoURL;
       });
     }
   } catch (error) {
-    console.error("Error fetching book or comments:", error);
+    console.error("Error fetching comments or user data:", error);
   }
-
   // Event listeners for feedback and book dragging
   if (feedbackList.value) {
     feedbackList.value.addEventListener("scroll", updateActiveDot);

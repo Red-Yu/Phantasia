@@ -110,8 +110,8 @@
         <div @click="submitData" class="action-button8 btnKey-L light">
           <p>COLLECT YOUR STAMPS</p>
         </div>
-        <div @click="saveData" class="action-button8 btnLink light">
-          <p>Back to shop</p>
+        <div @click="navigate('/Products')" class="action-button8 btnLink light">
+          <p>Back to store</p>
           <div class="icon-L">
             <div class="light-arrow"></div>
           </div>
@@ -126,10 +126,10 @@
           SUBSCRIBE NOW TO READ MORE
         </p>
         <div class="popup-buttons">
-          <div @click="confirmAction" class="action-button btnKey-L light">
+          <div @click="navigate('/Products')" class="action-button btnKey-L light">
             <p>BACK TO STORE</p>
           </div>
-          <div @click="closePopup" class="action-button btnKey-L light">
+          <div @click="navigate('/MemberCenter')" class="action-button btnKey-L light">
             <p>SUBSCRIBE</p>
             <div class="icon-L">
               <div class="white-cross">
@@ -151,7 +151,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path
 import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
@@ -166,6 +166,20 @@ const isSubscribed = ref(false); // Subscription status
 
 // Popup logic
 const showPopup = ref(false);
+
+const loading = ref(true); // New loading state
+
+// Use Vue Router
+const router = useRouter();
+
+// Define the navigate function (same as footer)
+function navigate(link) {
+  if (link.startsWith("http")) {
+    window.location.href = link; // External link
+  } else {
+    router.push(link); // Internal route
+  }
+}
 
 // Firebase Auth setup and subscription check
 const auth = getAuth();
@@ -189,6 +203,7 @@ onAuthStateChanged(auth, async (user) => {
     userId.value = null;
     isSubscribed.value = false; // Not logged in, so not subscribed
   }
+  loading.value = false; // Set loading false after checks
 });
 
 // Star rating logic
@@ -292,7 +307,7 @@ const preventScrollAction = (event) => {
 };
 
 const handleScroll = () => {
-  if (showPopup.value) return;
+  if (showPopup.value || loading.value) return; // Exit if loading
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercentage = scrollTop / scrollHeight;
@@ -318,7 +333,7 @@ const confirmAction = () => {
 };
 
 const scrollToPosition = (index, event) => {
-  if (showPopup.value) {
+  if (showPopup.value || loading.value) {
     event.preventDefault();
     return;
   }
@@ -335,7 +350,7 @@ const updateActiveDot = () => {
 };
 
 const scrollToTop = (event) => {
-  if (showPopup.value) {
+  if (showPopup.value || loading.value) {
     preventScrollAction(event);
     return;
   }

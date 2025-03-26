@@ -14,7 +14,7 @@
 
     <!-- Original About Button Section -->
     <div ref="aboutButtonSection" class="aboutButton">
-      <div class="x btnKey-L light">
+      <div class="x btnKey-L light" @click="navigate('/about')">
         <p>ABOUT US</p>
         <div class="icon-L">
           <div class="white-cross">
@@ -31,11 +31,12 @@
     </div>
   </div>
   <!-- Carousel Section -->
+  <!-- Carousel Section -->
   <div class="carousel-container">
     <div class="carousel">
       <div
         v-for="(product, index) in products"
-        :key="index"
+        :key="product.id"
         class="carousel-item-container"
         :class="{
           active: index === activeIndex,
@@ -44,8 +45,12 @@
           hidden: ![prevIndex, activeIndex, nextIndex].includes(index),
         }"
       >
-        <!-- Carousel Item -->
-        <div class="carousel-item">
+        <!-- Carousel Item with Conditional Click Handler -->
+        <div
+          class="carousel-item"
+          :class="{ clickable: index === activeIndex }"
+          @click="index === activeIndex ? goToProductPage(product.id) : null"
+        >
           <div class="box box--front">
             <div class="colorLayer" :style="{ backgroundColor: product.colorCode }"></div>
             <div
@@ -246,7 +251,15 @@ const db = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 gsap.registerPlugin(ScrollToPlugin, ScrollTrigger);
+
 const router = useRouter();
+function navigate(link) {
+  if (link.startsWith("http")) {
+    window.location.href = link; // External link
+  } else {
+    router.push(link); // Internal route
+  }
+}
 
 // Scroll Animation Logic
 const secSection = ref(null);
@@ -318,7 +331,28 @@ const fetchFirestoreData = async () => {
       });
     });
 
-    // Step 2: Fetch fixed image URLs from Storage
+    // Step 2: Fetch all comments to calculate total ratings
+    const commentsCollectionRef = collection(db, "comments");
+    const commentsSnapshot = await getDocs(commentsCollectionRef);
+    const ratingMap = {};
+
+    commentsSnapshot.forEach((doc) => {
+      const comment = doc.data();
+      const bookId = comment.bookId;
+      const rating = comment.rating;
+
+      if (!ratingMap[bookId]) {
+        ratingMap[bookId] = 0;
+      }
+      ratingMap[bookId] += rating;
+    });
+
+    // Step 3: Add totalRating to each product
+    fetchedProducts.forEach((product) => {
+      product.totalRating = ratingMap[product.id] || 0;
+    });
+
+    // Step 4: Fetch fixed image URLs from Storage
     const fixedImages = {
       coverImage: await getDownloadURL(
         storageRef(storage, "images/common/cover.png")
@@ -346,7 +380,7 @@ const fetchFirestoreData = async () => {
       }),
     };
 
-    // Step 3: Combine fetched products with fixed images
+    // Step 5: Combine fetched products with fixed images and totalRating
     products.value = fetchedProducts.map((product) => ({
       ...product,
       ...fixedImages,
@@ -430,7 +464,12 @@ const filteredProducts = computed(() => {
       result = result.filter((p) => p.ageGroup === "7-12");
       break;
     case "hot":
-      result.sort((a, b) => a.name.length - b.name.length);
+      result.sort((a, b) => {
+        if (b.totalRating !== a.totalRating) {
+          return b.totalRating - a.totalRating; // Sort by totalRating descending
+        }
+        return new Date(b.dateAdded) - new Date(a.dateAdded); // Then by dateAdded descending
+      });
       break;
   }
 

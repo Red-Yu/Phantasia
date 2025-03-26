@@ -3979,6 +3979,13 @@ body {
   position: relative;
 }
 
+.carousel-item-container.active {
+  transform: scale(1.2) translateY(100px);
+  opacity: 1;
+  z-index: 3;
+  cursor: pointer;
+}
+
 .text-box-container {
   width: 460px;
   padding-left: 120px;
@@ -4016,20 +4023,16 @@ body {
   margin: 5px 0;
 }
 
-.active {
-  transform: scale(1.2) translateY(100px);
-  opacity: 1;
-  z-index: 3;
-}
-
 .left {
   transform: translateX(-600px);
   z-index: 2;
+  cursor: default;
 }
 
 .right {
   transform: translateX(600px);
   z-index: 2;
+  cursor: default;
 }
 
 .hidden {
@@ -4820,6 +4823,12 @@ h2 {
   padding: 20px 0px;
 }
 
+.commentTitle {
+  margin-top: 40px;
+  color: white;
+  font-size: 24px;
+}
+
 .feedback-section3 {
   margin-top: 50px;
   display: flex;
@@ -5424,6 +5433,7 @@ h2 {
 
 .action-button {
   border: none;
+  cursor: pointer;
 }
 
 .actionButtonWrapper8 {
@@ -5443,6 +5453,7 @@ h2 {
 
 .action-button8 {
   border: none;
+  cursor: pointer;
 }
 
 .overlay {
