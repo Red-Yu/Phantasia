@@ -2501,13 +2501,12 @@ select {
 }
 .dayLayout .wrapper {
   width: calc(100% - 20px);
-  height: calc(100vh - 100px); /* 20邊框 + 80header */
+  height: calc(100vh - 100px); /* 10*2邊框 + 80header */
   position: absolute;
-  top: 10px;
+  top: 90px;
   left: 10px;
   right: 10px;
   bottom: 10px;
-  margin-top: 80px;
   overflow: auto;
   scrollbar-width: none;
   z-index: 200;
@@ -2573,7 +2572,9 @@ select {
   z-index: 3;
   top: 10px;
   bottom: 10px;
-  width: 100%;
+  left: 10px;
+  right: 10px;
+  width: calc(100% - 20px);
   overflow: auto;
   scrollbar-width: none;
   display: flex;
@@ -3419,25 +3420,41 @@ select {
 
 .Create {
   width: 100%;
+  height: calc(100vh - 100px);
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  overflow: auto;
+  scrollbar-width: none;
 }
 .Create .Function {
-  position: fixed;
+  position: sticky;
   top: 90px;
-  left: 10px;
+  left: 0;
+  top: 0;
   z-index: 3;
 }
 .Create .PageView {
-  position: fixed;
+  position: sticky;
   top: 90px;
-  right: 10px;
+  right: 0;
+  top: 0;
   z-index: 2;
 }
+.Create .main-content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  flex: 1;
+  top: 0;
+  z-index: 1;
+}
 .Create .CreateCanvas {
-  margin-top: 100px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .Create .CreateCanvas .FunctionBar {
   position: fixed;
@@ -3504,10 +3521,14 @@ select {
   background-position: center center;
 }
 .Create .CreateCanvas .canvasGroup {
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 100px;
+  padding-bottom: 30px;
 }
 .Create .CreateCanvas .canvasGroup .canvas {
   width: 680px;
@@ -3515,10 +3536,6 @@ select {
   background-color: #f9faf9;
   border: #dee2e6 solid 1px;
   position: relative;
-}
-.Create .CreateCanvas .canvasGroup .saveCanvas {
-  margin-top: 10px;
-  margin-bottom: 50px;
 }
 .Create .CreateMenu {
   display: flex;
@@ -3599,9 +3616,9 @@ select {
   gap: 10px;
 }
 .Create .Function .CreateMenuContent .model {
-  width: 102px;
+  width: 104px;
   height: 57px;
-  border-radius: 8px;
+  border-radius: 5px;
   border: #dee2e6 solid 1.5px;
   background-color: #f9faf9;
   overflow: hidden;
@@ -3643,8 +3660,8 @@ select {
   justify-content: space-between;
 }
 .Create .Function .CreateMenuContent .AccordionText .thirdRow .format {
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border: #dee2e6 solid 1px;
   border-radius: 5px;
 }
@@ -3652,6 +3669,9 @@ select {
   width: 100%;
   height: auto;
   opacity: 50%;
+}
+.Create .Function .CreateMenuContent .AccordionText .thirdRow .format:focus img, .Create .Function .CreateMenuContent .AccordionText .thirdRow .format:hover img {
+  opacity: 100%;
 }
 .Create .Function .CreateMenuContent .AccordionText .fourRow {
   width: 100%;
@@ -3677,6 +3697,9 @@ select {
 }
 .Create .PageView .MenuContent {
   width: 100%;
+  flex: 1;
+  overflow: auto;
+  scrollbar-width: none;
   display: flex;
   flex-direction: column;
   padding: 20px 10px;
@@ -3699,7 +3722,7 @@ select {
   height: 95px;
   border: #dee2e6 solid;
   background-color: #f9faf9;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-bottom: 10px;
   overflow: hidden;
 }
@@ -3709,8 +3732,8 @@ select {
 }
 .Create .PageView .modelView .modelContent .canvasPreview .remove-btn {
   position: absolute;
-  top: 28px;
-  right: 43px;
+  top: 24px;
+  right: 55px;
   cursor: pointer;
   width: 16px;
   height: 16px;
@@ -3719,11 +3742,26 @@ select {
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  background-color: #dee2e6;
+  background-color: #153243;
   color: white;
+  z-index: 30;
 }
 .Create .PageView .modelView .modelContent .canvasPreview .remove-btn:hover {
-  background-color: #153243;
+  background-color: #eead50;
+}
+.Create .PageView .next-step-btn {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.Create .PageView .next-step-btn .btnKey-M {
+  width: 160px;
+  display: flex;
+  justify-content: center;
 }
 .Create .Function.close,
 .Create .PageView.close {
@@ -3746,16 +3784,20 @@ select {
 .Create .PageView.close .MenuContent {
   display: none;
 }
+.Create .Function.close .next-step-btn,
+.Create .PageView.close .next-step-btn {
+  display: none;
+}
 
 .CreateNewProject {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 40px 20px;
 }
 .CreateNewProject .project {
-  margin-top: 20px;
+  margin-top: 15px;
   width: 50%;
   height: 450px;
   background-color: #f9faf9;
@@ -3765,7 +3807,6 @@ select {
 .CreateNewProject input {
   all: initial;
   width: 400px;
-  padding: 10px;
   border-bottom: #153243 solid 1px;
   text-align: center;
 }

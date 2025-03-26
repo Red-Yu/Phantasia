@@ -36,7 +36,7 @@
       </button>
     </nav>
     <!-- Props: CreateNewProject -->
-    <CreateNewProject :isVisible="isModalVisible" @close="closeModal" />
+    <CreateNewProject :isVisible="isModalVisible" modalId="CreateNewProject" @close="closeModal" />
 
     <!-- FileManager -->
     <nav class="recent-file" v-if="!searchQuery">
