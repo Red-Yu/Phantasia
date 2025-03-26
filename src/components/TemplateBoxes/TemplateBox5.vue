@@ -164,7 +164,6 @@ onUnmounted(() => {
 // 定義物件 ref
 const templateRef = ref(null); // 模組本人
 const bgcRef = ref(null);  
-const WidthTipRef = ref(null);  
 
 
 // 根據 mode 控制動畫行為
