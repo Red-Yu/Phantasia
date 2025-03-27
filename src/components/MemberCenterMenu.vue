@@ -75,9 +75,18 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from "vue"; // 添加 watch 引入
+import { ref, watch, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router"; // 添加 useRoute 引入
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db } from "../firebase/firebaseConfig";
+import { 
+  collection, 
+  query, 
+  where, 
+  orderBy, 
+  getDocs, 
+  limit 
+} from "firebase/firestore";
 
 import "@/assets/css/main.css";
 
@@ -87,14 +96,35 @@ const route = useRoute();
 const auth = getAuth();
 const avatarURL = ref("");
 
+// 添加訂閱狀態追踪
+const hasActiveSubscription = ref(false);
+
 onMounted(() => {
   onAuthStateChanged(auth, async (user) => {
-    // 將回調設為 async 函數
     if (user) {
       // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png";
+      
+      // 檢查用戶訂閱狀態
+      try {
+        const ordersRef = collection(db, "orders");
+        const q = query(
+          ordersRef, 
+          where("userId", "==", user.uid),
+          where("status", "==", "pending"),
+          orderBy("createdAt", "desc"),
+          limit(1)
+        );
+
+        const querySnapshot = await getDocs(q);
+        hasActiveSubscription.value = !querySnapshot.empty;
+      } catch (error) {
+        console.error("Error checking subscription status:", error);
+        hasActiveSubscription.value = false;
+      }
     } else {
       avatarURL.value = "/MyColset/avatarDefault.png";
+      hasActiveSubscription.value = false;
     }
   });
 });
@@ -193,17 +223,25 @@ const toggleSubMenu = (index) => {
   }
 };
 
-// 優化子選單點擊處理
+// 修改 selectSubMenu 函數以根據訂閱狀態決定導航目標
 const selectSubMenu = (mainIndex, subIndex) => {
-  const subItem = menuItems.value[mainIndex].subItems[subIndex];
-
   // 先更新選中狀態
   activeIndex.value = mainIndex;
   activeSubMenu.value = subIndex;
 
-  // 然後進行導航
-  if (subItem.path) {
-    router.push(subItem.path);
+  // 處理 My Plan 頁面的特殊導航邏輯
+  if (mainIndex === SUBSCRIPTION_PLAN_INDEX && subIndex === MY_PLAN_SUB_INDEX) {
+    const targetPath = hasActiveSubscription.value 
+      ? "/MemberCenter/MyPlanSubscribed" 
+      : "/MemberCenter/MyPlanVisitor";
+    
+    router.push(targetPath);
+  } else {
+    // 其他子選單的常規導航邏輯
+    const subItem = menuItems.value[mainIndex].subItems[subIndex];
+    if (subItem.path) {
+      router.push(subItem.path);
+    }
   }
 };
 </script>
