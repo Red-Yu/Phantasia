@@ -366,7 +366,7 @@ onMounted(async () => {
         console.log('Renewal Date:', renewalDate);
 
         hasActiveSubscription.value = true;
-        subscriptionPlanType.value = `${latestOrder.planType} Plan`;
+        subscriptionPlanType.value = `${latestOrder.planType}`;
         
         subscriptionStartDate.value = formatDate(startDate);
         subscriptionEndDate.value = formatDate(endDate);

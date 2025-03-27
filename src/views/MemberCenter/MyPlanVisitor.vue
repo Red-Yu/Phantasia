@@ -33,6 +33,7 @@
   font-family: "Fanwood Text", serif;
   font-size: 20px;
   color: #153243;
+  margin-bottom: 25px;
 }
 
 .pricing-cards {
@@ -250,7 +251,12 @@
   background-repeat: no-repeat;
 }
 
-
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 25px 0;
+}
 
 </style>
 
@@ -264,21 +270,7 @@
               Subscribe to unlock the full story! Join now to enjoy every detail
               and the thrilling ending—you're just one step away!
             </p>
-            <div class="btnKey-L light" @click="handleJoinNow">
-              <p >JOIN NOW</p>
-              
-              <div class="icon-L">
-                <div class="white-cross">
-                  <div class="cols">
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div class="rows">
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+
             <img :src="step" alt="step" />
           </div>
           <div class="subscription-section">
@@ -384,11 +376,11 @@
                     >Credit card/debit card payment</span
                   >
                 </div>
-                <div class="card-logos" v-show="showCreditCardForm">
+                <!-- <div class="card-logos" v-show="showCreditCardForm">
                   <img src="@/assets/img/membercenter/cardlogo.svg" alt="Mastercard" />
-                </div>
+                </div> -->
 
-                <div class="credit-card-form" v-show="showCreditCardForm">
+                <!-- <div class="credit-card-form" v-show="showCreditCardForm">
                   <div class="form-group">
                     <label>Credit Card Number <span class="required">*</span></label>
                     <div class="input-wrapper">
@@ -447,10 +439,28 @@
                     its relevant service policies and regulations, and report to
                     your chosen transaction service provider Get more information.
                   </p>
+                </div> -->
+              </div>
+            </div>
+            <div class="button-container">
+              <div class="btnKey-L light" @click="handleJoinNow">
+              <p>JOIN NOW</p>
+              <div class="icon-L">
+                <div class="white-cross">
+                  <div class="cols">
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="rows">
+                    <span></span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+
+          </div>
+          
 </template>
 
 <script setup>
@@ -464,6 +474,7 @@ import { getAuth } from "firebase/auth";
 
 const router = useRouter();
 
+// 處理支付按鈕點擊
 // 處理支付按鈕點擊
 const handleJoinNow = async () => {
   // 檢查是否選擇了訂閱計劃和支付方式
@@ -494,6 +505,35 @@ const handleJoinNow = async () => {
     const timestamp = new Date().getTime();
     const orderId = `order_${timestamp}`;
     
+    // 計算開始日期
+    const startDate = new Date();
+    
+    // 使用您提供的函數計算結束日期
+    const calculateEndDate = (startDate, planType) => {
+      const start = new Date(startDate);
+      const end = new Date(start);
+      
+      switch(planType) {
+        case "Monthly Plan":
+          end.setMonth(start.getMonth() + 1);
+          end.setDate(start.getDate() - 1);
+          break;
+        case "Quarterly Plan":
+          end.setMonth(start.getMonth() + 3);
+          end.setDate(start.getDate() - 1);
+          break;
+        case "Annual Plan":
+          end.setFullYear(start.getFullYear() + 1);
+          end.setDate(start.getDate() - 1);
+          break;
+      }
+      
+      return end;
+    };
+    
+    // 計算結束日期
+    const endDate = calculateEndDate(startDate, selectedPlan.value);
+    
     // 儲存訂單到 Firebase
     const db = getFirestore();
     await setDoc(doc(db, "orders", orderId), {
@@ -506,7 +546,8 @@ const handleJoinNow = async () => {
       status: 'pending', // 初始狀態為待支付
       merchantTradeNo: `P${timestamp}`, // 記錄綠界使用的交易編號
       createdAt: new Date().toISOString(),
-      startDate: new Date().toISOString()
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString() // 根據您的計算邏輯添加結束日期
     });
     
     // 將訂單 ID 存到 localStorage，以便在支付後使用
