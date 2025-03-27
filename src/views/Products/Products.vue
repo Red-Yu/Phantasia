@@ -1,5 +1,5 @@
 <style scoped>
-@import "../../Assets/css/products.css";
+@import "../../Assets/css/main.css";
 </style>
 
 <template>
@@ -30,22 +30,22 @@
       </div>
     </div>
   </div>
-  <!-- Carousel Section -->
+
+  <Header type="night" />
   <!-- Carousel Section -->
   <div class="carousel-container">
-    <div class="carousel">
-      <div
-        v-for="(product, index) in products"
-        :key="product.id"
-        class="carousel-item-container"
-        :class="{
-          active: index === activeIndex,
-          left: index === prevIndex,
-          right: index === nextIndex,
-          hidden: ![prevIndex, activeIndex, nextIndex].includes(index),
-        }"
-      >
-        <!-- Carousel Item with Conditional Click Handler -->
+    <div
+      v-for="(product, index) in products"
+      :key="product.id"
+      class="carousel-item-container"
+      :class="{
+        active: index === activeIndex,
+        left: index === prevIndex,
+        right: index === nextIndex,
+        hidden: ![prevIndex, activeIndex, nextIndex].includes(index),
+      }"
+    >
+      <div class="carousel-content-wrapper">
         <div
           class="carousel-item"
           :class="{ clickable: index === activeIndex }"
@@ -63,7 +63,6 @@
             ></div>
           </div>
         </div>
-
         <div class="text-box-container">
           <h2>{{ product.author }}</h2>
           <h1>{{ product.name }}</h1>
@@ -234,6 +233,7 @@ import { useRouter } from "vue-router";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
+import Header from "@/components/Header.vue";
 
 // Firebase Config
 const firebaseConfig = {

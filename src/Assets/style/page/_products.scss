@@ -1,175 +1,132 @@
-@use "sass:map"; //sass 3.0的引用函式的寫法
-
-// base
-@import "../base/_var";
-@import "../base/font";
-@import "../base/color";
-@import "../base/others";
-
-// mixin
-@import "../mixin/mixin";
-
-// component
-@import "../component/btn";
-@import "../component/form";
-@import "../component/icon";
-@import "../component/table";
-@import "../component/FileItem";
-@import "../component/ProjectMenu";
-@import "../component/sidebar";
-@import "../component/CreateMenuContent";
-
-// layout  (因為已經拉出成共用組件component，所以這邊好像不需要)
-@import "../layout/header";
-@import "../layout/footer";
-@import "../layout/content";
-@import "../layout/Day";
-@import "../layout/FullScreenModal";
-
-// page
-@import "../page/btnFamily";
-@import "../page/IconGroup";
-
-// CreateProject (Project+Draft)
-@import "../page/CreateProject";
-@import "../page/CreateInfo";
-@import "../page/Create";
-//= Props
-@import "../page/CreateNewProject";
-@import "../page/AddCover";
-@import "../page/PublishSuccess";
-
 //===============EEEE==================
-body {
-  display: flex;
-  flex-direction: column;
-  /* Stack children vertically */
-  justify-content: flex-start;
-  /* Align content from the top */
-  align-items: stretch;
-  /* Stretch children to full width */
-  min-height: 100vh;
-  /* Ensure it’s at least full viewport height */
-  background-color: #153243;
-  margin: 0;
-}
 
-.productsWrapper {
-  background-color: #153243;
-  width: 100%;
-  /* Full width */
-  min-height: 100vh;
-  /* At least full viewport height */
-  display: flex;
-  flex-direction: column;
-  /* Stack children vertically */
-  // overflow: hidden;
-  /* Prevent overflow issues */
-  padding: 7px;
-}
 
-.whiteLine {
-  border: white solid 4px;
-}
 
 .carousel-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 500px;
-
-  background-color: #153243;
-}
-
-.carousel {
-  display: flex;
   justify-content: center;
   align-items: center;
-  width: 400px;
-  height: 300px;
+  height: 65vh;
+  background-color: #153243;
+  width: 100%;
+  /* Ensure it spans the full viewport width */
+
+
+  margin: 0 auto;
+  /* Center it horizontally */
   position: relative;
+  overflow: hidden;
+  /* Prevent content from spilling out */
 }
 
 .carousel-item-container {
   position: absolute;
   display: flex;
+  justify-content: center;
+  /* Center children horizontally */
   align-items: center;
   transition: all 0.3s ease;
   opacity: 0.5;
   visibility: visible;
+  width: 100%;
+  /* Ensure it fits within the carousel */
+  max-width: 800px;
+  /* Match carousel max-width */
+  gap: 0;
 }
 
 .carousel-item {
-  width: 200px;
+  width: 25vw;
+  /* Scalable width */
+  max-width: 300px;
+  /* Optional: cap for larger screens */
   height: auto;
   line-height: 80px;
   text-align: center;
   background-color: lightblue;
   border-radius: 10px;
-  z-index: 2;
+  z-index: 3;
   display: flex;
   /* justify-content: center; */
   align-items: center;
   position: relative;
+  flex-shrink: 0;
+  /* Prevent shrinking */
+  margin-right: 0;
+  /* Ensure no extra margin */
 
 }
 
 .carousel-item-container.active {
-  transform: scale(1.2) translateY(100px);
+  transform: scale(1.2) translateY(10vh);
   opacity: 1;
   z-index: 3;
+  display: flex;
+  justify-content: center;
+  /* Ensure children are centered */
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+  /* Consistent with inactive state */
+  margin: 0 auto;
   cursor: pointer;
+  gap: 10px;
+  position: relative;
+  /* Ensure stacking context for children */
 }
 
-// ================Chris修改====================
-//拿掉固定高度，新增padding-top跟padding-bottom
-// 改成用內容去撐開高度才不會內容太多時跑版
+
 .text-box-container {
-  width: 460px;
-  // height: 260px;
-  padding-left: 120px;
-  padding-right: 10px;
-  padding-top: 40px;
-  padding-bottom: 40px;
+  width: 50%;
+  max-width: 400px;
+  padding: 5vh 2vw;
   background-color: #2a5670;
   color: white;
   border-radius: 10px;
   position: absolute;
-  left: 20px;
+  /* Absolute to overlap */
+  left: 350px;
+  /* Shift right to overlap with carousel-item; adjust as needed */
+  bottom: -100px;
   z-index: 2;
+  /* Behind carousel-item */
   text-align: left;
+  /* Align text to the right */
   font-family: "Fanwood Text", sans-serif;
-  z-index: 1;
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: normal;
   overflow: hidden;
-  /* Prevent text from overflowing */
+  flex-shrink: 0;
+  /* Prevent shrinking */
 }
 
 .text-box-container h1 {
-  font-size: 30px;
-  margin: 10px 0;
+  font-size: clamp(20px, 4vw, 30px);
+  /* Responsive font size */
+  margin: 1vh 0;
 }
 
 .text-box-container h2 {
-  font-size: 20px;
-  margin: 5px 0;
+  font-size: clamp(16px, 3vw, 20px);
+  margin: 0.5vh 0;
 }
 
 .text-box-container h3 {
-  font-size: 16px;
-  margin: 5px 0;
+  font-size: clamp(12px, 2vw, 16px);
+  margin: 0.5vh 0;
 }
 
 .left {
-  transform: translateX(-600px);
+  transform: translateX(-30vw);
+  /* Scalable translation */
   z-index: 2;
   cursor: default;
 }
 
 .right {
-  transform: translateX(600px);
+  transform: translateX(30vw);
+  /* Scalable translation */
   z-index: 2;
   cursor: default;
 }
@@ -238,7 +195,7 @@ body {
     height: 300px;
     padding: 20px;
     background-color: #2a5670;
-    color: white;
+    // color: white;
     border-radius: 10px;
     position: relative;
     text-align: left;
@@ -395,16 +352,6 @@ body {
   align-items: center;
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  // height: 100vh;
-  /* Use viewport height instead of percentage */
-  // overflow-x: hidden;
-  /* Prevent horizontal scrolling */
-}
 
 .sec {
   width: 100%;
@@ -1089,6 +1036,7 @@ h2 {
   transform: rotateX(16deg) rotateY(0deg);
   transform-style: preserve-3d;
   cursor: grab;
+  animation: bookFloat 15s ease-in-out infinite alternate; // 預設開啟動畫
 }
 
 .product-box-holder>div {

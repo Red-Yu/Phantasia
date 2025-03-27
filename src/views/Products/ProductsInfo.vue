@@ -1,5 +1,5 @@
 <style scoped>
-@import "../../Assets/css/products.css";
+@import "../../Assets/css/main.css";
 </style>
 
 <template>
@@ -111,8 +111,8 @@
         <div class="feedback-box3">
           <div ref="feedbackList" class="feedback-list3">
             <div
-              v-for="(comment, index) in comments"
-              :key="index"
+              v-for="(comment, index) in sortedComments"
+              :key="comment.id"
               class="feedback-entry3"
             >
               <div class="feedback-content3">
@@ -152,7 +152,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { ref as storageRef, getDownloadURL } from "firebase/storage";
@@ -170,6 +170,11 @@ const comments = ref([]); // Initialize as empty array instead of hardcoded comm
 const handleImageError = (event) => {
   event.target.src = "/MyColset/character115x409.png"; // Fallback image path
 };
+
+// Computed property to sort comments by timestamp in descending order
+const sortedComments = computed(() => {
+  return [...comments.value].sort((a, b) => b.timestamp - a.timestamp);
+});
 
 // Fetch book data and comments on mount
 onMounted(async () => {
@@ -310,6 +315,7 @@ const bookStartDragging = (e) => {
   bookPreviousX.value = e.clientX;
   bookPreviousY.value = e.clientY;
   bookHolder.value.style.cursor = "grabbing";
+  bookHolder.value.style.animation = "none"; // 停止動畫
   e.preventDefault();
 };
 
@@ -332,6 +338,7 @@ const bookDrag = (e) => {
 const bookStopDragging = () => {
   bookIsDragging.value = false;
   bookHolder.value.style.cursor = "grab";
+  bookHolder.value.style.animation = "bookFloat 15s ease-in-out infinite alternate"; // 重新啟動動畫
 };
 
 const bookTouchStart = (e) => {
