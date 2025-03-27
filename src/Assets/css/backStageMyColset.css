@@ -162,6 +162,15 @@ tbody > tr:hover {
      object-fit: contain; /* 保證圖片完整顯示，不會被裁切 */
 }
 
+.preview-image.partner {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.preview-image.magicCircle {
+  transform: scale(1.4);
+}
+
 /* 頁碼 */
 .pagination {
   text-align: center;

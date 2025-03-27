@@ -1,5 +1,5 @@
 <style scoped>
-@import "../../Assets/css/main.css";
+/* @import "../../Assets/css/main.css"; */
 @import "../../Assets/css/backStageMyColset.css";
 </style>
 
@@ -30,6 +30,7 @@
         name="search"
         type="text"
         placeholder="輸入服裝編號或服裝名稱"
+        v-model="searchQuery"
       />
       <div class="icon-M searchIcon">
         <div class="dark-search"></div>
@@ -49,7 +50,7 @@
     </thead>
     <tbody>
       <!-- 使用 v-for 渲染資料 -->
-      <tr v-for="(item, index) in clothingList" :key="index">
+      <tr v-for="(item, index) in filteredClothingList" :key="index">
         <td>{{ index + 1 }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.createdAt.toDate().toLocaleDateString() }}</td>
@@ -74,7 +75,7 @@
     </tbody>
   </table>
 
-  <div class="pagination">
+  <!-- <div class="pagination">
     <button @click="prevPage" :disabled="currentPage === 1"><<</button>
     <button
       v-for="page in totalPages"
@@ -85,7 +86,7 @@
       {{ page }} /
     </button>
     <button @click="nextPage" :disabled="currentPage === totalPages">>></button>
-  </div>
+  </div> -->
 
   <!-- 彈窗 -->
   <UploadImageLightBox
@@ -120,6 +121,9 @@ const gender = computed(() => (isFemale.value ? "女" : "男"));
 // 儲存服裝資料
 const clothingList = ref([]);
 
+// 搜尋框的輸入
+const searchQuery = ref("");
+
 // 根據性別抓取資料
 const fetchClothingData = async () => {
   const collectionName =
@@ -130,6 +134,9 @@ const fetchClothingData = async () => {
   clothingList.value = querySnapshot.docs.map((doc) => {
     return { id: doc.id, ...doc.data() };
   });
+
+  // 排序資料
+  clothingList.value.sort((a, b) => a.order - b.order);
 };
 
 // 當頁面加載時獲取資料
@@ -140,6 +147,18 @@ onMounted(() => {
 // 監聽 gender 的變化並重新抓取資料
 watch(gender, () => {
   fetchClothingData();
+});
+
+// 根據搜尋條件過濾服裝
+const filteredClothingList = computed(() => {
+  const searchTerm = searchQuery.value.toLowerCase();
+
+  return clothingList.value.filter((clothing) => {
+    return (
+      clothing.name.toLowerCase().includes(searchTerm) || // 根據服裝名稱搜尋
+      clothing.order.toString().includes(searchTerm) // 根據 order 數字欄位搜尋，轉為字串來匹配
+    );
+  });
 });
 
 // 控制彈窗顯示
@@ -178,12 +197,20 @@ const uploadImage = async ({ file, imageName }) => {
     // 獲取圖片的下載 URL
     const downloadURL = await getDownloadURL(imageRef);
 
+    // 讀取 Firestore 中的所有資料並計算最大的 order
+    const querySnapshot = await getDocs(collection(db, firestoreCollection));
+    const currentMaxOrder = querySnapshot.docs.length; // 當前最大順序號
+
+    // 新的 order 為當前資料數量 + 1
+    const newOrder = currentMaxOrder + 1;
+
     // 保存到 Firestore
     await addDoc(collection(db, firestoreCollection), {
       name: imageName,
       fileName: file.name, // 儲存檔案的原始名稱
       imageUrl: downloadURL,
       createdAt: new Date(),
+      order: newOrder,
     });
 
     // 重新獲取資料

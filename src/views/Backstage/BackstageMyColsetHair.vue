@@ -30,6 +30,7 @@
         name="search"
         type="text"
         placeholder="輸入髮型編號或髮型名稱"
+        v-model="searchQuery"
       />
       <div class="icon-M searchIcon">
         <div class="dark-search"></div>
@@ -50,7 +51,7 @@
     </thead>
     <tbody>
       <!-- 使用 v-for 渲染資料 -->
-      <tr v-for="(item, index) in hairList" :key="index">
+      <tr v-for="(item, index) in filteredHairList" :key="index">
         <td>{{ index + 1 }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.createdAt.toDate().toLocaleDateString() }}</td>
@@ -71,7 +72,7 @@
     </tbody>
   </table>
 
-  <div class="pagination">
+  <!-- <div class="pagination">
     <button @click="prevPage" :disabled="currentPage === 1"><<</button>
     <button
       v-for="page in totalPages"
@@ -82,7 +83,7 @@
       {{ page }} /
     </button>
     <button @click="nextPage" :disabled="currentPage === totalPages">>></button>
-  </div>
+  </div> -->
 
   <!-- 彈窗 -->
   <UploadImageLightBox
@@ -117,6 +118,9 @@ const gender = computed(() => (isFemale.value ? "女" : "男"));
 // 儲存髮型資料
 const hairList = ref([]);
 
+// 搜尋框的輸入
+const searchQuery = ref("");
+
 // 根據性別抓取資料
 const fetchHairData = async () => {
   const collectionName =
@@ -127,6 +131,9 @@ const fetchHairData = async () => {
   hairList.value = querySnapshot.docs.map((doc) => {
     return { id: doc.id, ...doc.data() };
   });
+
+  // 根據 order 欄位對資料進行排序
+  hairList.value.sort((a, b) => a.order - b.order); // 按照 order 欄位升序排列
 };
 
 // 當頁面加載時獲取資料
@@ -142,6 +149,17 @@ watch(gender, () => {
 // 上下架狀態
 // const isOn = ref(false);
 // const state = computed(() => (isOn.value ? "下架" : "上架"));
+
+// 根據搜尋條件過濾髮型
+const filteredHairList = computed(() => {
+  return hairList.value.filter((hair) => {
+    const searchTerm = searchQuery.value.toLowerCase();
+    return (
+      hair.name.toLowerCase().includes(searchTerm) ||
+      hair.order.toString().includes(searchTerm) // 根據 order 或 name 搜尋
+    );
+  });
+});
 
 // 控制彈窗顯示
 const isUploadImageVisible = ref(false);
@@ -179,12 +197,20 @@ const uploadImage = async ({ file, imageName }) => {
     // 獲取圖片的下載 URL
     const downloadURL = await getDownloadURL(imageRef);
 
+    // 讀取 Firestore 中的所有資料並計算最大的 order
+    const querySnapshot = await getDocs(collection(db, firestoreCollection));
+    const currentMaxOrder = querySnapshot.docs.length; // 當前最大順序號
+
+    // 新的 order 為當前資料數量 + 1
+    const newOrder = currentMaxOrder + 1;
+
     // 保存到 Firestore
     await addDoc(collection(db, firestoreCollection), {
       name: imageName,
       fileName: file.name, // 儲存檔案的原始名稱
       imageUrl: downloadURL,
       createdAt: new Date(),
+      order: newOrder,
     });
 
     // 重新獲取資料
