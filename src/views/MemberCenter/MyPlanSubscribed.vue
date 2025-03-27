@@ -301,7 +301,12 @@
               <img :src="feather" alt="feather" />
               <span class="label">NEXT RENEWAL DATE</span>
             </div>
-            <span class="value">{{ currentSubscription.nextRenewalDate }}</span>
+            <span class="value">
+              {{ currentSubscription.nextRenewalDate }}
+              <span v-if="subscriptionCancelled" class="cancellation-notice">
+                (Automatic renewal canceled)
+              </span>
+            </span>
           </div>
           <div class="cancel" @click="handleCancelSubscription">
             <p>Cancel Subscription</p>
@@ -401,6 +406,9 @@ const router = useRouter();
 const auth = getAuth();
 const db = getFirestore();
 
+// 添加訂閱取消狀態
+const subscriptionCancelled = ref(false);
+
 // 訂閱資訊狀態
 const currentSubscription = ref({
   planType: 'Unknown',
@@ -408,6 +416,11 @@ const currentSubscription = ref({
   endDate: '',
   nextRenewalDate: ''
 });
+
+// 響應式數據
+const selectedPlan = ref(null)
+const isHovered = ref(null)
+const showNotification = ref(false)
 
 // 格式化日期函數
 const formatDate = (dateStr) => {
@@ -462,16 +475,6 @@ const calculateNextRenewalDate = (startDate, planType) => {
   return nextRenewal;
 };
 
-// 處理取消訂閱的點擊事件
-const handleCancelSubscription = () => {
-  router.push('/MemberCenter/MyPlanCancel');
-};
-
-// 響應式數據
-const selectedPlan = ref(null)
-const isHovered = ref(null)
-const showNotification = ref(false)
-
 const plans = ref([
   {
     title: 'Monthly Plan',
@@ -493,6 +496,13 @@ const plans = ref([
 // 載入訂閱資訊
 onMounted(async () => {
   try {
+    // 檢查本地存儲中是否有取消訂閱的標記
+    if (localStorage.getItem('subscriptionCancelled') === 'true') {
+      subscriptionCancelled.value = true;
+      // 清除本地存儲，避免影響其他頁面
+      localStorage.removeItem('subscriptionCancelled');
+    }
+    
     const user = auth.currentUser;
     if (!user) {
       console.error('用戶未登入');
@@ -533,18 +543,26 @@ onMounted(async () => {
       }
 
       currentSubscription.value = {
-        planType: `${latestOrder.planType} Plan`,
+        planType: `${latestOrder.planType}`,
         startDate: formatDate(startDate),
         endDate: formatDate(endDate),
         nextRenewalDate: formatDate(nextRenewalDate)
       };
 
       selectedPlan.value = latestOrder.planType;
+      
+      // 檢查訂單是否已請求取消 - 移動到這裡
+      subscriptionCancelled.value = latestOrder.cancellationRequested || subscriptionCancelled.value;
     }
   } catch (error) {
     console.error('獲取訂閱詳情錯誤:', error);
   }
 });
+
+// 處理取消訂閱的點擊事件
+const handleCancelSubscription = () => {
+  router.push('/MemberCenter/MyPlanCancel');
+};
 
 // 訂閱計劃相關方法
 const togglePlan = (planTitle) => {

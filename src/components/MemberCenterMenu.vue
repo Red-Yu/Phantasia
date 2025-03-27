@@ -224,23 +224,37 @@ const toggleSubMenu = (index) => {
 };
 
 // 修改 selectSubMenu 函數以根據訂閱狀態決定導航目標
+// 修改 selectSubMenu 函數
 const selectSubMenu = (mainIndex, subIndex) => {
-  // 先更新選中狀態
-  activeIndex.value = mainIndex;
-  activeSubMenu.value = subIndex;
-
   // 處理 My Plan 頁面的特殊導航邏輯
   if (mainIndex === SUBSCRIPTION_PLAN_INDEX && subIndex === MY_PLAN_SUB_INDEX) {
     const targetPath = hasActiveSubscription.value 
       ? "/MemberCenter/MyPlanSubscribed" 
       : "/MemberCenter/MyPlanVisitor";
     
-    router.push(targetPath);
+    // 先更新狀態，再導航
+    activeIndex.value = mainIndex;
+    activeSubMenu.value = subIndex;
+    
+    // 使用 router.push 的回調確保導航完成後保持選中狀態
+    router.push(targetPath).then(() => {
+      // 確保導航後選中狀態仍然保持
+      activeIndex.value = mainIndex;
+      activeSubMenu.value = subIndex;
+    });
   } else {
     // 其他子選單的常規導航邏輯
     const subItem = menuItems.value[mainIndex].subItems[subIndex];
     if (subItem.path) {
-      router.push(subItem.path);
+      // 先更新狀態，再導航
+      activeIndex.value = mainIndex;
+      activeSubMenu.value = subIndex;
+      
+      router.push(subItem.path).then(() => {
+        // 確保導航後選中狀態仍然保持
+        activeIndex.value = mainIndex;
+        activeSubMenu.value = subIndex;
+      });
     }
   }
 };

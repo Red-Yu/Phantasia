@@ -204,7 +204,12 @@ h1 {
       <template v-if="hasActiveSubscription">
         <p>{{ subscriptionPlanType }}</p>
         <p>Subscription Period: From {{ subscriptionStartDate }} to {{ subscriptionEndDate }}</p>
-        <p>Next Renewal Date: {{ nextRenewalDate }}</p>
+        <p>
+          Next Renewal Date: {{ nextRenewalDate }}
+          <span v-if="subscriptionCancelled" class="cancellation-notice">
+            (Automatic renewal canceled)
+          </span>
+        </p>
         <div class="manage-link" @click="handleManageSubscription">
           <p style="font-size: 20px">Manage Subscription Plans</p>
           <div class="i">
@@ -275,6 +280,8 @@ const subscriptionPlanType = ref('');
 const subscriptionStartDate = ref("");
 const subscriptionEndDate = ref("");
 const nextRenewalDate = ref("");
+// 添加訂閱取消狀態
+const subscriptionCancelled = ref(false);
 
 // 格式化日期函數
 const formatDate = (date) => {
@@ -371,10 +378,20 @@ onMounted(async () => {
         subscriptionStartDate.value = formatDate(startDate);
         subscriptionEndDate.value = formatDate(endDate);
         nextRenewalDate.value = formatDate(renewalDate);
-
+        
+        // 檢查訂單是否已請求取消
+        subscriptionCancelled.value = latestOrder.cancellationRequested || false;
       } else {
         hasActiveSubscription.value = false;
       }
+      
+      // 檢查本地存儲中是否有取消訂閱的標記
+      if (localStorage.getItem('subscriptionCancelled') === 'true') {
+        subscriptionCancelled.value = true;
+        // 清除本地存儲，避免影響其他頁面
+        localStorage.removeItem('subscriptionCancelled');
+      }
+      
     } catch (error) {
       console.error("Error fetching user and subscription data:", error);
       hasActiveSubscription.value = false;
