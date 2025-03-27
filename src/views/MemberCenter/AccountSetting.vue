@@ -253,164 +253,167 @@
 </style>
 
 <template>
-          <div class="inform-header">
-            <div class="title">PERSONAL INFORMATION</div>
-            <div class="btnKey-L dark">
-              <p>UPDATE</p>
-              <div class="icon-L">
-                <div class="white-cross">
-                  <div class="cols">
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div class="rows">
-                    <span></span>
-                  </div>
+  <div class="inform-header">
+    <div class="title">PERSONAL INFORMATION</div>
+    <div class="btnKey-L dark" @click="handleUpdate" :disabled="isUpdating">
+      <p>{{ isUpdating ? 'UPDATING...' : 'UPDATE' }}</p>
+      <div class="icon-L">
+        <div class="white-cross">
+          <div class="cols">
+            <span></span>
+            <span></span>
+          </div>
+          <div class="rows">
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+        
+  <!-- 表單區塊 -->
+  <div class="form-container">
+    <div class="name">
+      <div class="form-group">
+        <label class="form-label">Name</label>
+        <div class="input-wrapper">
+          <input type="text" class="form-input" placeholder="Please enter your name" v-model="userInfo.name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Nickname <span class="new-field">*</span></label>
+        <div class="input-wrapper">
+          <input type="text" class="form-input" placeholder="Please enter" v-model="userInfo.nickname">
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-date">
+      <div class="form-group">
+        <label class="form-label">Phone Number <span class="new-field">*</span></label>
+        <div class="input-wrapper">
+          <input type="tel" class="form-input" placeholder="Please enter" v-model="userInfo.phoneNumber">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Date of Birth</label>
+        <div class="input-wrapper">
+          <input type="date" class="form-input" placeholder="Please enter" v-model="userInfo.birthday">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email</label>
+      <div class="input-wrapper">
+        <input type="email" class="form-input" placeholder="service@tibame.com" v-model="userInfo.email" :disabled="true">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Address <span class="new-field">*</span></label>
+      <div class="input-wrapper">
+        <input type="text" class="form-input" placeholder="Please enter" v-model="userInfo.address">
+      </div>
+    </div>
+  </div>
+
+  <!-- 顯示更新結果的訊息 -->
+  <div v-if="updateMessage.show" :class="updateMessage.isError ? 'error-message' : 'success-message'">
+    {{ updateMessage.text }}
+  </div>
+
+  <hr class="divider">
+
+  <!-- 社群登入區塊 -->
+  <div class="social-section">
+    <div class="title">LOGIN ACCOUNT</div>
+    <p class="social-description">
+      Linking your social account provides a faster and more convenient login experience, enables
+      data synchronization, and ensures your personalized settings are always with you.
+      If you no longer wish to link your social account, you can choose to unlink it at any time.
+    </p>
+
+    <div class="social-container">
+      <div class="social-grid">
+        <!-- Google -->
+        <div class="social-card">
+          <img :src="google" height="120px" alt="google" />
+          <div class="social-card-title">Google Account</div>
+          <div class="social-status">
+            <img :src="graylight" height="16px" alt="graylight" />
+            <div class="status-text unlinked">Not Linked</div>
+          </div>
+          <button class="btnKey-L dark-border">
+            <p>LINK</p>
+            <div class="icon-L">
+              <div class="dark-cross">
+                <div class="cols">
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="rows">
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        <!-- Facebook -->
+        <div class="social-card">
+          <img :src="facebook" height="120px" alt="google" />
+          <div class="social-card-title">Facebook Account</div>
+          <div class="social-status">
+            <img :src="greenlight" height="16px" alt="greenlight" />
+            <div class="status-text linked">Linked</div>
+          </div>
+          <div class="btnKey-L none">
+            <p>UNLINK</p>
+            <div class="icon-L">
+              <div class="gray-cross">
+                <div class="cols">
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="rows">
+                  <span></span>
                 </div>
               </div>
             </div>
           </div>
-            
-          <!-- 表單區塊 -->
-          <div class="form-container">
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <div class="name">
-            <div class="form-group">
-              <label class="form-label">Name</label>
-              <div class="input-wrapper">
-                <input type="text" class="form-input" placeholder="Please enter your name">
-              </div>
+  <hr class="divider">
+
+  <!-- 密碼區塊 -->
+  <div class="password-section">
+    <div class="password-header">
+      <div class="title">CHANGE PASSWORD</div>
+      <button 
+        class="btnKey-L dark" 
+        @click="handlePasswordChange"
+        :disabled="isLoading || !isFormValid"
+      >
+        <p>{{ isLoading ? 'PROCESSING...' : 'CHANGE' }}</p>
+        <div class="icon-L">
+          <div class="white-cross">
+            <div class="cols">
+              <span></span>
+              <span></span>
             </div>
-
-            <div class="form-group">
-              <label class="form-label">Nickname</label>
-              <div class="input-wrapper">
-                <input type="text" class="form-input" placeholder="Please enter">
-              </div>
-            </div>
-          </div>
-
-          <div class="phone-date">
-            <div class="form-group">
-              <label class="form-label">Phone Number</label>
-              <div class="input-wrapper">
-                <input type="tel" class="form-input" placeholder="Please enter">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Date of Birth</label>
-              <div class="input-wrapper">
-                <input type="date" class="form-input" placeholder="Please enter">
-              </div>
+            <div class="rows">
+              <span></span>
             </div>
           </div>
-
-
-            <div class="form-group">
-              <label class="form-label">Email</label>
-              <div class="input-wrapper">
-                <input type="email" class="form-input" placeholder="service@tibame.com">
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Address</label>
-              <div class="input-wrapper">
-                <input type="text" class="form-input" placeholder="Please enter">
-              </div>
-            </div>
-          </div>
-
-          <hr class="divider">
-
-          <!-- 社群登入區塊 -->
-          <div class="social-section">
-            <div class="title">LOGIN ACCOUNT</div>
-            <p class="social-description">
-              Linking your social account provides a faster and more convenient login experience, enables
-              data synchronization, and ensures your personalized settings are always with you.
-              If you no longer wish to link your social account, you can choose to unlink it at any time.
-            </p>
-
-            <div class="social-container">
-              <div class="social-grid">
-                <!-- Google -->
-                <div class="social-card">
-                  <img :src="google" height="120px" alt="google" />
-                  <div class="social-card-title">Google Account</div>
-                  <div class="social-status">
-                    <img :src="graylight" height="16px" alt="graylight" />
-                    <div class="status-text unlinked">Not Linked</div>
-                  </div>
-                  <button class="btnKey-L dark-border">
-                    <p>LINK</p>
-                    <div class="icon-L">
-                      <div class="dark-cross">
-                        <div class="cols">
-                          <span></span>
-                          <span></span>
-                        </div>
-                        <div class="rows">
-                          <span></span>
-                        </div>
-                      </div>
-                    </div>
-                  </button>
-                </div>
-
-                <!-- Facebook -->
-                <div class="social-card">
-                  <img :src="facebook" height="120px" alt="google" />
-                  <div class="social-card-title">Facebook Account</div>
-                  <div class="social-status">
-                    <img :src="greenlight" height="16px" alt="greenlight" />
-                    <div class="status-text linked">Linked</div>
-                  </div>
-                  <div class="btnKey-L none">
-                    <p>UNLINK</p>
-                    <div class="icon-L">
-                      <div class="gray-cross">
-                        <div class="cols">
-                          <span></span>
-                          <span></span>
-                        </div>
-                        <div class="rows">
-                          <span></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="divider">
-
-          <!-- 密碼區塊 -->
-          <div class="password-section">
-          <div class="password-header">
-            <div class="title">CHANGE PASSWORD</div>
-            <button 
-              class="btnKey-L dark" 
-              @click="handlePasswordChange"
-              :disabled="isLoading || !isFormValid"
-            >
-              <p>{{ isLoading ? 'PROCESSING...' : 'CHANGE' }}</p>
-              <div class="icon-L">
-                <div class="white-cross">
-                  <div class="cols">
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div class="rows">
-                    <span></span>
-                  </div>
-                </div>
-              </div>
-            </button>
-          </div>
+        </div>
+      </button>
+    </div>
 
     <!-- 成功與錯誤訊息 -->
     <div v-if="successMessage" class="success-message">
@@ -488,6 +491,8 @@ import greenlight from "@/assets/img/membercenter/greenlight.svg";
 
 import { ref, reactive, computed, onMounted } from "vue";
 import { auth } from "../../firebase/firebaseConfig";
+import { db } from "../../firebase/firebaseConfig"; // 確保導入 Firestore
+import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 
 import {
   updatePassword,
@@ -495,6 +500,24 @@ import {
   EmailAuthProvider,
   onAuthStateChanged
 } from "firebase/auth";
+
+// 用戶資訊
+const userInfo = reactive({
+  name: "",
+  nickname: "",
+  phoneNumber: "",
+  birthday: "",
+  email: "",
+  address: ""
+});
+
+// 用戶資料更新狀態
+const isUpdating = ref(false);
+const updateMessage = reactive({
+  show: false,
+  text: "",
+  isError: false
+});
 
 // 密碼欄位
 const oldPassword = ref("");
@@ -519,10 +542,97 @@ const errors = reactive({
   confirmPassword: ""
 });
 
+// 從 Firestore 獲取用戶資料
+const fetchUserData = async (userId) => {
+  try {
+    const userDoc = await getDoc(doc(db, "users", userId));
+    
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      
+      // 填充用戶資訊
+      userInfo.name = userData.name || "";
+      userInfo.email = userData.email || "";
+      userInfo.birthday = userData.birthday || "";
+      
+      // 也載入其他可能的欄位，如果存在的話
+      userInfo.nickname = userData.nickname || "";
+      userInfo.phoneNumber = userData.phoneNumber || "";
+      userInfo.address = userData.address || "";
+    } else {
+      console.log("沒有找到用戶文檔!");
+    }
+  } catch (error) {
+    console.error("獲取用戶資料時發生錯誤:", error);
+  }
+};
+
+// 更新用戶資料
+const handleUpdate = async () => {
+  if (!currentUser.value) {
+    updateMessage.show = true;
+    updateMessage.text = "您需要登入才能更新資料";
+    updateMessage.isError = true;
+    return;
+  }
+  
+  isUpdating.value = true;
+  updateMessage.show = false;
+  
+  try {
+    // 檢查用戶文檔是否存在，如果不存在則創建
+    const userDocRef = doc(db, "users", currentUser.value.uid);
+    const userSnap = await getDoc(userDocRef);
+    
+    // 要更新的資料
+    const updateData = {
+      name: userInfo.name,
+      nickname: userInfo.nickname,
+      phoneNumber: userInfo.phoneNumber,
+      birthday: userInfo.birthday,
+      address: userInfo.address,
+      // 記錄最後更新時間
+      lastUpdated: new Date()
+    };
+    
+    if (!userSnap.exists()) {
+      // 如果用戶文檔不存在，則創建一個新文檔
+      // 添加創建時間和電子郵件（如果有的話）
+      updateData.createdAt = new Date();
+      if (currentUser.value.email) {
+        updateData.email = currentUser.value.email;
+      }
+      
+      // 使用 setDoc 設置新文檔
+      await setDoc(userDocRef, updateData);
+      console.log("創建了新的用戶文檔");
+    } else {
+      // 如果文檔已存在，則更新它
+      await updateDoc(userDocRef, updateData);
+      console.log("更新了現有的用戶文檔");
+    }
+    
+    // 顯示成功訊息
+    updateMessage.show = true;
+    updateMessage.text = "Your profile has been successfully updated";
+    updateMessage.isError = false;
+    
+    // 更新成功後重新獲取資料，確保顯示最新資料
+    fetchUserData(currentUser.value.uid);
+  } catch (error) {
+    console.error("更新用戶資料時發生錯誤:", error);
+    updateMessage.show = true;
+    updateMessage.text = "更新資料時發生錯誤: " + error.message;
+    updateMessage.isError = true;
+  } finally {
+    isUpdating.value = false;
+  }
+};
+
 // 檢查密碼長度
 const checkPasswordLength = () => {
   if (newPassword.value.trim() !== "" && newPassword.value.length < 6) {
-    errors.newPassword = "Password must be at least 6 characters";
+    errors.newPassword = "密碼必須至少有6個字符";
   } else {
     errors.newPassword = "";
   }
@@ -531,13 +641,11 @@ const checkPasswordLength = () => {
 // 檢查密碼是否匹配
 const checkPasswordMatch = () => {
   if (confirmPassword.value.trim() !== "" && newPassword.value !== confirmPassword.value) {
-    errors.confirmPassword = "Passwords do not match";
+    errors.confirmPassword = "密碼不匹配";
   } else {
     errors.confirmPassword = "";
   }
 };
-
-
 
 // 驗證表單
 const validateForm = () => {
@@ -551,25 +659,25 @@ const validateForm = () => {
   
   // 驗證舊密碼
   if (!oldPassword.value.trim()) {
-    errors.oldPassword = "Please enter your old password";
+    errors.oldPassword = "請輸入您的舊密碼";
     isValid = false;
   }
   
   // 驗證新密碼
   if (!newPassword.value.trim()) {
-    errors.newPassword = "Please enter a new password";
+    errors.newPassword = "請輸入新密碼";
     isValid = false;
   } else if (newPassword.value.length < 6) {
-    errors.newPassword = "Password must be at least 8 characters";
+    errors.newPassword = "密碼必須至少有6個字符";
     isValid = false;
   }
   
   // 驗證確認密碼
   if (!confirmPassword.value.trim()) {
-    errors.confirmPassword = "Please confirm your new password";
+    errors.confirmPassword = "請確認您的新密碼";
     isValid = false;
   } else if (newPassword.value !== confirmPassword.value) {
-    errors.confirmPassword = "Passwords do not match";
+    errors.confirmPassword = "密碼不匹配";
     isValid = false;
   }
   
@@ -594,14 +702,14 @@ const handlePasswordChange = async () => {
   
   // 檢查是否有用戶登入
   if (!currentUser.value) {
-    errorMessage.value = "You need to be logged in to change your password";
+    errorMessage.value = "您需要登入才能更改密碼";
     return;
   }
   
   // 檢查登入方式
   const providerId = currentUser.value.providerData[0]?.providerId;
   if (providerId === 'google.com' || providerId === 'facebook.com') {
-    errorMessage.value = `You are signed in with ${providerId.replace('.com', '')}. Please change your password through their service.`;
+    errorMessage.value = `您是通過${providerId.replace('.com', '')}登入的。請通過該服務更改您的密碼。`;
     return;
   }
   
@@ -623,7 +731,7 @@ const handlePasswordChange = async () => {
     await updatePassword(currentUser.value, newPassword.value);
     
     // 成功訊息
-    successMessage.value = "Your password has been updated successfully";
+    successMessage.value = "您的密碼已成功更新";
     
     // 清空表單
     oldPassword.value = "";
@@ -631,31 +739,31 @@ const handlePasswordChange = async () => {
     confirmPassword.value = "";
     
   } catch (error) {
-    console.error("Error changing password:", error.code, error.message);
+    console.error("更改密碼時發生錯誤:", error.code, error.message);
     
     // 處理特定錯誤
     switch (error.code) {
       case "auth/wrong-password":
-        errors.oldPassword = "The password is incorrect";
+        errors.oldPassword = "密碼不正確";
         break;
       case "auth/weak-password":
-        errors.newPassword = "Password should be at least 6 characters";
+        errors.newPassword = "密碼應至少有6個字符";
         break;
       case "auth/requires-recent-login":
-        errorMessage.value = "For security reasons, please log out and log back in before changing your password";
+        errorMessage.value = "出於安全原因，請退出並重新登入，然後再更改密碼";
         break;
       case "auth/invalid-credential":
-        errors.oldPassword = "The old password is incorrect";
+        errors.oldPassword = "舊密碼不正確";
         break;
       case "auth/too-many-requests":
-        errorMessage.value = "Too many unsuccessful attempts. Please try again later.";
+        errorMessage.value = "太多失敗的嘗試。請稍後再試。";
         break;
       case "auth/network-request-failed":
-        errorMessage.value = "Network error. Please check your internet connection.";
+        errorMessage.value = "網絡錯誤。請檢查您的網絡連接。";
         break;
       default:
         // 清理錯誤訊息，使其更友好
-        let cleanErrorMessage = error.message || "An error occurred";
+        let cleanErrorMessage = error.message || "發生錯誤";
         // 移除 Firebase 前綴
         cleanErrorMessage = cleanErrorMessage.replace("Firebase: ", "");
         // 移除錯誤代碼
@@ -668,18 +776,34 @@ const handlePasswordChange = async () => {
   }
 };
 
-// 監聽登入狀態
+// 監聽登入狀態並獲取用戶資料
 onMounted(() => {
   const unsubscribe = onAuthStateChanged(auth, (user) => {
     currentUser.value = user;
     
-    // 如果用戶沒有登入，重置表單
-    if (!user) {
+    // 如果用戶登入了，獲取他們的數據
+    if (user) {
+      fetchUserData(user.uid);
+      console.log("用戶已登入，正在獲取數據...");
+      
+      // 如果用戶是通過電子郵件登入的，自動填入電子郵件地址
+      if (user.email) {
+        userInfo.email = user.email;
+      }
+    } else {
+      // 如果用戶沒有登入，重置表單
       oldPassword.value = "";
       newPassword.value = "";
       confirmPassword.value = "";
       successMessage.value = "";
-      errorMessage.value = "You must be logged in to change your password";
+      errorMessage.value = "您必須登入才能更改密碼";
+      
+      // 重置用戶資訊
+      Object.keys(userInfo).forEach(key => {
+        userInfo[key] = "";
+      });
+      
+      console.log("用戶未登入，已重置表單");
     }
   });
   
