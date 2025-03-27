@@ -239,7 +239,7 @@ h1 {
       <img :src="stamp" alt="stamp" />
       <div class="stepnumber">99</div>
     </div>
-    <div class="page-link">
+    <div class="page-link" @click="handleGoToMyRewardCard">
       <p style="font-size: 20px">Go To My Page</p>
       <div class="i">
         <div class="dark-arrow"></div>
@@ -410,6 +410,15 @@ const handleManageSubscription = () => {
 
 const handleExploreSubscription = () => {
   router.push("/MemberCenter/MyPlanVisitor").then(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+};
+
+const handleGoToMyRewardCard = () => {
+  router.push("/MyCabin/MyRewardCard").then(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
