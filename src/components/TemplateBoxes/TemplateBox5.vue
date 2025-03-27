@@ -179,7 +179,7 @@ watch(
 
         // 自定義動畫函式供外部觸發 , createPreview 呼叫他 
         wrapperEl.__startInnerAnimation = () => {
-          gsap.set([bgcRef.value,WidthTipRef.value],{ x: 0 });
+          gsap.set([bgcRef.value],{ x: 0 });
           const tl = gsap.timeline({delay:3});
           tl.to(bgcRef.value, { x: -400, duration: 1.2, ease: 'power2.out' });
         };
@@ -188,7 +188,7 @@ watch(
 
       // 一般和縮圖：載入時立即播放動畫
       if (newMode === 'edit' || newMode === 'thumbnail') {
-        gsap.set([bgcRef.value,WidthTipRef.value],{ x: 0 });
+        gsap.set([bgcRef.value],{ x: 0 });
         const tl = gsap.timeline({delay:3});
         tl.to(bgcRef.value, { x: -400, duration: 1.2, ease: 'power2.out' });
       }
