@@ -270,6 +270,11 @@
       </div>
     </div>
   </div>
+
+  <!-- 顯示更新結果的訊息 -->
+  <div v-if="updateMessage.show" :class="updateMessage.isError ? 'error-message' : 'success-message'">
+    {{ updateMessage.text }}
+  </div>
         
   <!-- 表單區塊 -->
   <div class="form-container">
@@ -320,10 +325,7 @@
     </div>
   </div>
 
-  <!-- 顯示更新結果的訊息 -->
-  <div v-if="updateMessage.show" :class="updateMessage.isError ? 'error-message' : 'success-message'">
-    {{ updateMessage.text }}
-  </div>
+
 
   <hr class="divider">
 
