@@ -109,7 +109,7 @@
     <div v-if="islogOut" class="logInmenuButton">
       <div class="filter"></div>
 
-      <div class="menuAvatar">
+      <div class="menuAvatar" @click="openModal">
         <img
           class="avaterImg"
           src="../Assets/Day/myColset/avatarDefault.png"

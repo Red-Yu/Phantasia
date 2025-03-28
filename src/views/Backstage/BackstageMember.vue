@@ -11,7 +11,8 @@
         class="search"
         name="search"
         type="text"
-        placeholder="輸入會員編號或姓名"
+        placeholder="輸入會員帳號或姓名"
+        v-model="searchQuery"
       />
       <div class="icon-M searchIcon">
         <div class="dark-search"></div>
@@ -107,18 +108,34 @@ import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
 const users = ref([]); // 用來存儲多個用戶資料
+const searchQuery = ref("");
 const currentPage = ref(1); // 當前頁數
 const itemsPerPage = 11; // 每頁顯示的資料筆數
 // const selectedMember = ref(null); // 用來存儲選中的會員資料
 // const showLightbox = ref(false); // 控制 Lightbox 的顯示與隱藏
 
 // 計算總頁數
-const totalPages = computed(() => Math.ceil(users.value.length / itemsPerPage));
+const totalPages = computed(() =>
+  Math.ceil(filteredUsers.value.length / itemsPerPage)
+);
 
-// 計算當前頁顯示的資料
+// 計算過濾後的所有會員資料
+const filteredUsers = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return users.value.filter((user) => {
+    return (
+      user.email?.toLowerCase().includes(query) ||
+      "" || // 確保 email 存在且不是 undefined/null
+      user.name?.toLowerCase().includes(query) ||
+      "" // 確保 name 存在且不是 undefined/null
+    );
+  });
+});
+
+// 計算當前頁顯示的資料 (基於過濾後的資料)
 const paginatedUsers = computed(() => {
   const startIndex = (currentPage.value - 1) * itemsPerPage;
-  return users.value.slice(startIndex, startIndex + itemsPerPage);
+  return filteredUsers.value.slice(startIndex, startIndex + itemsPerPage);
 });
 
 // 在組件加載時獲取所有用戶資料

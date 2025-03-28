@@ -256,11 +256,20 @@ onMounted(() => {
         console.log("Error getting document:", error);
       }
       // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/character115x409.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      avatarURL.value =
+        user.photoURL ||
+        new URL("../../Assets/Day/myColset/avatarDefault.png", import.meta.url)
+          .href; // 如果用戶有頭像，則使用；否則使用預設頭像
     } else {
       // 用戶未登入
-      avatarURL.value = "/MyColset/character115x409.png";
-      partnerURL.value = "/MyColset/Ollie.png";
+      avatarURL.value = new URL(
+        "../../Assets/Day/myColset/avatarDefault.png",
+        import.meta.url
+      ).href;
+      partnerURL.value = new URL(
+        "../../Assets/Day/myColset/elf_1.png",
+        import.meta.url
+      ).href;
     }
   });
 });

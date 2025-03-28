@@ -1,4 +1,6 @@
 <style scoped>
+@import "../Assets/css/index.css";
+
 .loading-animation {
   position: absolute;
   max-width: 1440px;
@@ -17,8 +19,17 @@ p {
   font-weight: 400;
   line-height: normal;
   font-variant: small-caps;
-
   pointer-events: auto;
+}
+
+.visitor,
+.login {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.visitor:hover,
+.login:hover {
+  color: white;
 }
 
 .video-container {
@@ -53,14 +64,14 @@ p {
   position: absolute;
   z-index: 3000;
   transform: translate(-50%, -50%);
-  top: 72%;
+  top: 66%;
   left: 50%;
   display: flex;
   gap: 40px;
 }
 
 .start p {
-  font-size: 40px;
+  font-size: 44px;
   text-shadow: 3px 3px 4px rgba(0, 79, 59, 0.8);
 }
 
@@ -77,6 +88,27 @@ p {
   font-size: 28px;
   font-style: italic;
   cursor: pointer;
+}
+
+.Administrator:hover {
+  color: white;
+}
+
+.Administrator::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0;
+  background-color: white;
+  transition: width 0.4s ease;
+  transform-origin: left;
+}
+
+.Administrator:hover::after,
+.Administrator.active::after {
+  width: 100%;
 }
 
 /* ==========影片========== */
@@ -172,7 +204,7 @@ p {
   <div v-if="isStart" class="loading-animation">
     <div class="startWrapper start">
       <p class="start_btn visitor" @click="startVideo">Visitor</p>
-      <p class="start_btn inhabitant" @click="openModal">Login</p>
+      <p class="start_btn login" @click="openModal">Login</p>
     </div>
   </div>
 

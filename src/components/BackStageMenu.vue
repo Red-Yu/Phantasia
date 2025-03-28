@@ -2,6 +2,9 @@
 import { ref, onMounted } from "vue";
 import TabButton from "./BTN/TabButton.vue";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const auth = getAuth();
 const avatarURL = ref("");
@@ -23,12 +26,22 @@ onMounted(() => {
     // 將回調設為 async 函數
     if (user) {
       // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      avatarURL.value =
+        user.photoURL ||
+        new URL("../Assets/Day/myColset/avatarDefault.png", import.meta.url)
+          .href; // 如果用戶有頭像，則使用；否則使用預設頭像
     } else {
-      avatarURL.value = "/MyColset/avatarDefault.png";
+      avatarURL.value = new URL(
+        "../Assets/Day/myColset/avatarDefault.png",
+        import.meta.url
+      ).href;
     }
   });
 });
+
+const backToHome = () => {
+  router.push("/");
+};
 </script>
 
 <style scoped>
@@ -103,20 +116,9 @@ onMounted(() => {
           />
         </div>
         <div class="logout-container">
-          <button class="logout">
+          <button @click="backToHome" class="logout">
             <div class="btnKey-M dark">
-              <p>登出</p>
-              <div class="icon-M">
-                <div class="white-cross">
-                  <div class="cols">
-                    <span></span>
-                    <span></span>
-                  </div>
-                  <div class="rows">
-                    <span></span>
-                  </div>
-                </div>
-              </div>
+              <p>返回首頁</p>
             </div>
           </button>
         </div>

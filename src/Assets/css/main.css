@@ -2991,7 +2991,10 @@ table {
   margin: 10px 0;
 }
 
-table, th, tr, td {
+table,
+th,
+tr,
+td {
   text-align: center;
   padding: 10px;
 }

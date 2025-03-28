@@ -4,7 +4,7 @@
     <div class="sidebar">
       <div class="user">
         <div class="useImg">
-          <div class="avatar">
+          <div class="avatar" style="cursor: pointer" @click="ToMyCloset">
             <img
               class="avaterImg"
               v-if="avatarURL"
@@ -56,10 +56,20 @@ onMounted(() => {
     // 將回調設為 async 函數
     if (user) {
       // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      avatarURL.value =
+        user.photoURL ||
+        new URL("../Assets/Day/myColset/avatarDefault.png", import.meta.url)
+          .href; // 如果用戶有頭像，則使用；否則使用預設頭像
     } else {
-      avatarURL.value = "/MyColset/avatarDefault.png";
+      avatarURL.value = new URL(
+        "../Assets/Day/myColset/avatarDefault.png",
+        import.meta.url
+      ).href;
     }
   });
 });
+
+const ToMyCloset = () => {
+  router.push("/MyCabin/MyColset");
+};
 </script>
