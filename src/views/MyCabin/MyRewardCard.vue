@@ -276,7 +276,7 @@
                     />
                     <img
                       v-else
-                      src="../../Assets/Day/rewardCard/key.png"
+                      src="../../Assets/Day/myColset/elf_5.png"
                       alt="Key"
                       class="real_dress"
                     />

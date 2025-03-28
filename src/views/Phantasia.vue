@@ -78,8 +78,9 @@
 
   <BlackCover />
 
-  <div class="blackWrapper">
+  <div class="blackWrapper" style="overflow: hidden">
     <div
+      class="preloadSlideArea"
       :class="[
         'slideArea',
         { rightSliding: isRightSliding, leftSliding: isLeftSliding },
@@ -612,6 +613,4 @@ const ToAbout = () => {
 const ToMemberCenter = () => {
   router.push("/MemberCenter");
 };
-
-document.body.style.overflow = "hidden";
 </script>

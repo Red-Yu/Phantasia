@@ -3025,8 +3025,9 @@ tbody > tr:hover {
 
 .pagination button.active {
   font-weight: bold;
-  background-color: #007bff;
+  background-color: #153243;
   color: white;
+  border-radius: 8px;
 }
 
 .topBar {
