@@ -79,6 +79,11 @@
                 @click="ToMyColset"
               />
 
+              <!-- 角色旁邊的對話框 -->
+              <div class="dialogBox characterDialog">
+                <p>If you want a style change, just let me know!</p>
+              </div>
+
               <!-- <img
                 src="../../Assets/Day/myCabin/character115x409.png"
                 alt=""
@@ -107,6 +112,11 @@
                 alt=""
                 class="elf"
               /> -->
+
+              <!-- 夥伴旁邊的對話框 -->
+              <div class="dialogBox partnerDialog">
+                <p>Let's check out your reward card points!</p>
+              </div>
 
               <img
                 class="partnerImg"

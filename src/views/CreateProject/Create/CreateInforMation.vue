@@ -71,8 +71,8 @@
             <!-- <option value="5">3-5</option>
             <option value="12">5-12</option>
             <option value="16">12-16</option> -->
-            <option value="1~6">1-6</option>
-            <option value="7~12">7-12</option>
+            <option value="1-6">1-6</option>
+            <option value="7-12">7-12</option>
           </select>
           <div class="selectIcon">
             <div class="cross">

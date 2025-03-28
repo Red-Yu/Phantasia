@@ -983,6 +983,27 @@ button {
   transform: translate(-50%, -50%);
 }
 
+/* 角色旁邊的對話框 */
+.dialogBox {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-family: "Aleo";
+  font-weight: 500;
+  font-style: normal;
+  padding: 10px;
+  padding-left: 20px;
+  border-radius: 5px;
+  width: 13vw;
+  min-width: 170px;
+  font-size: 14px;
+  // display: none;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
 .characterWrapper {
   // background-color: yellow;
   position: absolute;
@@ -992,6 +1013,19 @@ button {
   height: 50vh;
   min-width: 120px;
   pointer-events: auto;
+
+  //角色的對話框
+  .characterDialog {
+    top: 55px;
+    left: 110%;
+    width: 16vw;
+    min-width: 208px;
+    // display: block;
+  }
+
+  &:hover .characterDialog {
+    opacity: 1;
+  }
 
   .avaterImg {
     pointer-events: none;
@@ -1007,6 +1041,17 @@ button {
   height: 23vh;
   min-width: 100px;
   pointer-events: auto;
+
+  //小精靈對話框
+  .partnerDialog {
+    top: 20px;
+    left: 110%; /* 根據需要調整距離 */
+    display: block;
+  }
+
+  &:hover .partnerDialog {
+    opacity: 1;
+  }
 
   .partnerImg {
     pointer-events: none;
