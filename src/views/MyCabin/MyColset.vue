@@ -112,6 +112,13 @@
 <template>
   <BlackCover />
 
+  <MyClosetLoading
+    :isVisible="isUploading"
+    :isUploading="isUploading"
+    :uploadProgress="uploadProgress"
+    @close="closeModal"
+  />
+
   <div class="blackWrapper">
     <div class="wrapper">
       <div class="positionArea">
@@ -527,8 +534,16 @@ import {
 import { auth, storage } from "@/firebase/firebaseConfig";
 import { db } from "@/firebase/firebaseConfig";
 import { getAuth, updateProfile } from "firebase/auth";
-import { ref as fsRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref as fsRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import BlackCover from "../../components/BlackCover.vue";
+import MyClosetLoading from "../../components/MyClosetLoading.vue";
+
+const isUploading = ref(false);
+const uploadProgress = ref(0);
 
 const router = useRouter();
 const parallaxContainer = ref(null);
@@ -670,7 +685,7 @@ onMounted(async () => {
       });
     });
 
-    console.log(partnerImages.value[0].imageUrl);
+    // console.log(partnerImages.value[0].imageUrl);
   } catch (error) {
     console.error("Error fetching data from Firestore: ", error);
   }
@@ -902,6 +917,10 @@ const setDefaultSelections = () => {
 // ==================使用canva生成圖片=================
 
 const generateAllImages = async () => {
+  // 開始上傳，設置彈窗狀態
+  isUploading.value = true;
+  uploadProgress.value = 0;
+
   selectedBall.value = null;
   isSaveButtonVisible.value = false;
 
@@ -1150,13 +1169,35 @@ const uploadImages = async (avatarDataURL, partnerDataURL) => {
       `userAvatars/${user.uid}/partner.png`
     );
 
-    // 上傳圖片
-    const avatarSnapshot = await uploadBytes(avatarStorageRef, avatarBlob);
-    const partnerSnapshot = await uploadBytes(partnerStorageRef, partnerBlob);
+    // 上傳圖片 (處理上傳進度)
+    const avatarUploadTask = uploadBytesResumable(avatarStorageRef, avatarBlob);
+    const partnerUploadTask = uploadBytesResumable(
+      partnerStorageRef,
+      partnerBlob
+    );
+
+    // 監聽上傳進度
+    avatarUploadTask.on("state_changed", (snapshot) => {
+      const progress = Math.floor(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+      uploadProgress.value = Math.max(uploadProgress.value, progress); // 確保進度不會回退
+    });
+
+    partnerUploadTask.on("state_changed", (snapshot) => {
+      const progress = Math.floor(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+      uploadProgress.value = Math.max(uploadProgress.value, progress); // 確保進度不會回退
+    });
+
+    // 等待上傳完成
+    const avatarUploadSnapshot = await avatarUploadTask;
+    const partnerUploadSnapshot = await partnerUploadTask;
 
     // 獲取下載 URL
-    const avatarURL = await getDownloadURL(avatarSnapshot.ref);
-    const partnerURL = await getDownloadURL(partnerSnapshot.ref);
+    const avatarURL = await getDownloadURL(avatarUploadSnapshot.ref);
+    const partnerURL = await getDownloadURL(partnerUploadSnapshot.ref);
 
     // 更新 Firebase Authentication 的頭像 URL
     await updateProfile(user, {
@@ -1166,7 +1207,7 @@ const uploadImages = async (avatarDataURL, partnerDataURL) => {
     // 儲存 partnerURL 到 Firestore
     await setDoc(doc(db, "users", user.uid), { partnerURL }, { merge: true });
 
-    console.log("Partner URL saved to Firestore:", partnerURL);
+    // console.log("Partner URL saved to Firestore:", partnerURL);
 
     // 更新 Pinia store 中
     const userAuthState = useUserAuthState();
@@ -1174,6 +1215,15 @@ const uploadImages = async (avatarDataURL, partnerDataURL) => {
     userAuthState.setPartnerURL(partnerURL);
 
     console.log("Avatar and partner images updated successfully!");
+
+    // 上傳完成，隱藏彈窗
+    isUploading.value = false;
+
+    // 在上傳完成後確保最終進度為100%
+    avatarUploadTask.then(() => {
+      uploadProgress.value = 100;
+    });
+    // uploadProgress.value = 100;
 
     // 這裡可以選擇是否要返回這兩個下載 URL 進行進一步處理
     // return { avatarURL, partnerURL };
