@@ -107,7 +107,7 @@
     </div>
     <div class="actionButtonWrapper8">
       <div class="action-buttons8">
-        <div @click="submitData" class="action-button8 btnKey-L light">
+        <div @click="collectStamps" class="action-button8 btnKey-L light">
           <p>COLLECT YOUR STAMPS</p>
         </div>
         <div @click="navigate('/Products')" class="action-button8 btnLink light">
@@ -180,6 +180,10 @@ function navigate(link) {
     router.push(link); // Internal route
   }
 }
+
+const collectStamps = () => {
+  router.push("/MyCabin/MyRewardCard");
+};
 
 // Firebase Auth setup and subscription check
 const auth = getAuth();

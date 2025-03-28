@@ -3,6 +3,8 @@
 </style>
 
 <template>
+  <SnowflakeEffect />
+  <Header type="night" />
   <div class="wrapper3">
     <div class="page-container3">
       <section class="content-section3">
@@ -157,6 +159,8 @@ import { useRouter, useRoute } from "vue-router";
 import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { ref as storageRef, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path to your Firebase config
+import Header from "@/components/Header.vue";
+import SnowflakeEffect from "@/components/SnowflakeEffect.vue";
 
 // Router and Route setup
 const router = useRouter();
@@ -287,8 +291,7 @@ const goToProductReadPage = () => {
 
 // Placeholder for adding to shelf
 const addToShelf = () => {
-  console.log(`Adding book ${product.value.id} to shelf`);
-  // Implement Firestore update or other logic here
+  router.push({ name: "MyBookcase" });
 };
 
 // Feedback list scroll logic

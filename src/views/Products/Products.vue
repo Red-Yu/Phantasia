@@ -3,6 +3,7 @@
 </style>
 
 <template>
+  <SnowflakeEffect />
   <div ref="scrollContainer">
     <!-- Original Section (Full Scroll Effect Applies) -->
     <div ref="secSection" class="sec">
@@ -31,7 +32,9 @@
     </div>
   </div>
 
-  <Header type="night" />
+  <div class="header-wrapper" ref="headerWrapper">
+    <Header type="night" />
+  </div>
   <!-- Carousel Section -->
   <div class="carousel-container">
     <div
@@ -234,6 +237,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
 import Header from "@/components/Header.vue";
+import SnowflakeEffect from "@/components/SnowflakeEffect.vue";
 
 // Firebase Config
 const firebaseConfig = {
@@ -265,6 +269,8 @@ function navigate(link) {
 const secSection = ref(null);
 const aboutButtonSection = ref(null);
 const scrollContainer = ref(null);
+const headerWrapper = ref(null); // Ref for header wrapper visibility control
+
 let isAnimating = false;
 
 function debounce(func, wait) {
@@ -399,8 +405,12 @@ onMounted(async () => {
   console.log("Products after fetch:", products.value); // Debug here
   await nextTick();
 
-  if (!secSection.value || !aboutButtonSection.value) {
-    console.error("Refs not found:", secSection.value, aboutButtonSection.value);
+  if (!secSection.value || !aboutButtonSection.value || !headerWrapper.value) {
+    console.error("Refs not found:", {
+      secSection: secSection.value,
+      aboutButtonSection: aboutButtonSection.value,
+      headerWrapper: headerWrapper.value,
+    });
     return;
   }
 
@@ -411,6 +421,27 @@ onMounted(async () => {
     onEnter: () => handleFullScroll("down"),
     onEnterBack: () => handleFullScroll("up"),
     once: false,
+  });
+
+  // Header Visibility Control
+  ScrollTrigger.create({
+    trigger: secSection.value,
+    start: "bottom top", // When bottom of secSection hits top of viewport (scrolling down)
+    end: "top bottom", // When top of secSection hits bottom of viewport (scrolling up)
+    onEnter: () => {
+      if (headerWrapper.value) {
+        headerWrapper.value.classList.add("visible"); // Show header when scrolling past secSection
+      } else {
+        console.error("headerWrapper is null in onEnter");
+      }
+    },
+    onEnterBack: () => {
+      if (headerWrapper.value) {
+        headerWrapper.value.classList.remove("visible"); // Hide header when scrolling back into secSection
+      } else {
+        console.error("headerWrapper is null in onEnterBack");
+      }
+    },
   });
 });
 
