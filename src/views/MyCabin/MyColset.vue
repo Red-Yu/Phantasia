@@ -342,7 +342,7 @@
                 v-for="(image, index) in clothesImages"
                 :key="index"
                 v-show="selectedClothesImage === index"
-                :src="`/MyColset/${image.url}`"
+                :src="image.imageUrl"
                 :alt="image.name"
               />
 
