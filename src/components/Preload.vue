@@ -170,6 +170,21 @@ p {
 </style>
 
 <template>
+  <div class="textContent">
+    <!-- =====introduction===== -->
+    <transition name="fade" mode="out-in">
+      <div class="introduction">
+        <span v-show="isintroduction" class="title1 flipInY"
+          >Welcome to Phantasia, a marvelous magic world.
+        </span>
+
+        <br />
+        <span v-show="isintroduction" class="title1 flipInY"
+          >Try clicking the lamp and other objects to see what happens.</span
+        >
+      </div>
+    </transition>
+  </div>
   <!-- Login Modal -->
   <Login
     :isVisible="isLoginVisible"
@@ -272,6 +287,7 @@ import "animate.css";
 
 const router = useRouter();
 const isLoading = ref(true);
+const isintroduction = ref(false);
 const isStart = ref(false);
 const isVideo = ref(false);
 const videoShow = ref(true); //讓動畫出現時有過場
@@ -282,6 +298,11 @@ const startVideoElement = ref(null);
 const startVideo = () => {
   isStart.value = false;
   // console.log(startVideoElement.value);
+
+  setTimeout(() => {
+    resetTextillateAnimations();
+    isintroduction.value = true;
+  }, 5800);
 
   setTimeout(() => {
     $(".rippleArea").ripples("destroy");
@@ -417,6 +438,12 @@ const preloadImagesAndVideos = () => {
   }, 6000);
 };
 
+// 移除並重新附加 textillate 動畫 class
+const resetTextillateAnimations = () => {
+  // 重新初始化 textillate 動畫
+  $(".title1").textillate("start");
+};
+
 onMounted(() => {
   isVideo.value = true;
   videoShow.value = true;
@@ -459,6 +486,14 @@ onMounted(() => {
         delay: 50,
       },
     });
+  });
+
+  $(".flipInY").textillate({
+    in: {
+      effect: "flipInY",
+      shuffle: true,
+      delay: 60,
+    },
   });
 
   // 檢查 sessionStorage 中是否有標記，決定是否顯示 Preload 動畫

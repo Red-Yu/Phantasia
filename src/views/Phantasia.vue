@@ -56,8 +56,6 @@
 </style>
 
 <template>
-  <Preload />
-
   <!-- ===================登入彈窗===================== -->
 
   <!-- Login Modal -->
@@ -79,54 +77,16 @@
   <!-- ===================首頁共用組件(前景)===================== -->
 
   <BlackCover />
-  <div class="textContent">
-    <!-- =====log out===== -->
-    <div v-if="islogIn" class="logOutmenuButton">
-      <div class="filter"></div>
-      <div class="menuAvatar" @click="ToMemberCenter">
-        <img
-          class="avaterImg"
-          v-if="avatarURL"
-          :src="avatarURL"
-          alt="User Avatar"
-        />
-        <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
-      </div>
-      <div class="btnLink white loginInfo" @click="ToMemberCenter">
-        <p v-if="userName">Hi, {{ userName }} !</p>
-        <p v-else>Hi, Visitor !</p>
-        <!-- <p>Hi,Chris!</p> -->
-      </div>
-      <div class="btnLink white" @click="logout">
-        <p>Log Out</p>
-        <div class="icon-M">
-          <div class="white-setting"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- =====log in===== -->
-    <div v-if="islogOut" class="logInmenuButton">
-      <div class="filter"></div>
-
-      <div class="menuAvatar" @click="openModal">
-        <img
-          class="avaterImg"
-          src="../Assets/Day/myColset/avatarDefault.png"
-          alt="User Avatar"
-        />
-        <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
-      </div>
-      <div class="btnLink white loginInfo" @click="openModal">
-        <p>Log In</p>
-        <!-- <div class="icon-M">
-          <div class="white-edit"></div>
-        </div> -->
-      </div>
-    </div>
-  </div>
 
   <div class="blackWrapper">
+    <div
+      :class="[
+        'slideArea',
+        { rightSliding: isRightSliding, leftSliding: isLeftSliding },
+      ]"
+    >
+      <Preload />
+    </div>
     <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
       <div
         :class="[
@@ -134,6 +94,53 @@
           { rightSliding: isRightSliding, leftSliding: isLeftSliding },
         ]"
       >
+        <div class="textContent">
+          <!-- =====log out===== -->
+          <div v-if="islogIn" class="logOutmenuButton">
+            <div class="filter"></div>
+            <div class="menuAvatar" @click="ToMemberCenter">
+              <img
+                class="avaterImg"
+                v-if="avatarURL"
+                :src="avatarURL"
+                alt="User Avatar"
+              />
+              <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
+            </div>
+            <div class="btnLink white loginInfo" @click="ToMemberCenter">
+              <p v-if="userName">Hi, {{ userName }} !</p>
+              <p v-else>Hi, Visitor !</p>
+              <!-- <p>Hi,Chris!</p> -->
+            </div>
+            <div class="btnLink white" @click="logout">
+              <p>Log Out</p>
+              <div class="icon-M">
+                <div class="white-setting"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =====log in===== -->
+          <div v-if="islogOut" class="logInmenuButton">
+            <div class="filter"></div>
+
+            <div class="menuAvatar" @click="openModal">
+              <img
+                class="avaterImg"
+                src="../Assets/Day/myColset/avatarDefault.png"
+                alt="User Avatar"
+              />
+              <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
+            </div>
+            <div class="btnLink white loginInfo" @click="openModal">
+              <p>Log In</p>
+              <!-- <div class="icon-M">
+          <div class="white-edit"></div>
+        </div> -->
+            </div>
+          </div>
+        </div>
+
         <transition name="fade_slow" mode="out-in">
           <img v-show="showImage" :src="bgBook" alt="" class="bgBook" />
         </transition>
@@ -605,4 +612,6 @@ const ToAbout = () => {
 const ToMemberCenter = () => {
   router.push("/MemberCenter");
 };
+
+document.body.style.overflow = "hidden";
 </script>
