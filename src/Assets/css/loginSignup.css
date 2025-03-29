@@ -4380,7 +4380,7 @@ button[type=submit]:hover {
 div.btn {
   display: flex;
   justify-content: center;
-  padding-top: 12px;
+  padding-top: 8px;
 }
 
 .error {
@@ -4453,7 +4453,18 @@ input {
 }
 
 .error-message {
+  height: 14px; /* 固定高度，避免擠壓 */
+  line-height: 14px; /* 垂直置中 */
   color: red;
+  font-size: 14px;
+  visibility: hidden; /* 預設隱藏 */
+  opacity: 0; /* 預設透明 */
+  transition: opacity 0.3s ease; /* 添加過渡效果 */
+}
+
+.error-message.visible {
+  visibility: visible; /* 顯示錯誤訊息 */
+  opacity: 1; /* 完全不透明 */
 }
 
 .modal-content.successPrompt {
