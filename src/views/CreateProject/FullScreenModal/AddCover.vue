@@ -105,7 +105,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc , doc, updateDoc} from "firebase/firestore";
 
 const docIdStore = useDocIdStore(); // 使用 Pinia store
 //-----------------------------
@@ -234,24 +234,52 @@ const handleSave = async () => {
               ) {
                 // 轉換 RGB 顏色為 HEX 格式
                 const hexColorCode = rgbToHex(r, g, b);
+// ==================================================================
+// (舊版) 創建資料 --> 改從前一步 [ 創作 ] 創建資料
+// ==================================================================        
+                // // 儲存資料到 Firestore
+                // const db = getFirestore();
+                // const booksCollection = collection(db, "books");
 
-                // 儲存資料到 Firestore
-                const db = getFirestore();
-                const booksCollection = collection(db, "books");
+                // const docRef = await addDoc(booksCollection, {
+                //   userId: user.uid,
+                //   colorCode: hexColorCode, // 儲存 HEX 顏色代碼
+                //   imagePath: imageUrl, // 儲存圖片 URL
+                // });
 
-                const docRef = await addDoc(booksCollection, {
-                  userId: user.uid,
-                  colorCode: hexColorCode, // 儲存 HEX 顏色代碼
-                  imagePath: imageUrl, // 儲存圖片 URL
-                });
+                // const docId = docRef.id; // 這裡獲取 docId
 
-                const docId = docRef.id; // 這裡獲取 docId
+                // console.log("Data saved to Firestore!");
 
-                console.log("Data saved to Firestore!");
+                // // 儲存 docId 到 Pinia Store
+                // docIdStore.setDocId(docId); // 儲存 docId
+// ==================================================================
+// 資玲 --> 修改成更新 (添加) 資料
+// ==================================================================
+                // 確保 docId 存在
+                const docId = docIdStore.getDocId;
+                  if (!docId) {
+                    alert("No document ID found.");
+                    return;
+                  }
 
-                // 儲存 docId 到 Pinia Store
-                docIdStore.setDocId(docId); // 儲存 docId
+                  // 獲取指定 docId 的文件引用
+                  const db = getFirestore();
+                  const bookRef = doc(db, "books", docId); // "books" 是集合名稱，docId 是文件 ID
 
+                  try {
+                    // 更新資料
+                    await updateDoc(bookRef, {
+                      colorCode: hexColorCode, // 儲存 HEX 顏色代碼
+                      imagePath: imageUrl, // 儲存圖片 URL
+                    });
+
+                    console.log("Data saved to Firestore!");
+                    // 如果需要，跳轉到下一頁
+                    // this.$router.push('/Create/CreateInfo/CreateConfirm');
+                  } catch (error) {
+                    console.error("Error adding document: ", error);
+                  }
                 // 關閉彈窗
                 closeModal();
 

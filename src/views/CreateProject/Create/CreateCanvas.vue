@@ -3,18 +3,18 @@
     <!-- FunctionBar -->
     <div class="FunctionBar">
       <div class="Zoom">
-        <span class="btn" @click="zoomOut">-</span>
+        <span class="btn" @click="zoomOut">–</span>
         <span> {{ zoomLevel }}% </span>
         <span class="btn" @click="zoomIn">+</span>
       </div>
-      <div class="stepGroup">
+      <!-- <div class="stepGroup">
         <div class="step">
           <div class="last" @click="undo"></div>
         </div>
         <div class="step">
           <div class="next" @click="redo"></div>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- Canvas Group，綁定縮放 -->
     <div
@@ -47,12 +47,12 @@ import { useTemplateStore } from "@/stores/template";
 // =================
 const templateStore = useTemplateStore();
 
-const undo = () => {
-  templateStore.undo();
-};
-const redo = () => {
-  templateStore.redo();
-};
+// const undo = () => {
+//   templateStore.undo();
+// };
+// const redo = () => {
+//   templateStore.redo();
+// };
 
 // =================
 // 縮放比例

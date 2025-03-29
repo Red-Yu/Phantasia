@@ -9,12 +9,12 @@
       <div class="stickyBar">
         <div class="FunctionBar">
           <div class="CheckBox">
-            <CheckBox></CheckBox>
+            <!-- <CheckBox></CheckBox> -->
           </div>
           <span class="Toggle" @click="toggleFunction" />
         </div>
         <div class="bookInfoBox">
-          <h1 class="title">Project Name 0101001010010100101001010</h1>
+          <h1 class="title">{{ storyName }}</h1>
           <h3 class="subTitle">Drafts</h3>
         </div>
       </div>
@@ -70,9 +70,8 @@
             </div>
           </div>
         </button>
-        <!--  -->
         <router-link to="/Create/CreateInfo"  class="SaveBtn">
-          <div class="btnKey-M dark">
+          <div class="btnKey-M dark"  @click="saveTemplates" >
             <p>SAVE</p>
             <div class="icon-M">
               <div class="white-cross">
@@ -87,9 +86,24 @@
             </div>
           </div>
         </router-link >
+          <!-- <button class="test-ProuductFinish" @click="openModal">test-ProuductFinish</button> -->
       </div>
     </div>
+
+<!-- 這裡在測試 記得調整回來 !!!!!!!! -->
+
+    <!-- 這個是對的 -->
     <CreatePreview :isVisible="isModalVisible" modalId="CreatePreview"  @close="closeModal" />
+    
+    
+    <!-- 測試抓資料 -->
+    <!-- <ProductsFinish :isVisible="isModalVisible" modalId="ProductsFinish"  @close="closeModal" /> -->
+  
+  
+  
+<!-- 這裡在測試 記得調整回來 !!!!!!!! -->
+  
+  
   </div>
 </template>
 
@@ -102,6 +116,10 @@ import AccordionText from "../../../components/BTN/AccordionText.vue";
 import CheckBox from "../../../components/Input/CheckBox.vue";
 import CreateCanvas from "./CreateCanvas.vue";
 import CreatePreview from "../FullScreenModal/CreatePreview.vue";
+
+
+// 它是用來測試的 
+import ProductsFinish from "../../../components/ProductsFinish.vue";
 
 // 使用 Pinia store
 const templateStore = useTemplateStore();
@@ -121,6 +139,9 @@ const accordionItems = ref([
   { title: "Template", content: AccordionTemplate },
   { title: "Text", content: AccordionText },
 ]);
+
+// 叫出使用者創建的書名
+const storyName = templateStore.storyName.name;  // 獲取簡報名稱
 
 // ====================
 // 右側-PageView
@@ -156,6 +177,17 @@ const openModal = () => {
 // 關閉彈窗的方法
 const closeModal = () => {
   isModalVisible.value = false;
+};
+// ==================
+// 儲存功能的引用
+// ==================
+const saveTemplates = async () => {
+  try {
+    await templateStore.saveTemplatesToFirebase(); // 調用儲存方法
+    console.log("簡報已儲存！");
+  } catch (error) {
+    console.error("儲存簡報時出現錯誤:", error);
+  }
 };
 
 </script>

@@ -1,105 +1,238 @@
 import { defineStore } from "pinia";
 import { reactive, shallowRef } from "vue";
+// 模板映射
+import TemplateBox1 from "@/components/TemplateBoxes/TemplateBox1.vue";
+import TemplateBox2 from "@/components/TemplateBoxes/TemplateBox2.vue";
+import TemplateBox3 from "@/components/TemplateBoxes/TemplateBox3.vue";
+import TemplateBox4 from "@/components/TemplateBoxes/TemplateBox4.vue";
+import TemplateBox5 from "@/components/TemplateBoxes/TemplateBox5.vue";
+import TemplateBox6 from "@/components/TemplateBoxes/TemplateBox6.vue";
+import TemplateBox7 from "@/components/TemplateBoxes/TemplateBox7.vue";
+import TemplateBox8 from "@/components/TemplateBoxes/TemplateBox8.vue";
+// id 創建相關
 import { nanoid } from 'nanoid';
-// import { eventBus } from "@/utils/eventBus"; // 引入 mitt 事件總線
+import { getAuth } from "firebase/auth";
+// firebase 相關
+import { useDocIdStore } from "@/stores/docIdStore"; // 引入 Pinia store
+import { getFirestore, collection, addDoc , doc, getDoc } from "firebase/firestore";
+import {
+  getStorage,
+  ref as storageRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 
+
+// ===============
 // 模板 store，用來存放選中的模板組件
-  export const useTemplateStore = defineStore("template", () => {
+// ===============
+
+export const useTemplateStore = defineStore("template", () => {
   
+  // -----------------------
+  // 映射 -> templateName 
+  // -----------------------
+  const templateMapping = {
+    'TemplateBox1': TemplateBox1, 
+    'TemplateBox2': TemplateBox2,  
+    'TemplateBox3': TemplateBox3,  
+    'TemplateBox4': TemplateBox4,  
+    'TemplateBox5': TemplateBox5,  
+    'TemplateBox6': TemplateBox6,  
+    'TemplateBox7': TemplateBox7,  
+    'TemplateBox8': TemplateBox8,  
+  };
+  
+    function getTemplateComponent(templateName) {
+      return templateMapping[templateName] || null;  // 如果未找到對應組件，返回 null 或者預設組件
+    }
+
+
+  // -----------------------
+  // 儲存專案名稱 -> storyName 
+  // -----------------------
+  const storyName = reactive({ name: '' }); // 儲存專案名稱
+
+    function setStoryName(name) {
+      storyName.name = name; 
+    }
+
+  // -----------------------
+  // 儲存所有模板 -> templates 
+  // -----------------------
   const templates = reactive([]);
-  // const history = reactive([]);   // 存放歷史快照（Undo 用）
-  // const redoStack = reactive([]); // 存放重做快照（Redo 用）
+  
+    // ----{{ addTemplate }}
+    function addTemplate(templateComponent, templateData = {}) {
+      
+      const templateName = templateComponent.name;
 
-  // **儲存當前狀態**
-  // function saveState() {
-  //   const snapshot = templates.map(t => ({
-  //     component: t.component, // 直接存原始的 shallowRef，不做 JSON 序列化
-  //     data: JSON.parse(JSON.stringify(t.data)), // 深拷貝 data
-  //   }));
-
-  //   history.push(snapshot);
-  //   redoStack.length = 0; // 只要有新操作，就清空 redoStack
-  //   if (history.length > 20) history.shift(); // 限制歷史紀錄數量
-  // }
-
-
-  function addTemplate(templateComponent, templateData = {}) {
-    if (templates.length < 12) {
-      const clonedTemplate = {
-        component: shallowRef(templateComponent), // 存儲組件
-        data: {
-          ...JSON.parse(JSON.stringify(templateData)), // 深拷貝數據
-          templateId: nanoid(), // 加上唯一 ID，供動畫判斷用
+      if (templates.length < 12) {
+        const clonedTemplate = {
+          component: shallowRef(templateComponent),      // 存儲組件
+          data: {
+            templateName,                                // 模板名稱
+            templateId: nanoid(),                        // 給文字樣式判斷用 (各模板的唯一ID) 在個模板設定
+            ...JSON.parse(JSON.stringify(templateData)), // 深拷貝數據
           }
       };
       // console.log("原始 templateComponent:", templateComponent);
-      // console.log("拷貝後 clonedTemplate:",clonedTemplate );
+      console.log("拷貝後 clonedTemplate:",clonedTemplate );
       templates.push(clonedTemplate);
+      }
     }
-  }
 
-  // 更新某個模板的數據
-  function updateTemplateData(i, newData) {
-    if (templates[i]) {
-      templates[i].data = { ...templates[i].data, ...newData };
-      console.log(`模板 ${i} 更新後的數據:`, templates[index]); // ✅ 檢查這裡
+    // ----{{ 更新模板(回傳)數據 }}
+    function updateTemplateData(i, newData) {
+      if (templates[i]) {
+        templates[i].data = { ...templates[i].data, ...newData };
+        // console.log(`模板 ${i} 更新後的數據:`, templates[index]); 
+      }
     }
-  }
 
-  // 刪除模板
-  function removeTemplate(i) {
-    if (templates[i]) {
-      templates.splice(i, 1);
+    // ----{{ 刪除模板 }}
+    function removeTemplate(i) {
+      if (templates[i]) {
+        templates.splice(i, 1);
+      }
     }
-  }
 
-  // 清空所有模板
-  function resetTemplates() {
-    templates = 0;
-  }
+    // ----{{ 清空模板 }}
+    function resetTemplates() {
+      templates.splice(0, templates.length); // 清空陣列
+    }
 
-  //  // **返回上一步 (Undo)**
-  //  function undo() {
-  //   if (history.length > 0) {
-  //     redoStack.push(templates.map(t => ({
-  //       component: t.component,
-  //       data: JSON.parse(JSON.stringify(t.data)),
-  //     }))); // 先存當前狀態，確保 redo 有作用
+  // -----------------
+  // firebase 內容
+  // -----------------
 
-  //     const lastState = history.pop(); // 取出上一個狀態
-  //     if (lastState && Array.isArray(lastState)) {
-  //       templates.splice(0, templates.length, ...lastState.map(t => ({
-  //         component: shallowRef(t.component), // 重新包裝 shallowRef，防止 Vue 響應式丟失
-  //         data: JSON.parse(JSON.stringify(t.data)), // 確保 data 正確還原
-  //       })));
-  //     }
-  //   }
-  // }
+    // ----{{ 完整存入 : 透過 docId pinia }}
+    async function saveTemplatesToFirebase() {
+      const auth = getAuth();
+      const user = auth.currentUser;
+    
+      // 確認是否有登入
+      if (!user) {
+        alert("Please log in to save your Story.");
+        return;
+      }
+    
+      const userId = user.uid; // 使用者 ID
+      const userStoryId = `${userId}-${storyName.name}-${Date.now()}`; // 故事 ID
+      
+      // [ 打包模板資料 + 圖片存入 getStorage ]
+      const storage = getStorage();
 
-  // // **往後一步 (Redo)**
-  // function redo() {
-  //   if (redoStack.length > 0) {
-  //     history.push(templates.map(t => ({
-  //       component: t.component,
-  //       data: JSON.parse(JSON.stringify(t.data)),
-  //     }))); // 先存當前狀態，確保可以再次 Undo
+      const folderName = 'story-images';  // 設定要放置圖片的資料夾名稱
 
-  //     const nextState = redoStack.pop();
-  //     if (nextState && Array.isArray(nextState)) {
-  //       templates.splice(0, templates.length, ...nextState.map(t => ({
-  //         component: shallowRef(t.component), // 重新包裝 shallowRef
-  //         data: JSON.parse(JSON.stringify(t.data)), // 確保 data 正確還原
-  //       })));
-  //     }
-  //   }
-  // }
+      const templatesData = await Promise.all(
+        templates.map(async (template) => {
+          // 如果模板資料中包含圖片 URL，進行圖片上傳
+          if (template.data.imageUrl) {
+            const imageRef = storageRef(storage, `images/${folderName}//${nanoid()}`);
+            const imageBlob = await fetch(template.data.imageUrl).then(res => res.blob()); // 轉換成 blob
+            const uploadTask = uploadBytesResumable(imageRef, imageBlob);
+            // 等待圖片上傳並取得 URL
+            const uploadSnapshot = await uploadTask;
+            const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+            template.data.imageUrl = imageUrl; // 更新為 Firebase Storage 的圖片 URL
+          }
+          
+          if (template.data.objectUrl) {
+            const objectRef = storageRef(storage, `images/${folderName}/${nanoid()}`);  // 同一資料夾下
+            const objectBlob = await fetch(template.data.objectUrl).then(res => res.blob());
+            const uploadTask = uploadBytesResumable(objectRef, objectBlob);
+            // 等待圖片上傳並取得 URL
+            const uploadSnapshot = await uploadTask;
+            const objectUrl = await getDownloadURL(uploadSnapshot.ref);
+            template.data.objectUrl = objectUrl;
+          }
+
+          if (template.data.objectUrlB) {
+            const objectRef = storageRef(storage, `images/${folderName}/${nanoid()}`);  // 同一資料夾下
+            const objectBlob = await fetch(template.data.objectUrlB).then(res => res.blob());
+            const uploadTask = uploadBytesResumable(objectRef, objectBlob);
+            // 等待圖片上傳並取得 URL
+            const uploadSnapshot = await uploadTask;
+            const objectUrlB = await getDownloadURL(uploadSnapshot.ref);
+            template.data.objectUrlB = objectUrlB;
+          }
+
+          // 返回每個模板的資料
+          return {
+            templateId: template.data.templateId, // 模板唯一 ID
+            templateData: template.data // 模板具體資料
+          };
+        })
+      );
+
+      // [ 把打包好的陣列存到 Firestore ]
+      const docIdStore = useDocIdStore(); // docId store
+
+      const db = getFirestore();
+      const booksCollection = collection(db, "books");
+
+      const docRef = await addDoc(booksCollection, { 
+        userId,
+        userStoryId: userStoryId,
+        templatesData, // 儲存模板資料陣列
+      });
+      const docId = docRef.id; // 這裡獲取 docId
+
+      console.log("Data saved to Firestore!");
+      
+      // 儲存 docId 到 Pinia Store
+      docIdStore.setDocId(docId); // 儲存 docId
+    }
+
+    // 
+    
+
+    // ----{{ 叫出 }}
+    
 
 
   return {
     templates,
+    storyName,
+    getTemplateComponent,
+    setStoryName,
     addTemplate,
     removeTemplate,
     resetTemplates,
     updateTemplateData,
+    saveTemplatesToFirebase,
   };
 });
+
+
+// ===========================
+// 存入 firebase 的內容需要 :
+// userId
+// userStoryId: 商品的ID
+// projectName: 書名資料,
+// templateName:組件名稱
+// templateData: template.data,
+// ===========================
+
+    // // 根據 templateName 動態加載對應的組件
+    // function loadTemplateComponent(templateName) {
+    //   switch (templateName) {
+    //     case 'TemplateBox1':
+    //       return TemplateBox1;
+    //     case 'TemplateBox2':
+    //       return TemplateBox2;
+    //     case 'TemplateBox3':
+    //       return TemplateBox3;
+    //     case 'TemplateBox4':
+    //       return TemplateBox4;
+    //       case 'TemplateBox5':
+    //         return TemplateBox5;
+    //       case 'TemplateBox6':
+    //         return TemplateBox6;
+    //       case 'TemplateBox7':
+    //         return TemplateBox7;
+    //       case 'TemplateBox8':
+    //         return TemplateBox8;
+    //   }
+    // }
