@@ -325,6 +325,7 @@ const fetchFirestoreData = async () => {
 
     querySnapshot.forEach((doc) => {
       const data = doc.data();
+      console.log("Doc Data:", data); // Check raw Firestore data
       fetchedProducts.push({
         id: doc.id, // Firebase-generated ID
         name: data.title,

@@ -81,7 +81,7 @@
         <div class="actionButtonWrapper">
           <div class="action-buttons">
             <div @click="saveData" class="action-button btnLink light">
-              <p>Save</p>
+              <p>Save for now</p>
               <div class="icon-L">
                 <div class="light-edit"></div>
               </div>
@@ -160,7 +160,7 @@ import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 const route = useRoute();
 const bookId = route.params.id; // e.g., "abc123xyz"
 // Reactive data
-const avatarURL = ref("/MyColset/character115x409.png");
+const avatarURL = ref("");
 const userId = ref(null); // Store authenticated user ID
 const isSubscribed = ref(false); // Subscription status
 
