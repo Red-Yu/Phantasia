@@ -48,7 +48,12 @@
         <th class="preview">預覽</th>
         <th class="delete">刪除</th>
       </tr>
+      <th colspan="5" class="textDonload" @click="donloadLink">
+        如欲下載測試用素材
+        <span>請點擊這裡</span>
+      </th>
     </thead>
+
     <tbody>
       <!-- 使用 v-for 渲染資料 -->
       <tr v-for="(item, index) in filteredHairList" :key="index">
@@ -252,5 +257,12 @@ const deleteHair = async (hairId, imageUrl, order) => {
     console.error("刪除操作失敗：", error);
     alert("刪除失敗！");
   }
+};
+
+const donloadLink = () => {
+  window.open(
+    "https://drive.google.com/drive/folders/13PnMXmmUMKdpcX4xA0QmkYF9s01TmFRX?usp=drive_link",
+    "_blank"
+  ); // 在新頁面中打開
 };
 </script>

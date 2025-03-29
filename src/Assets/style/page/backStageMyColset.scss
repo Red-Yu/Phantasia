@@ -203,3 +203,20 @@ tr {
   // background-color: #007bff;
   color: white;
 }
+
+// 測試素材下載
+
+.textDonload {
+  width: 100%;
+  text-align: center;
+  background-color: #999999;
+  height: 10px;
+  line-height: 0.5;
+  letter-spacing: 1.5px;
+  color: yellow;
+
+  span {
+    cursor: pointer;
+    color: #fff7c0;
+  }
+}

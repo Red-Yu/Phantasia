@@ -190,4 +190,18 @@ tbody > tr:hover {
 .pagination button.active {
   font-weight: bold;
   color: white;
+}
+
+.textDonload {
+  width: 100%;
+  text-align: center;
+  background-color: #999999;
+  height: 10px;
+  line-height: 0.5;
+  letter-spacing: 1.5px;
+  color: yellow;
+}
+.textDonload span {
+  cursor: pointer;
+  color: #fff7c0;
 }/*# sourceMappingURL=backStageMyColset.css.map */
