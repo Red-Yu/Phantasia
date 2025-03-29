@@ -72,4 +72,10 @@ tbody > tr:hover {
   background-color: #153243;
   color: white;
   border-radius: 8px;
+}
+
+.deleteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 垂直居中 */
 }/*# sourceMappingURL=backStage.css.map */
