@@ -227,12 +227,12 @@ h1 {
     </div>
   </div>
 
-
+  <!-- 點數顯示區塊 -->
   <div class="stamp-display">
     <h1>My Stamp Count</h1>
     <div class="stamp-container">
       <img :src="stamp" alt="stamp" />
-      <div class="stepnumber">99</div>
+      <div class="stepnumber">{{points}}</div>
     </div>
     <div class="page-link">
       <p style="font-size: 20px">Go To My Page</p>
@@ -268,6 +268,7 @@ const auth = getAuth();
 const userName = ref("");
 const userBirthday = ref("");
 const userEmail = ref("");
+const points = ref(0); // 新增用於存儲會員點數的變量
 
 // 訂閱相關資料
 const hasActiveSubscription = ref(false);
@@ -341,6 +342,7 @@ onMounted(async () => {
         userName.value = userData.name || ""; 
         userBirthday.value = userData.birthday || ""; 
         userEmail.value = userData.email || ""; 
+        points.value = userData.points || 0; // 設置用戶點數
       }
 
       // 查詢訂閱訂單

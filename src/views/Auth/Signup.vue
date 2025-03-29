@@ -49,7 +49,9 @@
             required
           />
 
-          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+          <p :class="['error-message', { visible: errorMessage }]" v-text="errorMessage"></p>
+
+          <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
 
           <div class="btn">
             <button type="submit" class="btnKey-L dark">Submit</button>
@@ -199,6 +201,8 @@ const openLogin = () => {
   password.value = "";
   confirmPassword.value = "";
   errorMessage.value = "";
+  name.value = "";
+  birthday.value = "";
 };
 
 // 關閉彈窗的方法
@@ -210,6 +214,8 @@ const closeModal = () => {
   password.value = "";
   confirmPassword.value = "";
   errorMessage.value = "";
+  name.value = "";
+  birthday.value = "";
 };
 
 // // 用於控制光箱顯示與隱藏

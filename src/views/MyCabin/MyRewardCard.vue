@@ -226,7 +226,7 @@
                 <div class="unlock">
                   <div v-for="octagon in unlockedOctagons" :key="octagon.id" class="octagon">
                     <img v-if="!octagon.unlocked" src="../../Assets/Day/rewardCard/lock.png" alt="Lock" />
-                    <img v-else src="../../Assets/Day/rewardCard/key.png" alt="Key" class="real_dress" />
+                    <img v-else src="../../Assets/Day/rewardCard/gift.png" alt="Key" class="real_dress" />
                   </div>
                 </div>
                 <!-- <div class="unlock">
@@ -429,13 +429,21 @@ const circles = ref([
 //     filled: index < points.value, // 只有小於 points 數的圓圈變成印章
 //   }))
 // );
+// const filledCircles = computed(() => {
+//   const modPoints = points.value % 10 || 10; // 讓滿10後重置
+//   return circles.value.map((circle, index) => ({
+//     ...circle,
+//     filled: index < modPoints, // 當 index < modPoints 時顯示印章
+//   }));
+// });
+
 const filledCircles = computed(() => {
-  const modPoints = points.value % 10 || 10; // 讓滿10後重置
   return circles.value.map((circle, index) => ({
     ...circle,
-    filled: index < modPoints, // 當 index < modPoints 時顯示印章
+    filled: points.value > 0 && (points.value - 1) % 10 >= index
   }));
 });
+
 // 定義 6 個八角形框，預設為鎖
 const octagons = ref([
   { id: 1, unlocked: false },
@@ -447,13 +455,19 @@ const octagons = ref([
 ]);
 
 // 計算哪些八角形應該變成鑰匙
+// const unlockedOctagons = computed(() => {
+//   return octagons.value.map((octagon, index) => ({
+//     ...octagon,
+//     unlocked: points.value >= (index + 1) * 5,
+//   }));
+// });
 const unlockedOctagons = computed(() => {
   return octagons.value.map((octagon, index) => ({
     ...octagon,
     unlocked: points.value >= (index + 1) * 5,
+    keyImage: `/Assets/Day/rewardCard/key${index + 1}.png`
   }));
 });
-
 const fetchPoints = async (uid) => {
   if (!uid) return;
   const userRef = doc(db, 'users', uid);
@@ -490,11 +504,16 @@ onMounted(() => {
 });
 
 //中間點數參資料庫
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    userID.value = user.uid;
-    fetchPoints(user.uid);
-  }
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      userID.value = user.uid;
+      fetchPoints(user.uid);
+    } else {
+      userID.value = null;
+      points.value = 0; // 如果使用者未登入，則顯示 0 分
+    }
+  });
 });
 
 //卡片打開關閉

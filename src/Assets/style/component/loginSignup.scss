@@ -131,7 +131,7 @@ button[type="submit"]:hover {
 div.btn {
   display: flex;
   justify-content: center;
-  padding-top: 12px;
+  padding-top: 8px;
 }
 
 // 錯誤提示
@@ -144,6 +144,7 @@ div.btn {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  opacity: 40%;
 }
 
 .outsideContect a {
@@ -206,9 +207,19 @@ input {
 }
 
 .error-message {
+  height: 14px; /* 固定高度，避免擠壓 */
+  line-height: 14px; /* 垂直置中 */
   color: red;
+  font-size: 14px;
+  visibility: hidden; /* 預設隱藏 */
+  opacity: 0; /* 預設透明 */
+  transition: opacity 0.3s ease; /* 添加過渡效果 */
 }
 
+.error-message.visible {
+  visibility: visible; /* 顯示錯誤訊息 */
+  opacity: 1; /* 完全不透明 */
+}
 
 // 登入註冊成功
 .modal-content.successPrompt {
