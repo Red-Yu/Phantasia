@@ -9,7 +9,7 @@
       <div class="stickyBar">
         <div class="FunctionBar">
           <div class="CheckBox">
-            <CheckBox></CheckBox>
+            <!-- <CheckBox></CheckBox> -->
           </div>
           <span class="Toggle" @click="toggleFunction" />
         </div>
