@@ -70,23 +70,40 @@
             </div>
           </div>
         </button>
-        <router-link to="/Create/CreateInfo"  class="SaveBtn">
-          <div class="btnKey-M dark"  @click="saveTemplates" >
-            <p>SAVE</p>
-            <div class="icon-M">
-              <div class="white-cross">
-                <div class="cols">
-                  <span></span>
-                  <span></span>
-                </div>
-                <div class="rows">
-                  <span></span>
+        <div class="save-btn-group">
+          <div class="SaveDraftBtn"  @click="saveDraftTemplates">
+            <div class="btnKey-M dark"  >
+              <p>SAVE DRAFT</p>
+              <div class="icon-M">
+                <div class="white-cross">
+                  <div class="cols">
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="rows">
+                    <span></span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </router-link >
-          <!-- <button class="test-ProuductFinish" @click="openModal">test-ProuductFinish</button> -->
+          <div class="SaveBtn" @click="saveTemplates">
+            <div class="btnKey-M light" >
+              <p>NEXT STEP</p>
+              <div class="icon-M">
+                <div class="white-cross">
+                  <div class="cols">
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="rows">
+                    <span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div >
+        </div>
       </div>
     </div>
 
@@ -109,6 +126,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { useTemplateStore } from "@/stores/template";
 import Accordion from "../../../components/BTN/Accordion.vue";
 import AccordionTemplate from "../../../components/BTN/AccordionTemplate.vue";
@@ -181,10 +199,35 @@ const closeModal = () => {
 // ==================
 // 儲存功能的引用
 // ==================
+const router = useRouter();
+
+// -----{{儲存進草稿資料夾}}
+const saveDraftTemplates = async () => {
+  // 提示用戶確認是否儲存模板
+  try {
+    await templateStore.saveDraftToFirebase(); // 調用儲存方法
+    console.log("簡報已儲存！");
+    router.push('/Create/CreateProject');
+  } catch (error) {
+    console.error("儲存簡報時出現錯誤:", error);
+  }
+};
+
+// -----{{確認儲存往下一步}}
 const saveTemplates = async () => {
+  // 提示用戶確認是否儲存模板
+  const isConfirmed = window.confirm("Are you sure you want to save your templates?");
+  if (!isConfirmed) {
+    console.log("User canceled the save operation.");
+    return; // 如果用戶取消操作，則停止儲存
+  }
+
   try {
     await templateStore.saveTemplatesToFirebase(); // 調用儲存方法
     console.log("簡報已儲存！");
+    
+    // 儲存成功後，跳轉到下一頁
+    router.push('/Create/CreateInfo');
   } catch (error) {
     console.error("儲存簡報時出現錯誤:", error);
   }

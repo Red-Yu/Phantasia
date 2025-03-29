@@ -23,6 +23,7 @@
         transform: `scale(${zoomLevel / 100})`,
         transformOrigin: 'top center',
       }"
+      id="#CreateCanvasElement"
     >
       <div class="canvas" v-for="(template, i) in templateStore.templates" :key="i">
         <component
