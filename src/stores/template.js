@@ -106,7 +106,7 @@ export const useTemplateStore = defineStore("template", () => {
   // firebase 內容
   // -----------------
 
-    // ----{{ 存入 : 透過 docId pinia }}
+    // ----{{ 完整存入 : 透過 docId pinia }}
     async function saveTemplatesToFirebase() {
       const auth = getAuth();
       const user = auth.currentUser;
@@ -184,6 +184,9 @@ export const useTemplateStore = defineStore("template", () => {
       // 儲存 docId 到 Pinia Store
       docIdStore.setDocId(docId); // 儲存 docId
     }
+
+    // 
+    
 
     // ----{{ 叫出 }}
     

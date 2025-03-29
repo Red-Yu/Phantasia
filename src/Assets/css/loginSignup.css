@@ -1815,10 +1815,8 @@ select {
   align-items: center;
   justify-content: center;
 }
-.grid-view img {
-  width: 200px;
-  height: auto;
-  object-fit: cover;
+.grid-view .file-img img {
+  height: 100%;
 }
 .grid-view .file-info {
   display: flex;
@@ -1863,6 +1861,10 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+.list-view .file-img img {
+  height: 100%;
 }
 .list-view .file-name {
   flex: 1;
@@ -1904,6 +1906,10 @@ select {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+.draft-view .file-img img {
+  height: 100%;
 }
 .draft-view .file-name {
   flex: 1;
