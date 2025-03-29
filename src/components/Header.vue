@@ -31,7 +31,8 @@
       </div>
 
       <menu class="menuBtn">
-        <OpenCloseButton type="hamburger" color="light" />
+        <!-- <OpenCloseButton type="hamburger" color="light" /> -->
+        <BookMenuNight></BookMenuNight>
       </menu>
     </div>
   </div>
@@ -40,7 +41,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import OpenCloseButton from "./BTN/OpenCloseButton.vue";
-import BookMenu from "./BookMenu.vue";
+import BookMenuNight from "./BookMenuNight.vue";
 // -----------------------
 //
 // -----------------------

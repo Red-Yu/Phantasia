@@ -35,8 +35,8 @@
           <!-- 書本堆疊 -->
           <div class="bm-books">
             <!-- <router-link to="/" class="bm-book bm-book-1" :class="{'bm-visible': isMenuOpen}">
-                <img :src="book1Image" alt="Stories Book" class="bm-book-image">
-              </router-link> -->
+                  <img :src="book1Image" alt="Stories Book" class="bm-book-image">
+                </router-link> -->
 
             <!-- 修改: 為每個 router-link 添加 @click="closeMenu" -->
             <router-link
