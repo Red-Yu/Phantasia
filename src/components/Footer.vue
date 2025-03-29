@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-    <div class="container">
+    <div class="containerFT">
       <div class="accordion">
         <!-- 按鈕改為直向排列 -->
         <button
@@ -84,7 +84,7 @@ onMounted(() => {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
-.container {
+.containerFT {
   width: 100%;
   margin: 0 auto;
   padding: 3vw 0;

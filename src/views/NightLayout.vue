@@ -6,7 +6,6 @@
     <div class="bgd-wrapper"></div>
 
     <!-- Header -->
-    <Header type="night" />
 
     <!-- 子頁面顯示區域 -->
     <div class="wrapper">
@@ -22,5 +21,4 @@
 <script setup>
 import BlackCover from "../components/BlackCover.vue";
 import Footer from "../components/Footer.vue";
-import Header from "../components/Header.vue";
 </script>

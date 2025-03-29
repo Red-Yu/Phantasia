@@ -3998,7 +3998,6 @@ body {
   display: flex;
   flex-direction: column;
   /* Stack children vertically */
-  overflow: hidden;
   /* Prevent overflow issues */
   padding: 7px;
 }
@@ -4047,6 +4046,13 @@ body {
   position: relative;
 }
 
+.carousel-item-container.active {
+  transform: scale(1.2) translateY(100px);
+  opacity: 1;
+  z-index: 3;
+  cursor: pointer;
+}
+
 .text-box-container {
   width: 460px;
   padding-left: 120px;
@@ -4062,6 +4068,11 @@ body {
   text-align: left;
   font-family: "Fanwood Text", sans-serif;
   z-index: 1;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  overflow: hidden;
+  /* Prevent text from overflowing */
 }
 
 .text-box-container h1 {
@@ -4079,20 +4090,16 @@ body {
   margin: 5px 0;
 }
 
-.active {
-  transform: scale(1.2) translateY(100px);
-  opacity: 1;
-  z-index: 3;
-}
-
 .left {
   transform: translateX(-600px);
   z-index: 2;
+  cursor: default;
 }
 
 .right {
   transform: translateX(600px);
   z-index: 2;
+  cursor: default;
 }
 
 .hidden {
@@ -4105,12 +4112,13 @@ body {
   .carousel-container {
     height: auto;
     /* Adapt to content height */
-    padding-top: 80px;
+    padding-top: 100px;
+    padding-bottom: 100px;
     /* Add padding instead of fixed height */
   }
   .carousel {
-    width: 100%;
-    max-width: 500px;
+    width: 400px;
+    height: 300px;
     height: auto;
     /* Adapt to content */
   }
@@ -4130,8 +4138,7 @@ body {
     align-items: center;
     /* Centers items vertically */
     width: 100%;
-    max-width: 700px;
-    padding: 0 20px;
+    padding: 0 50px;
     height: 100%;
   }
   .carousel-item {
@@ -4144,9 +4151,9 @@ body {
     flex: 1;
   }
   .text-box-container {
-    width: 50%;
+    width: 200px;
     /* Take half of the container */
-    height: auto;
+    height: 300px;
     padding: 20px;
     background-color: #2a5670;
     color: white;
@@ -4174,8 +4181,8 @@ body {
   .carousel-container {
     height: auto;
     /* Adapt to content height */
-    padding-top: 80px;
-    padding-bottom: 50px;
+    padding-top: 180px;
+    padding-bottom: 150px;
     /* Add padding instead of fixed height */
   }
   .carousel {
@@ -4297,9 +4304,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100vh;
   /* Use viewport height instead of percentage */
-  overflow-x: hidden;
   /* Prevent horizontal scrolling */
 }
 
@@ -4363,6 +4368,7 @@ body {
   justify-content: right;
   position: relative;
   display: flex;
+  background-color: #153243;
 }
 
 @media (max-width: 964px) {
@@ -4631,15 +4637,17 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-size: contain;
+  /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  /* Prevent the image from repeating */
 }
 
 .colorLayer {
   z-index: 0;
   /* Behind everything */
-  background-color: #eead50;
 }
 
 .inner-layer {
@@ -4655,9 +4663,12 @@ body {
   /* Move to center vertically */
   transform: translate(-50%, -50%);
   /* Offset by half its size to truly center */
-  background-size: contain; /* Ensure the image maintains aspect ratio and fits within the element */
-  background-position: center; /* Center the image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
+  background-size: contain;
+  /* Ensure the image maintains aspect ratio and fits within the element */
+  background-position: center;
+  /* Center the image */
+  background-repeat: no-repeat;
+  /* Prevent the image from repeating */
 }
 
 .box--front {
@@ -4694,18 +4705,10 @@ body {
   .pg_itemsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .box-holder:hover {
-    animation: none;
-    /* Disable animation on mobile */
-  }
 }
 @media (max-width: 768px) {
   .pg_itemsGrid {
     grid-template-columns: 1fr;
-  }
-  .box-holder:hover {
-    animation: none;
-    /* Disable animation on mobile */
   }
 }
 .pg_itemCard {
@@ -4868,10 +4871,29 @@ h2 {
   color: white;
 }
 
-.readButton {
+.readButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 60px;
+}
+
+.readButtonL {
   position: relative;
   float: right;
   padding: 20px 0px;
+}
+
+.readButtonR {
+  position: relative;
+  float: right;
+  padding: 20px 0px;
+}
+
+.commentTitle {
+  margin-top: 40px;
+  color: white;
+  font-size: 24px;
 }
 
 .feedback-section3 {
@@ -4926,10 +4948,15 @@ h2 {
   color: white;
 }
 
-.feedback-stars3 {
-  font-size: 14px;
-  color: rgb(255, 255, 255);
-  margin-bottom: 8px;
+.feedback-stars3 span {
+  font-size: 20px;
+  color: #ccc;
+  /* Unfilled stars */
+}
+
+.feedback-stars3 span.filled {
+  color: gold;
+  /* Filled stars */
 }
 
 .feedback-divider3 {
@@ -5359,8 +5386,18 @@ h2 {
 }
 
 .feedback-icon37 {
+  width: 60px;
+  /* Adjust size */
+  height: 60px;
+  border-radius: 50%;
+  /* Circular window */
+  -o-object-fit: cover;
+     object-fit: cover;
+  /* Ensures image fits */
+  -o-object-position: center top;
+     object-position: center top;
+  /* Shifts focus to the top of the image */
   margin-right: 10px;
-  /* Space between icon and stars */
 }
 
 .feedback-details37 {
@@ -5463,6 +5500,7 @@ h2 {
 
 .action-button {
   border: none;
+  cursor: pointer;
 }
 
 .actionButtonWrapper8 {
@@ -5482,6 +5520,7 @@ h2 {
 
 .action-button8 {
   border: none;
+  cursor: pointer;
 }
 
 .overlay {

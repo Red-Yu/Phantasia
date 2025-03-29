@@ -1,6 +1,7 @@
 <style scoped>
 @import "../../Assets/css/products.css";
-.disabled {  /* 集點部分 */
+.disabled {
+  /* 集點部分 */
   pointer-events: none; /* 禁用點擊 */
   opacity: 0.5; /* 顯示為禁用狀態 */
 }
@@ -52,11 +53,7 @@
     <div class="user-input-wrapper">
       <div class="user-input-container">
         <div class="feedback-content37">
-          <img
-            src="../../Assets/img/pics/Acc icon.png"
-            alt="Feedback Icon"
-            class="feedback-icon37"
-          />
+          <img :src="avatarURL" alt="User Avatar" class="feedback-icon37" />
           <div class="feedback-details37">
             <div class="feedback-stars37">
               <span
@@ -77,8 +74,8 @@
 
         <div class="reviewText">
           <p>
-            Kindly note that your comments will be publicly visible, so please
-            post responsibly.
+            Kindly note that your comments will be publicly visible, so please post
+            responsibly.
           </p>
         </div>
 
@@ -88,12 +85,12 @@
             v-model="userInput"
             placeholder="Enter your feedback..."
           ></textarea>
-          <span class="char-counter">{{ charCount }}/1000</span>
+          <span class="char-counter">{{ charCount }}/100</span>
         </div>
         <div class="actionButtonWrapper">
           <div class="action-buttons">
             <div @click="saveData" class="action-button btnLink light">
-              <p>Save</p>
+              <p>Save for now</p>
               <div class="icon-L">
                 <div class="light-edit"></div>
               </div>
@@ -119,8 +116,8 @@
     </div>
     <div class="actionButtonWrapper8">
       <div class="action-buttons8">
-        <div 
-          @click="addPoint" 
+        <div
+          @click="addPoint"
           class="action-button8 btnKey-L light"
           :class="{ disabled: hasClicked }"
         >
@@ -133,8 +130,8 @@
           @close="isSuccessModalVisible = false"
         />
 
-        <div @click="saveData" class="action-button8 btnLink light">
-          <p>Back to shop</p>
+        <div @click="navigate('/Products')" class="action-button8 btnLink light">
+          <p>Back to books</p>
           <div class="icon-L">
             <div class="light-arrow"></div>
           </div>
@@ -149,10 +146,10 @@
           SUBSCRIBE NOW TO READ MORE
         </p>
         <div class="popup-buttons">
-          <div @click="confirmAction" class="action-button btnKey-L light">
-            <p>BACK TO STORE</p>
+          <div @click="navigate('/Products')" class="action-button btnKey-L light">
+            <p>BACK TO BOOKS</p>
           </div>
-          <div @click="closePopup" class="action-button btnKey-L light">
+          <div @click="navigate('/MemberCenter')" class="action-button btnKey-L light">
             <p>SUBSCRIBE</p>
             <div class="icon-L">
               <div class="white-cross">
@@ -172,246 +169,291 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
-import axios from "axios";
-
-import { db } from "@/firebase/firebaseConfig"; 
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useRoute, useRouter } from "vue-router";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
 import SuccessModal from "../MyCabin/stampSuccess.vue";
 
+// Popup logic
+const showPopup = ref(false);
+// Route setup
+const route = useRoute();
+const bookId = route.params.id; // e.g., "abc123xyz"
+// Reactive data
+const avatarURL = ref("");
+const userId = ref(null); // Store authenticated user ID
+const isSubscribed = ref(false); // Subscription status
 
+const loading = ref(true); // New loading state
 
-export default {
-  components: {
-      SuccessModal, // 註冊 SuccessModal 組件
-  },
-  setup() {
-    // Popup logic
-    const showPopup = ref(false);
+// Use Vue Router
+const router = useRouter();
 
-    const preventScrollAction = (event) => {
-      if (showPopup.value) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    };
+// Define the navigate function (same as footer)
+function navigate(link) {
+  if (link.startsWith("http")) {
+    window.location.href = link; // External link
+  } else {
+    router.push(link); // Internal route
+  }
+}
 
-    const handleScroll = () => {
-      if (showPopup.value) return; // Prevent scroll handling when popup is active
-
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      if (scrollTop / scrollHeight >= 0.95) {
-        showPopup.value = true;
-        document.body.style.overflow = "hidden"; // Disable scroll when popup appears
-      }
-    };
-
-    const closePopup = () => {
-      showPopup.value = false;
-      document.body.style.overflow = "";
-    };
-
-    const confirmAction = () => {
-      alert("Confirmed!");
-      closePopup();
-    };
-
-    // Scroll-related logic
-    const sections = ref([
-      { image: new URL("@/assets/img/pics/one.png", import.meta.url).href },
-      { image: new URL("@/assets/img/pics/two.png", import.meta.url).href },
-    ]);
-    const dots = ref(new Array(10).fill(null));
-    const activeDot = ref(0);
-
-    const scrollToPosition = (index, event) => {
-      if (showPopup.value) {
-        event.preventDefault(); // Prevent scrolling action if popup is visible
-        return; // Stop executing further code
-      }
-
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const scrollTo = (scrollHeight / 9) * index;
-
-      // Scroll smoothly to the calculated position
-      window.scrollTo({ top: scrollTo, behavior: "smooth" });
-    };
-
-    const updateActiveDot = () => {
-      if (showPopup.value) return; // Prevents updating the scroll indicator when popup is active
-
-      const scrollTop = window.scrollY;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
-      activeDot.value = Math.min(
-        9,
-        Math.floor((scrollTop / scrollHeight) * 10)
-      );
-    };
-
-    const scrollToTop = (event) => {
-      if (showPopup.value) {
-        preventScrollAction(event); // Block scroll action if popup is active
-        return;
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    };
-
-    // Star rating logic
-    const totalStars7 = 5;
-    const currentRating7 = ref(0);
-    const hoverRating7 = ref(0);
-
-    const hoverStar7 = (star7) => {
-      hoverRating7.value = star7;
-    };
-
-    const resetHover7 = () => {
-      hoverRating7.value = 0;
-    };
-
-    const setRating7 = (star7) => {
-      currentRating7.value = star7;
-    };
-
-    // Character Counter Logic
-    const userInput = ref("");
-    const charCount = computed(() => userInput.value.length);
-
-    watch(userInput, (newValue) => {
-      if (newValue.length > 1000) {
-        userInput.value = newValue.slice(0, 1000);
-      }
-    });
-
-    // Save and Submit logic
-    const saveData = () => {
-      localStorage.setItem(
-        "userFeedback",
-        JSON.stringify({
-          feedback: userInput.value,
-          rating: currentRating7.value,
-        })
-      );
-      alert("Your feedback has been saved locally.");
-    };
-
-    const submitData = async () => {
-      const feedbackData = {
-        feedback: userInput.value,
-        rating: currentRating7.value,
-      };
-      try {
-        await axios.post("your-backend-api-url", feedbackData);
-        alert("Your feedback has been submitted.");
-      } catch (error) {
-        alert("An error occurred while submitting your feedback.");
-      }
-    };
-
-
-    //集點
-    const auth = getAuth();
-    const userID = ref(null);
-    const points = ref(0);
-    const hasClicked = ref(false); // 用於追蹤是否已點擊
-    const isSuccessModalVisible = ref(false);
-
-
-    const fetchPoints = async (uid) => {
-      if (!uid) return;
-      const userRef = doc(db, 'users', uid);
-      const userSnap = await getDoc(userRef);
-      if (userSnap.exists()) {
-        points.value = userSnap.data().points || 0;
-      } else {
-        await setDoc(userRef, { points: 0 });
-      }
-    };
-
-    const addPoint = async () => {
-      if (hasClicked.value || !userID.value) return; // 如果已點擊或未登入則返回
-      hasClicked.value = true; // 標記為已點擊
-      const userRef = doc(db, "users", userID.value);
-      try {
-        await updateDoc(userRef, {
-          points: points.value + 1,
-        });
-        points.value++; // 確保資料庫更新成功後再增加點數
-        // 集點成功後顯示提示
-        // alert("集點成功！");        
-        isSuccessModalVisible.value = true; 
-        console.log('isSuccessModalVisible:', isSuccessModalVisible.value);
-      } catch (error) {
-        console.error("更新點數時發生錯誤:", error);
-        hasClicked.value = false; // 如果更新失敗，重置點擊狀態
-      }
-
-      // 設置定時器，3秒後關閉成功彈窗
-      setTimeout(() => {
-        const modal = document.querySelector('.success-modal');
-        if (modal) {
-          modal.classList.add('fade-out');
-          setTimeout(() => {
-            isSuccessModalVisible.value = false;
-          }, 1000); 
-        }
-      }, 2000); 
-    };
-
-
-    // Lifecycle Hooks
-    onMounted(() => {
-      window.addEventListener("scroll", handleScroll);
-      window.addEventListener("scroll", updateActiveDot);
-
-      //辨識為會員才在資料庫紀錄點數
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          userID.value = user.uid;
-          fetchPoints(user.uid);
-        }
-      });
-
-      // isSuccessModalVisible.value = true;
-    });
-
-    onUnmounted(() => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("scroll", updateActiveDot);
-      document.body.style.overflow = "";
-    });
-
-    return {
-      showPopup,
-      closePopup,
-      confirmAction,
-      sections,
-      dots,
-      activeDot,
-      scrollToPosition,
-      scrollToTop,
-      totalStars7,
-      currentRating7,
-      hoverRating7,
-      hoverStar7,
-      resetHover7,
-      setRating7,
-      userInput,
-      charCount,
-      saveData,
-      submitData,
-      points, 
-      addPoint,
-      hasClicked,
-      isSuccessModalVisible
-    };
-  },
+const collectStamps = () => {
+  router.push("/MyCabin/MyRewardCard");
 };
+
+// 辨識為會員才在資料庫紀錄點數
+// onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           userID.value = user.uid;
+//           fetchPoints(user.uid);
+//         }
+//       });
+// Firebase Auth setup and subscription check
+const auth = getAuth();
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    userID.value = user.uid;
+    fetchPoints(user.uid);
+  }
+
+  if (user) {
+    avatarURL.value = user.photoURL || "/MyColset/character115x409.png";
+    userId.value = user.uid;
+
+    // Check subscription status in Firestore
+    const ordersQuery = query(
+      collection(db, "orders"),
+      where("userId", "==", userId.value)
+    );
+    const querySnapshot = await getDocs(ordersQuery);
+    isSubscribed.value = querySnapshot.docs.some((doc) => {
+      const endDate = new Date(doc.data().endDate);
+      return endDate > new Date(); // Active subscription if endDate is in the future
+    });
+  } else {
+    avatarURL.value = "/MyColset/character115x409.png";
+    userId.value = null;
+    isSubscribed.value = false; // Not logged in, so not subscribed
+  }
+  loading.value = false; // Set loading false after checks
+});
+
+// Star rating logic
+const totalStars7 = 5;
+const currentRating7 = ref(0);
+const hoverRating7 = ref(0);
+const userInput = ref("");
+
+//集點
+
+const userID = ref(null);
+const points = ref(0);
+const hasClicked = ref(false); // 用於追蹤是否已點擊
+const isSuccessModalVisible = ref(false);
+
+const fetchPoints = async (uid) => {
+  if (!uid) return;
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+  if (userSnap.exists()) {
+    points.value = userSnap.data().points || 0;
+  } else {
+    await setDoc(userRef, { points: 0 });
+  }
+};
+
+const addPoint = async () => {
+  if (hasClicked.value || !userID.value) return; // 如果已點擊或未登入則返回
+  hasClicked.value = true; // 標記為已點擊
+  const userRef = doc(db, "users", userID.value);
+  try {
+    await updateDoc(userRef, {
+      points: points.value + 1,
+    });
+    points.value++; // 確保資料庫更新成功後再增加點數
+    // 集點成功後顯示提示
+    // alert("集點成功！");
+    isSuccessModalVisible.value = true;
+    console.log("isSuccessModalVisible:", isSuccessModalVisible.value);
+  } catch (error) {
+    console.error("更新點數時發生錯誤:", error);
+    hasClicked.value = false; // 如果更新失敗，重置點擊狀態
+  }
+
+  // 設置定時器，3秒後關閉成功彈窗
+  setTimeout(() => {
+    const modal = document.querySelector(".success-modal");
+    if (modal) {
+      modal.classList.add("fade-out");
+      setTimeout(() => {
+        isSuccessModalVisible.value = false;
+      }, 1000);
+    }
+  }, 2000);
+};
+
+// Load from sessionStorage on mount
+onMounted(() => {
+  const savedData = sessionStorage.getItem(`feedback-${bookId}`);
+  if (savedData) {
+    const { rating, feedback } = JSON.parse(savedData);
+    currentRating7.value = rating || 0;
+    userInput.value = feedback || "";
+  }
+  // Existing scroll event listeners
+  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", updateActiveDot);
+});
+
+const hoverStar7 = (star7) => {
+  hoverRating7.value = star7;
+};
+
+const resetHover7 = () => {
+  hoverRating7.value = 0;
+};
+
+const setRating7 = (star7) => {
+  currentRating7.value = star7;
+  saveToSessionStorage(); // Save rating immediately when set
+};
+
+// Character Counter Logic
+const charCount = computed(() => userInput.value.length);
+
+watch(userInput, (newValue) => {
+  if (newValue.length > 100) {
+    userInput.value = newValue.slice(0, 100);
+  }
+  saveToSessionStorage(); // Save comment as user types
+});
+
+// Session Storage Functions
+const saveToSessionStorage = () => {
+  sessionStorage.setItem(
+    `feedback-${bookId}`,
+    JSON.stringify({
+      rating: currentRating7.value,
+      feedback: userInput.value,
+    })
+  );
+};
+
+const saveData = () => {
+  saveToSessionStorage();
+  alert("Your feedback has been saved temporarily.");
+};
+
+const submitData = async () => {
+  if (!userId.value) {
+    alert("Please log in to submit your feedback.");
+    return;
+  }
+
+  const feedbackData = {
+    text: userInput.value,
+    rating: currentRating7.value,
+    userId: userId.value,
+    bookId: bookId,
+    timestamp: new Date().toISOString(),
+  };
+  try {
+    await addDoc(collection(db, "comments"), feedbackData);
+    alert("Your feedback has been submitted to Firestore.");
+
+    // Clear sessionStorage and reset form after submission
+    sessionStorage.removeItem(`feedback-${bookId}`);
+    currentRating7.value = 0;
+    userInput.value = "";
+  } catch (error) {
+    console.error("Error submitting feedback to Firestore:", error);
+    alert("An error occurred while submitting your feedback.");
+  }
+};
+
+// Existing Scroll-related logic (unchanged)
+const sections = ref([
+  { image: new URL("@/assets/img/pics/one.png", import.meta.url).href },
+  { image: new URL("@/assets/img/pics/two.png", import.meta.url).href },
+]);
+const dots = ref(new Array(10).fill(null));
+const activeDot = ref(0);
+
+const preventScrollAction = (event) => {
+  if (showPopup.value) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+};
+
+const handleScroll = () => {
+  if (showPopup.value || loading.value) return; // Exit if loading
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercentage = scrollTop / scrollHeight;
+
+  // Show popup if not logged in OR logged in but not subscribed, at 95% scroll
+  if (
+    scrollPercentage >= 0.55 &&
+    (!userId.value || (userId.value && !isSubscribed.value))
+  ) {
+    showPopup.value = true;
+    document.body.style.overflow = "hidden";
+  }
+};
+
+const closePopup = () => {
+  showPopup.value = false;
+  document.body.style.overflow = "";
+};
+
+const confirmAction = () => {
+  alert("Confirmed!");
+  closePopup();
+};
+
+const scrollToPosition = (index, event) => {
+  if (showPopup.value || loading.value) {
+    event.preventDefault();
+    return;
+  }
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollTo = (scrollHeight / 9) * index;
+  window.scrollTo({ top: scrollTo, behavior: "smooth" });
+};
+
+const updateActiveDot = () => {
+  if (showPopup.value) return;
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  activeDot.value = Math.min(9, Math.floor((scrollTop / scrollHeight) * 10));
+};
+
+const scrollToTop = (event) => {
+  if (showPopup.value || loading.value) {
+    preventScrollAction(event);
+    return;
+  }
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+  window.removeEventListener("scroll", updateActiveDot);
+  document.body.style.overflow = "";
+});
 </script>
