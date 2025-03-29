@@ -400,6 +400,7 @@ const viewBookDetails = (book) => {
   padding: 13px 5px;
   gap: 27px;
   margin: 0 auto;
+  
 }
 
 .project-name {

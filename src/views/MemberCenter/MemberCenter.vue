@@ -1,7 +1,3 @@
-<!-- <div>這是會員中心</div>
-<div>因為有無訂閱只有內容不一樣，用條件判斷決定顯示的內容</div> -->
-<!-- src/views/MemberCenter.vue -->
-
 <style scoped>
 @import "../../Assets/css/main.css";
 
@@ -188,7 +184,7 @@ h1 {
       <img :src="feather" alt="feather" />
       <span class="label">Date Of Birth</span>
     </div>
-    <span class="value">{{ userBirthday }}</span>
+    <span class="value">{{ displayBirthday }}</span>
     <div class="detail-item">
       <img :src="feather" alt="feather" />
       <span class="label">Email</span>
@@ -252,7 +248,7 @@ h1 {
 import { useRouter } from "vue-router";
 import stamp from "@/assets/img/membercenter/Frame 427319813.svg";
 import feather from "@/assets/img/membercenter/feather.svg";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { db } from "../../firebase/firebaseConfig";
 import { 
   doc, 
@@ -273,6 +269,28 @@ const auth = getAuth();
 const userName = ref("");
 const userBirthday = ref("");
 const userEmail = ref("");
+const userLoginMethod = ref(""); // 新增登入方式欄位
+
+// 檢查是否為 Google 登入
+const isGoogleLogin = computed(() => {
+  return userLoginMethod.value === 'google';
+});
+
+// 處理顯示生日
+const displayBirthday = computed(() => {
+  // 如果資料庫中存在生日資料，則無論登入方式如何都顯示該資料
+  if (userBirthday.value) {
+    return userBirthday.value;
+  }
+  
+  // 如果資料庫中沒有生日資料且是Google登入，顯示填寫提示
+  if (isGoogleLogin.value) {
+    return "Please go to Account Setting to fill in";
+  }
+  
+  // 如果沒有生日資料且不是Google登入，顯示空字串
+  return "";
+});
 
 // 訂閱相關資料
 const hasActiveSubscription = ref(false);
@@ -341,6 +359,18 @@ onMounted(async () => {
 
   if (user) {
     try {
+      // 檢查登入提供商
+      if (user.providerData && user.providerData.length > 0) {
+        const providerId = user.providerData[0]?.providerId;
+        if (providerId === 'google.com') {
+          userLoginMethod.value = 'google';
+        } else if (providerId === 'facebook.com') {
+          userLoginMethod.value = 'facebook';
+        } else {
+          userLoginMethod.value = 'email';
+        }
+      }
+
       // 獲取用戶基本資料
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
@@ -348,6 +378,11 @@ onMounted(async () => {
         userName.value = userData.name || ""; 
         userBirthday.value = userData.birthday || ""; 
         userEmail.value = userData.email || ""; 
+        
+        // 如果資料庫中有登入方式資訊，優先使用資料庫中的
+        if (userData.loginMethod) {
+          userLoginMethod.value = userData.loginMethod;
+        }
       }
 
       // 查詢訂閱訂單

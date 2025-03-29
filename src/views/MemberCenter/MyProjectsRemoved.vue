@@ -30,8 +30,8 @@
 
   <!-- loading 指示器 -->
   <div v-if="loading" class="loading-indicator">Loading...</div>
-  
-  <!-- 項目表格 -->
+
+  <!-- 項目表格 (始終顯示) -->
   <table class="projects-table">
     <thead>
       <tr>
@@ -50,10 +50,6 @@
       <tr v-for="(book, index) in filteredBooks" :key="book.id">
         <td>
           <div class="project-info">
-            <!-- 移除選擇功能，保留圖標做為裝飾 -->
-            <div class="projectdeleteicon">
-              <img :src="projectdeleteicon" alt="projectdeleteicon" />
-            </div>
             <div class="project-image">
               <img :src="book.imageUrl || book.imagePath || projectIcon" alt="project" />
             </div>
@@ -64,7 +60,7 @@
           </div>
         </td>
         <td class="project-date">{{ formatDate(book.dateAdded) }}</td>
-        <td class="more-info" @click="goToProductPage(book)">
+        <td class="more-info" @click="viewBookDetails(book)">
           More
           <div class="i">
             <div class="dark-view"></div>
@@ -78,13 +74,12 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { collection, query, where, getDocs, orderBy } from 'firebase/firestore';
-import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage'; // 添加Storage相關導入
 import { db, auth } from '../../firebase/firebaseConfig'; // 請確保路徑正確
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'; // 導入路由器
 import projectIcon from "@/assets/img/membercenter/project.svg";
 import remove from "@/assets/img/membercenter/remove.svg";
 import search from "@/assets/img/membercenter/search.svg";
-import projectdeleteicon from "@/assets/img/membercenter/projectdeleteicon.svg";
 
 // 初始化路由器
 const router = useRouter();
@@ -186,8 +181,13 @@ const fetchUserBooks = async () => {
     books.value = fetchedBooks;
     
     // 按日期排序（如果有日期）
-    sortBooks();
-    
+    if (books.value.length > 0) {
+      books.value.sort((a, b) => {
+        const dateA = a.dateAdded ? new Date(a.dateAdded) : new Date(0);
+        const dateB = b.dateAdded ? new Date(b.dateAdded) : new Date(0);
+        return dateB - dateA; // 降序排列
+      });
+    }
   } catch (error) {
     console.error('Error fetching books:', error);
   } finally {
@@ -203,8 +203,8 @@ const filteredBooks = computed(() => {
   
   const query = searchQuery.value.toLowerCase();
   return books.value.filter(book => 
-    (book.title?.toLowerCase().includes(query)) || 
-    (book.subtitle?.toLowerCase().includes(query))
+    book.title.toLowerCase().includes(query) || 
+    book.subtitle.toLowerCase().includes(query)
   );
 });
 
@@ -236,14 +236,9 @@ const formatDate = (dateValue) => {
 // 根據日期排序
 const sortByDate = () => {
   sortDirection.value = sortDirection.value === 'asc' ? 'desc' : 'asc';
-  sortBooks();
-};
-
-// 排序書籍
-const sortBooks = () => {
   books.value.sort((a, b) => {
-    const dateA = a.dateAdded?.toDate ? a.dateAdded.toDate() : new Date(a.dateAdded || 0);
-    const dateB = b.dateAdded?.toDate ? b.dateAdded.toDate() : new Date(b.dateAdded || 0);
+    const dateA = a.dateAdded?.toDate ? a.dateAdded.toDate() : new Date(a.dateAdded);
+    const dateB = b.dateAdded?.toDate ? b.dateAdded.toDate() : new Date(b.dateAdded);
     
     return sortDirection.value === 'asc' 
       ? dateA - dateB
@@ -251,15 +246,13 @@ const sortBooks = () => {
   });
 };
 
-
-
 // 跳轉到創建專案頁面
 const goToCreateStory = () => {
   router.push('/CreateProject'); // 修改為您的CreateProject路由路徑
 };
 
-// 導航到商品頁面
-const goToProductPage = (book) => {
+// 查看書籍詳情
+const viewBookDetails = (book) => {
   console.log('Navigating to product page for book ID:', book.id);
   router.push(`/products/${book.id}`);
 };
@@ -299,7 +292,7 @@ const goToProductPage = (book) => {
   align-items: center;
   justify-content: right;
   gap: 10px;
-  cursor: pointer;
+  cursor: pointer; /* 添加游標指針樣式 */
 }
 
 .search-section {
@@ -344,12 +337,12 @@ const goToProductPage = (book) => {
   display: flex;
   align-items: center;
   justify-content: right;
-  color: #153243;
+  color: #EEAD50;
   gap: 15px;
-  cursor: pointer;
 }
 
 .remove-button .img{
+  color: #EEAD50;
   height: 24px;
 }
 
@@ -402,14 +395,67 @@ const goToProductPage = (book) => {
 .project-info {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: center; /* 修改：從 flex-start 改為 center */
   padding: 13px 5px;
   gap: 27px;
   margin: 0 auto;
 }
 
-.projectdeleteicon {
+.project-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 新增：垂直居中內容 */
+  height: 100%; /* 新增：確保高度填滿 */
+}
+
+.project-name {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  font-size: 28px;
+  color: #153243;
+  font-weight: 500;
+  margin: 0; /* 移除預設邊距 */
+}
+
+.project-subtitle {
+  font-family: "Fanwood Text";
+  font-variant: small-caps;
+  font-size: 18px;
+  color: #7A7A7A;
+  margin: 0; /* 移除預設邊距 */
+}
+
+.project-date {
+  font-family: "Fanwood Text";
+  color: #7A7A7A;
+  font-size: 18px;
+}
+
+.more-info {
+  font-family: "Fanwood Text";
+  color: #153243;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 改為置中對齊 */
+  gap: 10px;
   cursor: pointer;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 20px;
+  font-family: "Fanwood Text";
+  font-size: 20px;
+  color: #7A7A7A;
+}
+
+.no-data-cell {
+  text-align: center;
+  padding: 40px 0;
+  font-family: "Fanwood Text";
+  font-size: 20px;
+  color: #7A7A7A;
 }
 
 .project-image {
@@ -428,54 +474,5 @@ const goToProductPage = (book) => {
   height: 100px;
   object-fit: cover;
   border-radius: 5px;
-}
-
-.project-name {
-  font-family: "Fanwood Text";
-  font-variant: small-caps;
-  font-size: 28px;
-  color: #153243;
-  font-weight: 500;
-}
-
-.project-subtitle {
-  font-family: "Fanwood Text";
-  font-variant: small-caps;
-  font-size: 18px;
-  color: #7A7A7A;
-}
-
-.project-date {
-  font-family: "Fanwood Text";
-  color: #7A7A7A;
-  font-size: 18px;
-}
-
-.more-info {
-  font-family: "Fanwood Text";
-  color: #153243;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 30px;
-  cursor: pointer;
-}
-
-.loading-indicator {
-  text-align: center;
-  padding: 20px;
-  font-family: "Fanwood Text";
-  font-size: 20px;
-  color: #7A7A7A;
-}
-
-.no-data-cell {
-  text-align: center;
-  padding: 40px 0;
-  font-family: "Fanwood Text";
-  font-size: 20px;
-  color: #7A7A7A;
 }
 </style>

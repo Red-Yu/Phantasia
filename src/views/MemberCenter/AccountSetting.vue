@@ -400,7 +400,7 @@
       <button 
         class="btnKey-L dark" 
         @click="handlePasswordChange"
-        :disabled="isLoading || !isFormValid"
+        :disabled="isLoading || !isFormValid || isGoogleLogin"
       >
         <p>{{ isLoading ? 'PROCESSING...' : 'CHANGE' }}</p>
         <div class="icon-L">
@@ -425,8 +425,14 @@
     <div v-if="errorMessage" class="error-message">
       {{ errorMessage }}
     </div>
+    
+    <!-- Google 登入提示訊息 - 使用成功消息的顏色 -->
+    <div v-if="isGoogleLogin" class="success-message">
+      You are logged in with Google. Password change is not available for Google accounts.
+    </div>
 
-    <div class="password-form">
+    <!-- 只有非 Google 登入用戶才顯示密碼表單 -->
+    <div class="password-form" v-if="!isGoogleLogin">
       <div class="form-group">
         <label>Old Password <span class="required">*</span></label>
         <div class="input-wrapper">
@@ -508,9 +514,10 @@ const userInfo = reactive({
   name: "",
   nickname: "",
   phoneNumber: "",
-  birthday: "",
+  birthday: "",  // 默認為空
   email: "",
-  address: ""
+  address: "",
+  loginMethod: "" // 新增登入方式欄位
 });
 
 // 用戶資料更新狀態
@@ -544,6 +551,17 @@ const errors = reactive({
   confirmPassword: ""
 });
 
+// 檢查是否為 Google 登入用戶
+const isGoogleLogin = computed(() => {
+  // 檢查登入提供商
+  if (currentUser.value && currentUser.value.providerData && currentUser.value.providerData.length > 0) {
+    return currentUser.value.providerData[0]?.providerId === 'google.com';
+  }
+  
+  // 從數據庫中檢查登入方式
+  return userInfo.loginMethod === 'google';
+});
+
 // 從 Firestore 獲取用戶資料
 const fetchUserData = async (userId) => {
   try {
@@ -555,17 +573,22 @@ const fetchUserData = async (userId) => {
       // 填充用戶資訊
       userInfo.name = userData.name || "";
       userInfo.email = userData.email || "";
-      userInfo.birthday = userData.birthday || "";
+      userInfo.birthday = userData.birthday || "";  // 改為空字符串
       
       // 也載入其他可能的欄位，如果存在的話
       userInfo.nickname = userData.nickname || "";
       userInfo.phoneNumber = userData.phoneNumber || "";
       userInfo.address = userData.address || "";
+      
+      // 獲取登入方式
+      userInfo.loginMethod = userData.loginMethod || "";
     } else {
       console.log("沒有找到用戶文檔!");
+      userInfo.birthday = "";  // 改為空字符串
     }
   } catch (error) {
     console.error("獲取用戶資料時發生錯誤:", error);
+    userInfo.birthday = "";  // 改為空字符串
   }
 };
 
@@ -591,7 +614,7 @@ const handleUpdate = async () => {
       name: userInfo.name,
       nickname: userInfo.nickname,
       phoneNumber: userInfo.phoneNumber,
-      birthday: userInfo.birthday,
+      birthday: userInfo.birthday,  // 直接使用用戶輸入的值
       address: userInfo.address,
       // 記錄最後更新時間
       lastUpdated: new Date()
@@ -603,6 +626,18 @@ const handleUpdate = async () => {
       updateData.createdAt = new Date();
       if (currentUser.value.email) {
         updateData.email = currentUser.value.email;
+      }
+      
+      // 檢查並記錄登入方式
+      if (currentUser.value.providerData && currentUser.value.providerData.length > 0) {
+        const providerId = currentUser.value.providerData[0]?.providerId;
+        if (providerId === 'google.com') {
+          updateData.loginMethod = 'google';
+        } else if (providerId === 'facebook.com') {
+          updateData.loginMethod = 'facebook';
+        } else {
+          updateData.loginMethod = 'email';
+        }
       }
       
       // 使用 setDoc 設置新文檔
@@ -651,6 +686,11 @@ const checkPasswordMatch = () => {
 
 // 驗證表單
 const validateForm = () => {
+  // 如果是 Google 登入，不進行驗證
+  if (isGoogleLogin.value) {
+    return false;
+  }
+  
   let isValid = true;
   
   // 重置錯誤訊息
@@ -688,6 +728,11 @@ const validateForm = () => {
 
 // 計算表單是否有效
 const isFormValid = computed(() => {
+  // 如果是 Google 登入，表單永遠無效
+  if (isGoogleLogin.value) {
+    return false;
+  }
+  
   return (
     oldPassword.value.trim() !== "" &&
     newPassword.value.trim() !== "" &&
@@ -699,6 +744,12 @@ const isFormValid = computed(() => {
 
 // 處理密碼變更
 const handlePasswordChange = async () => {
+  // 如果是 Google 登入，不允許變更密碼
+  if (isGoogleLogin.value) {
+    errorMessage.value = "您是通過 Google 登入的。密碼變更功能不適用於 Google 帳戶。";
+    return;
+  }
+  
   // 驗證表單
   if (!validateForm()) return;
   
