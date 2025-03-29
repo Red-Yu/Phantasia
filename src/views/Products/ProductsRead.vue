@@ -4,6 +4,10 @@
   pointer-events: none; /* 禁用點擊 */
   opacity: 0.5; /* 顯示為禁用狀態 */
 }
+.fade-out {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
 </style>
 
 <template>
@@ -122,6 +126,12 @@
         >
           <p>COLLECT YOUR STAMPS</p>
         </div>
+        <SuccessModal
+          v-if="isSuccessModalVisible"
+          class="success-modal"
+          :isVisible="isSuccessModalVisible"
+          @close="isSuccessModalVisible = false"
+        />
 
         <div @click="saveData" class="action-button8 btnLink light">
           <p>Back to shop</p>
@@ -169,10 +179,14 @@ import axios from "axios";
 import { db } from "@/firebase/firebaseConfig"; 
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-// import Login from "../../views/Auth/Login.vue";
+import SuccessModal from "../MyCabin/stampSuccess.vue";
+
 
 
 export default {
+  components: {
+      SuccessModal, // 註冊 SuccessModal 組件
+  },
   setup() {
     // Popup logic
     const showPopup = ref(false);
@@ -307,6 +321,8 @@ export default {
     const userID = ref(null);
     const points = ref(0);
     const hasClicked = ref(false); // 用於追蹤是否已點擊
+    const isSuccessModalVisible = ref(false);
+
 
     const fetchPoints = async (uid) => {
       if (!uid) return;
@@ -323,10 +339,30 @@ export default {
       if (hasClicked.value || !userID.value) return; // 如果已點擊或未登入則返回
       hasClicked.value = true; // 標記為已點擊
       const userRef = doc(db, "users", userID.value);
-      await updateDoc(userRef, {
-        points: points.value + 1,
-      });
-      points.value++;
+      try {
+        await updateDoc(userRef, {
+          points: points.value + 1,
+        });
+        points.value++; // 確保資料庫更新成功後再增加點數
+        // 集點成功後顯示提示
+        // alert("集點成功！");        
+        isSuccessModalVisible.value = true; 
+        console.log('isSuccessModalVisible:', isSuccessModalVisible.value);
+      } catch (error) {
+        console.error("更新點數時發生錯誤:", error);
+        hasClicked.value = false; // 如果更新失敗，重置點擊狀態
+      }
+
+      // 設置定時器，3秒後關閉成功彈窗
+      setTimeout(() => {
+        const modal = document.querySelector('.success-modal');
+        if (modal) {
+          modal.classList.add('fade-out');
+          setTimeout(() => {
+            isSuccessModalVisible.value = false;
+          }, 1000); 
+        }
+      }, 2000); 
     };
 
 
@@ -342,6 +378,8 @@ export default {
           fetchPoints(user.uid);
         }
       });
+
+      // isSuccessModalVisible.value = true;
     });
 
     onUnmounted(() => {
@@ -372,6 +410,7 @@ export default {
       points, 
       addPoint,
       hasClicked,
+      isSuccessModalVisible
     };
   },
 };

@@ -12,7 +12,7 @@
 </template>
 
 <style scoped>
-@import "../../Assets/css/main.css";
+/* @import "../../Assets/css/main.css"; */
 @import "../../Assets/css/stampSuccess.css";
 </style>
 
@@ -22,7 +22,7 @@ import { defineProps ,defineEmits } from 'vue';
 const props = defineProps({
   isVisible: {
     type: Boolean,
-    // required: true,
+    required: true,
   },
 });
 const emit = defineEmits(['close']);

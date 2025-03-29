@@ -1,4 +1,5 @@
-@import "../main.scss";
+@import "../base/color";
+@import "../base/font";
 
 body,
 input,
@@ -21,7 +22,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 3500;
+  z-index: 3000;
+  visibility: visible;  /* 確保元素可見 */
   // background-color: yellow;
 }
 
@@ -95,25 +97,3 @@ button {
     margin: 25px 0;
   }
 }
-
-// .modal-content  {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 30vh ;
-
-//   // .lightbox-content {
-//   //   display: flex;
-//   //   justify-content: center;
-//   //   align-items: center;
-//   //   height: 30vh ;
-
-//   // }
-// }
-
-
-
-// .fade-out {
-//   opacity: 0;
-//   transition: opacity 1s ease-out;
-// }
