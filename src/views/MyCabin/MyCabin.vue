@@ -43,6 +43,14 @@
 
       <div class="positionArea">
         <div class="main_container" ref="parallaxContainer">
+          <div class="myCabinCoverBase">
+            <img
+              ref="myCabinBaseCover"
+              src="../../Assets/Day/myCabin/myCabinBaseLight.jpg"
+              alt=""
+              class="myCabinBaseCover"
+            />
+          </div>
           <div class="parallax-wrapper" data-depth="0.04">
             <img
               src="../../Assets/Day/myCabin/myCabinBaseDark.jpg"
@@ -133,7 +141,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 // import { useUserAuthState } from "@/stores/userAuthState";
@@ -151,6 +159,8 @@ const auth = getAuth();
 
 const partnerURL = ref("");
 const avatarURL = ref("");
+
+const myCabinBaseCover = ref(null);
 
 // // 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
 // const avatarURL = computed(() => {
@@ -219,6 +229,16 @@ const ToMyColset = () => {
 };
 
 onMounted(() => {
+  nextTick(() => {
+    if (myCabinBaseCover.value) {
+      myCabinBaseCover.value.style.transition = "opacity 1s ease-out";
+      setTimeout(() => {
+        myCabinBaseCover.value.style.opacity = 0;
+        myCabinBaseCover.value.style.pointerEvents = "none";
+      }, 650);
+    }
+  });
+
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
     const scene = parallaxContainer.value;

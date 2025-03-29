@@ -1430,3 +1430,21 @@ button {
 .MyColsetBase {
   animation: flickerEffect 8s infinite;
 }
+
+// mycabin頁過場cover
+.MyColsetCover {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.myCabinCoverBase {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: 10000;
+}
+
+.myCabinBaseCover {
+  pointer-events: auto;
+  opacity: 1;
+}

@@ -288,6 +288,21 @@
         <canvas ref="avatarCanvas" style="display: none"></canvas>
         <canvas ref="partnerCanvas" style="display: none"></canvas>
         <div class="main_container" ref="parallaxContainer">
+          <div class="myCabinCoverBase">
+            <!-- <img
+              ref="MyColsetCover"
+              src="../../Assets/Day/myColset/MyColsetBase.jpg"
+              alt=""
+              class="MyColsetCover"
+            /> -->
+            <video ref="MyColsetCover" class="MyColsetCover" autoplay muted>
+              <source
+                src="../../Assets/Day/myColset/myClosetCoverVideo.webm"
+                type="video/webm"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
           <div class="parallax-wrapper" data-depth="0.04">
             <img
               src="../../Assets/Day/myColset/MyColsetBaseDark.jpg"
@@ -518,7 +533,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import { useUserAuthState } from "@/stores/userAuthState";
@@ -548,7 +563,20 @@ const uploadProgress = ref(0);
 const router = useRouter();
 const parallaxContainer = ref(null);
 
+const MyColsetCover = ref(null);
+
 onMounted(async () => {
+  // MyColsetCover消失
+  nextTick(() => {
+    if (MyColsetCover.value) {
+      MyColsetCover.value.style.transition = "opacity 2s ease-out";
+      setTimeout(() => {
+        MyColsetCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值
+        MyColsetCover.value.style.pointerEvents = "none";
+      }, 3700);
+    }
+  });
+
   // 確保 DOM 內容加載完成後執行 Parallax 初始化
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
