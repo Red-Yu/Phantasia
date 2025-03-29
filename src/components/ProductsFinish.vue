@@ -1,37 +1,37 @@
 <template>
-  <div class="modal-overlay" v-if="isVisible" @click="closeModal">
+<div class="modal-overlay" v-if="isVisible" @click="closeModal">
     <div class="modal-content" ref="scrollContainerRef" @click.stop>
-      <div class="bgc"></div>
-      <!-- 模組顯示主區塊 -->
-      <div class="mainContent" ref="mainContentRef">  
+    <div class="bgc"></div>
+    <!-- 模組顯示主區塊 -->
+    <div class="mainContent" ref="mainContentRef">  
         <div class="CreatePreviewGroup" :style="getPreviewStyle">
-          <div class="modelBox">
-            <div
-              class="modelPreview"
-              v-for="(template, i) in templateStore.templates"
-              :key="i"
-              :ref="el => modelRefs[i] = el"
-              style="pointer-events: none;"
-            >
-              <component
-                :is="template.component"        
-                v-bind="template.data"          
-                :mode="currentMode"                    
-                @updateData="updateTemplateData(i, $event)" 
-              />
-            </div>
+        <div class="modelBox">
+          <div
+          class="modelPreview"
+          v-for="(template, i) in templateStore.templates"
+          :key="i"
+          :ref="el => modelRefs[i] = el"
+          style="pointer-events: none;"
+          >
+          <component
+              :is="template.component"        
+              v-bind="template.data"          
+              :mode="currentMode"                    
+              @updateData="updateTemplateData(i, $event)" 
+          />
           </div>
         </div>
-      </div>
+        </div>
     </div>
-  </div>
+    </div>
+</div>
 </template>
-
+  
 <script setup>
-import { computed, ref ,watch ,nextTick } from "vue";
+import { computed, ref ,watch ,nextTick, onMounted } from "vue";
 import { useElementSize } from "@vueuse/core";
 import { useTemplateStore } from "@/stores/template";
-
+import { useDocIdStore } from "@/stores/docIdStore";
 // =================
 // 外部傳入的屬性
 // =================
@@ -57,22 +57,38 @@ const closeModal = () => {
 };
 
 // =================
-// Pinia 狀態 + 預覽動畫模式切換
+// Pinia  + firebase 資料寫入
 // =================
+// const templateStore = useTemplateStore(); // 取得模板資料 store
+
 const templateStore = useTemplateStore(); // 取得模板資料 store
-const scrollContainerRef = ref(null); // 指向預覽區域（作為 IntersectionObserver 的 root）
+const docIdStore = useDocIdStore(); // 用於取得 docId
+
+// 假設你已經有從 URL 或其他地方取得的 userStoryId
+const userStoryId = "HIu8Pt6qhQVre3jmRxQ4We6kMXz1-testest-1743220337822"; // 這裡需要用實際的 userStoryId 替換
+
 const currentMode = ref('preview'); // 預設模式為預覽
 
+// -----------------
 // 根據彈窗開關切換當前模式
+// -----------------
 watch(
   () => props.isVisible,
-  (visible) => {
+  async (visible) => {
     if (visible) {
       currentMode.value = 'preview';
 
       // 等 DOM 完成後手動啟動 observer（確保能正確觀察 DOM）
-      nextTick(() => {
+      nextTick(async () => {
         setupObserver();
+
+        try {
+          // 只有在彈窗顯示時才載入 Firebase 資料
+          await templateStore.loadTemplatesFromFirebase(userStoryId);
+        } catch (error) {
+          console.error("Failed to load templates:", error);
+          alert("Failed to load templates.");
+        }
       });
     } else {
       currentMode.value = 'edit';
@@ -81,6 +97,7 @@ watch(
   },
   { immediate: true }
 );
+
 
 // =================
 // 模板縮放邏輯（根據容器寬度進行等比縮放）
@@ -102,6 +119,7 @@ const getPreviewStyle = computed(() => {
 // =================
 // IntersectionObserver 設定：模組進入畫面時觸發動畫
 // =================
+const scrollContainerRef = ref(null); // 指向預覽區域（作為 IntersectionObserver 的 root）
 const modelRefs = ref([]); // 收集所有模組區塊的 DOM 參考
 
 function setupObserver() {

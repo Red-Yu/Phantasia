@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'TemplateBox5'
+}
+</script>
+
 <script setup>
 import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch, nextTick } from 'vue';
 import { gsap } from 'gsap';

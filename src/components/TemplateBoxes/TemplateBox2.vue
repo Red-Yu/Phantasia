@@ -1,7 +1,14 @@
+<script>
+export default {
+  name: 'TemplateBox2'
+}
+</script>
+
 <script setup>
 import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch, nextTick } from 'vue';
 import { gsap } from 'gsap';
 import { eventBus } from "@/utils/eventBus";
+
 
 // props = 接收 templateStore 來的數據
 const props = defineProps({
@@ -240,6 +247,7 @@ watch(
         </div>
         <input ref="bgcFileInputRef" type="file" @change="onImageUpload($event, 'bgc')" />
       </div>
+      <input type="hidden" v-model="templateName">
       <img class="bgc" v-show="bgcImageUrl" :src="bgcImageUrl" @click="triggerFileInput('bgc')" />
     </div>
 

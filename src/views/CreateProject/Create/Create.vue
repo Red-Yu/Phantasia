@@ -62,17 +62,16 @@
         </div>
       </div>
       <div class="next-step-btn">
-        <button class="PreviewBtn" @click="openModal">
+        <!-- <button class="PreviewBtn" @click="openModal">
           <div class="btnKey-M dark-border">
             <p>PREVIEW</p>
             <div class="icon-M">
               <div class="dark-view"></div>
             </div>
           </div>
-        </button>
-        <!--  -->
+        </button> -->
         <router-link to="/Create/CreateInfo"  class="SaveBtn">
-          <div class="btnKey-M dark">
+          <div class="btnKey-M dark"  @click="saveTemplates" >
             <p>SAVE</p>
             <div class="icon-M">
               <div class="white-cross">
@@ -87,9 +86,24 @@
             </div>
           </div>
         </router-link >
+          <button class="test-ProuductFinish" @click="openModal">test-ProuductFinish</button>
       </div>
     </div>
-    <CreatePreview :isVisible="isModalVisible" modalId="CreatePreview"  @close="closeModal" />
+
+<!-- 這裡在測試 記得調整回來 !!!!!!!! -->
+
+    <!-- 這個是對的 -->
+    <!-- <CreatePreview :isVisible="isModalVisible" modalId="CreatePreview"  @close="closeModal" /> -->
+    
+    
+    <!-- 測試抓資料 -->
+    <ProductsFinish :isVisible="isModalVisible" modalId="ProductsFinish"  @close="closeModal" />
+  
+  
+  
+<!-- 這裡在測試 記得調整回來 !!!!!!!! -->
+  
+  
   </div>
 </template>
 
@@ -102,6 +116,10 @@ import AccordionText from "../../../components/BTN/AccordionText.vue";
 import CheckBox from "../../../components/Input/CheckBox.vue";
 import CreateCanvas from "./CreateCanvas.vue";
 import CreatePreview from "../FullScreenModal/CreatePreview.vue";
+
+
+// 它是用來測試的 
+import ProductsFinish from "../../../components/ProductsFinish.vue";
 
 // 使用 Pinia store
 const templateStore = useTemplateStore();
@@ -159,6 +177,17 @@ const openModal = () => {
 // 關閉彈窗的方法
 const closeModal = () => {
   isModalVisible.value = false;
+};
+// ==================
+// 儲存功能的引用
+// ==================
+const saveTemplates = async () => {
+  try {
+    await templateStore.saveTemplatesToFirebase(); // 調用儲存方法
+    console.log("簡報已儲存！");
+  } catch (error) {
+    console.error("儲存簡報時出現錯誤:", error);
+  }
 };
 
 </script>

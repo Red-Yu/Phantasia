@@ -1,3 +1,9 @@
+<script>
+export default {
+  name: 'TemplateBox3'
+}
+</script>
+
 <script setup>
 import { ref, onMounted, onUnmounted, defineEmits, defineProps, watch, nextTick } from 'vue';
 import { gsap } from 'gsap';
@@ -6,7 +12,7 @@ import { eventBus } from "@/utils/eventBus";
 // props = 接收 templateStore 來的數據
 const props = defineProps({
   imageUrl: String, // 背景圖片
-  objectUrlA: String, // 物件圖片
+  objectUrl: String, // 物件圖片
   objectUrlB: String, // 物件圖片
   text: String, // 文字
   textStyle: Object, // textStyle
@@ -33,7 +39,7 @@ const objectFileInputRefA = ref(null);
 const objectFileInputRefB = ref(null);
 
 const bgcImageUrl = ref(props.imageUrl || null);
-const objectImageUrlA = ref(props.objectUrlA || null);
+const objectImageUrlA = ref(props.objectUrl || null);
 const objectImageUrlB = ref(props.objectUrlB || null);
 
 const validateFileType = (file) => {
@@ -51,7 +57,7 @@ const onImageUpload = (event, type) => {
       emit("updateData", { imageUrl });
     } else if (type === "objectA") {
       objectImageUrlA.value = imageUrl;
-      emit("updateData", { objectUrlA: imageUrl });
+      emit("updateData", { objectUrl: imageUrl });
     } else if (type === "objectB") {
       objectImageUrlB.value = imageUrl;
       emit("updateData", { objectUrlB: imageUrl });
@@ -79,7 +85,7 @@ const triggerFileInput = (type) => {
 watch(() => props.imageUrl, (newUrl) => {
   bgcImageUrl.value = newUrl;
 });
-watch(() => props.objectUrlA, (newUrl) => {
+watch(() => props.objectUrl, (newUrl) => {
   objectImageUrlA.value = newUrl;
 });
 watch(() => props.objectUrlB, (newUrl) => {
