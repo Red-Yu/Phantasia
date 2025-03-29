@@ -80,7 +80,7 @@
         </td>
         <td class="deleteButton">
           <button
-            @click="deleteMagicCircle(item.id, item.imageUrl)"
+            @click="deleteMagicCircle(item.id, item.imageUrl, item.order)"
             class="btnKey-M dark"
           >
             刪除
@@ -219,8 +219,14 @@ const uploadImage = async ({ file, imageName }) => {
 };
 
 // 刪除魔法陣的邏輯
-const deleteMagicCircle = async (magicCircleId, imageUrl) => {
+const deleteMagicCircle = async (magicCircleId, imageUrl, order) => {
   try {
+    // 檢查是否為 order 1~3 的預設樣式
+    if (order >= 1 && order <= 3) {
+      alert("預設魔法陣 (編號 1~3) 不能刪除！");
+      return; // 阻止刪除
+    }
+
     // 1. 刪除 Firestore 中的資料
     const magicCircleDocRef = doc(db, "MyClosetMagicCircles", magicCircleId);
     await deleteDoc(magicCircleDocRef);

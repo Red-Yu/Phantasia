@@ -55,7 +55,7 @@
         </td>
         <td class="deleteButton">
           <button
-            @click="deleteElf(item.id, item.imageUrl)"
+            @click="deleteElf(item.id, item.imageUrl, item.order)"
             class="btnKey-M dark"
           >
             刪除
@@ -197,8 +197,13 @@ const uploadImage = async ({ file, imageName }) => {
 };
 
 // 刪除精靈的邏輯
-const deleteElf = async (elfId, imageUrl) => {
+const deleteElf = async (elfId, imageUrl, order) => {
   try {
+    // 檢查是否為 order 1~3 的預設樣式
+    if (order >= 1 && order <= 5) {
+      alert("預設小精靈 (編號 1~5) 不能刪除！");
+      return; // 阻止刪除
+    }
     // 1. 刪除 Firestore 中的資料
     const elfDocRef = doc(db, "MyClosetElves", elfId);
     await deleteDoc(elfDocRef);

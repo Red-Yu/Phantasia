@@ -62,7 +62,7 @@
         </td>
         <td class="deleteButton">
           <button
-            @click="deleteHair(item.id, item.imageUrl)"
+            @click="deleteHair(item.id, item.imageUrl, item.order)"
             class="btnKey-M dark"
           >
             刪除
@@ -224,8 +224,13 @@ const uploadImage = async ({ file, imageName }) => {
   }
 };
 
-const deleteHair = async (hairId, imageUrl) => {
+const deleteHair = async (hairId, imageUrl, order) => {
   try {
+    // 檢查是否為 order 1~3 的預設樣式
+    if (order >= 1 && order <= 3) {
+      alert("預設髮型 (編號 1~3) 不能刪除！");
+      return; // 阻止刪除
+    }
     // 1. 刪除 Firestore 中的資料
     const hairDocRef = doc(
       db,

@@ -65,7 +65,7 @@
         </td>
         <td class="deleteButton">
           <button
-            @click="deleteClothing(item.id, item.imageUrl)"
+            @click="deleteClothing(item.id, item.imageUrl, item.order)"
             class="btnKey-M dark"
           >
             刪除
@@ -224,8 +224,14 @@ const uploadImage = async ({ file, imageName }) => {
   }
 };
 
-const deleteClothing = async (clothingId, imageUrl) => {
+const deleteClothing = async (clothingId, imageUrl, order) => {
   try {
+    // 檢查是否為 order 1~3 的預設樣式
+    if (order >= 1 && order <= 4) {
+      alert("預設服裝 (編號 1~4) 不能刪除！");
+      return; // 阻止刪除
+    }
+
     // 1. 刪除 Firestore 中的資料
     const clothingDocRef = doc(
       db,
