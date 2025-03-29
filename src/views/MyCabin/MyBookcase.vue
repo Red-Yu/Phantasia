@@ -386,7 +386,9 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  const style = document.getElementById('bookcase-global-style')
-  if (style) style.remove()
+  // alert()
+  document.body.style.cursor="auto"
+  // const style = document.getElementById('bookcase-global-style')
+  // if (style) style.remove()
 })
 </script>
