@@ -62,14 +62,14 @@
         </div>
       </div>
       <div class="next-step-btn">
-        <!-- <button class="PreviewBtn" @click="openModal">
+        <button class="PreviewBtn" @click="openModal">
           <div class="btnKey-M dark-border">
             <p>PREVIEW</p>
             <div class="icon-M">
               <div class="dark-view"></div>
             </div>
           </div>
-        </button> -->
+        </button>
         <router-link to="/Create/CreateInfo"  class="SaveBtn">
           <div class="btnKey-M dark"  @click="saveTemplates" >
             <p>SAVE</p>
@@ -86,18 +86,18 @@
             </div>
           </div>
         </router-link >
-          <button class="test-ProuductFinish" @click="openModal">test-ProuductFinish</button>
+          <!-- <button class="test-ProuductFinish" @click="openModal">test-ProuductFinish</button> -->
       </div>
     </div>
 
 <!-- 這裡在測試 記得調整回來 !!!!!!!! -->
 
     <!-- 這個是對的 -->
-    <!-- <CreatePreview :isVisible="isModalVisible" modalId="CreatePreview"  @close="closeModal" /> -->
+    <CreatePreview :isVisible="isModalVisible" modalId="CreatePreview"  @close="closeModal" />
     
     
     <!-- 測試抓資料 -->
-    <ProductsFinish :isVisible="isModalVisible" modalId="ProductsFinish"  @close="closeModal" />
+    <!-- <ProductsFinish :isVisible="isModalVisible" modalId="ProductsFinish"  @close="closeModal" /> -->
   
   
   

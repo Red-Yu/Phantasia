@@ -2536,17 +2536,17 @@ select {
   border: solid transparent;
 }
 .modal-content .bgc::before {
-  border-width: 5px; /* 外框寬度 */
+  border-width: 3px; /* 外框寬度 */
   border-color: #153243; /* 外框顏色 */
   z-index: 1;
 }
 .modal-content .bgc::after {
   border-width: 2px; /* 內框寬度 */
   border-color: #153243; /* 內框顏色 */
-  top: 8px; /* 外框寬度 + padding */
-  left: 8px; /* 外框寬度 + padding */
-  right: 8px; /* 外框寬度 + padding */
-  bottom: 8px; /* 外框寬度 + padding */
+  top: 5px; /* 外框寬度 + padding */
+  left: 5px; /* 外框寬度 + padding */
+  right: 5px; /* 外框寬度 + padding */
+  bottom: 5px; /* 外框寬度 + padding */
   z-index: 2;
 }
 .modal-content .btn-close {
