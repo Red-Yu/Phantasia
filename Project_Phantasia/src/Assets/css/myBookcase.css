@@ -9,16 +9,22 @@
 }
 
 #container {
-  width: 100vw;
-  height: 100vh;
   position: fixed;
+  top: 0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/myBookcase/backimage.png);
+  background-size: cover;
+  
+
 }
 
 /* 元件的主要元素 */
 :deep(.element) {
   width: 130px;
   height: 160px;
-  box-shadow: 0px 0px 12px rgba(0, 255, 250, 0.5);
+  box-shadow: 0px 0px 12px rgba(67, 126, 125, 0.5);
   border: 3px solid rgba(127, 255, 255, 0.25);
   font-family: Helvetica, sans-serif;
   text-align: center;

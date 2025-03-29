@@ -21,6 +21,7 @@
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { db, auth } from '@/firebase/firebaseConfig'
+import { doc, updateDoc } from 'firebase/firestore'
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import * as THREE from 'three'
 import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js'
@@ -35,7 +36,7 @@ const defaultCover = 'logo.png'
 const container = ref(null)
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000)
-camera.position.z = 3000
+camera.position.z = 2000
 let renderer, controls
 const objects = []
 const targets = { table: [], sphere: [], helix: [], grid: [] }
@@ -71,7 +72,7 @@ function generateTableFromSlots() {
 }
 
 // Firestore 讀取使用者book templateData
-async function fetchBooksFromFirestore() {
+async function fetchBooksFromFirestoreAndSaveToMyBookcase() {
   const user = auth.currentUser
   if (!user) return
 
@@ -80,13 +81,13 @@ async function fetchBooksFromFirestore() {
   const q = query(booksRef, where('userId', '==', user.uid))
   const snapshot = await getDocs(q)
 
-  const books = []
-  snapshot.forEach(doc => {
-    const data = doc.data()
+  const extractedBooks = []
+  snapshot.forEach(docSnap => {
+    const data = docSnap.data()
     // 確保有 templateData 陣列，並取出每筆 template
-    if (data.templateData && Array.isArray(data.templateData)) {
+    if (Array.isArray(data.templateData)) {
       data.templateData.forEach(item => {
-        books.push({
+        extractedBooks.push({
           title: item.templateName || '',
           cover: item.templateId || null  // 假設 templateId 是圖片檔名或完整網址
         })
@@ -94,14 +95,24 @@ async function fetchBooksFromFirestore() {
     }
   })
 
+
+  const limitedBooks = extractedBooks.slice(0, 100)
+
   // 填滿 100 格，沒資料補空白格
   for (let i = 0; i < totalSlots; i++) {
-    slots.value[i] = i < books.length ? books[i] : { title: '', cover: null }
+    slots.value[i] = i < limitedBooks.length ? limitedBooks[i] : { title: '', cover: null }
   }
 
-  // 轉換格式並初始化書櫃
+    // 儲存進目前使用者文件的 MyBookcase 欄位
+  const userRef = doc(db, 'users', user.uid)
+  await updateDoc(userRef, {
+    MyBookcase: limitedBooks
+  })
+
+   //轉換格式並初始化書櫃
   table.value = generateTableFromSlots()
   initBookcase()
+
 }
 
 // 書櫃初始化與物件加入場景
@@ -118,6 +129,11 @@ function initBookcase() {
     const img = document.createElement('img')
     const isUrl = book.cover && book.cover.startsWith('http')
     img.src = isUrl ? book.cover : new URL(`../../Assets/img/myBookcase/${book.cover || defaultCover}`, import.meta.url).href
+
+
+  img.onerror = () => {
+    img.src = new URL(`../../Assets/img/myBookcase/${defaultCover}`, import.meta.url).href
+  }
     symbol.appendChild(img)
     element.appendChild(symbol)
 
@@ -154,8 +170,13 @@ function initBookcase() {
   controls.addEventListener('change', render)
 
   createLayouts()
+  console.log('目前建立的 objects 數量:', objects.length)
+  console.log('table 目標位置數量:', targets.table.length)
   transform(targets.table, 2000)
   animate()
+
+  renderer.render(scene, camera)  // ✅ 強制初次渲染書櫃
+
 
   const style = document.createElement('style')
   style.textContent = `
@@ -382,11 +403,13 @@ onMounted(() => {
     }
   })
 
-  fetchBooksFromFirestore()
+  fetchBooksFromFirestoreAndSaveToMyBookcase()
 })
 
 onBeforeUnmount(() => {
-  const style = document.getElementById('bookcase-global-style')
-  if (style) style.remove()
+  // alert()
+  document.body.style.cursor="auto"
+  // const style = document.getElementById('bookcase-global-style')
+  // if (style) style.remove()
 })
 </script>
