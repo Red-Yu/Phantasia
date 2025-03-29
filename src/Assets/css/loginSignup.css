@@ -2650,7 +2650,7 @@ select {
   position: relative;
   background-color: #f9faf9;
 }
-.modal-content .bgc {
+.modal-content .FullScreenModalBgc {
   max-width: 80vw;
   width: 100%;
   height: 90vh;
@@ -2659,7 +2659,7 @@ select {
   pointer-events: none;
   border: 5px solid #153243;
 }
-.modal-content .bgc::before, .modal-content .bgc::after {
+.modal-content .FullScreenModalBgc::before, .modal-content .FullScreenModalBgc::after {
   content: "";
   position: absolute;
   top: 0;
@@ -2668,12 +2668,12 @@ select {
   bottom: 0;
   border: solid transparent;
 }
-.modal-content .bgc::before {
+.modal-content .FullScreenModalBgc::before {
   border-width: 3px; /* 外框寬度 */
   border-color: #153243; /* 外框顏色 */
   z-index: 1;
 }
-.modal-content .bgc::after {
+.modal-content .FullScreenModalBgc::after {
   border-width: 2px; /* 內框寬度 */
   border-color: #153243; /* 內框顏色 */
   top: 5px; /* 外框寬度 + padding */

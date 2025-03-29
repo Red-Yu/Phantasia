@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay" v-if="isVisible" @click="closeModal">
     <div class="modal-content" @click.stop>
-      <div class="bgc"></div>
+      <div class="FullScreenModalBgc"></div>
       <!-- mainContent -->
       <div class="mainContent PublishSuccess">
         <TitleTemplate firstTitle="Launched" middleText="Is" secondTitle="Already" />
