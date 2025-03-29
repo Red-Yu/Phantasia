@@ -111,7 +111,7 @@
           <p>COLLECT YOUR STAMPS</p>
         </div>
         <div @click="navigate('/Products')" class="action-button8 btnLink light">
-          <p>Back to store</p>
+          <p>Back to books</p>
           <div class="icon-L">
             <div class="light-arrow"></div>
           </div>
@@ -127,7 +127,7 @@
         </p>
         <div class="popup-buttons">
           <div @click="navigate('/Products')" class="action-button btnKey-L light">
-            <p>BACK TO STORE</p>
+            <p>BACK TO BOOKS</p>
           </div>
           <div @click="navigate('/MemberCenter')" class="action-button btnKey-L light">
             <p>SUBSCRIBE</p>

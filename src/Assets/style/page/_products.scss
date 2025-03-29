@@ -51,17 +51,25 @@
   /* Accessible */
 }
 
+.blankSpace {
+  height: 80px;
+  display: block;
+  background-color: #153243;
+}
+
+
 /* Your existing styles remain unchanged */
 .carousel-container {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 550px;
+  height: 570px;
   background-color: #153243;
   width: 100%;
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  padding-top: 80px;
 }
 
 
@@ -183,14 +191,14 @@
   overflow: hidden;
 }
 
-.left {
+.leftC {
   transform: translateX(-30vw);
   /* Scalable translation */
   z-index: 2;
   cursor: default;
 }
 
-.right {
+.rightC {
   transform: translateX(30vw);
   /* Scalable translation */
   z-index: 2;

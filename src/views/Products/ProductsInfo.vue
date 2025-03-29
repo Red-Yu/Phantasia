@@ -338,10 +338,20 @@ const bookDrag = (e) => {
   bookPreviousY.value = bookCurrentY;
 };
 
+// const bookStopDragging = () => {
+//   bookIsDragging.value = false;
+//   bookHolder.value.style.cursor = "grab";
+//   bookHolder.value.style.animation = "bookFloat 15s ease-in-out infinite alternate"; // 重新啟動動畫
+// };
+
 const bookStopDragging = () => {
   bookIsDragging.value = false;
-  bookHolder.value.style.cursor = "grab";
-  bookHolder.value.style.animation = "bookFloat 15s ease-in-out infinite alternate"; // 重新啟動動畫
+  if (bookHolder.value) {
+    bookHolder.value.style.cursor = "grab";
+    bookHolder.value.style.animation = "bookFloat 15s ease-in-out infinite alternate";
+  } else {
+    console.error("bookHolder.value is null in bookStopDragging");
+  }
 };
 
 const bookTouchStart = (e) => {

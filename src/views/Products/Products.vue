@@ -35,6 +35,7 @@
   <div class="header-wrapper" ref="headerWrapper">
     <Header type="night" />
   </div>
+  <div class="blankSpace"></div>
   <!-- Carousel Section -->
   <div class="carousel-container">
     <div
@@ -43,8 +44,8 @@
       class="carousel-item-container"
       :class="{
         active: index === activeIndex,
-        left: index === prevIndex,
-        right: index === nextIndex,
+        leftC: index === prevIndex,
+        rightC: index === nextIndex,
         hidden: ![prevIndex, activeIndex, nextIndex].includes(index),
       }"
     >

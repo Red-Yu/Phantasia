@@ -42,6 +42,7 @@
 import { useRouter } from "vue-router";
 import OpenCloseButton from "./BTN/OpenCloseButton.vue";
 import BookMenuNight from "./BookMenuNight.vue";
+import BookMenu from "./BookMenu.vue";
 // -----------------------
 //
 // -----------------------

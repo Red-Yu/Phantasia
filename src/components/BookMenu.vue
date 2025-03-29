@@ -4,7 +4,7 @@
     <!-- 漢堡按鈕 -->
     <div @click="toggleMenu">
       <!-- <OpenCloseButton type="hamburger" color="dark" /> -->
-      <OpenCloseButton type="hamburger" color="light" />
+      <OpenCloseButton type="hamburger" color="dark" />
     </div>
     <!-- 全屏選單 -->
     <teleport to="body">
