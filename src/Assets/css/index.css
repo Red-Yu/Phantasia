@@ -2154,16 +2154,23 @@ button {
   animation: flickerEffect 8s infinite;
 }
 
-.MyColsetCover {
-  pointer-events: auto;
-  opacity: 1;
-}
-
 .myCabinCoverBase {
   position: absolute;
   width: 100%;
   height: 100vh;
   z-index: 10000;
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  overflow: hidden; /* 確保影片不會超出邊界 */
+}
+.myCabinCoverBase .MyColsetCover {
+  pointer-events: auto;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover; /* 保持影片的等比縮放並覆蓋整個區域 */
 }
 
 .myCabinBaseCover {
