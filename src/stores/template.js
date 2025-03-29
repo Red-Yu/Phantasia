@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { reactive, shallowRef } from "vue";
 // 截圖
-import html2canvas from 'html2canvas'; 
+import html2canvas from 'html2canvas';
 // 模板映射
 import TemplateBox1 from "@/components/TemplateBoxes/TemplateBox1.vue";
 import TemplateBox2 from "@/components/TemplateBoxes/TemplateBox2.vue";
@@ -206,33 +206,6 @@ export const useTemplateStore = defineStore("template", () => {
       // [ 打包模板資料 + 圖片存入 getStorage ]
       const storage = getStorage();
 
-      // [ 擷取畫板畫面並儲存為圖片 ]
-      // 取得畫板元素並轉換為 Blob
-      // 擷取畫板圖片並上傳
-      const boardImageUrl = await new Promise((resolve, reject) => {
-        html2canvas(document.querySelector("#CreateCanvasElement")) // 擷取畫板
-          .then((canvas) => {
-            canvas.toBlob((blob) => {
-              if (blob) {
-                const imageRef = storageRef(storage, `images/${Draft-Covers}/${nanoid()}`);  // 使用 nanoid 生成唯一的檔案名稱
-                const uploadTask = uploadBytesResumable(imageRef, blob);  // 上傳圖片到 Firebase Storage
-                
-                uploadTask.on('state_changed', 
-                  null, 
-                  (error) => reject(error),  // 處理錯誤
-                  async () => { // 當上傳完成後
-                    const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-                    resolve(imageUrl); // 返回圖片 URL
-                  }
-                );
-              } else {
-                reject(new Error('Failed to convert canvas to Blob'));
-              }
-            });
-          })
-          .catch(reject);
-      });
-      
       const folderName = 'Draft-images';  // 設定要放置圖片的資料夾名
       const templatesData = await Promise.all(
         templates.map(async (template) => {
@@ -275,6 +248,35 @@ export const useTemplateStore = defineStore("template", () => {
         })
       );
 
+      // [ 擷取畫板畫面並儲存為圖片 ]
+
+       // [ 擷取畫板畫面並上傳圖片 ]
+      const boardImageUrl = await new Promise((resolve, reject) => {
+        html2canvas(document.querySelector("#CreateCanvasElement"))  // 擷取畫板 DOM 元素
+          .then((canvas) => {
+            canvas.toBlob((blob) => {
+              if (blob) {
+                const storage = getStorage();
+                const DraftFolderName = 'Draft-covers';  // 設定要放置圖片的資料夾名稱
+                const imageRef = storageRef(storage, `images/${DraftFolderName}/${nanoid()}`);  // 使用 nanoid 生成唯一檔名
+                const uploadTask = uploadBytesResumable(imageRef, blob);  // 上傳圖片到 Firebase Storage
+
+                uploadTask.on('state_changed', 
+                  null, 
+                  (error) => reject(error),  // 錯誤處理
+                  async () => { // 上傳完成後
+                    const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                    resolve(imageUrl);  // 返回圖片 URL
+                  }
+                );
+              } else {
+                reject(new Error('Failed to convert canvas to Blob'));
+              }
+            });
+          })
+          .catch(reject);
+      });
+
       // [ 把打包好的陣列存到 Firestore ]
       const docIdStore = useDocIdStore(); // docId store
 
@@ -287,7 +289,7 @@ export const useTemplateStore = defineStore("template", () => {
         saveDate: saveDate,
         title: filesTile,
         templatesData, // 儲存模板資料陣列
-        boardImageUrl: boardImageUrl,  // 將畫板圖片 URL 儲存到 Firestore
+        boardImageUrl: boardImageUrl ,  // 將畫板圖片 URL 儲存到 Firestore
       });
       const docId = docRef.id; // 這裡獲取 docId
 
