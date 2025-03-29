@@ -204,9 +204,9 @@ const fetchFirestoreData = async () => {
     const userId = currentUser.uid; // 當前用戶的 userId
     
     // 基於當前用戶的 userId 篩選書籍資料
-    const booksCollectionRef = collection(db, "books");
+    const DraftsCollectionRef = collection(db, "Drafts");
     const querySnapshot = await getDocs(
-      query(booksCollectionRef, where("userId", "==", userId)) // 篩選條件：只顯示該用戶的書籍
+      query(DraftsCollectionRef, where("userId", "==", userId)) // 篩選條件：只顯示該用戶的書籍
     );
     
     if (querySnapshot.empty) {
@@ -223,7 +223,7 @@ const fetchFirestoreData = async () => {
         name: data.title,
         size: data.size || 0, // 假設書籍大小為數字，若無則設置為 0
         type: data.type || "application/pdf", // 書籍類型，預設為 PDF
-        time: data.dateAdded || "Unknown", // 書籍加入時間，若無則顯示為 "Unknown"
+        time: data.saveDate || "Unknown", // 書籍加入時間，若無則顯示為 "Unknown"
         url: data.imagePath || "", // 書籍封面圖片 URL
       });
     });

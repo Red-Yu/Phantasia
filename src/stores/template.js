@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import { reactive, shallowRef } from "vue";
+// 截圖
+import html2canvas from 'html2canvas'; 
 // 模板映射
 import TemplateBox1 from "@/components/TemplateBoxes/TemplateBox1.vue";
 import TemplateBox2 from "@/components/TemplateBoxes/TemplateBox2.vue";
@@ -160,8 +162,8 @@ export const useTemplateStore = defineStore("template", () => {
 
           // 返回每個模板的資料
           return {
-            templateId: template.data.templateId, // 模板唯一 ID
             templateData: template.data // 模板具體資料
+            // templateId: template.data.templateId, // 模板唯一 ID
           };
         })
       );
@@ -185,8 +187,115 @@ export const useTemplateStore = defineStore("template", () => {
       docIdStore.setDocId(docId); // 儲存 docId
     }
 
-    // 
+    // ----{{ 存入草稿 : 透過 docId pinia }}
+    async function saveDraftToFirebase() {
+      const auth = getAuth();
+      const user = auth.currentUser;
     
+      // 確認是否有登入
+      if (!user) {
+        alert("Please log in to save your Story.");
+        return;
+      }
+    
+      const userId = user.uid; // 使用者 ID
+      const userStoryId = `${userId}-${storyName.name}-${Date.now()}`; // 故事 ID
+      const saveDate = new Date().toLocaleDateString('en-CA'); // en-CA 格式為 YYYY-MM-DD
+      const filesTile = storyName.name;                        // 獲取簡報名稱
+
+      // [ 打包模板資料 + 圖片存入 getStorage ]
+      const storage = getStorage();
+
+      // [ 擷取畫板畫面並儲存為圖片 ]
+      // 取得畫板元素並轉換為 Blob
+      // 擷取畫板圖片並上傳
+      const boardImageUrl = await new Promise((resolve, reject) => {
+        html2canvas(document.querySelector("#CreateCanvasElement")) // 擷取畫板
+          .then((canvas) => {
+            canvas.toBlob((blob) => {
+              if (blob) {
+                const imageRef = storageRef(storage, `images/${Draft-Covers}/${nanoid()}`);  // 使用 nanoid 生成唯一的檔案名稱
+                const uploadTask = uploadBytesResumable(imageRef, blob);  // 上傳圖片到 Firebase Storage
+                
+                uploadTask.on('state_changed', 
+                  null, 
+                  (error) => reject(error),  // 處理錯誤
+                  async () => { // 當上傳完成後
+                    const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                    resolve(imageUrl); // 返回圖片 URL
+                  }
+                );
+              } else {
+                reject(new Error('Failed to convert canvas to Blob'));
+              }
+            });
+          })
+          .catch(reject);
+      });
+      
+      const folderName = 'Draft-images';  // 設定要放置圖片的資料夾名
+      const templatesData = await Promise.all(
+        templates.map(async (template) => {
+          // 如果模板資料中包含圖片 URL，進行圖片上傳
+          if (template.data.imageUrl) {
+            const imageRef = storageRef(storage, `images/${folderName}/${nanoid()}`);
+            const imageBlob = await fetch(template.data.imageUrl).then(res => res.blob()); // 轉換成 blob
+            const uploadTask = uploadBytesResumable(imageRef, imageBlob);
+            // 等待圖片上傳並取得 URL
+            const uploadSnapshot = await uploadTask;
+            const imageUrl = await getDownloadURL(uploadSnapshot.ref);
+            template.data.imageUrl = imageUrl; // 更新為 Firebase Storage 的圖片 URL
+          }
+          
+          if (template.data.objectUrl) {
+            const objectRef = storageRef(storage, `images/${folderName}/${nanoid()}`);  // 同一資料夾下
+            const objectBlob = await fetch(template.data.objectUrl).then(res => res.blob());
+            const uploadTask = uploadBytesResumable(objectRef, objectBlob);
+            // 等待圖片上傳並取得 URL
+            const uploadSnapshot = await uploadTask;
+            const objectUrl = await getDownloadURL(uploadSnapshot.ref);
+            template.data.objectUrl = objectUrl;
+          }
+
+          if (template.data.objectUrlB) {
+            const objectRef = storageRef(storage, `images/${folderName}/${nanoid()}`);  // 同一資料夾下
+            const objectBlob = await fetch(template.data.objectUrlB).then(res => res.blob());
+            const uploadTask = uploadBytesResumable(objectRef, objectBlob);
+            // 等待圖片上傳並取得 URL
+            const uploadSnapshot = await uploadTask;
+            const objectUrlB = await getDownloadURL(uploadSnapshot.ref);
+            template.data.objectUrlB = objectUrlB;
+          }
+
+          // 返回每個模板的資料
+          return {
+            templateData: template.data // 模板具體資料
+            // templateId: template.data.templateId, // 模板唯一 ID
+          };
+        })
+      );
+
+      // [ 把打包好的陣列存到 Firestore ]
+      const docIdStore = useDocIdStore(); // docId store
+
+      const db = getFirestore();
+      const DraftsCollection = collection(db, "Drafts");
+
+      const docRef = await addDoc(DraftsCollection, { 
+        userId,
+        userStoryId: userStoryId,
+        saveDate: saveDate,
+        title: filesTile,
+        templatesData, // 儲存模板資料陣列
+        boardImageUrl: boardImageUrl,  // 將畫板圖片 URL 儲存到 Firestore
+      });
+      const docId = docRef.id; // 這裡獲取 docId
+
+      console.log("Data saved to Firestore!");
+      
+      // 儲存 docId 到 Pinia Store
+      docIdStore.setDocId(docId); // 儲存 docId
+    }
 
     // ----{{ 叫出 }}
     
@@ -202,6 +311,7 @@ export const useTemplateStore = defineStore("template", () => {
     resetTemplates,
     updateTemplateData,
     saveTemplatesToFirebase,
+    saveDraftToFirebase,
   };
 });
 
