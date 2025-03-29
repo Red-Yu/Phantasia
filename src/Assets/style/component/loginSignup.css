@@ -1977,7 +1977,6 @@ select {
   max-width: 250px;
   width: 100%;
   height: 50vh;
-  min-height: 320px;
   display: flex;
   flex-direction: column;
   border-left: #153243 solid;
@@ -2005,32 +2004,20 @@ select {
   border: #153243 solid;
 }
 .ProjectMenu .user .useImg .avatar {
-  position: relative;
   width: 85%;
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
   overflow: hidden;
 }
-.ProjectMenu .user .useImg .avatar .avaterBg {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.3);
-}
 .ProjectMenu .user .useImg .avatar .avaterImg {
-  z-index: 100;
   position: relative;
-  transform: scale(0.51);
-  transform-origin: top left;
 }
 .ProjectMenu .user .useImg .tab-group {
   width: 100%;
   display: flex;
   flex-direction: column;
   border-top: #153243 solid;
-  cursor: pointer;
 }
 .ProjectMenu main {
   flex: 1;
@@ -2069,7 +2056,6 @@ select {
   border: #153243 solid;
 }
 .member-center .useImg .avatar {
-  position: relative;
   width: 85%;
   height: 85%;
   border-radius: 80%;
@@ -2077,26 +2063,14 @@ select {
   overflow: hidden;
   text-align: center;
 }
-.member-center .useImg .avatar .avaterBg {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.34);
-  opacity: 0.9;
-}
 .member-center .useImg .avatar .avaterImg {
-  z-index: 100;
   position: relative;
-  transform: scale(0.57);
-  transform-origin: top left;
 }
 .member-center .tab-group {
   width: 100%;
   display: flex;
   flex-direction: column;
   border-top: #153243 solid;
-  cursor: pointer;
 }
 .member-center .btnTab {
   display: flex;
@@ -2357,11 +2331,11 @@ select {
   top: 0;
   max-width: 250px;
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   border: #153243 solid;
   background-color: #f9faf9;
+  cursor: pointer;
 }
 .backStageMenu .user {
   width: 100%;
@@ -2381,32 +2355,16 @@ select {
   border: #153243 solid;
 }
 .backStageMenu .user .useImg .avatar {
-  position: relative;
   width: 85%;
   height: 85%;
   border-radius: 80%;
   background-color: #dee2e6;
-  overflow: hidden;
-}
-.backStageMenu .user .useImg .avatar .avaterBg {
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.3);
-}
-.backStageMenu .user .useImg .avatar .avaterImg {
-  z-index: 100;
-  position: relative;
-  transform: scale(0.51);
-  transform-origin: top left;
 }
 .backStageMenu .user .tab-group {
   width: 100%;
   display: flex;
   flex-direction: column;
   border-top: #153243 solid;
-  cursor: pointer;
 }
 .backStageMenu .logout-container {
   padding: 10px;
@@ -4391,7 +4349,6 @@ div.btn {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  opacity: 40%;
 }
 
 .outsideContect a {
@@ -4454,29 +4411,4 @@ input {
 
 .error-message {
   color: red;
-}
-
-.modal-content.successPrompt {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30vh;
-}
-.modal-content.successPrompt .lightbox-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30vh;
-}
-
-.successPrompt h2 {
-  font-family: Aleo;
-  color: #153243;
-  font-size: 2.2rem;
-  margin: 25px 0;
-}
-
-.fade-out {
-  opacity: 0;
-  transition: opacity 1s ease-out;
 }/*# sourceMappingURL=loginSignup.css.map */
