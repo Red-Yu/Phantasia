@@ -4373,8 +4373,9 @@ button {
   position: relative;
 }
 .modal-content .bgc {
+  max-width: 35vw;
   width: 100%;
-  height: 100%;
+  height: 70vh;
   background-color: #f9faf9;
 }
 .modal-content .bgc::before, .modal-content .bgc::after {

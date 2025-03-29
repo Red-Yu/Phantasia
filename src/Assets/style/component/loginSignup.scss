@@ -36,8 +36,13 @@ button {
   overflow: hidden;
   position: relative;
   .bgc {
+    // 資玲-修改這段因為和我的命名一樣會被我的其他元件影響到
+    max-width: 35vw;
     width: 100%;
-    height: 100%;
+    height: 70vh;
+    // 這邊是原本寫的
+    // width: 100%;
+    // height: 100%;
     background-color: $subWhite;
     // 邊框
     &::before,
