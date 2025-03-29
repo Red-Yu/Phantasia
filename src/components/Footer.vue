@@ -1,6 +1,7 @@
 <template>
   <div class="footer">
-    <div class="container">
+    <div class="containerFt">
+      <showParticles />
       <div class="accordion">
         <!-- 按鈕改為直向排列 -->
         <button
@@ -28,6 +29,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import showParticles from "@/components/SnowParticles.vue";
 
 // 使用 Vue Router
 const router = useRouter();
@@ -84,7 +86,8 @@ onMounted(() => {
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
-.container {
+
+.containerFt {
   width: 100%;
   margin: 0 auto;
   padding: 3vw 0;
