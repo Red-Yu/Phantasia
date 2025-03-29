@@ -38,10 +38,10 @@
           </div>
 
           <div class="outsideContect">
-            <a href="#">
+            <a href="#" @click.prevent="showComingSoon">
               <img src="../../Assets/img/membercenter/facebook.svg" alt="FB" />
             </a>
-            <a href="#">
+            <a href="#" @click.prevent="showComingSoon">
               <img
                 src="../../Assets/img/membercenter/google.svg"
                 alt="Google"
@@ -51,6 +51,11 @@
         </form>
 
         <p v-if="error" class="error-message">{{ error }}</p>
+        
+        <!-- 彈出的Coming Soon訊息 -->
+        <div v-if="isComingSoonVisible" class="coming-soon-message">
+          Coming Soon...
+        </div>
       </div>
     </div>
   </div>
@@ -67,6 +72,25 @@
 <style scoped>
 @import "../../Assets/css/main.css";
 @import "../../Assets/css/loginSignup.css";
+
+.coming-soon-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(21, 50, 67, 0.85);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 </style>
 
 <script setup>
@@ -99,6 +123,7 @@ const email = ref("");
 const password = ref("");
 const error = ref("");
 const isSuccessModalVisible = ref(false);
+const isComingSoonVisible = ref(false);
 
 // 關閉彈窗
 const closeModal = () => {
@@ -117,6 +142,16 @@ const openSignup = () => {
   email.value = "";
   password.value = "";
   error.value = "";
+};
+
+// 顯示Coming Soon訊息
+const showComingSoon = () => {
+  isComingSoonVisible.value = true;
+  
+  // 2秒後自動隱藏
+  setTimeout(() => {
+    isComingSoonVisible.value = false;
+  }, 2000);
 };
 
 // 登入功能
