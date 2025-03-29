@@ -1,5 +1,5 @@
 <template>
-<SnowParticles/>
+
   <div class="footer">
     <div class="container">
       <div class="accordion">
@@ -29,7 +29,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import SnowParticles from "../components/SnowParticles.vue";
+
 
 // 使用 Vue Router
 const router = useRouter();
