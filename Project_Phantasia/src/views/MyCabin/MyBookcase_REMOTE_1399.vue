@@ -2,10 +2,7 @@
 @import "../../Assets/css/myBookcase.css";
 
 </style>
-<<<<<<< HEAD
-=======
 
->>>>>>> cf9f3671d934ddcb0feee75dba75476b0d6dae29
 <template>
   <div>
     <div id="info">
@@ -27,22 +24,16 @@
       <button
         @click="backToHome"
         class="btnLink whiteForFrontPage backToHome menuIn"
-<<<<<<< HEAD
-      >Back to my Cabin</button>
-=======
       >
         Back to my Cabin
       </button>
->>>>>>> cf9f3671d934ddcb0feee75dba75476b0d6dae29
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue'
-import { useRouter } from "vue-router"
 import { db, auth } from '@/firebase/firebaseConfig'
-import { onAuthStateChanged } from 'firebase/auth'
 import { doc, updateDoc } from 'firebase/firestore'
 import { collection, getDocs, orderBy, query, where } from 'firebase/firestore'
 import * as THREE from 'three'
@@ -93,19 +84,6 @@ function generateTableFromSlots() {
   return result
 }
 
-onMounted(() => {
-  slots.value = Array.from({ length: totalSlots }, () => ({ title: '', cover: null }))
-  table.value = generateTableFromSlots()
-  initBookcase()
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      fetchBooksFromFirestoreAndSaveToMyBookcase()
-    } else {
-      console.warn('尚未登入，無法載入書櫃')
-    }
-  })
-})
 // Firestore 讀取使用者book templateData
 async function fetchBooksFromFirestoreAndSaveToMyBookcase() {
   const user = auth.currentUser
@@ -146,20 +124,13 @@ async function fetchBooksFromFirestoreAndSaveToMyBookcase() {
 
    //轉換格式並初始化書櫃
   table.value = generateTableFromSlots()
-  transform(targets.table, 2000)
+  initBookcase()
 
 }
 
 // 書櫃初始化與物件加入場景
 function initBookcase() {
   const position = getFixedSlotPositions()
-  const slotWidth = 140
-  const slotHeight = 180
-  const maxX = 18
-  const maxY = 10
-  const xOffset = ((maxX - 1) / 2) * slotWidth
-  const yOffset = ((maxY - 1) / 2) * slotHeight
-
   for (let i = 0; i < totalSlots; i++) {
     const book = slots.value[i]
     const pos = position[i]
@@ -212,9 +183,13 @@ function initBookcase() {
   controls.addEventListener('change', render)
 
   createLayouts()
+  console.log('目前建立的 objects 數量:', objects.length)
+  console.log('table 目標位置數量:', targets.table.length)
   transform(targets.table, 2000)
   animate()
+
   renderer.render(scene, camera)  // ✅ 強制初次渲染書櫃
+
 
   const style = document.createElement('style')
   style.textContent = `
