@@ -248,34 +248,34 @@ export const useTemplateStore = defineStore("template", () => {
         })
       );
 
-      // [ 擷取畫板畫面並儲存為圖片 ]
-
-       // [ 擷取畫板畫面並上傳圖片 ]
+      // [ 擷取畫板畫面並上傳圖片 ]
       const boardImageUrl = await new Promise((resolve, reject) => {
-        html2canvas(document.querySelector("#CreateCanvasElement"))  // 擷取畫板 DOM 元素
-          .then((canvas) => {
-            canvas.toBlob((blob) => {
-              if (blob) {
-                const storage = getStorage();
-                const DraftFolderName = 'Draft-covers';  // 設定要放置圖片的資料夾名稱
-                const imageRef = storageRef(storage, `images/${DraftFolderName}/${nanoid()}`);  // 使用 nanoid 生成唯一檔名
-                const uploadTask = uploadBytesResumable(imageRef, blob);  // 上傳圖片到 Firebase Storage
-
-                uploadTask.on('state_changed', 
-                  null, 
-                  (error) => reject(error),  // 錯誤處理
-                  async () => { // 上傳完成後
-                    const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
-                    resolve(imageUrl);  // 返回圖片 URL
-                  }
-                );
-              } else {
-                reject(new Error('Failed to convert canvas to Blob'));
-              }
-            });
-          })
-          .catch(reject);
+      html2canvas(document.querySelector("#CreateCanvasElement"))  // 擷取整個畫板
+        .then((canvas) => {
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const storage = getStorage();
+              const DraftFolderName = 'Draft-covers';
+              const imageRef = storageRef(storage, `images/${DraftFolderName}/${nanoid()}`);
+              const uploadTask = uploadBytesResumable(imageRef, blob);
+    
+              uploadTask.on('state_changed',
+                null,
+                (error) => reject(error),
+                async () => {
+                  const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
+                  resolve(imageUrl);  // 返回圖片 URL
+                }
+              );
+            } else {
+              reject(new Error('Failed to convert canvas to Blob'));
+            }
+          });
+        })
+        .catch(reject);
       });
+      
+      
 
       // [ 把打包好的陣列存到 Firestore ]
       const docIdStore = useDocIdStore(); // docId store
