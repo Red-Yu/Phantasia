@@ -6,7 +6,7 @@
     <div class="bgd-wrapper"></div>
 
     <!-- Header -->
-    <Header type="night" />
+    <!-- <Header type="night" /> -->
 
     <!-- 子頁面顯示區域 -->
     <div class="wrapper">

@@ -2637,9 +2637,6 @@ select {
   bottom: 5px;
   z-index: 2;
 }
-.nightLayout .Header {
-  display: none;
-}
 
 .modal-overlay {
   position: fixed;
