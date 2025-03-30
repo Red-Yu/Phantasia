@@ -28,10 +28,12 @@ const createSnowflake = () => {
 };
 
 onMounted(() => {
+  console.log("SNOWFLAKE EFFECT MOUNTED");
   intervalId = setInterval(createSnowflake, 200);
 });
 
 onBeforeUnmount(() => {
+  console.log("SNOWFLAKE EFFECT UNMOUNTED");
   clearInterval(intervalId);
 });
 </script>
