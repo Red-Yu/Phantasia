@@ -21,7 +21,7 @@
           to="/CreateProject"
           @click="changeStyle"
         />
-        <TabButton text="Draft" to="/CreateProject/Draft" />
+        <TabButton text="Publish" to="/CreateProject/Draft" />
       </div>
     </div>
     <!-- Tab分頁面顯示內容 -->

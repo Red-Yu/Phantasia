@@ -207,7 +207,7 @@ const saveDraftTemplates = async () => {
   try {
     await templateStore.saveDraftToFirebase(); // 調用儲存方法
     console.log("簡報已儲存！");
-    router.push('/Create/CreateProject');
+    router.push('/CreateProject');
   } catch (error) {
     console.error("儲存簡報時出現錯誤:", error);
   }
