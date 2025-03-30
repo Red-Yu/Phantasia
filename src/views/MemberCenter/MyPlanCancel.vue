@@ -168,6 +168,10 @@
   }
 }
 
+.highlight-date {
+  color: #EEAD50;
+}
+
 </style>
 
 <template>
@@ -230,13 +234,12 @@
                 class="notification-card"
                 @click.stop  
               >
-                <div class="notification-content">
-                  <p class="message">
-                    Your subscription has been successfully canceled. Your membership benefits will continue until the end of the current subscription period: December 31, 2024.<br>
-                    Thank you for your continued support. If you have any questions or need further assistance, please do not hesitate to contact our customer support team.
-                  </p>
- 
-                </div>
+              <div class="notification-content">
+                <p class="message">
+                  Your subscription has been successfully canceled. Your membership benefits will continue until the end of the current subscription period: <span class="highlight-date">{{ subscriptionEndDate }}</span>.<br>
+                  Thank you for your continued support. If you have any questions or need further assistance, please do not hesitate to contact our customer support team.
+                </p>
+              </div>
               </div>
             </div>
 
@@ -258,24 +261,134 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import AnimatedTitle from '@/components/MemberCenterAnimatedTitle.vue'
+// 引入 Firestore
+import { getFirestore, doc, updateDoc, collection, query, where, orderBy, getDocs, limit, getDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
 const router = useRouter()
+const auth = getAuth()
+const db = getFirestore()
 
 // 通知相關狀態
 const showNotification = ref(false)
+// 存儲訂閱結束日期
+const subscriptionEndDate = ref('')
+
+// 格式化日期函數
+const formatDate = (date) => {
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+};
+
+// 計算結束日期的函數
+const calculateEndDate = (startDate, planType) => {
+  const start = new Date(startDate);
+  const end = new Date(start);
+  
+  switch(planType) {
+    case "Monthly Plan":
+      end.setMonth(start.getMonth() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Quarterly Plan":
+      end.setMonth(start.getMonth() + 3);
+      end.setDate(start.getDate() - 1);
+      break;
+    case "Annual Plan":
+      end.setFullYear(start.getFullYear() + 1);
+      end.setDate(start.getDate() - 1);
+      break;
+  }
+  
+  return end;
+};
+
+// 在組件掛載時獲取訂閱信息
+onMounted(async () => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      // 查詢用戶的訂閱訂單
+      const ordersRef = collection(db, "orders");
+      const q = query(
+        ordersRef, 
+        where("userId", "==", user.uid),
+        where("status", "==", "pending"),
+        orderBy("createdAt", "desc"),
+        limit(1)
+      );
+
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const latestOrder = querySnapshot.docs[0].data();
+        const startDate = new Date(latestOrder.startDate);
+        const endDate = calculateEndDate(startDate, latestOrder.planType);
+        
+        // 設置訂閱結束日期
+        subscriptionEndDate.value = formatDate(endDate);
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching subscription data:", error);
+  }
+});
 
 // 點擊確認取消按鈕
-const handleChangeClick = () => {
-  showNotification.value = true  // 移除了 selectedPlan 的檢查，因為這是取消訂閱的確認
+const handleChangeClick = async () => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      // 查詢用戶的訂閱訂單
+      const ordersRef = collection(db, "orders");
+      const q = query(
+        ordersRef, 
+        where("userId", "==", user.uid),
+        where("status", "==", "pending"),
+        orderBy("createdAt", "desc"),
+        limit(1)
+      );
+
+      const querySnapshot = await getDocs(q);
+      
+      if (!querySnapshot.empty) {
+        const orderDoc = querySnapshot.docs[0];
+        // 更新訂單狀態為 "cancelled"，但保留訂閱到期日期
+        await updateDoc(doc(db, "orders", orderDoc.id), {
+          cancellationRequested: true,
+          cancellationDate: new Date().toISOString()
+        });
+        
+        // 設置本地存儲，用於跨頁面傳遞取消狀態
+        localStorage.setItem('subscriptionCancelled', 'true');
+      }
+    }
+  } catch (error) {
+    console.error("Error cancelling subscription:", error);
+  }
+  
+  // 顯示通知
+  showNotification.value = true;
 }
 
 // 點擊空白處關閉通知
 const handleOverlayClick = (event) => {
   if (event.target.classList.contains('notification-overlay')) {
-    showNotification.value = false
+    showNotification.value = false;
+    
+    // 關閉對話框後跳轉到會員中心首頁
+    router.push('/MemberCenter').then(() => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
   }
 }
 
@@ -284,7 +397,7 @@ const handleReturnClick = () => {
   router.push('/MemberCenter').then(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth' // 使用平滑滾動
+      behavior: 'smooth'
     })
   })
 }

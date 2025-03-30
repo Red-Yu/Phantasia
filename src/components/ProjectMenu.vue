@@ -21,7 +21,7 @@
           to="/CreateProject"
           @click="changeStyle"
         />
-        <TabButton text="Draft" to="/CreateProject/Draft" />
+        <TabButton text="Publish" to="/CreateProject/Draft" />
       </div>
     </div>
     <!-- Tab分頁面顯示內容 -->
@@ -39,8 +39,6 @@ const changeStyle = () => {};
 
 import { ref, onMounted } from "vue"; // 添加 watch 引入
 import { useRouter, useRoute } from "vue-router"; // 添加 useRoute 引入
-// import { auth, storage } from "@/firebase/firebaseConfig";
-// import { useUserAuthState } from "@/stores/userAuthState";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import "@/assets/css/main.css";
@@ -51,12 +49,38 @@ const route = useRoute();
 const auth = getAuth();
 const avatarURL = ref("");
 
+// 檢查頭像是否來自 Google
+function isGoogleAvatar(photoURL) {
+  return photoURL && (
+    photoURL.includes('googleusercontent.com') || 
+    photoURL.includes('google.com')
+  );
+}
+
+// 獲取適當的頭像 URL
+function getProperAvatarURL(user) {
+  if (!user) return "/MyColset/avatarDefault.png";
+  
+  // 如果是 Google 頭像，返回預設頭像
+  if (isGoogleAvatar(user.photoURL)) {
+    return "/MyColset/avatarDefault.png";
+  }
+  
+  // 否則返回用戶的頭像或預設頭像
+  return user.photoURL || "/MyColset/avatarDefault.png";
+}
+
 onMounted(() => {
+  // 先檢查是否有當前登入用戶，立即處理頭像
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    avatarURL.value = getProperAvatarURL(currentUser);
+  }
+
   onAuthStateChanged(auth, async (user) => {
-    // 將回調設為 async 函數
     if (user) {
-      // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      // 更新頭像 URL - 使用過濾函數
+      avatarURL.value = getProperAvatarURL(user);
     } else {
       avatarURL.value = "/MyColset/avatarDefault.png";
     }

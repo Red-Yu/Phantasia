@@ -1,7 +1,3 @@
-<!-- <div>這是會員中心</div>
-<div>因為有無訂閱只有內容不一樣，用條件判斷決定顯示的內容</div> -->
-<!-- src/views/MemberCenter.vue -->
-
 <style scoped>
 @import "../../Assets/css/main.css";
 
@@ -43,6 +39,12 @@
     line-height: normal;
     letter-spacing: 2px;
     color: #153243;
+  }
+  
+  /* 添加灰色提示樣式 */
+  .placeholder-text {
+    color: #A9A9A9; /* 灰色文字 */
+    font-style: italic;
   }
 }
 
@@ -188,7 +190,7 @@ h1 {
       <img :src="feather" alt="feather" />
       <span class="label">Date Of Birth</span>
     </div>
-    <span class="value">{{ userBirthday }}</span>
+    <span :class="{ 'value': true, 'placeholder-text': isPlaceholderBirthday }">{{ displayBirthday }}</span>
     <div class="detail-item">
       <img :src="feather" alt="feather" />
       <span class="label">Email</span>
@@ -204,7 +206,12 @@ h1 {
       <template v-if="hasActiveSubscription">
         <p>{{ subscriptionPlanType }}</p>
         <p>Subscription Period: From {{ subscriptionStartDate }} to {{ subscriptionEndDate }}</p>
-        <p>Next Renewal Date: {{ nextRenewalDate }}</p>
+        <p>
+          Next Renewal Date: {{ nextRenewalDate }}
+          <span v-if="subscriptionCancelled" class="cancellation-notice">
+            (Automatic renewal canceled)
+          </span>
+        </p>
         <div class="manage-link" @click="handleManageSubscription">
           <p style="font-size: 20px">Manage Subscription Plans</p>
           <div class="i">
@@ -234,7 +241,7 @@ h1 {
       <img :src="stamp" alt="stamp" />
       <div class="stepnumber">{{points}}</div>
     </div>
-    <div class="page-link">
+    <div class="page-link" @click="handleGoToMyRewardCard">
       <p style="font-size: 20px">Go To My Page</p>
       <div class="i">
         <div class="dark-arrow"></div>
@@ -247,7 +254,7 @@ h1 {
 import { useRouter } from "vue-router";
 import stamp from "@/assets/img/membercenter/Frame 427319813.svg";
 import feather from "@/assets/img/membercenter/feather.svg";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { db } from "../../firebase/firebaseConfig";
 import { 
   doc, 
@@ -268,6 +275,33 @@ const auth = getAuth();
 const userName = ref("");
 const userBirthday = ref("");
 const userEmail = ref("");
+const userLoginMethod = ref(""); // 新增登入方式欄位
+
+// 檢查是否為 Google 登入
+const isGoogleLogin = computed(() => {
+  return userLoginMethod.value === 'google';
+});
+
+// 檢查是否是提示文字
+const isPlaceholderBirthday = computed(() => {
+  return !userBirthday.value && isGoogleLogin.value;
+});
+
+// 處理顯示生日
+const displayBirthday = computed(() => {
+  // 如果資料庫中存在生日資料，則無論登入方式如何都顯示該資料
+  if (userBirthday.value) {
+    return userBirthday.value;
+  }
+  
+  // 如果資料庫中沒有生日資料且是Google登入，顯示填寫提示
+  if (isGoogleLogin.value) {
+    return "Please go to Account Setting to fill in";
+  }
+  
+  // 如果沒有生日資料且不是Google登入，顯示空字串
+  return "";
+});
 const points = ref(0); // 新增用於存儲會員點數的變量
 
 // 訂閱相關資料
@@ -276,6 +310,8 @@ const subscriptionPlanType = ref('');
 const subscriptionStartDate = ref("");
 const subscriptionEndDate = ref("");
 const nextRenewalDate = ref("");
+// 添加訂閱取消狀態
+const subscriptionCancelled = ref(false);
 
 // 格式化日期函數
 const formatDate = (date) => {
@@ -335,6 +371,18 @@ onMounted(async () => {
 
   if (user) {
     try {
+      // 檢查登入提供商
+      if (user.providerData && user.providerData.length > 0) {
+        const providerId = user.providerData[0]?.providerId;
+        if (providerId === 'google.com') {
+          userLoginMethod.value = 'google';
+        } else if (providerId === 'facebook.com') {
+          userLoginMethod.value = 'facebook';
+        } else {
+          userLoginMethod.value = 'email';
+        }
+      }
+
       // 獲取用戶基本資料
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (userDoc.exists()) {
@@ -342,6 +390,11 @@ onMounted(async () => {
         userName.value = userData.name || ""; 
         userBirthday.value = userData.birthday || ""; 
         userEmail.value = userData.email || ""; 
+        
+        // 如果資料庫中有登入方式資訊，優先使用資料庫中的
+        if (userData.loginMethod) {
+          userLoginMethod.value = userData.loginMethod;
+        }
         points.value = userData.points || 0; // 設置用戶點數
       }
 
@@ -368,15 +421,25 @@ onMounted(async () => {
         console.log('Renewal Date:', renewalDate);
 
         hasActiveSubscription.value = true;
-        subscriptionPlanType.value = `${latestOrder.planType} Plan`;
+        subscriptionPlanType.value = `${latestOrder.planType}`;
         
         subscriptionStartDate.value = formatDate(startDate);
         subscriptionEndDate.value = formatDate(endDate);
         nextRenewalDate.value = formatDate(renewalDate);
-
+        
+        // 檢查訂單是否已請求取消
+        subscriptionCancelled.value = latestOrder.cancellationRequested || false;
       } else {
         hasActiveSubscription.value = false;
       }
+      
+      // 檢查本地存儲中是否有取消訂閱的標記
+      if (localStorage.getItem('subscriptionCancelled') === 'true') {
+        subscriptionCancelled.value = true;
+        // 清除本地存儲，避免影響其他頁面
+        localStorage.removeItem('subscriptionCancelled');
+      }
+      
     } catch (error) {
       console.error("Error fetching user and subscription data:", error);
       hasActiveSubscription.value = false;
@@ -395,6 +458,15 @@ const handleManageSubscription = () => {
 
 const handleExploreSubscription = () => {
   router.push("/MemberCenter/MyPlanVisitor").then(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+};
+
+const handleGoToMyRewardCard = () => {
+  router.push("/MyCabin/MyRewardCard").then(() => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",

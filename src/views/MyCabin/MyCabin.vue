@@ -241,11 +241,10 @@ onMounted(() => {
   // ===============獲取用戶圖片===============
 
   onAuthStateChanged(auth, async (user) => {
-    // 將回調設為 async 函數
     if (user) {
       // 獲取用戶資料
       try {
-        const userDoc = await getDoc(doc(db, "users", user.uid)); // 使用 await 獲取資料
+        const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data();
           partnerURL.value = userData.partnerURL || "/MyColset/Ollie.png";
@@ -255,8 +254,17 @@ onMounted(() => {
       } catch (error) {
         console.log("Error getting document:", error);
       }
-      // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/character115x409.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      
+      // 檢查是否為 Google 頭像
+      const isGoogleAvatar = user.photoURL && (
+        user.photoURL.includes('googleusercontent.com') || 
+        user.photoURL.includes('google.com')
+      );
+      
+      // 更新頭像 URL，如果是 Google 頭像則不使用
+      avatarURL.value = isGoogleAvatar 
+        ? "/MyColset/character115x409.png"  // 使用預設頭像
+        : (user.photoURL || "/MyColset/character115x409.png"); // 使用自訂頭像或預設頭像
     } else {
       // 用戶未登入
       avatarURL.value = "/MyColset/character115x409.png";
