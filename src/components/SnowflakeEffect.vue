@@ -38,7 +38,7 @@ onBeforeUnmount(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .snow-container {
   position: fixed;
   top: 0;
