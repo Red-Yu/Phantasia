@@ -3,33 +3,35 @@
 
 </style>
 
-
 <template>
   <div>
     <div id="info">
       <a href="https://threejs.org" target="_blank" rel="noopener"></a>
     </div>
+    
     <div id="container" ref="container"></div>
 
-      <div id="menu">
-        <!-- 按鈕選單 -->
-        <button class="btnKey-M dark" @click="handleClick('helix', false)">HELIX</button>
-        <button class="btnKey-M dark" @click="handleClick('table', true)">EDIT</button>
-        <button class="btnKey-M dark" @click="handleClick('sphere', false)">SPHERE</button>
-        <button class="btnKey-M dark" @click="handleClick('grid', false)">GRID</button>
+    <div id="menu">
+      <!-- 按鈕選單 -->
+      <button class="btnKey-M dark" @click="handleClick('helix', false)">HELIX</button>
+      <button class="btnKey-M dark" @click="handleClick('table', true)">EDIT</button>
+      <button class="btnKey-M dark" @click="handleClick('sphere', false)">SPHERE</button>
+      <button class="btnKey-M dark" @click="handleClick('grid', false)">GRID</button>
+    </div>
 
-        <div class="backToHome_button">
-          <button @click="backToHome"class="btnLink whiteForFrontPage backToHome menuIn">Back to my Cabin</button></div>
-      </div>
+    <!-- 回到小屋按鈕 -->
+    <div class="backToHome_button">
+      <button
+        @click="backToHome"
+        class="btnLink whiteForFrontPage backToHome menuIn"
+      >
+        Back to my Cabin
+      </button>
+    </div>
   </div>
 </template>
 
 <script setup>
-// onMounted(async () => {
-//   await fetchBooksFromFirestoreAndSaveToMyBookcase()
-//   table.value = generateTableFromSlots()
-//   transform(table.value, 2000)
-// })
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { db, auth } from '@/firebase/firebaseConfig'
 import { doc, updateDoc } from 'firebase/firestore'
