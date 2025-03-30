@@ -15,11 +15,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-    img {
-        width: 200px;
-        height: auto;
-        object-fit: cover;
+        img {
+            height: 100%;
+        }
     }
 
     // info
@@ -58,6 +56,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
+        img{
+            height: 100%;
+        }
     }
 
     // info
@@ -93,6 +95,10 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
+        img{
+            height: 100%;
+        }
     }
 
     // info

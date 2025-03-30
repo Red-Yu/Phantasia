@@ -284,9 +284,11 @@
   // height: 100%;
 }
 .point span {
-  font-size: 20px;
+  font-size: 28px;
   font-weight: bold;
-  color: black;
+  color: $subDark-gray;
+  font-family: "Aleo";
+  text-transform: capitalize;
   position: absolute;
   top: 50%;
   left: 50%;

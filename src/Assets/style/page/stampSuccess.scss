@@ -1,0 +1,99 @@
+@import "../base/color";
+@import "../base/font";
+
+body,
+input,
+label,
+p,
+h2,
+button {
+  margin: 0;
+  padding: 0;
+}
+
+/* 光箱外底色 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($baseBlue, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  visibility: visible;  /* 確保元素可見 */
+  // background-color: yellow;
+}
+
+// 光箱大小邊框
+.modal-content {
+//   max-width: 35vw;
+  width: 27%;
+  height: 30vh;
+  // min-height: 450px;
+
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+  .bgc {
+    width: 100%;
+    height: 100%;
+    background-color: $subWhite;
+    // 邊框
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: solid transparent;
+    }
+    &::before {
+      border-width: 5px; /* 外框寬度 */
+      border-color: $baseBlue; /* 外框顏色 */
+      z-index: 1;
+    }
+    &::after {
+      border-width: 2px; /* 內框寬度 */
+      border-color: $baseBlue; /* 內框顏色 */
+      top: 8px; /* 外框寬度 + padding */
+      left: 8px; /* 外框寬度 + padding */
+      right: 8px; /* 外框寬度 + padding */
+      bottom: 8px; /* 外框寬度 + padding */
+      z-index: 2;
+    }
+  }
+}
+
+/* 光箱內容 */
+.lightbox-content {
+  // width: 40%;
+  // max-width: 30vw;
+  width: 27%;
+  height: 30vh;
+  // min-height: 450px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 確保光箱正中央 */
+  z-index: 5000;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+
+  h2 {
+    font-family: Aleo;
+    color: $baseBlue;
+    // color: black;
+    font-size: 2.2rem;
+    margin: 25px 0;
+  }
+}

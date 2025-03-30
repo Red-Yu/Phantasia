@@ -234,12 +234,12 @@ h1 {
     </div>
   </div>
 
-
+  <!-- 點數顯示區塊 -->
   <div class="stamp-display">
     <h1>My Stamp Count</h1>
     <div class="stamp-container">
       <img :src="stamp" alt="stamp" />
-      <div class="stepnumber">99</div>
+      <div class="stepnumber">{{points}}</div>
     </div>
     <div class="page-link" @click="handleGoToMyRewardCard">
       <p style="font-size: 20px">Go To My Page</p>
@@ -302,6 +302,7 @@ const displayBirthday = computed(() => {
   // 如果沒有生日資料且不是Google登入，顯示空字串
   return "";
 });
+const points = ref(0); // 新增用於存儲會員點數的變量
 
 // 訂閱相關資料
 const hasActiveSubscription = ref(false);
@@ -394,6 +395,7 @@ onMounted(async () => {
         if (userData.loginMethod) {
           userLoginMethod.value = userData.loginMethod;
         }
+        points.value = userData.points || 0; // 設置用戶點數
       }
 
       // 查詢訂閱訂單

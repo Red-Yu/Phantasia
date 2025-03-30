@@ -95,6 +95,7 @@
 .google-login-btn {
   transition: all 0.2s ease;
   cursor: pointer;
+  opacity: 1;
 }
 
 .google-login-btn:hover {
@@ -108,7 +109,7 @@
 .error-message {
   color: #e53935;
   margin-top: 10px;
-  text-align: center;
+  /* text-align: center; */
 }
 </style>
 

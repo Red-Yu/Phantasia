@@ -1,0 +1,27 @@
+.mainContent {
+  // 定位
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  // 外觀
+  width: calc(100% - 20px);
+  height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: none;
+  // 內容排版
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px; 
+}
+.CreatePreviewGroup{
+  align-items: center;
+  justify-content: center;
+}
+.modelBox{
+  width: 680px;
+  height: 380px;
+}

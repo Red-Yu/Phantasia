@@ -36,8 +36,13 @@ button {
   overflow: hidden;
   position: relative;
   .bgc {
+    // 資玲-修改這段因為和我的命名一樣會被我的其他元件影響到
+    max-width: 35vw;
     width: 100%;
-    height: 100%;
+    height: 70vh;
+    // 這邊是原本寫的
+    // width: 100%;
+    // height: 100%;
     background-color: $subWhite;
     // 邊框
     &::before,
@@ -131,7 +136,7 @@ button[type="submit"]:hover {
 div.btn {
   display: flex;
   justify-content: center;
-  padding-top: 12px;
+  padding-top: 8px;
 }
 
 // 錯誤提示
@@ -144,6 +149,7 @@ div.btn {
   display: flex;
   justify-content: space-around;
   width: 100%;
+  opacity: 40%;
 }
 
 .outsideContect a {
@@ -206,9 +212,19 @@ input {
 }
 
 .error-message {
+  height: 14px; /* 固定高度，避免擠壓 */
+  line-height: 14px; /* 垂直置中 */
   color: red;
+  font-size: 14px;
+  visibility: hidden; /* 預設隱藏 */
+  opacity: 0; /* 預設透明 */
+  transition: opacity 0.3s ease; /* 添加過渡效果 */
 }
 
+.error-message.visible {
+  visibility: visible; /* 顯示錯誤訊息 */
+  opacity: 1; /* 完全不透明 */
+}
 
 // 登入註冊成功
 .modal-content.successPrompt {

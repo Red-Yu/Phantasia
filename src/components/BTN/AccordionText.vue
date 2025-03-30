@@ -4,6 +4,9 @@ import { eventBus } from "@/utils/eventBus"; // 引入 mitt 事件總線
 import { ColorPicker } from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
 
+// 追蹤當前選中的輸入框 ID
+const activeTextInputId = ref(null);
+
 const fontFamily = ref("Arial");
 const fontSize = ref("16");
 const fontWidth = ref("400");
@@ -11,17 +14,25 @@ const textAlign = ref("left");
 const alignItems = ref("end");
 const fontColor = ref("#000000"); // 預設顏色為黑色
 
-// 當用戶變更字體樣式時，發送事件
+// 監聽來自 CreateTextInput 的選中事件
+eventBus.on("setActiveTextInput", (id) => {
+  activeTextInputId.value = id;
+});
+
+// 當用戶變更字體樣式時，發送事件 **只發送給當前選中的輸入框**
 const updateTextStyle = () => {
-  eventBus.emit("updateTextStyle", {
-    fontFamily: fontFamily.value,
-    fontSize: fontSize.value + "px",
-    fontWeight: fontWidth.value,
-    textAlign: textAlign.value,
-    alignItems: alignItems.value,
-    color: fontColor.value, // 傳遞顏色
-  });
+  if (activeTextInputId.value) {
+    eventBus.emit(`updateTextStyle-${activeTextInputId.value}`, {
+      fontFamily: fontFamily.value,
+      fontSize: fontSize.value + "px",
+      fontWeight: fontWidth.value,
+      textAlign: textAlign.value,
+      alignItems: alignItems.value,
+      color: fontColor.value,
+    });
+  }
 };
+
 watch(fontColor, updateTextStyle);
 </script>
 
@@ -129,33 +140,6 @@ watch(fontColor, updateTextStyle);
           class="format text-align-justify"
         >
           <img src="../../Assets/img/icon/text-align-justify.png" alt="" />
-        </button>
-        <button
-          @click="
-            alignItems = 'center';
-            updateTextStyle();
-          "
-          class="format justify-content-center"
-        >
-          <img src="../../Assets/img/icon/justify-content-center.png" alt="" />
-        </button>
-        <button
-          @click="
-            alignItems = 'end';
-            updateTextStyle();
-          "
-          class="format justify-content-end"
-        >
-          <img src="../../Assets/img/icon/justify-content-end.png" alt="" />
-        </button>
-        <button
-          @click="
-            alignItems = 'start';
-            updateTextStyle();
-          "
-          class="format justify-content-start"
-        >
-          <img src="../../Assets/img/icon/justify-content-start.png" alt="" />
         </button>
       </div>
       <div class="fourRow">

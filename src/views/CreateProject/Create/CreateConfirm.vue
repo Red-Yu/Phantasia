@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <PublishSuccess :isVisible="isModalVisible" @close="closeModal" />
+        <PublishSuccess :isVisible="isModalVisible" modalId="PublishSuccess" @close="closeModal" />
       </div>
     </div>
   </div>

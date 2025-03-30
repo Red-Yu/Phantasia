@@ -36,7 +36,7 @@
       </button>
     </nav>
     <!-- Props: CreateNewProject -->
-    <CreateNewProject :isVisible="isModalVisible" @close="closeModal" />
+    <CreateNewProject :isVisible="isModalVisible" modalId="CreateNewProject" @close="closeModal" />
 
     <!-- FileManager -->
     <nav class="recent-file" v-if="!searchQuery">
@@ -99,10 +99,13 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+
+import { ref, computed , onMounted } from "vue";
 import FileItem from "../../components/FileItem.vue";
 import CreateNewProject from "./FullScreenModal/CreateNewProject.vue";
-
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { db, auth } from '../../firebase/firebaseConfig'; // 請確保路徑正確
 // ===========================
 // CreateNewProject
 // ===========================
@@ -184,95 +187,113 @@ const filteredFiles = computed(() => {
 });
 // ==============================
 // 檔案資訊
+// 從 firebase 抓資料填入
 // ==============================
-const files = ref([
-  {
-    id: 1,
-    name: "The Last Guardian",
-    size: 120,
-    type: "application/pdf",
-    time: "Jan 11, 2025 1:08 AM",
-    url: "",
-  },
-  {
-    id: 2,
-    name: "A Tale of Two Worlds",
-    size: 420,
-    type: "application/pdf",
-    time: "Jan 11, 2025 2:08 AM",
-    url: "",
-  },
-  {
-    id: 3,
-    name: "The Midnight Mystery",
-    size: 80,
-    type: "application/docx",
-    time: "Jan 11, 2025 3:08 AM",
-    url: "",
-  },
-  {
-    id: 4,
-    name: "Secrets Beneath the Sea",
-    size: 3200,
-    type: "audio/mp3",
-    time: "Jan 11, 2025 4:08 AM",
-    url: "",
-  },
-  {
-    id: 5,
-    name: "Beyond the Horizon",
-    size: 120,
-    type: "application/pdf",
-    time: "Jan 11, 2025 5:08 AM",
-    url: "",
-  },
-  {
-    id: 6,
-    name: "The Cursed Amulet",
-    size: 420,
-    type: "application/pdf",
-    time: "Jan 11, 2025 6:08 AM",
-    url: "",
-  },
-  {
-    id: 7,
-    name: "Shadows in the Fog",
-    size: 80,
-    type: "application/docx",
-    time: "Jan 11, 2025 7:08 AM",
-    url: "",
-  },
-  {
-    id: 8,
-    name: "The Enchanted Forest",
-    size: 120,
-    type: "application/pdf",
-    time: "Jan 11, 2025 1:08 AM",
-    url: "",
-  },
-  {
-    id: 9,
-    name: "Lost in Time",
-    size: 420,
-    type: "application/pdf",
-    time: "Jan 11, 2025 2:08 AM",
-    url: "",
-  },
-  {
-    id: 10,
-    name: "Whispers of the Wind",
-    size: 80,
-    type: "application/docx",
-    time: "Jan 11, 2025 3:08 AM",
-    url: "",
-  },
-  {
-    id: 11,
-    name: "The Hidden Key",
-    size: 3200,
-    type: "audio/mp3",
-    time: "Jan 11, 2025 4:08 AM",
-    url: "",
-  },
-]);
+const files = ref([]); // 存儲從 Firestore 獲取的書籍資料
+
+// 從 Firestore 獲取書籍資料
+const fetchFirestoreData = async () => {
+  try {
+    const db = getFirestore();
+    const currentUser = auth.currentUser; // 獲取當前已登錄用戶
+    if (!currentUser) {
+      console.error("No user is logged in");
+      return;
+    }
+
+    const userId = currentUser.uid; // 當前用戶的 userId
+    
+    // 基於當前用戶的 userId 篩選書籍資料
+    const DraftsCollectionRef = collection(db, "Drafts");
+    const querySnapshot = await getDocs(
+      query(DraftsCollectionRef, where("userId", "==", userId)) // 篩選條件：只顯示該用戶的書籍
+    );
+    
+    if (querySnapshot.empty) {
+      console.log("No books found for the current user");
+      files.value = []; // 如果該用戶沒有書籍，設置為空陣列
+      return;
+    }
+
+    // 將每本書的資料映射為與 `files` 類似的結構
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      files.value.push({
+        id: doc.id, // Firebase-generated ID
+        name: data.title,
+        size: data.size || 0, // 假設書籍大小為數字，若無則設置為 0
+        type: data.type || "application/pdf", // 書籍類型，預設為 PDF
+        time: data.saveDate || "Unknown", // 書籍加入時間，若無則顯示為 "Unknown"
+        url: data.imagePath || "", // 書籍封面圖片 URL
+      });
+    });
+  } catch (error) {
+    console.error("Error fetching data from Firestore:", error);
+  }
+};
+
+// 在組件加載時獲取資料
+onMounted(() => {
+  fetchFirestoreData(); // 獲取 Firestore 中的書籍資料
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// 成功
+// const files = ref([]); // 存儲從 Firestore 獲取的書籍資料
+
+// // 從 Firestore 獲取書籍資料
+// const fetchFirestoreData = async () => {
+//   try {
+//     const db = getFirestore();
+//     const booksCollectionRef = collection(db, "books");
+//     const querySnapshot = await getDocs(booksCollectionRef);
+    
+//     if (querySnapshot.empty) {
+//       console.log("No documents found in 'books' collection");
+//       files.value = []; // 如果沒有資料，設置為空陣列
+//       return;
+//     }
+
+//     // 將每本書的資料映射為與 `files` 類似的結構
+//     querySnapshot.forEach((doc) => {
+//       const data = doc.data();
+//       files.value.push({
+//         id: doc.id, // Firebase-generated ID
+//         name: data.title,
+//         size: data.size || 0, // 假設書籍大小為數字，若無則設置為 0
+//         type: data.type || "application/pdf", // 書籍類型，預設為 PDF
+//         time: data.dateAdded || "Unknown", // 書籍加入時間，若無則顯示為 "Unknown"
+//         url: data.imagePath || "", // 書籍封面圖片 URL
+//       });
+//     });
+//   } catch (error) {
+//     console.error("Error fetching data from Firestore:", error);
+//   }
+// };
+
+// // 在組件加載時獲取資料
+// onMounted(() => {
+//   fetchFirestoreData(); // 獲取 Firestore 中的書籍資料
+// });
+
 </script>

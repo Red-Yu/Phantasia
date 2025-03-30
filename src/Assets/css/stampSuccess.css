@@ -1,0 +1,92 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Aleo:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fanwood+Text:ital@0;1&display=swap");
+/* FanwoodText
+    AG - [ 全大寫 + 高低差 : 裝飾標題]
+    Ag - [ 字首大寫 + 粗體 : 副標 , linkBtn ]
+    normal - [ 一般文字 (內文) ]  */
+/* Aleo
+    AG - [ 內文標題、發光按鈕 ]
+    Ag - [ 粗體副標 ] */
+body,
+input,
+label,
+p,
+h2,
+button {
+  margin: 0;
+  padding: 0;
+}
+
+/* 光箱外底色 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(21, 50, 67, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  visibility: visible; /* 確保元素可見 */
+}
+
+.modal-content {
+  width: 27%;
+  height: 30vh;
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.modal-content .bgc {
+  width: 100%;
+  height: 100%;
+  background-color: #f9faf9;
+}
+.modal-content .bgc::before, .modal-content .bgc::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: solid transparent;
+}
+.modal-content .bgc::before {
+  border-width: 5px; /* 外框寬度 */
+  border-color: #153243; /* 外框顏色 */
+  z-index: 1;
+}
+.modal-content .bgc::after {
+  border-width: 2px; /* 內框寬度 */
+  border-color: #153243; /* 內框顏色 */
+  top: 8px; /* 外框寬度 + padding */
+  left: 8px; /* 外框寬度 + padding */
+  right: 8px; /* 外框寬度 + padding */
+  bottom: 8px; /* 外框寬度 + padding */
+  z-index: 2;
+}
+
+/* 光箱內容 */
+.lightbox-content {
+  width: 27%;
+  height: 30vh;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 確保光箱正中央 */
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.lightbox-content h2 {
+  font-family: Aleo;
+  color: #153243;
+  font-size: 2.2rem;
+  margin: 25px 0;
+}/*# sourceMappingURL=stampSuccess.css.map */
