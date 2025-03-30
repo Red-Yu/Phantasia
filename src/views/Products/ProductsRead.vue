@@ -74,8 +74,8 @@
 
         <div class="reviewText">
           <p>
-            Kindly note that your comments will be publicly visible, so please
-            post responsibly.
+            Kindly note that your comments will be publicly visible, so please post
+            responsibly.
           </p>
         </div>
 
@@ -116,13 +116,21 @@
     </div>
     <div class="actionButtonWrapper8">
       <div class="action-buttons8">
-        <div @click="collectStamps" class="action-button8 btnKey-L light">
+        <div
+          @click="addPoint"
+          class="action-button8 btnKey-L light"
+          :class="{ disabled: hasClicked }"
+        >
           <p>COLLECT YOUR STAMPS</p>
         </div>
-        <div
-          @click="navigate('/Products')"
-          class="action-button8 btnLink light"
-        >
+        <SuccessModal
+          v-if="isSuccessModalVisible"
+          class="success-modal"
+          :isVisible="isSuccessModalVisible"
+          @close="isSuccessModalVisible = false"
+        />
+
+        <div @click="navigate('/Products')" class="action-button8 btnLink light">
           <p>Back to books</p>
           <div class="icon-L">
             <div class="light-arrow"></div>
@@ -138,16 +146,10 @@
           SUBSCRIBE NOW TO READ MORE
         </p>
         <div class="popup-buttons">
-          <div
-            @click="navigate('/Products')"
-            class="action-button btnKey-L light"
-          >
+          <div @click="navigate('/Products')" class="action-button btnKey-L light">
             <p>BACK TO BOOKS</p>
           </div>
-          <div
-            @click="navigate('/MemberCenter')"
-            class="action-button btnKey-L light"
-          >
+          <div @click="navigate('/MemberCenter')" class="action-button btnKey-L light">
             <p>SUBSCRIBE</p>
             <div class="icon-L">
               <div class="white-cross">
@@ -172,8 +174,21 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import SuccessModal from "../MyCabin/stampSuccess.vue";
 
+// Popup logic
+const showPopup = ref(false);
 // Route setup
 const route = useRoute();
 const bookId = route.params.id; // e.g., "abc123xyz"
@@ -181,9 +196,6 @@ const bookId = route.params.id; // e.g., "abc123xyz"
 const avatarURL = ref("");
 const userId = ref(null); // Store authenticated user ID
 const isSubscribed = ref(false); // Subscription status
-
-// Popup logic
-const showPopup = ref(false);
 
 const loading = ref(true); // New loading state
 
@@ -203,9 +215,21 @@ const collectStamps = () => {
   router.push("/MyCabin/MyRewardCard");
 };
 
+// 辨識為會員才在資料庫紀錄點數
+// onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           userID.value = user.uid;
+//           fetchPoints(user.uid);
+//         }
+//       });
 // Firebase Auth setup and subscription check
 const auth = getAuth();
 onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    userID.value = user.uid;
+    fetchPoints(user.uid);
+  }
+
   if (user) {
     avatarURL.value = user.photoURL || "/MyColset/character115x409.png";
     userId.value = user.uid;
@@ -233,6 +257,54 @@ const totalStars7 = 5;
 const currentRating7 = ref(0);
 const hoverRating7 = ref(0);
 const userInput = ref("");
+
+//集點
+
+const userID = ref(null);
+const points = ref(0);
+const hasClicked = ref(false); // 用於追蹤是否已點擊
+const isSuccessModalVisible = ref(false);
+
+const fetchPoints = async (uid) => {
+  if (!uid) return;
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+  if (userSnap.exists()) {
+    points.value = userSnap.data().points || 0;
+  } else {
+    await setDoc(userRef, { points: 0 });
+  }
+};
+
+const addPoint = async () => {
+  if (hasClicked.value || !userID.value) return; // 如果已點擊或未登入則返回
+  hasClicked.value = true; // 標記為已點擊
+  const userRef = doc(db, "users", userID.value);
+  try {
+    await updateDoc(userRef, {
+      points: points.value + 1,
+    });
+    points.value++; // 確保資料庫更新成功後再增加點數
+    // 集點成功後顯示提示
+    // alert("集點成功！");
+    isSuccessModalVisible.value = true;
+    console.log("isSuccessModalVisible:", isSuccessModalVisible.value);
+  } catch (error) {
+    console.error("更新點數時發生錯誤:", error);
+    hasClicked.value = false; // 如果更新失敗，重置點擊狀態
+  }
+
+  // 設置定時器，3秒後關閉成功彈窗
+  setTimeout(() => {
+    const modal = document.querySelector(".success-modal");
+    if (modal) {
+      modal.classList.add("fade-out");
+      setTimeout(() => {
+        isSuccessModalVisible.value = false;
+      }, 1000);
+    }
+  }, 2000);
+};
 
 // Load from sessionStorage on mount
 onMounted(() => {
@@ -331,8 +403,7 @@ const preventScrollAction = (event) => {
 const handleScroll = () => {
   if (showPopup.value || loading.value) return; // Exit if loading
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const scrollHeight =
-    document.documentElement.scrollHeight - window.innerHeight;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercentage = scrollTop / scrollHeight;
 
   // Show popup if not logged in OR logged in but not subscribed, at 95% scroll
@@ -360,8 +431,7 @@ const scrollToPosition = (index, event) => {
     event.preventDefault();
     return;
   }
-  const scrollHeight =
-    document.documentElement.scrollHeight - window.innerHeight;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollTo = (scrollHeight / 9) * index;
   window.scrollTo({ top: scrollTo, behavior: "smooth" });
 };
@@ -369,8 +439,7 @@ const scrollToPosition = (index, event) => {
 const updateActiveDot = () => {
   if (showPopup.value) return;
   const scrollTop = window.scrollY;
-  const scrollHeight =
-    document.documentElement.scrollHeight - window.innerHeight;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
   activeDot.value = Math.min(9, Math.floor((scrollTop / scrollHeight) * 10));
 };
 

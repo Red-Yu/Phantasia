@@ -18,9 +18,7 @@
                 ></div>
                 <div
                   class="pb-inner-layer"
-                  :style="{
-                    backgroundImage: `url(${product.innerCoverImage})`,
-                  }"
+                  :style="{ backgroundImage: `url(${product.innerCoverImage})` }"
                 ></div>
                 <div
                   class="pb-outer-layer"
@@ -134,8 +132,7 @@
                   </div>
                   <p>{{ comment.text }}</p>
                   <p>
-                    {{ comment.userName }} -
-                    {{ comment.timestamp.toLocaleDateString() }}
+                    {{ comment.userName }} - {{ comment.timestamp.toLocaleDateString() }}
                   </p>
                 </div>
               </div>
@@ -162,9 +159,8 @@ import { useRouter, useRoute } from "vue-router";
 import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
 import { ref as storageRef, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path to your Firebase config
-// import Header from "@/components/Header.vue";
-// import SnowflakeEffect from "@/components/SnowflakeEffect.vue";
-import SnowflakeEffect from "../../components/SnowflakeEffect.vue";
+import Header from "@/components/Header.vue";
+import SnowflakeEffect from "@/components/SnowflakeEffect.vue";
 
 // Router and Route setup
 const router = useRouter();
