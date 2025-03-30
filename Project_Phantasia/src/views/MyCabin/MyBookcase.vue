@@ -2,10 +2,6 @@
 @import "../../Assets/css/myBookcase.css";
 
 </style>
-<<<<<<< HEAD
-=======
-
->>>>>>> cf9f3671d934ddcb0feee75dba75476b0d6dae29
 <template>
   <div>
     <div id="info">
@@ -27,13 +23,9 @@
       <button
         @click="backToHome"
         class="btnLink whiteForFrontPage backToHome menuIn"
-<<<<<<< HEAD
-      >Back to my Cabin</button>
-=======
       >
         Back to my Cabin
       </button>
->>>>>>> cf9f3671d934ddcb0feee75dba75476b0d6dae29
     </div>
   </div>
 </template>
