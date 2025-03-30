@@ -1,7 +1,7 @@
 <template>
   <div class="modal-overlay" v-if="isVisible" @click="closeModal">
     <div class="modal-content" ref="scrollContainerRef" @click.stop>
-      <div class="bgc"></div>
+      <div class="FullScreenModalBgc"></div>
       <!-- 模組顯示主區塊 -->
       <div class="mainContent" ref="mainContentRef">  
         <div class="CreatePreviewGroup" :style="getPreviewStyle">

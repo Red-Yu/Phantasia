@@ -1,5 +1,5 @@
 <template>
-  <div class="CreateCanvas">
+  <div class="CreateCanvas" id="CreateCanvasElement">
     <!-- FunctionBar -->
     <div class="FunctionBar">
       <div class="Zoom">
@@ -23,7 +23,6 @@
         transform: `scale(${zoomLevel / 100})`,
         transformOrigin: 'top center',
       }"
-      id="#CreateCanvasElement"
     >
       <div class="canvas" v-for="(template, i) in templateStore.templates" :key="i">
         <component
