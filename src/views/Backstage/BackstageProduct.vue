@@ -87,8 +87,9 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { db } from "../../firebase/firebaseConfig";
+import { db, storage } from "../../firebase/firebaseConfig";
 import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
+import { ref as storageRef, deleteObject } from "firebase/storage";
 
 const books = ref([]); // 用來存儲多個商品資料
 const searchQuery = ref(""); // 搜尋關鍵字
@@ -150,13 +151,28 @@ const goToPage = (page) => {
 };
 
 // 刪除商品
-const deleteBook = async (bookId) => {
+const deleteBook = async (bookId, imageUrl) => {
   try {
-    await deleteDoc(doc(db, "books", bookId)); // 刪除 Firestore 中的商品資料
-    books.value = books.value.filter((book) => book.id !== bookId); // 更新本地資料
-    console.log("商品已刪除");
+    // 1. 刪除 Firestore 中的資料
+    const bookDocRef = doc(db, "books", bookId);
+    await deleteDoc(bookDocRef);
+    console.log("Firestore 資料已刪除");
+
+    // 2. 如果有圖片 URL，則刪除 Storage 中的圖片
+    if (imageUrl) {
+      const imageRef = storageRef(storage, imageUrl); // 使用圖片的相對路徑建立 Storage 引用
+      await deleteObject(imageRef);
+      console.log("Storage 中的圖片已刪除");
+    } else {
+      console.log("沒有圖片，跳過圖片刪除");
+    }
+
+    // 3. 更新頁面上的資料
+    books.value = books.value.filter((book) => book.id !== bookId);
+    alert("刪除成功！");
   } catch (error) {
-    console.log("Error deleting book:", error);
+    console.error("刪除操作失敗：", error);
+    alert("刪除失敗！");
   }
 };
 </script>
