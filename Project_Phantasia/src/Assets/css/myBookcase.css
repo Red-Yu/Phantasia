@@ -2,7 +2,7 @@
 #menu {
   position: absolute;
   bottom: 20px;
-  left: 58%;
+  left: 50%;
   transform: translateX(-50%);
   display: flex;
   gap: 30px;
@@ -16,8 +16,9 @@
 }
 
 .backToHome_button {
-  position: relative;
-  left: 270px;
+  position: absolute;
+  bottom: 20px;
+  right: 170px;
 }
 
 button.backToHome {
