@@ -3,7 +3,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
-import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,36 +22,6 @@ const database = getDatabase(app);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
-
-// 監聽所有使用者的 auth 狀態變化
-onAuthStateChanged(auth, async (user) => {
-  if (user) {
-    console.log("使用者已登入:", user.email);
-    
-    // 方法1: 嘗試更新使用者的 profile，將頭像設為 null
-    try {
-      await updateProfile(user, {
-        photoURL: null
-      });
-      console.log("已移除使用者頭像顯示");
-    } catch (error) {
-      console.error("無法更新使用者的頭像:", error);
-    }
-    
-    // 方法2: 覆蓋 photoURL 屬性 (更徹底的方法)
-    try {
-      Object.defineProperty(user, 'photoURL', {
-        get: function() {
-          return null;
-        },
-        configurable: true
-      });
-      console.log("已覆蓋 photoURL 屬性");
-    } catch (error) {
-      console.error("無法覆蓋 photoURL 屬性:", error);
-    }
-  }
-});
 
 const firebaseServices = {
   database,

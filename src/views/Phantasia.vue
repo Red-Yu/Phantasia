@@ -518,8 +518,9 @@ onMounted(() => {
       } catch (error) {
         console.log("Error getting document:", error);
       }
-      // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png"; // 如果用戶有頭像，則使用；否則使用預設頭像
+      // 解決用google帳號登入會覆蓋頭像的問題
+      // 更新頭像 URL - 使用過濾函數處理 Google 頭像
+      avatarURL.value = getProperAvatarURL(user);
     } else {
       // 用戶未登入
       islogIn.value = false;
@@ -605,4 +606,28 @@ const ToAbout = () => {
 const ToMemberCenter = () => {
   router.push("/MemberCenter");
 };
+
+
+// ==============================================
+// 檢查頭像是否來自 Google
+function isGoogleAvatar(photoURL) {
+  return photoURL && (
+    photoURL.includes('googleusercontent.com') || 
+    photoURL.includes('google.com')
+  );
+}
+
+// 獲取適當的頭像 URL
+function getProperAvatarURL(user) {
+  if (!user) return "/MyColset/avatarDefault.png";
+  
+  // 如果是 Google 頭像，返回預設頭像
+  if (isGoogleAvatar(user.photoURL)) {
+    return "/MyColset/avatarDefault.png";
+  }
+  
+  // 否則返回用戶的頭像或預設頭像
+  return user.photoURL || "/MyColset/avatarDefault.png";
+}
+
 </script>

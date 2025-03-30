@@ -99,11 +99,38 @@ const avatarURL = ref("");
 // 添加訂閱狀態追踪
 const hasActiveSubscription = ref(false);
 
+// 檢查頭像是否來自 Google
+function isGoogleAvatar(photoURL) {
+  return photoURL && (
+    photoURL.includes('googleusercontent.com') || 
+    photoURL.includes('google.com')
+  );
+}
+
+// 獲取適當的頭像 URL
+function getProperAvatarURL(user) {
+  if (!user) return "/MyColset/avatarDefault.png";
+  
+  // 如果是 Google 頭像，返回預設頭像
+  if (isGoogleAvatar(user.photoURL)) {
+    return "/MyColset/avatarDefault.png";
+  }
+  
+  // 否則返回用戶的頭像或預設頭像
+  return user.photoURL || "/MyColset/avatarDefault.png";
+}
+
 onMounted(() => {
+  // 先檢查是否有當前登入用戶，立即處理頭像
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    avatarURL.value = getProperAvatarURL(currentUser);
+  }
+
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      // 更新頭像 URL
-      avatarURL.value = user.photoURL || "/MyColset/avatarDefault.png";
+      // 更新頭像 URL - 使用過濾函數
+      avatarURL.value = getProperAvatarURL(user);
       
       // 檢查用戶訂閱狀態
       try {

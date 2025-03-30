@@ -40,6 +40,12 @@
     letter-spacing: 2px;
     color: #153243;
   }
+  
+  /* 添加灰色提示樣式 */
+  .placeholder-text {
+    color: #A9A9A9; /* 灰色文字 */
+    font-style: italic;
+  }
 }
 
 .subscription-box {
@@ -184,7 +190,7 @@ h1 {
       <img :src="feather" alt="feather" />
       <span class="label">Date Of Birth</span>
     </div>
-    <span class="value">{{ displayBirthday }}</span>
+    <span :class="{ 'value': true, 'placeholder-text': isPlaceholderBirthday }">{{ displayBirthday }}</span>
     <div class="detail-item">
       <img :src="feather" alt="feather" />
       <span class="label">Email</span>
@@ -274,6 +280,11 @@ const userLoginMethod = ref(""); // 新增登入方式欄位
 // 檢查是否為 Google 登入
 const isGoogleLogin = computed(() => {
   return userLoginMethod.value === 'google';
+});
+
+// 檢查是否是提示文字
+const isPlaceholderBirthday = computed(() => {
+  return !userBirthday.value && isGoogleLogin.value;
 });
 
 // 處理顯示生日

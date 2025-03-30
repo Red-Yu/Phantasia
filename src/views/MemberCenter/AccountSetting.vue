@@ -651,7 +651,7 @@ const handleUpdate = async () => {
     
     // 顯示成功訊息
     updateMessage.show = true;
-    updateMessage.text = "Your profile has been successfully updated";
+    updateMessage.text = "Your profile has been successfully updated.";
     updateMessage.isError = false;
     
     // 更新成功後重新獲取資料，確保顯示最新資料
@@ -669,7 +669,7 @@ const handleUpdate = async () => {
 // 檢查密碼長度
 const checkPasswordLength = () => {
   if (newPassword.value.trim() !== "" && newPassword.value.length < 6) {
-    errors.newPassword = "密碼必須至少有6個字符";
+    errors.newPassword = "Your password must be at least 6 characters.";
   } else {
     errors.newPassword = "";
   }
@@ -784,7 +784,7 @@ const handlePasswordChange = async () => {
     await updatePassword(currentUser.value, newPassword.value);
     
     // 成功訊息
-    successMessage.value = "您的密碼已成功更新";
+    successMessage.value = "Your password has been successfully updated.";
     
     // 清空表單
     oldPassword.value = "";

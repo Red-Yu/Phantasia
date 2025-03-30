@@ -13,7 +13,7 @@
         <div class="slogon">
           <h1 class="title1 flipInY">Reward card</h1>
           <h6 class="title3 rollIn">
-            Try clicking the Reward card and see how many points you’ve earned!
+            Try clicking the Reward card and see how many points you've earned!
           </h6>
         </div>
         <div class="menu">
@@ -92,8 +92,8 @@
                   /> -->
                   <img
                     class="avaterImg avatar"
-                    v-if="avatarURL"
-                    :src="avatarURL"
+                    v-if="displayAvatarURL"
+                    :src="displayAvatarURL"
                     alt="User Avatar"
                   />
                 </div>
@@ -289,92 +289,6 @@
 </template>
 
 <script setup>
-// $(document).ready(function() {
-//     // 當點擊頁面任意位置時觸發打開動作
-//     $(document).click(function(e) {
-//       // 如果點擊的地方是 .front，則展開
-//       if ($(e.target).closest('.front').length) {
-//         $(".back").addClass("open");
-//         $(".middle").addClass("open");
-//         $(".right").addClass("open");
-//         $(".front").css("visibility", "hidden"); // 隱藏 .front
-//         $(".front").css("opacity", "0");
-//       }
-//       // 如果點擊的地方不是 .front，則關閉所有區域
-//       else {
-//         $(".back").removeClass("open");
-//         $(".middle").removeClass("open");
-//         $(".right").removeClass("open");
-//         $(".front").css("visibility", "visible"); // 顯示 .front
-//         $(".front").css("opacity", "1");
-//       }
-//     });
-//     console.log("jQuery loaded successfully.");
-//   });
-
-//   $(function(){
-//     console.log("jQuery loaded");
-
-//     $(".left").click(function(){
-//         // console.log("Front clicked");
-//         $(".left").addClass("open");
-//         setTimeout(function(){
-//             $(".right").addClass("open");
-//         }, 250);
-//         setTimeout(function(){
-//             $(".back").addClass("open");
-//         }, 350);
-//     });
-
-//     $(".left, .right, .middle").click(function(){
-//         console.log("Closing card");
-//         setTimeout(function(){
-//             $(".left").removeClass("open");
-//         }, 250);
-//         $(".right").removeClass("open");
-//         setTimeout(function(){
-//             $(".back").removeClass("open");
-//         }, 600);
-//     });
-// });
-
-// =====================
-// $(function(){
-//     console.log("jQuery loaded");
-
-//     $(".front").click(function(){
-//         // 開始旋轉左邊
-//         $(".left").addClass("open");
-
-//         setTimeout(function(){
-//             // 開始旋轉右邊
-//             $(".right").addClass("open");
-//         }, 250);
-
-//         setTimeout(function(){
-//             // 展開背面
-//             $(".back").addClass("open");
-//         }, 600); // 增加一些延遲，以確保先旋轉完左邊和右邊
-//     });
-
-//     $(".left, .right, .middle").click(function(){
-//         console.log("Closing card");
-
-//         setTimeout(function(){
-//             // 關閉左邊
-//             $(".left").removeClass("open");
-//         }, 250);
-
-//         // 關閉右邊
-//         $(".right").removeClass("open");
-
-//         setTimeout(function(){
-//             // 關閉背面
-//             $(".back").removeClass("open");
-//         }, 600); // 關閉背面的時間應該與開啟背面的時間一致
-//     });
-// });
-// ====================================
 import { onMounted, ref, nextTick, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useUserAuthState } from "@/stores/userAuthState";
@@ -391,11 +305,31 @@ const router = useRouter();
 const userAuthState = useUserAuthState();
 const user = userAuthState.user; // 引用全域的用戶資料
 
-// 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
+// 檢查頭像是否來自 Google
+function isGoogleAvatar(photoURL) {
+  return photoURL && (
+    photoURL.includes('googleusercontent.com') || 
+    photoURL.includes('google.com')
+  );
+}
+
+// 專門用於顯示的頭像 URL 計算屬性，會過濾 Google 頭像
+const displayAvatarURL = computed(() => {
+  if (!user) return "/MyColset/character115x409.png";
+  
+  // 如果是 Google 頭像，返回預設頭像
+  if (isGoogleAvatar(user.photoURL)) {
+    return "/MyColset/character115x409.png";
+  }
+  
+  // 否則返回用戶的頭像或預設頭像
+  return user.photoURL || "/MyColset/character115x409.png";
+});
+
+// 保留原有 avatarURL 計算屬性（如果其他地方還在使用的話）
 const avatarURL = computed(() => {
-  return user && user.photoURL
-    ? user.photoURL
-    : "/MyColset/character115x409.png"; // 如果沒有 photoURL 則返回 null
+  // 使用處理過的頭像 URL
+  return displayAvatarURL.value;
 });
 
 // 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
@@ -423,12 +357,6 @@ const circles = ref([
 ]);
 
 // 計算哪些圓圈應該變成印章
-// const filledCircles = computed(() =>
-//   circles.value.map((circle, index) => ({
-//     ...circle,
-//     filled: index < points.value, // 只有小於 points 數的圓圈變成印章
-//   }))
-// );
 const filledCircles = computed(() => {
   const modPoints = points.value % 10 || 10; // 讓滿10後重置
   return circles.value.map((circle, index) => ({
@@ -436,6 +364,7 @@ const filledCircles = computed(() => {
     filled: index < modPoints, // 當 index < modPoints 時顯示印章
   }));
 });
+
 // 定義 6 個八角形框，預設為鎖
 const octagons = ref([
   { id: 1, unlocked: false },
@@ -537,7 +466,4 @@ $(function () {
 const backToHome = () => {
   router.push("/MyCabin");
 };
-
-// return { points, filledCircles };
-
 </script>
