@@ -56,10 +56,7 @@
           @click="index === activeIndex ? goToProductPage(product.id) : null"
         >
           <div class="box box--front">
-            <div
-              class="colorLayer"
-              :style="{ backgroundColor: product.colorCode }"
-            ></div>
+            <div class="colorLayer" :style="{ backgroundColor: product.colorCode }"></div>
             <div
               class="inner-layer"
               :style="{ backgroundImage: `url(${product.innerCoverImage})` }"
@@ -155,11 +152,7 @@
     </div>
     <div class="pg_mainContainer">
       <div class="pg_itemsGrid">
-        <div
-          v-for="product in paginatedProducts"
-          :key="product.id"
-          class="pg_itemCard"
-        >
+        <div v-for="product in paginatedProducts" :key="product.id" class="pg_itemCard">
           <div class="container" @click="goToProductPage(product.id)">
             <div class="box-holder">
               <div class="box box--front">
@@ -245,11 +238,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRouter } from "vue-router";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import {
-  getStorage,
-  ref as storageRef,
-  getDownloadURL,
-} from "firebase/storage";
+import { getStorage, ref as storageRef, getDownloadURL } from "firebase/storage";
 import Header from "@/components/Header.vue";
 import SnowflakeEffect from "@/components/SnowflakeEffect.vue";
 
@@ -444,6 +433,7 @@ onMounted(async () => {
     start: "bottom top", // When bottom of secSection hits top of viewport (scrolling down)
     end: "top bottom", // When top of secSection hits bottom of viewport (scrolling up)
     onEnter: () => {
+      console.log("onEnter triggered - showing header");
       if (headerWrapper.value) {
         headerWrapper.value.classList.add("visible"); // Show header when scrolling past secSection
       } else {
@@ -451,6 +441,7 @@ onMounted(async () => {
       }
     },
     onEnterBack: () => {
+      console.log("onEnterBack triggered - hiding header");
       if (headerWrapper.value) {
         headerWrapper.value.classList.remove("visible"); // Hide header when scrolling back into secSection
       } else {
@@ -504,9 +495,7 @@ const filteredProducts = computed(() => {
       result.sort((a, b) => new Date(a.dateAdded) - new Date(b.dateAdded));
       break;
     case "age1_6":
-      result = result.filter(
-        (p) => p.ageGroup === "1-6" || p.ageGroup === "1~6"
-      );
+      result = result.filter((p) => p.ageGroup === "1-6" || p.ageGroup === "1~6");
       break;
     case "age7_12":
       result = result.filter((p) => p.ageGroup === "7-12");
@@ -540,9 +529,7 @@ const totalPages = computed(() => {
 });
 
 const dateSortLabel = computed(() => {
-  return dateSortOrder.value === "newest"
-    ? "Newest to Oldest"
-    : "Oldest to Newest";
+  return dateSortOrder.value === "newest" ? "Newest to Oldest" : "Oldest to Newest";
 });
 
 // Methods

@@ -2621,12 +2621,14 @@ select {
   bottom: 0;
   border: solid transparent;
 }
-.nightLayout .bgd-wrapper::before { /* 外框 */
+.nightLayout .bgd-wrapper::before {
+  /* 外框 */
   border-width: 6px;
   border-color: #153243;
   z-index: 1;
 }
-.nightLayout .bgd-wrapper::after { /* 內框 */
+.nightLayout .bgd-wrapper::after {
+  /* 內框 */
   border-width: 2px;
   border-color: #f9faf9;
   top: 5px;
@@ -4262,7 +4264,8 @@ tbody > tr:hover {
   position: absolute;
   top: 0;
   left: 0;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .templateObject {

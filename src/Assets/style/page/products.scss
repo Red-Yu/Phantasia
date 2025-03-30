@@ -8,6 +8,8 @@
 @import "../mixin/mixin";
 
 //===============EEEE==================
+
+
 /* Snowflake styles */
 .snow-container {
   position: fixed;
@@ -571,8 +573,7 @@
 .pg_controlButton.pg_active .icon-L,
 .pg_controlButton.pg_active-newest .icon-L,
 .pg_controlButton.pg_active-oldest .icon-L {
-  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%)
-    hue-rotate(10deg);
+  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%) hue-rotate(10deg);
 }
 
 // .pg_controlButton:hover {
@@ -1101,7 +1102,7 @@ h2 {
   animation: bookFloat 15s ease-in-out infinite alternate; // 預設開啟動畫
 }
 
-.product-box-holder > div {
+.product-box-holder>div {
   position: absolute;
   top: 0;
   left: 0;
@@ -1133,42 +1134,36 @@ h2 {
 .product-box--side-left {
   width: 76.49px;
   height: 700px;
-  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px)
-    rotateY(-90deg);
+  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
   // background-color: palegoldenrod;
 }
 
 .product-box--side-right {
   width: 76.49px;
   height: 700px;
-  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px)
-    rotateY(90deg);
+  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
 }
 
 .product-box--top {
   width: 507.93px;
   height: 76.49px;
-  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px)
-    rotateX(90deg);
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
-    no-repeat center center;
+  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
   background-size: cover;
 }
 
 .product-box--bottom {
   width: 507.93px;
   height: 76.49px;
-  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px)
-    rotateX(-90deg);
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
-    no-repeat center center;
+  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
   background-size: cover;
 }
 
 /* Styles for inner divs to fill their parent containers */
-.product-box--front > div,
-.product-box--back > div,
-.product-box--side-left > div {
+.product-box--front>div,
+.product-box--back>div,
+.product-box--side-left>div {
   position: absolute;
   top: 0;
   left: 0;
@@ -1260,37 +1255,32 @@ h2 {
   .product-box--back {
     width: 507.93px * 0.8;
     height: 700px * 0.8;
-    transform: translate3d(-250px * 0.8, -375px * 0.8, -59px * 0.8)
-      rotateY(180deg);
+    transform: translate3d(-250px * 0.8, -375px * 0.8, -59px * 0.8) rotateY(180deg);
   }
 
   .product-box--side-left {
     width: 76.49px * 0.8;
     height: 700px * 0.8;
-    transform: translate3d(-268px * 0.8, -375px * 0.8, 0)
-      translate3d(-20px * 0.8, 0, -20px * 0.8) rotateY(-90deg);
+    transform: translate3d(-268px * 0.8, -375px * 0.8, 0) translate3d(-20px * 0.8, 0, -20px * 0.8) rotateY(-90deg);
   }
 
   .product-box--side-right {
     width: 76.49px * 0.8;
     height: 700px * 0.8;
-    transform: translate3d(-262px * 0.8, -375px * 0.8, 0)
-      translate3d(480px * 0.8, 0px, -20px * 0.8) rotateY(90deg);
+    transform: translate3d(-262px * 0.8, -375px * 0.8, 0) translate3d(480px * 0.8, 0px, -20px * 0.8) rotateY(90deg);
     /* 480px × 0.8 */
   }
 
   .product-box--top {
     width: 507.93px * 0.8;
     height: 76.49px * 0.8;
-    transform: translate3d(-250px * 0.8, -393px * 0.8, 0)
-      translate3d(0px, -20px * 0.8, -20px * 0.8) rotateX(90deg);
+    transform: translate3d(-250px * 0.8, -393px * 0.8, 0) translate3d(0px, -20px * 0.8, -20px * 0.8) rotateX(90deg);
   }
 
   .product-box--bottom {
     width: 507.93px * 0.8;
     height: 76.49px * 0.8;
-    transform: translate3d(-250px * 0.8, -443px * 0.8, 0)
-      translate3d(0px, 730px * 0.8, -20px * 0.8) rotateX(-90deg);
+    transform: translate3d(-250px * 0.8, -443px * 0.8, 0) translate3d(0px, 730px * 0.8, -20px * 0.8) rotateX(-90deg);
   }
 
   // .product-box--front {
@@ -1404,36 +1394,31 @@ h2 {
   .book3d-box--back {
     width: 300px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px)
-      rotateY(180deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px) rotateY(180deg);
   }
 
   .book3d-box--side-left {
     width: 24px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px)
-      rotateY(-90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px) rotateY(-90deg);
   }
 
   .book3d-box--side-right {
     width: 24px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px)
-      rotateY(90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px) rotateY(90deg);
   }
 
   .book3d-box--top {
     width: 300px;
     height: 24px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px)
-      rotateX(90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px) rotateX(90deg);
   }
 
   .book3d-box--bottom {
     width: 300px;
     height: 24px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px)
-      rotateX(-90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px) rotateX(-90deg);
   }
 
   .feedback-section3 {

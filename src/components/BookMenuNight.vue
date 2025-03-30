@@ -35,8 +35,8 @@
           <!-- 書本堆疊 -->
           <div class="bm-books">
             <!-- <router-link to="/" class="bm-book bm-book-1" :class="{'bm-visible': isMenuOpen}">
-                  <img :src="book1Image" alt="Stories Book" class="bm-book-image">
-                </router-link> -->
+                <img :src="book1Image" alt="Stories Book" class="bm-book-image">
+              </router-link> -->
 
             <!-- 修改: 為每個 router-link 添加 @click="closeMenu" -->
             <router-link
@@ -149,10 +149,16 @@ const closeMenu = () => {
 /* 關閉按鈕樣式 */
 .bm-close-btn {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 28px;
+  right: 20px;
   cursor: pointer;
   z-index: 100001 !important;
+}
+@media screen and (max-width: 768px) {
+  .bm-close-btn {
+    top: 28px;
+    right: 12px;
+  }
 }
 
 /* 選單覆蓋層 - 確保子元素的z-index可正常使用 */
@@ -283,7 +289,7 @@ const closeMenu = () => {
 }
 
 .bm-logo {
-  margin-top: 30px;
+  margin-top: 90px;
   text-align: center;
   max-height: 15vh;
   opacity: 0;
