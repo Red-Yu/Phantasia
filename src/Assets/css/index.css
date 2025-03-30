@@ -1407,7 +1407,7 @@ button {
   width: 100%;
   margin: auto;
 }
-.about .content {
+.about .aboutContent {
   max-width: 1440px;
   width: 100%;
   position: relative;
@@ -1415,12 +1415,12 @@ button {
   justify-content: space-between;
   z-index: 400;
 }
-.about .content .leftContent {
+.about .aboutContent .leftContent {
   padding: 30px 40px 30px 40px;
   height: 100vh;
   display: flex;
 }
-.about .content .leftContent .contentBox {
+.about .aboutContent .leftContent .contentBox {
   width: 373px;
   max-height: 600px;
   display: flex;
@@ -1430,11 +1430,11 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.about .content .leftContent .contentBox .slogon {
+.about .aboutContent .leftContent .contentBox .slogon {
   position: absolute;
   color: white;
 }
-.about .content .leftContent .contentBox .slogon h1 {
+.about .aboutContent .leftContent .contentBox .slogon h1 {
   color: #fff;
   text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.6);
   font-family: Aleo;
@@ -1444,7 +1444,7 @@ button {
   line-height: 125%;
   text-transform: uppercase;
 }
-.about .content .leftContent .contentBox .slogon h2 {
+.about .aboutContent .leftContent .contentBox .slogon h2 {
   color: #fff;
   text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.6);
   font-family: Aleo;
@@ -1454,7 +1454,7 @@ button {
   line-height: 125%;
   text-transform: uppercase;
 }
-.about .content .leftContent .contentBox .slogon h6 {
+.about .aboutContent .leftContent .contentBox .slogon h6 {
   color: #fff;
   text-shadow: 6px 6px 15px rgba(0, 0, 0, 0.6);
   font-family: Aleo;
@@ -1463,7 +1463,7 @@ button {
   font-weight: 600;
   line-height: normal;
 }
-.about .content .leftContent .contentBox .menu {
+.about .aboutContent .leftContent .contentBox .menu {
   margin-top: auto;
   color: white;
   text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
@@ -1474,29 +1474,29 @@ button {
   line-height: normal;
   font-variant: small-caps;
 }
-.about .content .leftContent .contentBox .menu .backToHome {
+.about .aboutContent .leftContent .contentBox .menu .backToHome {
   font-size: 26px;
   margin-top: 5px;
   font-style: italic;
 }
-.about .content .leftContent .contentBox .menu .backToHome::after {
+.about .aboutContent .leftContent .contentBox .menu .backToHome::after {
   height: 3px;
 }
-.about .content .leftContent .contentBox .menu .btnLink {
+.about .aboutContent .leftContent .contentBox .menu .btnLink {
   padding: 0;
   opacity: 70%;
 }
-.about .content .leftContent .contentBox .menu .btnLink:hover {
+.about .aboutContent .leftContent .contentBox .menu .btnLink:hover {
   opacity: 100%;
 }
-.about .content .leftContent .contentBox .menu .btnLink.active {
+.about .aboutContent .leftContent .contentBox .menu .btnLink.active {
   opacity: 1;
 }
-.about .content .rightContent {
+.about .aboutContent .rightContent {
   height: 100vh;
   padding: 30px;
 }
-.about .content .rightContent .aboutContents {
+.about .aboutContent .rightContent .aboutContents {
   position: relative;
   top: 50%;
   left: 50%;
@@ -1504,16 +1504,16 @@ button {
   width: 390px;
   height: 560px;
 }
-.about .content .rightContent .aboutContents .aboutUsContent {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent {
   position: absolute;
   z-index: 1;
 }
-.about .content .rightContent .aboutContents .aboutUsContent .box {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box {
   position: absolute;
   width: 390px;
   height: 560px;
 }
-.about .content .rightContent .aboutContents .aboutUsContent .box h3 {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box h3 {
   padding: 10px 0px 7px 17px;
   color: #fff;
   font-family: "Fanwood Text";
@@ -1523,7 +1523,7 @@ button {
   line-height: normal;
   font-variant: small-caps;
 }
-.about .content .rightContent .aboutContents .aboutUsContent .box h4 {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box h4 {
   padding: 0px 0px 5px 17px;
   color: #fff;
   font-family: "Fanwood Text";
@@ -1532,8 +1532,8 @@ button {
   font-weight: 400;
   line-height: 110%;
 }
-.about .content .rightContent .aboutContents .aboutUsContent .box p,
-.about .content .rightContent .aboutContents .aboutUsContent .box li {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box p,
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box li {
   color: #fff;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
   font-family: "Fanwood Text";
@@ -1542,17 +1542,17 @@ button {
   font-weight: 400;
   line-height: 110%; /* 17.6px */
 }
-.about .content .rightContent .aboutContents .aboutUsContent .box p {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box p {
   padding: 0 15px 15px 17px;
 }
-.about .content .rightContent .aboutContents .aboutUsContent .box li {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box li {
   padding: 3px 15px 15px 3px;
 }
-.about .content .rightContent .aboutContents .aboutUsContent .box ul {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .box ul {
   padding-left: 35px;
   padding-right: 5px;
 }
-.about .content .rightContent .aboutContents .bgBlack {
+.about .aboutContent .rightContent .aboutContents .bgBlack {
   width: 390px;
   height: 560px;
   position: absolute;

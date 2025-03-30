@@ -301,7 +301,8 @@
   transition: width 0.4s ease;
   transform-origin: left;
 }
-.btnLink.dark:hover::after, .btnLink.dark.active::after {
+.btnLink.dark:hover::after,
+.btnLink.dark.active::after {
   width: 100%;
 }
 .btnLink.dark:hover .cols {
@@ -336,7 +337,8 @@
   transition: width 0.4s ease;
   transform-origin: left;
 }
-.btnLink.light:hover::after, .btnLink.light.active::after {
+.btnLink.light:hover::after,
+.btnLink.light.active::after {
   width: 100%;
 }
 .btnLink.light:hover .cols {
@@ -371,7 +373,8 @@
   transition: width 0.4s ease;
   transform-origin: left;
 }
-.btnLink.white:hover::after, .btnLink.white.active::after {
+.btnLink.white:hover::after,
+.btnLink.white.active::after {
   width: 100%;
 }
 .btnLink.white:hover .cols {
@@ -401,7 +404,8 @@
   transition: width 0.4s ease;
   transform-origin: left;
 }
-.btnLink.whiteForFrontPage:hover::after, .btnLink.whiteForFrontPage.active::after {
+.btnLink.whiteForFrontPage:hover::after,
+.btnLink.whiteForFrontPage.active::after {
   width: 100%;
 }
 .btnLink.whiteForFrontPage:hover .cols {
@@ -2427,7 +2431,9 @@ select {
 }
 
 .headerLayout {
-  width: calc(100% - 20px); /* 內外框:2 + 內外框間距:8 = 10 *2 邊(不用算外框 box-sizing: border-box;)*/
+  width: calc(
+    100% - 20px
+  ); /* 內外框:2 + 內外框間距:8 = 10 *2 邊(不用算外框 box-sizing: border-box;)*/
   height: 80px;
   position: fixed;
   top: 10px;
@@ -2554,7 +2560,8 @@ select {
   background-blend-mode: soft-light;
   position: fixed;
 }
-.dayLayout .bgd-wrapper::before, .dayLayout .bgd-wrapper::after {
+.dayLayout .bgd-wrapper::before,
+.dayLayout .bgd-wrapper::after {
   content: "";
   position: absolute;
   top: 0;
@@ -2563,12 +2570,14 @@ select {
   bottom: 0;
   border: solid transparent;
 }
-.dayLayout .bgd-wrapper::before { /* 外框 */
+.dayLayout .bgd-wrapper::before {
+  /* 外框 */
   border-width: 5px;
   border-color: #153243;
   z-index: 1;
 }
-.dayLayout .bgd-wrapper::after { /* 內框 */
+.dayLayout .bgd-wrapper::after {
+  /* 內框 */
   border-width: 2px;
   border-color: #153243;
   top: 8px;
@@ -2601,7 +2610,8 @@ select {
   pointer-events: none;
   border: 5px solid #f9faf9;
 }
-.nightLayout .bgd-wrapper::before, .nightLayout .bgd-wrapper::after {
+.nightLayout .bgd-wrapper::before,
+.nightLayout .bgd-wrapper::after {
   content: "";
   position: absolute;
   top: 0;
@@ -2610,12 +2620,14 @@ select {
   bottom: 0;
   border: solid transparent;
 }
-.nightLayout .bgd-wrapper::before { /* 外框 */
+.nightLayout .bgd-wrapper::before {
+  /* 外框 */
   border-width: 6px;
   border-color: #153243;
   z-index: 1;
 }
-.nightLayout .bgd-wrapper::after { /* 內框 */
+.nightLayout .bgd-wrapper::after {
+  /* 內框 */
   border-width: 2px;
   border-color: #f9faf9;
   top: 5px;
@@ -2623,9 +2635,6 @@ select {
   right: 5px;
   bottom: 5px;
   z-index: 2;
-}
-.nightLayout .Header {
-  display: none;
 }
 
 .modal-overlay {
@@ -2659,7 +2668,8 @@ select {
   pointer-events: none;
   border: 5px solid #153243;
 }
-.modal-content .FullScreenModalBgc::before, .modal-content .FullScreenModalBgc::after {
+.modal-content .FullScreenModalBgc::before,
+.modal-content .FullScreenModalBgc::after {
   content: "";
   position: absolute;
   top: 0;
@@ -2986,7 +2996,10 @@ table {
   margin: 10px 0;
 }
 
-table, th, tr, td {
+table,
+th,
+tr,
+td {
   text-align: center;
   padding: 10px;
 }
@@ -3364,25 +3377,31 @@ tbody > tr:hover {
 .createInfo .bookCover .cover-save-preview .product-box--side-left {
   width: 76.49px;
   height: 700px;
-  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
+  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px)
+    rotateY(-90deg);
 }
 .createInfo .bookCover .cover-save-preview .product-box--side-right {
   width: 76.49px;
   height: 700px;
-  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
+  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px)
+    rotateY(90deg);
 }
 .createInfo .bookCover .cover-save-preview .product-box--top {
   width: 507.93px;
   height: 76.49px;
-  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px)
+    rotateX(90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
+    no-repeat center center;
   background-size: cover;
 }
 .createInfo .bookCover .cover-save-preview .product-box--bottom {
   width: 507.93px;
   height: 76.49px;
-  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px)
+    rotateX(-90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
+    no-repeat center center;
   background-size: cover;
 }
 .createInfo .bookCover .cover-save-preview .product-box--front > div,
@@ -3411,7 +3430,11 @@ tbody > tr:hover {
 .createInfo .bookCover .cover-save-preview .product-box--back .pb-outer-layer {
   z-index: 0;
 }
-.createInfo .bookCover .cover-save-preview .product-box--side-left .pb-outer-layer {
+.createInfo
+  .bookCover
+  .cover-save-preview
+  .product-box--side-left
+  .pb-outer-layer {
   width: 100%;
   height: 100%;
   z-index: 0;
@@ -3440,23 +3463,27 @@ tbody > tr:hover {
 .createInfo .bookCover .cover-save-preview .product-box--side-left {
   width: 45.894px;
   height: 420px;
-  transform: translate3d(-160.8px, -225px, 0) translate3d(-12px, 0, -12px) rotateY(-90deg);
+  transform: translate3d(-160.8px, -225px, 0) translate3d(-12px, 0, -12px)
+    rotateY(-90deg);
 }
 .createInfo .bookCover .cover-save-preview .product-box--side-right {
   width: 45.894px;
   height: 420px;
-  transform: translate3d(-157.2px, -225px, 0) translate3d(288px, 0px, -12px) rotateY(90deg);
+  transform: translate3d(-157.2px, -225px, 0) translate3d(288px, 0px, -12px)
+    rotateY(90deg);
   /* 480px × $size */
 }
 .createInfo .bookCover .cover-save-preview .product-box--top {
   width: 304.758px;
   height: 45.894px;
-  transform: translate3d(-150px, -235.8px, 0) translate3d(0px, -12px, -12px) rotateX(90deg);
+  transform: translate3d(-150px, -235.8px, 0) translate3d(0px, -12px, -12px)
+    rotateX(90deg);
 }
 .createInfo .bookCover .cover-save-preview .product-box--bottom {
   width: 304.758px;
   height: 45.894px;
-  transform: translate3d(-150px, -265.8px, 0) translate3d(0px, 438px, -12px) rotateX(-90deg);
+  transform: translate3d(-150px, -265.8px, 0) translate3d(0px, 438px, -12px)
+    rotateX(-90deg);
 }
 @keyframes bookFloat {
   0% {
@@ -3565,18 +3592,21 @@ tbody > tr:hover {
   color: #eead50;
   font-weight: 600;
 }
-.createInfo .inputGroups, .createInfo .InfoConfirm {
+.createInfo .inputGroups,
+.createInfo .InfoConfirm {
   width: 90%;
   display: flex;
   flex-direction: column;
   margin-bottom: 2vh;
 }
-.createInfo .inputGroups .Group, .createInfo .InfoConfirm .Group {
+.createInfo .inputGroups .Group,
+.createInfo .InfoConfirm .Group {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.createInfo .inputGroups .Group h3, .createInfo .InfoConfirm .Group h3 {
+.createInfo .inputGroups .Group h3,
+.createInfo .InfoConfirm .Group h3 {
   margin-top: 50px;
   font-family: "Aleo";
   font-size: 16px;
@@ -3586,12 +3616,14 @@ tbody > tr:hover {
   text-transform: uppercase;
   font-weight: 800;
 }
-.createInfo .inputGroups .StepFunction, .createInfo .InfoConfirm .StepFunction {
+.createInfo .inputGroups .StepFunction,
+.createInfo .InfoConfirm .StepFunction {
   display: flex;
   justify-content: space-between;
   margin-top: 80px;
 }
-.createInfo .inputGroups .StepFunction .back, .createInfo .InfoConfirm .StepFunction .back {
+.createInfo .inputGroups .StepFunction .back,
+.createInfo .InfoConfirm .StepFunction .back {
   display: flex;
   gap: 10px;
   opacity: 50%;
@@ -3854,7 +3886,14 @@ tbody > tr:hover {
   height: auto;
   opacity: 50%;
 }
-.Create .Function .CreateMenuContent .AccordionText .thirdRow .format:focus img, .Create .Function .CreateMenuContent .AccordionText .thirdRow .format:hover img {
+.Create .Function .CreateMenuContent .AccordionText .thirdRow .format:focus img,
+.Create
+  .Function
+  .CreateMenuContent
+  .AccordionText
+  .thirdRow
+  .format:hover
+  img {
   opacity: 100%;
 }
 .Create .Function .CreateMenuContent .AccordionText .fourRow {
@@ -3985,7 +4024,8 @@ tbody > tr:hover {
 .Create .PageView.close .bookInfoBox {
   display: none;
 }
-.Create .Function.close .CreateMenuContent, .Create .Function.close .MenuContent,
+.Create .Function.close .CreateMenuContent,
+.Create .Function.close .MenuContent,
 .Create .PageView.close .CreateMenuContent,
 .Create .PageView.close .MenuContent {
   display: none;
@@ -4457,7 +4497,8 @@ tbody > tr:hover {
 /* 背景圖 */
 .bg {
   position: relative;
-  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png), url(../../Assets/Day/rewardCard/rc_bg.jpg);
+  background-image: url(../../Assets/Day/rewardCard/rc_bg_circle.png),
+    url(../../Assets/Day/rewardCard/rc_bg.jpg);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -4698,7 +4739,16 @@ tbody > tr:hover {
   height: 100px;
   background-color: #dee2e6;
   opacity: 70%;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+  clip-path: polygon(
+    25% 0%,
+    75% 0%,
+    100% 25%,
+    100% 75%,
+    75% 100%,
+    25% 100%,
+    0% 75%,
+    0% 25%
+  );
   margin: 10px;
 }
 
@@ -4778,4 +4828,4 @@ tbody > tr:hover {
   transition: transform 0.7s ease-in-out;
   backface-visibility: visible;
   -webkit-backface-visibility: visible;
-}/*# sourceMappingURL=MyRewardCard.css.map */
+} /*# sourceMappingURL=MyRewardCard.css.map */

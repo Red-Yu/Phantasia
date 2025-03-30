@@ -54,7 +54,7 @@
 <template>
   <div class="aboutWrapper">
     <div :class="['about slideArea', { sliding: isSliding }]">
-      <div class="content">
+      <div class="aboutContent">
         <div class="leftContent">
           <div class="contentBox">
             <transition name="fade" mode="out-in">
