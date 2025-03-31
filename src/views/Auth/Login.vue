@@ -22,6 +22,10 @@
             placeholder="Please enter your password."
             required
           />
+
+        <!-- <p v-if="error" class="error-message">{{ error }}</p> -->
+        <p :class="['error-message', { visible: errorMessage }]" v-text="errorMessage"></p>
+
           <div class="btn">
             <button type="submit" class="btnKey-L dark">Submit</button>
           </div>
@@ -39,12 +43,12 @@
 
           <div class="outsideContect">
             <a href="#" @click.prevent="showComingSoon">
-              <img src="../../Assets/img/membercenter/facebook.svg" alt="FB" />
+              <img src="../../Assets/img/membercenter/facebook.svg" alt="FB" class="fb"/>
             </a>
             <a
               href="#"
               @click.prevent="loginWithGoogle"
-              class="google-login-btn"
+              class="google-login-btn google"
             >
               <img
                 src="../../Assets/img/membercenter/google.svg"
@@ -54,7 +58,6 @@
           </div>
         </form>
 
-        <p v-if="error" class="error-message">{{ error }}</p>
 
         <!-- 彈出的Coming Soon訊息 -->
         <div v-if="isComingSoonVisible" class="coming-soon-message">
@@ -151,7 +154,7 @@ const emit = defineEmits(["close", "openSignup", "login-success"]);
 // 定義狀態
 const email = ref("");
 const password = ref("");
-const error = ref("");
+const errorMessage = ref("");
 const isSuccessModalVisible = ref(false);
 const isComingSoonVisible = ref(false);
 
@@ -162,7 +165,7 @@ const closeModal = () => {
   // 清空表單數據
   email.value = "";
   password.value = "";
-  error.value = "";
+  errorMessage.value = "";
 };
 
 // 切換到註冊彈窗
@@ -171,7 +174,7 @@ const openSignup = () => {
   // 清空表單數據
   email.value = "";
   password.value = "";
-  error.value = "";
+  errorMessage.value = "";
 };
 
 // 顯示Coming Soon訊息
@@ -203,7 +206,7 @@ const handleLoginSuccess = (user) => {
   // 清空表單數據
   email.value = "";
   password.value = "";
-  error.value = "";
+  errorMessage.value = "";
 
   // 切換到登入選單
   emit("close");
@@ -280,7 +283,7 @@ const login = async () => {
     // 處理登入成功
     handleLoginSuccess(user);
   } catch (err) {
-    error.value = `Login failed: ${err.message}`;
+    errorMessage.value = `Login failed: ${err.message}`;
   }
 };
 
@@ -317,7 +320,7 @@ const loginWithGoogle = async () => {
     handleLoginSuccess(user);
   } catch (err) {
     // 處理錯誤
-    error.value = `Google login failed: ${err.message}`;
+    errorMessage.value = `Google login failed: ${err.message}`;
     console.error("Google登入錯誤:", err);
   }
 };
