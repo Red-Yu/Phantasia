@@ -50,6 +50,9 @@
       <tr v-for="(book, index) in filteredBooks" :key="book.id">
         <td>
           <div class="project-info">
+            <div class="project-delete-icon">
+              <img :src="projectdeleteicon" alt="delete project" />
+            </div>
             <div class="project-image">
               <img :src="book.imageUrl || book.imagePath || projectIcon" alt="project" />
             </div>
@@ -80,6 +83,7 @@ import { useRouter } from 'vue-router'; // 導入路由器
 import projectIcon from "@/assets/img/membercenter/project.svg";
 import remove from "@/assets/img/membercenter/remove.svg";
 import search from "@/assets/img/membercenter/search.svg";
+import projectdeleteicon from "@/assets/img/membercenter/projectdeleteicon.svg";
 
 // 初始化路由器
 const router = useRouter();
@@ -395,17 +399,29 @@ const viewBookDetails = (book) => {
 .project-info {
   display: flex;
   flex-direction: row;
-  align-items: center; /* 修改：從 flex-start 改為 center */
+  align-items: center;
   padding: 13px 5px;
-  gap: 27px;
+  gap: 15px;
   margin: 0 auto;
+}
+
+.project-delete-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.project-delete-icon img {
+  width: 50px;
+  height: 70px;
 }
 
 .project-text {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 新增：垂直居中內容 */
-  height: 100%; /* 新增：確保高度填滿 */
+  justify-content: center;
+  height: 100%;
 }
 
 .project-name {
@@ -414,7 +430,7 @@ const viewBookDetails = (book) => {
   font-size: 28px;
   color: #153243;
   font-weight: 500;
-  margin: 0; /* 移除預設邊距 */
+  margin: 0;
 }
 
 .project-subtitle {
@@ -422,7 +438,7 @@ const viewBookDetails = (book) => {
   font-variant: small-caps;
   font-size: 18px;
   color: #7A7A7A;
-  margin: 0; /* 移除預設邊距 */
+  margin: 0;
 }
 
 .project-date {
@@ -437,7 +453,7 @@ const viewBookDetails = (book) => {
   font-size: 20px;
   display: flex;
   align-items: center;
-  justify-content: center; /* 改為置中對齊 */
+  justify-content: center;
   gap: 10px;
   cursor: pointer;
 }
