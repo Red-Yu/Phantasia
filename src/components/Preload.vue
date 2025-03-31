@@ -3,7 +3,7 @@
 
 .loading-animation {
   position: absolute;
-  max-width: 1440px;
+  /* max-width: 1440px; */
   width: 100%;
   height: 100%;
   z-index: 3000;
