@@ -58,7 +58,10 @@ const closeModal = () => {
 // 點擊 CREATE 按鈕後
 // =================
 const projectName = ref("");  // 定義專案名稱
+
 const createProject = () => {
+  templateStore.resetTemplates();
+  
   if (projectName.value.trim()) {  // 檢查名稱是否非空
     templateStore.setStoryName(projectName.value);  // 儲存專案名稱
     router.push("/Create");  // 跳轉到創建頁面
