@@ -105,7 +105,13 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { getFirestore, collection, addDoc , doc, updateDoc} from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
 
 const docIdStore = useDocIdStore(); // 使用 Pinia store
 //-----------------------------
@@ -212,87 +218,69 @@ const handleSave = async () => {
           // 圖片上傳完成，獲取下載 URL
           const imageUrl = await getDownloadURL(uploadTask.snapshot.ref);
 
+          // 取得顏色資料，若沒有顏色則給預設顏色 #EEAD50
+          let color = coverSetting.color;
+          if (!color || typeof color !== "string" || !color.startsWith("rgb")) {
+            // 如果沒有顏色資料或格式不正確，給一個預設顏色
+            color = "rgb(238, 173, 80)"; // RGB 格式的預設顏色對應於 #EEAD50
+          }
+
           // 解析 rgb 字符串
-          const color = coverSetting.color;
+          const rgbValues = color.match(/\d+/g);
+          if (rgbValues && rgbValues.length === 3) {
+            const r = parseInt(rgbValues[0]);
+            const g = parseInt(rgbValues[1]);
+            const b = parseInt(rgbValues[2]);
 
-          if (color && typeof color === "string" && color.startsWith("rgb")) {
-            // 解析 rgb(209, 21, 175) 字符串
-            const rgbValues = color.match(/\d+/g);
-            if (rgbValues && rgbValues.length === 3) {
-              const r = parseInt(rgbValues[0]);
-              const g = parseInt(rgbValues[1]);
-              const b = parseInt(rgbValues[2]);
+            // 檢查是否是有效的 RGB 值
+            if (
+              r >= 0 &&
+              r <= 255 &&
+              g >= 0 &&
+              g <= 255 &&
+              b >= 0 &&
+              b <= 255
+            ) {
+              // 轉換 RGB 顏色為 HEX 格式
+              const hexColorCode = rgbToHex(r, g, b);
 
-              // 檢查是否是有效的 RGB 值
-              if (
-                r >= 0 &&
-                r <= 255 &&
-                g >= 0 &&
-                g <= 255 &&
-                b >= 0 &&
-                b <= 255
-              ) {
-                // 轉換 RGB 顏色為 HEX 格式
-                const hexColorCode = rgbToHex(r, g, b);
-// ==================================================================
-// (舊版) 創建資料 --> 改從前一步 [ 創作 ] 創建資料
-// ==================================================================        
-                // // 儲存資料到 Firestore
-                // const db = getFirestore();
-                // const booksCollection = collection(db, "books");
-
-                // const docRef = await addDoc(booksCollection, {
-                //   userId: user.uid,
-                //   colorCode: hexColorCode, // 儲存 HEX 顏色代碼
-                //   imagePath: imageUrl, // 儲存圖片 URL
-                // });
-
-                // const docId = docRef.id; // 這裡獲取 docId
-
-                // console.log("Data saved to Firestore!");
-
-                // // 儲存 docId 到 Pinia Store
-                // docIdStore.setDocId(docId); // 儲存 docId
-// ==================================================================
-// 資玲 --> 修改成更新 (添加) 資料
-// ==================================================================
-                // 確保 docId 存在
-                const docId = docIdStore.getDocId;
-                  if (!docId) {
-                    alert("No document ID found.");
-                    return;
-                  }
-
-                  // 獲取指定 docId 的文件引用
-                  const db = getFirestore();
-                  const bookRef = doc(db, "books", docId); // "books" 是集合名稱，docId 是文件 ID
-
-                  try {
-                    // 更新資料
-                    await updateDoc(bookRef, {
-                      colorCode: hexColorCode, // 儲存 HEX 顏色代碼
-                      imagePath: imageUrl, // 儲存圖片 URL
-                    });
-
-                    console.log("Data saved to Firestore!");
-                    // 如果需要，跳轉到下一頁
-                    // this.$router.push('/Create/CreateInfo/CreateConfirm');
-                  } catch (error) {
-                    console.error("Error adding document: ", error);
-                  }
-                // 關閉彈窗
-                closeModal();
-
-                // 如果需要，跳轉至其他頁面
-                // router.push("/Create/CreateInfo/CreateInforMation");
-              } else {
-                console.error("Invalid RGB values:", { r, g, b });
+              // ==================================================================
+              // 資玲 --> 修改成更新 (添加) 資料
+              // ==================================================================
+              // 確保 docId 存在
+              const docId = docIdStore.getDocId;
+              if (!docId) {
+                alert("No document ID found.");
+                return;
               }
+
+              // 獲取指定 docId 的文件引用
+              const db = getFirestore();
+              const bookRef = doc(db, "books", docId); // "books" 是集合名稱，docId 是文件 ID
+
+              try {
+                // 更新資料
+                await updateDoc(bookRef, {
+                  colorCode: hexColorCode, // 儲存 HEX 顏色代碼
+                  imagePath: imageUrl, // 儲存圖片 URL
+                });
+
+                console.log("Data saved to Firestore!");
+                // 如果需要，跳轉到下一頁
+                // this.$router.push('/Create/CreateInfo/CreateConfirm');
+              } catch (error) {
+                console.error("Error adding document: ", error);
+              }
+              // 關閉彈窗
+              closeModal();
+
+              // 如果需要，跳轉至其他頁面
+              // router.push("/Create/CreateInfo/CreateInforMation");
             } else {
-              console.error("Invalid RGB string format:", color);
+              console.error("Invalid RGB values:", { r, g, b });
             }
           } else {
-            console.error("Invalid or missing color data in coverSetting.");
+            console.error("Invalid RGB string format:", color);
           }
         }
       );
@@ -303,4 +291,24 @@ const handleSave = async () => {
     alert("Please upload an image first.");
   }
 };
+
+// ==================================================================
+// (舊版) 創建資料 --> 改從前一步 [ 創作 ] 創建資料
+// ==================================================================
+// // 儲存資料到 Firestore
+// const db = getFirestore();
+// const booksCollection = collection(db, "books");
+
+// const docRef = await addDoc(booksCollection, {
+//   userId: user.uid,
+//   colorCode: hexColorCode, // 儲存 HEX 顏色代碼
+//   imagePath: imageUrl, // 儲存圖片 URL
+// });
+
+// const docId = docRef.id; // 這裡獲取 docId
+
+// console.log("Data saved to Firestore!");
+
+// // 儲存 docId 到 Pinia Store
+// docIdStore.setDocId(docId); // 儲存 docId
 </script>
