@@ -48,11 +48,12 @@
             class="canvas"
             v-for="(template, i) in templateStore.templates"
             :key="template.data.templateId"
+            style="pointer-events: none;"
           >
             <component
               :is="template.component"
               v-bind="template.data"
-              :mode="main"
+              :mode="preview"
               @updateData="updateTemplateData(i, $event)"
             />
           </div>
@@ -189,7 +190,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch, nextTick} from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path
@@ -435,6 +436,48 @@ const scale = computed(() => {
   const scale = Math.min(width.value / baseWidth);
   return scale;
 });
+
+// =================
+// IntersectionObserver 設定：模組進入畫面時觸發動畫
+// 這段是用來判斷進入視窗重新撥放動畫 但因為結構問題沒有辦法處理
+// =================
+// const modelRefs = ref([]); // 收集所有模組區塊的 DOM 參考
+
+// 判斷元素是否進入可視區域 50%
+// function isElementInViewport(el) {
+//   const rect = el.getBoundingClientRect();
+//   return (
+//     rect.top >= 0 && // 元素頂部大於等於視窗頂部
+//     rect.left >= 0 && // 元素左邊大於等於視窗左邊
+//     rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.5 && // 元素頂部小於等於視窗的一半
+//     rect.right <= (window.innerWidth || document.documentElement.clientWidth) // 元素右邊小於等於視窗的右邊界
+//   );
+// }
+
+// function checkScroll() {
+//   console.log('檢查滾動...');
+//   modelRefs.value.forEach(el => {
+//     if (el && isElementInViewport(el)) {
+//       console.log('觸發動畫', el);
+//       el.__startInnerAnimation?.();
+//     }
+//   });
+// }
+
+// // 監聽全域的滾動事件
+// onMounted(() => {
+//   window.addEventListener('scroll', checkScroll);
+//   // 初次檢查一次
+//   checkScroll();
+// });
+
+// // 在元件卸載時移除滾動事件監聽器
+// onUnmounted(() => {
+//   window.removeEventListener('scroll', checkScroll);
+// });
+
+// -------------------------import pinia-----------------------
+
 // readTemplateGroup
 // Existing Scroll-related logic (unchanged)
 const sections = ref([
