@@ -93,6 +93,7 @@
           :key="file.id"
           :file="file"
           :mode="viewMode"
+          @click="openFile(file)"
         />
       </div>
     </div>
