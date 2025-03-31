@@ -300,30 +300,6 @@ export const useTemplateStore = defineStore("template", () => {
     }
 
     // ----{{ 叫出 }}
-    // async function loadTemplatesFromFirebase(docId) {
-    //   const db = getFirestore();
-    //   const docRef = doc(db, "Drafts", docId); // 根據 docId 讀取資料
-    //   const docSnap = await getDoc(docRef);
-  
-    //   if (docSnap.exists()) {
-    //     const templatesData = docSnap.data().templatesData;
-        
-    //     // 清空現有模板資料
-    //     resetTemplates();
-  
-    //     // 依次載入每個模板
-    //     templatesData.forEach((template) => {
-    //       const component = getTemplateComponent(template.templateName);
-    //       if (component) {
-    //         addTemplate(component, template.templateData); // 使用已有的 addTemplate 函式
-    //       }
-    //     });
-    //   } 
-    // }
-
-
-
-
     async function loadTemplatesFromFirebase(docId) {
       const db = getFirestore();
       const docRef = doc(db, "Drafts", docId); // 根據 docId 讀取資料
@@ -333,12 +309,13 @@ export const useTemplateStore = defineStore("template", () => {
       if (docSnap.exists()) {
         console.log("Firebase 文檔資料已成功載入！");  // 加入 log 確認資料已成功載入
         const templatesData = docSnap.data().templatesData;
+
+        // 儲存檔案名稱到 storyName
+        storyName.name = docSnap.data().title || "Untitled";  // 設置檔案名稱
+
         
         // 清空現有模板資料
         resetTemplates();
-        
-        // 檢查載入的 templatesData 是否正確
-        console.log("載入的模板資料:", templatesData);
     
         // 依次載入每個模板
         templatesData.forEach((template) => {
