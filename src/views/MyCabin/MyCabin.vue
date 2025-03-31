@@ -43,6 +43,14 @@
 
       <div class="positionArea">
         <div class="main_container" ref="parallaxContainer">
+          <div class="myCabinCoverBase">
+            <img
+              ref="myCabinBaseCover"
+              src="../../Assets/Day/myCabin/myCabinBaseLight.jpg"
+              alt=""
+              class="myCabinBaseCover"
+            />
+          </div>
           <div class="parallax-wrapper" data-depth="0.04">
             <img
               src="../../Assets/Day/myCabin/myCabinBaseDark.jpg"
@@ -79,6 +87,11 @@
                 @click="ToMyColset"
               />
 
+              <!-- 角色旁邊的對話框 -->
+              <div class="dialogBox characterDialog">
+                <p>If you want a style change, just let me know!</p>
+              </div>
+
               <!-- <img
                 src="../../Assets/Day/myCabin/character115x409.png"
                 alt=""
@@ -108,6 +121,11 @@
                 class="elf"
               /> -->
 
+              <!-- 夥伴旁邊的對話框 -->
+              <div class="dialogBox partnerDialog">
+                <p>Let's check out your reward card points!</p>
+              </div>
+
               <img
                 class="partnerImg"
                 v-if="partnerURL"
@@ -123,7 +141,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, nextTick } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 // import { useUserAuthState } from "@/stores/userAuthState";
@@ -141,6 +159,8 @@ const auth = getAuth();
 
 const partnerURL = ref("");
 const avatarURL = ref("");
+
+const myCabinBaseCover = ref(null);
 
 // // 計算屬性：只有在用戶資料加載完畢後，才會返回頭像 URL
 // const avatarURL = computed(() => {
@@ -209,6 +229,16 @@ const ToMyColset = () => {
 };
 
 onMounted(() => {
+  nextTick(() => {
+    if (myCabinBaseCover.value) {
+      myCabinBaseCover.value.style.transition = "opacity 1s ease-out";
+      setTimeout(() => {
+        myCabinBaseCover.value.style.opacity = 0;
+        myCabinBaseCover.value.style.pointerEvents = "none";
+      }, 650);
+    }
+  });
+
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
     const scene = parallaxContainer.value;
@@ -247,28 +277,49 @@ onMounted(() => {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         if (userDoc.exists()) {
           const userData = userDoc.data();
-          partnerURL.value = userData.partnerURL || "/MyColset/Ollie.png";
+          partnerURL.value =
+            userData.partnerURL ||
+            new URL("../../Assets/Day/myColset/elf_1.png", import.meta.url);
         } else {
           console.log("No such document!");
         }
       } catch (error) {
         console.log("Error getting document:", error);
       }
-      
+
+      // // 更新頭像 URL
+      // avatarURL.value =
+      //   user.photoURL ||
+      //   new URL("../../Assets/Day/myColset/avatarDefault.png", import.meta.url)
+      //     .href; // 如果用戶有頭像，則使用；否則使用預設頭像
+
       // 檢查是否為 Google 頭像
-      const isGoogleAvatar = user.photoURL && (
-        user.photoURL.includes('googleusercontent.com') || 
-        user.photoURL.includes('google.com')
-      );
-      
+      const isGoogleAvatar =
+        user.photoURL &&
+        (user.photoURL.includes("googleusercontent.com") ||
+          user.photoURL.includes("google.com"));
+
       // 更新頭像 URL，如果是 Google 頭像則不使用
-      avatarURL.value = isGoogleAvatar 
-        ? "/MyColset/character115x409.png"  // 使用預設頭像
-        : (user.photoURL || "/MyColset/character115x409.png"); // 使用自訂頭像或預設頭像
+      avatarURL.value = isGoogleAvatar
+        ? new URL(
+            "../../Assets/Day/myColset/avatarDefault.png",
+            import.meta.url
+          ) // 使用預設頭像
+        : user.photoURL ||
+          new URL(
+            "../../Assets/Day/myColset/avatarDefault.png",
+            import.meta.url
+          ); // 使用自訂頭像或預設頭像
     } else {
       // 用戶未登入
-      avatarURL.value = "/MyColset/character115x409.png";
-      partnerURL.value = "/MyColset/Ollie.png";
+      avatarURL.value = new URL(
+        "../../Assets/Day/myColset/avatarDefault.png",
+        import.meta.url
+      ).href;
+      partnerURL.value = new URL(
+        "../../Assets/Day/myColset/elf_1.png",
+        import.meta.url
+      ).href;
     }
   });
 });

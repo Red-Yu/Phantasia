@@ -2985,7 +2985,10 @@ table {
   margin: 10px 0;
 }
 
-table, th, tr, td {
+table,
+th,
+tr,
+td {
   text-align: center;
   padding: 10px;
 }
@@ -3016,8 +3019,9 @@ tbody > tr:hover {
 
 .pagination button.active {
   font-weight: bold;
-  background-color: #007bff;
+  background-color: #153243;
   color: white;
+  border-radius: 8px;
 }
 
 .topBar {

@@ -28,21 +28,24 @@ button {
 // 光箱大小邊框
 .modal-content {
   max-width: 35vw;
+  // 宏育修改-因為加了這段，所以底下資玲修改的地方可以維持原本，不然我的會被影響到xd
+  min-width: 450px;
+  // =======
   width: 100%;
   height: 70vh;
   min-height: 450px;
-
   border-radius: 2px;
   overflow: hidden;
   position: relative;
   .bgc {
     // 資玲-修改這段因為和我的命名一樣會被我的其他元件影響到
-    max-width: 35vw;
-    width: 100%;
-    height: 70vh;
-    // 這邊是原本寫的
+    // max-width: 35vw;
     // width: 100%;
-    // height: 100%;
+    // height: 70vh;
+    // 這邊是原本寫的
+    width: 100%;
+    height: 100%;
+    // ======
     background-color: $subWhite;
     // 邊框
     &::before,
@@ -79,6 +82,8 @@ button {
   .lightbox-content {
     height: 80vh;
     min-height: 500px;
+    min-width: 450px;
+
     top: 49%;
   }
 }
@@ -87,6 +92,7 @@ button {
 .lightbox-content {
   // width: 40%;
   max-width: 30vw;
+  min-width: 450px;
   width: 100%;
   height: 70vh;
   min-height: 450px;
@@ -221,6 +227,7 @@ input {
   transition: opacity 0.3s ease; /* 添加過渡效果 */
 }
 
+// ===衝突點紀錄===
 .error-message.visible {
   visibility: visible; /* 顯示錯誤訊息 */
   opacity: 1; /* 完全不透明 */
@@ -231,30 +238,28 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh ;
+  // max-width: 37vh;
+  min-height: 200px;
+  height: 20vh;
 
   .lightbox-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 30vh ;
-
+    height: 20vh;
+    min-height: 200px;
+    max-width: 35vw;
+    min-width: 450px;
+    top: 50.5%;
   }
 }
-// .successPrompt{
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 30vh !important;
-//   // width: 80%;
-// }
+
 .successPrompt h2 {
   font-family: Aleo;
   color: $baseBlue;
   font-size: 2.2rem;
-  margin: 25px 0;
+  margin: 7px 0;
 }
-
 
 .fade-out {
   opacity: 0;

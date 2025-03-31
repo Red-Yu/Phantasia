@@ -1,4 +1,6 @@
 <style scoped>
+@import "../Assets/css/index.css";
+
 .loading-animation {
   position: absolute;
   max-width: 1440px;
@@ -17,8 +19,17 @@ p {
   font-weight: 400;
   line-height: normal;
   font-variant: small-caps;
-
   pointer-events: auto;
+}
+
+.visitor,
+.login {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.visitor:hover,
+.login:hover {
+  color: white;
 }
 
 .video-container {
@@ -53,14 +64,14 @@ p {
   position: absolute;
   z-index: 3000;
   transform: translate(-50%, -50%);
-  top: 72%;
+  top: 66%;
   left: 50%;
   display: flex;
   gap: 40px;
 }
 
 .start p {
-  font-size: 40px;
+  font-size: 44px;
   text-shadow: 3px 3px 4px rgba(0, 79, 59, 0.8);
 }
 
@@ -77,6 +88,27 @@ p {
   font-size: 28px;
   font-style: italic;
   cursor: pointer;
+}
+
+.Administrator:hover {
+  color: white;
+}
+
+.Administrator::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0;
+  background-color: white;
+  transition: width 0.4s ease;
+  transform-origin: left;
+}
+
+.Administrator:hover::after,
+.Administrator.active::after {
+  width: 100%;
 }
 
 /* ==========影片========== */
@@ -138,6 +170,21 @@ p {
 </style>
 
 <template>
+  <div class="textContent">
+    <!-- =====introduction===== -->
+    <transition name="fade" mode="out-in">
+      <div class="introduction">
+        <span v-show="isintroduction" class="title1 flipInY"
+          >Welcome to Phantasia, a marvelous magic world.
+        </span>
+
+        <br />
+        <span v-show="isintroduction" class="title1 flipInY"
+          >Try clicking the lamp and other objects to see what happens.</span
+        >
+      </div>
+    </transition>
+  </div>
   <!-- Login Modal -->
   <Login
     :isVisible="isLoginVisible"
@@ -172,7 +219,7 @@ p {
   <div v-if="isStart" class="loading-animation">
     <div class="startWrapper start">
       <p class="start_btn visitor" @click="startVideo">Visitor</p>
-      <p class="start_btn inhabitant" @click="openModal">Login</p>
+      <p class="start_btn login" @click="openModal">Login</p>
     </div>
   </div>
 
@@ -240,6 +287,7 @@ import "animate.css";
 
 const router = useRouter();
 const isLoading = ref(true);
+const isintroduction = ref(false);
 const isStart = ref(false);
 const isVideo = ref(false);
 const videoShow = ref(true); //讓動畫出現時有過場
@@ -250,6 +298,11 @@ const startVideoElement = ref(null);
 const startVideo = () => {
   isStart.value = false;
   // console.log(startVideoElement.value);
+
+  setTimeout(() => {
+    resetTextillateAnimations();
+    isintroduction.value = true;
+  }, 5800);
 
   setTimeout(() => {
     $(".rippleArea").ripples("destroy");
@@ -385,6 +438,12 @@ const preloadImagesAndVideos = () => {
   }, 6000);
 };
 
+// 移除並重新附加 textillate 動畫 class
+const resetTextillateAnimations = () => {
+  // 重新初始化 textillate 動畫
+  $(".title1").textillate("start");
+};
+
 onMounted(() => {
   isVideo.value = true;
   videoShow.value = true;
@@ -427,6 +486,14 @@ onMounted(() => {
         delay: 50,
       },
     });
+  });
+
+  $(".flipInY").textillate({
+    in: {
+      effect: "flipInY",
+      shuffle: true,
+      delay: 60,
+    },
   });
 
   // 檢查 sessionStorage 中是否有標記，決定是否顯示 Preload 動畫

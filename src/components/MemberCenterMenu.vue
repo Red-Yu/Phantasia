@@ -4,7 +4,7 @@
     <div class="sidebar">
       <div class="user">
         <div class="useImg">
-          <div class="avatar">
+          <div class="avatar" style="cursor: pointer" @click="ToMyCloset">
             <img
               class="avaterImg"
               v-if="avatarURL"
@@ -79,13 +79,13 @@ import { ref, watch, onMounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router"; // 添加 useRoute 引入
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "../firebase/firebaseConfig";
-import { 
-  collection, 
-  query, 
-  where, 
-  orderBy, 
-  getDocs, 
-  limit 
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  getDocs,
+  limit,
 } from "firebase/firestore";
 
 import "@/assets/css/main.css";
@@ -101,23 +101,29 @@ const hasActiveSubscription = ref(false);
 
 // 檢查頭像是否來自 Google
 function isGoogleAvatar(photoURL) {
-  return photoURL && (
-    photoURL.includes('googleusercontent.com') || 
-    photoURL.includes('google.com')
+  return (
+    photoURL &&
+    (photoURL.includes("googleusercontent.com") ||
+      photoURL.includes("google.com"))
   );
 }
 
 // 獲取適當的頭像 URL
 function getProperAvatarURL(user) {
-  if (!user) return "/MyColset/avatarDefault.png";
-  
+  const defaultAvatar = new URL(
+    "../Assets/Day/myColset/avatarDefault.png",
+    import.meta.url
+  ).href;
+
+  if (!user) return defaultAvatar;
+
   // 如果是 Google 頭像，返回預設頭像
   if (isGoogleAvatar(user.photoURL)) {
-    return "/MyColset/avatarDefault.png";
+    return defaultAvatar;
   }
-  
+
   // 否則返回用戶的頭像或預設頭像
-  return user.photoURL || "/MyColset/avatarDefault.png";
+  return user.photoURL || defaultAvatar;
 }
 
 onMounted(() => {
@@ -131,12 +137,12 @@ onMounted(() => {
     if (user) {
       // 更新頭像 URL - 使用過濾函數
       avatarURL.value = getProperAvatarURL(user);
-      
+
       // 檢查用戶訂閱狀態
       try {
         const ordersRef = collection(db, "orders");
         const q = query(
-          ordersRef, 
+          ordersRef,
           where("userId", "==", user.uid),
           where("status", "==", "pending"),
           orderBy("createdAt", "desc"),
@@ -150,7 +156,10 @@ onMounted(() => {
         hasActiveSubscription.value = false;
       }
     } else {
-      avatarURL.value = "/MyColset/avatarDefault.png";
+      avatarURL.value = new URL(
+        "../Assets/Day/myColset/avatarDefault.png",
+        import.meta.url
+      ).href;
       hasActiveSubscription.value = false;
     }
   });
@@ -255,14 +264,14 @@ const toggleSubMenu = (index) => {
 const selectSubMenu = (mainIndex, subIndex) => {
   // 處理 My Plan 頁面的特殊導航邏輯
   if (mainIndex === SUBSCRIPTION_PLAN_INDEX && subIndex === MY_PLAN_SUB_INDEX) {
-    const targetPath = hasActiveSubscription.value 
-      ? "/MemberCenter/MyPlanSubscribed" 
+    const targetPath = hasActiveSubscription.value
+      ? "/MemberCenter/MyPlanSubscribed"
       : "/MemberCenter/MyPlanVisitor";
-    
+
     // 先更新狀態，再導航
     activeIndex.value = mainIndex;
     activeSubMenu.value = subIndex;
-    
+
     // 使用 router.push 的回調確保導航完成後保持選中狀態
     router.push(targetPath).then(() => {
       // 確保導航後選中狀態仍然保持
@@ -276,7 +285,7 @@ const selectSubMenu = (mainIndex, subIndex) => {
       // 先更新狀態，再導航
       activeIndex.value = mainIndex;
       activeSubMenu.value = subIndex;
-      
+
       router.push(subItem.path).then(() => {
         // 確保導航後選中狀態仍然保持
         activeIndex.value = mainIndex;
@@ -284,6 +293,10 @@ const selectSubMenu = (mainIndex, subIndex) => {
       });
     }
   }
+};
+
+const ToMyCloset = () => {
+  router.push("/MyCabin/MyColset");
 };
 </script>
 

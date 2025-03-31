@@ -11,7 +11,8 @@
         class="search"
         name="search"
         type="text"
-        placeholder="輸入會員編號或姓名"
+        placeholder="輸入會員帳號或姓名"
+        v-model="searchQuery"
       />
       <div class="icon-M searchIcon">
         <div class="dark-search"></div>
@@ -58,79 +59,17 @@
         <td>2025.03.03</td>
         <td>MORE</td>
       </tr>
-      <tr>
-        <td>4</td>
-        <td>be22g4533fef255577ea@gmail.com</td>
-        <td>Qing Hui, Wang</td>
-        <td>0987654321</td>
-        <td></td>
-        <td>2025.03.03</td>
-        <td>MORE</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>be22g4533fef255577ea@gmail.com</td>
-        <td>Qing Hui, Wang</td>
-        <td>0987654321</td>
-        <td></td>
-        <td>2025.03.03</td>
-        <td>MORE</td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>be22g4533fef255577ea@gmail.com</td>
-        <td>Qing Hui, Wang</td>
-        <td>0987654321</td>
-        <td></td>
-        <td>2025.03.03</td>
-        <td>MORE</td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td>be22g4533fef255577ea@gmail.com</td>
-        <td>Qing Hui, Wang</td>
-        <td>0987654321</td>
-        <td></td>
-        <td>2025.03.03</td>
-        <td>MORE</td>
-      </tr>
-      <tr>
-        <td>8</td>
-        <td>be22g4533fef255577ea@gmail.com</td>
-        <td>Qing Hui, Wang</td>
-        <td>0987654321</td>
-        <td></td>
-        <td>2025.03.03</td>
-        <td>MORE</td>
-      </tr>
-      <tr>
-        <td>9</td>
-        <td>be22g4533fef255577ea@gmail.com</td>
-        <td>Qing Hui, Wang</td>
-        <td>0987654321</td>
-        <td></td>
-        <td>2025.03.03</td>
-        <td>MORE</td>
-      </tr>
-      <tr>
-        <td>10</td>
-        <td>be22g4533fef255577ea@gmail.com</td>
-        <td>Qing Hui, Wang</td>
-        <td>0987654321</td>
-        <td></td>
-        <td>2025.03.03</td>
-        <td>MORE</td>
-      </tr> -->
+    
 
       <!-- 使用 v-for 動態渲染每一行資料 -->
-      <tr v-for="(user, index) in users" :key="user.id">
-        <td>{{ index + 1 }}</td>
+      <tr v-for="(user, index) in paginatedUsers" :key="user.id">
+        <td>{{ index + 1 + (currentPage - 1) * itemsPerPage }}</td>
         <td>{{ user.email }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.birthday }}</td>
         <td>{{ user.plan }}</td>
         <td>{{ user.registrationDate }}</td>
-        <td><button @click="openLightbox(member)">MORE</button></td>
+        <td><button @click="openLightbox(user)">MORE</button></td>
       </tr>
     </tbody>
   </table>
@@ -146,6 +85,7 @@
       </div>
     </div> -->
 
+  <!-- 分頁 -->
   <div class="pagination">
     <button @click="prevPage" :disabled="currentPage === 1"><<</button>
     <button
@@ -161,15 +101,42 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { db } from "../../firebase/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const auth = getAuth();
 const users = ref([]); // 用來存儲多個用戶資料
+const searchQuery = ref("");
+const currentPage = ref(1); // 當前頁數
+const itemsPerPage = 11; // 每頁顯示的資料筆數
 // const selectedMember = ref(null); // 用來存儲選中的會員資料
 // const showLightbox = ref(false); // 控制 Lightbox 的顯示與隱藏
+
+// 計算總頁數
+const totalPages = computed(() =>
+  Math.ceil(filteredUsers.value.length / itemsPerPage)
+);
+
+// 計算過濾後的所有會員資料
+const filteredUsers = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return users.value.filter((user) => {
+    return (
+      user.email?.toLowerCase().includes(query) ||
+      "" || // 確保 email 存在且不是 undefined/null
+      user.name?.toLowerCase().includes(query) ||
+      "" // 確保 name 存在且不是 undefined/null
+    );
+  });
+});
+
+// 計算當前頁顯示的資料 (基於過濾後的資料)
+const paginatedUsers = computed(() => {
+  const startIndex = (currentPage.value - 1) * itemsPerPage;
+  return filteredUsers.value.slice(startIndex, startIndex + itemsPerPage);
+});
 
 // 在組件加載時獲取所有用戶資料
 onMounted(async () => {
@@ -185,4 +152,21 @@ onMounted(async () => {
     console.log("Error getting users:", error);
   }
 });
+
+// 分頁控制函數
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+const goToPage = (page) => {
+  currentPage.value = page;
+};
 </script>

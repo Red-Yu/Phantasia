@@ -92,8 +92,8 @@
                   /> -->
                   <img
                     class="avaterImg avatar"
-                    v-if="displayAvatarURL"
-                    :src="displayAvatarURL"
+                    v-if="avatarURL"
+                    :src="avatarURL"
                     alt="User Avatar"
                   />
                 </div>
@@ -111,45 +111,85 @@
                 />
               </div>
               <div class="pointAll">
-      <!-- 第一組 5 個圓圈 -->
+                <!-- 第一組 5 個圓圈 -->
                 <div class="point_5">
                   <div class="twicePoint">
-                    <div v-for="(circle, index) in filledCircles.slice(0, 2)" :key="circle.id" class="point">
-                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                    <div
+                      v-for="(circle, index) in filledCircles.slice(0, 2)"
+                      :key="circle.id"
+                      class="point"
+                    >
+                      <img
+                        v-if="circle.filled"
+                        src="../../Assets/img/membercenter/logo.svg"
+                        alt="stamp"
+                      />
                       <span v-else>{{ index + 1 }}</span>
                     </div>
                   </div>
                   <div class="oncePoint">
                     <div class="point">
-                      <img v-if="filledCircles[2]?.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <img
+                        v-if="filledCircles[2]?.filled"
+                        src="../../Assets/img/membercenter/logo.svg"
+                        alt="stamp"
+                      />
                       <span v-else>3</span>
                     </div>
                   </div>
                   <div class="twicePoint">
-                    <div v-for="(circle, index) in filledCircles.slice(3, 5)" :key="circle.id" class="point">
-                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                    <div
+                      v-for="(circle, index) in filledCircles.slice(3, 5)"
+                      :key="circle.id"
+                      class="point"
+                    >
+                      <img
+                        v-if="circle.filled"
+                        src="../../Assets/img/membercenter/logo.svg"
+                        alt="stamp"
+                      />
                       <span v-else>{{ index + 4 }}</span>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- 第二組 5 個圓圈 -->
                 <div class="point_5">
                   <div class="twicePoint">
-                    <div v-for="(circle, index) in filledCircles.slice(5, 7)" :key="circle.id" class="point">
-                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                    <div
+                      v-for="(circle, index) in filledCircles.slice(5, 7)"
+                      :key="circle.id"
+                      class="point"
+                    >
+                      <img
+                        v-if="circle.filled"
+                        src="../../Assets/img/membercenter/logo.svg"
+                        alt="stamp"
+                      />
                       <span v-else>{{ index + 6 }}</span>
                     </div>
                   </div>
                   <div class="oncePoint">
                     <div class="point">
-                      <img v-if="filledCircles[7]?.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                      <img
+                        v-if="filledCircles[7]?.filled"
+                        src="../../Assets/img/membercenter/logo.svg"
+                        alt="stamp"
+                      />
                       <span v-else>8</span>
                     </div>
                   </div>
                   <div class="twicePoint">
-                    <div v-for="(circle, index) in filledCircles.slice(8, 10)" :key="circle.id" class="point">
-                      <img v-if="circle.filled" src="../../Assets/img/membercenter/logo.svg"  alt="stamp" />
+                    <div
+                      v-for="(circle, index) in filledCircles.slice(8, 10)"
+                      :key="circle.id"
+                      class="point"
+                    >
+                      <img
+                        v-if="circle.filled"
+                        src="../../Assets/img/membercenter/logo.svg"
+                        alt="stamp"
+                      />
                       <span v-else>{{ index + 9 }}</span>
                     </div>
                   </div>
@@ -224,9 +264,22 @@
                   </p>
                 </div>
                 <div class="unlock">
-                  <div v-for="octagon in unlockedOctagons" :key="octagon.id" class="octagon">
-                    <img v-if="!octagon.unlocked" src="../../Assets/Day/rewardCard/lock.png" alt="Lock" />
-                    <img v-else src="../../Assets/Day/rewardCard/gift.png" alt="Key" class="real_dress" />
+                  <div
+                    v-for="octagon in unlockedOctagons"
+                    :key="octagon.id"
+                    class="octagon"
+                  >
+                    <img
+                      v-if="!octagon.unlocked"
+                      src="../../Assets/Day/rewardCard/lock.png"
+                      alt="Lock"
+                    />
+                    <img
+                      v-else
+                      src="../../Assets/Day/myColset/elf_5.png"
+                      alt="Key"
+                      class="real_dress"
+                    />
                   </div>
                 </div>
                 <!-- <div class="unlock">
@@ -291,59 +344,61 @@
 <script setup>
 import { onMounted, ref, nextTick, computed, watch } from "vue";
 import { useRouter } from "vue-router";
-import { useUserAuthState } from "@/stores/userAuthState";
+// import { useUserAuthState } from "@/stores/userAuthState";
 
-import { db } from "@/firebase/firebaseConfig"; 
-import { doc, getDoc, setDoc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
+import { db } from "@/firebase/firebaseConfig";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const isVisible = ref(false);
 const router = useRouter();
 
+const avatarURL = ref("");
+
 // 使用 Pinia store
-const userAuthState = useUserAuthState();
-const user = userAuthState.user; // 引用全域的用戶資料
+// const userAuthState = useUserAuthState();
+// const user = userAuthState.user; // 引用全域的用戶資料
 
 // 檢查頭像是否來自 Google
-function isGoogleAvatar(photoURL) {
-  return photoURL && (
-    photoURL.includes('googleusercontent.com') || 
-    photoURL.includes('google.com')
-  );
-}
+// function isGoogleAvatar(photoURL) {
+//   return (
+//     photoURL &&
+//     (photoURL.includes("googleusercontent.com") ||
+//       photoURL.includes("google.com"))
+//   );
+// }
 
-// 專門用於顯示的頭像 URL 計算屬性，會過濾 Google 頭像
-const displayAvatarURL = computed(() => {
-  if (!user) return "/MyColset/character115x409.png";
-  
-  // 如果是 Google 頭像，返回預設頭像
-  if (isGoogleAvatar(user.photoURL)) {
-    return "/MyColset/character115x409.png";
-  }
-  
-  // 否則返回用戶的頭像或預設頭像
-  return user.photoURL || "/MyColset/character115x409.png";
-});
+// // 專門用於顯示的頭像 URL 計算屬性，會過濾 Google 頭像
+// const displayAvatarURL = computed(() => {
+//   if (!user) return "/MyColset/character115x409.png";
 
-// 保留原有 avatarURL 計算屬性（如果其他地方還在使用的話）
-const avatarURL = computed(() => {
-  // 使用處理過的頭像 URL
-  return displayAvatarURL.value;
-});
+//   // 如果是 Google 頭像，返回預設頭像
+//   if (isGoogleAvatar(user.photoURL)) {
+//     return "/MyColset/character115x409.png";
+//   }
 
-// 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
-watch(
-  () => user?.photoURL,
-  async (newPhotoURL) => {
-    if (newPhotoURL) {
-      console.log("User avatar updated:", newPhotoURL);
-      // 等待下次 DOM 更新後再執行其他操作
-      await nextTick();
-      // 在此處處理需要在頭像更新後進行的其他操作
-    }
-  }
-);
+//   // 否則返回用戶的頭像或預設頭像
+//   return user.photoURL || "/MyColset/character115x409.png";
+// });
+
+// // 保留原有 avatarURL 計算屬性（如果其他地方還在使用的話）
+// const avatarURL = computed(() => {
+//   // 使用處理過的頭像 URL
+//   return displayAvatarURL.value;
+// });
+
+// // 監聽 user.photoURL 的變化，並確保在變更後觸發 DOM 更新
+// watch(
+//   () => user?.photoURL,
+//   async (newPhotoURL) => {
+//     if (newPhotoURL) {
+//       console.log("User avatar updated:", newPhotoURL);
+//       // 等待下次 DOM 更新後再執行其他操作
+//       await nextTick();
+//       // 在此處處理需要在頭像更新後進行的其他操作
+//     }
+//   }
+// );
 
 //設定中間點數引用資料庫
 const auth = getAuth();
@@ -352,8 +407,16 @@ const points = ref(0);
 
 // 定義 10 個不規則位置的圓圈
 const circles = ref([
-  { id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 },
-  { id: 6 }, { id: 7 }, { id: 8 }, { id: 9 }, { id: 10 }
+  { id: 1 },
+  { id: 2 },
+  { id: 3 },
+  { id: 4 },
+  { id: 5 },
+  { id: 6 },
+  { id: 7 },
+  { id: 8 },
+  { id: 9 },
+  { id: 10 },
 ]);
 
 // 計算哪些圓圈應該變成印章
@@ -374,7 +437,7 @@ const circles = ref([
 const filledCircles = computed(() => {
   return circles.value.map((circle, index) => ({
     ...circle,
-    filled: points.value > 0 && (points.value - 1) % 10 >= index
+    filled: points.value > 0 && (points.value - 1) % 10 >= index,
   }));
 });
 
@@ -385,7 +448,7 @@ const octagons = ref([
   { id: 3, unlocked: false },
   { id: 4, unlocked: false },
   { id: 5, unlocked: false },
-  { id: 6, unlocked: false }
+  { id: 6, unlocked: false },
 ]);
 
 // 計算哪些八角形應該變成鑰匙
@@ -399,12 +462,12 @@ const unlockedOctagons = computed(() => {
   return octagons.value.map((octagon, index) => ({
     ...octagon,
     unlocked: points.value >= (index + 1) * 5,
-    keyImage: `/Assets/Day/rewardCard/key${index + 1}.png`
+    keyImage: `/Assets/Day/rewardCard/key${index + 1}.png`,
   }));
 });
 const fetchPoints = async (uid) => {
   if (!uid) return;
-  const userRef = doc(db, 'users', uid);
+  const userRef = doc(db, "users", uid);
   const userSnap = await getDoc(userRef);
   if (userSnap.exists()) {
     points.value = userSnap.data().points || 0;
@@ -435,6 +498,35 @@ onMounted(() => {
       delay: 40,
     },
   });
+});
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    // 獲取用戶資料
+
+    // // 更新頭像 URL
+    // avatarURL.value =
+    //   user.photoURL ||
+    //   new URL("../../Assets/Day/myColset/avatarDefault.png", import.meta.url)
+    //     .href; // 如果用戶有頭像，則使用；否則使用預設頭像
+
+    // 檢查是否為 Google 頭像
+    const isGoogleAvatar =
+      user.photoURL &&
+      (user.photoURL.includes("googleusercontent.com") ||
+        user.photoURL.includes("google.com"));
+
+    // 更新頭像 URL，如果是 Google 頭像則不使用
+    avatarURL.value = isGoogleAvatar
+      ? new URL("../../Assets/Day/myColset/avatarDefault.png", import.meta.url) // 使用預設頭像
+      : user.photoURL ||
+        new URL("../../Assets/Day/myColset/avatarDefault.png", import.meta.url); // 使用自訂頭像或預設頭像
+  } else {
+    avatarURL.value = new URL(
+      "../../Assets/Day/myColset/avatarDefault.png",
+      import.meta.url
+    ).href;
+  }
 });
 
 //中間點數參資料庫

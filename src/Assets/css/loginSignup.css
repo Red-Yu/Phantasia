@@ -10,6 +10,7 @@
     Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -38,6 +39,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -68,6 +70,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -96,6 +99,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -126,6 +130,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -144,6 +149,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -172,6 +178,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -202,6 +209,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -230,6 +238,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -260,6 +269,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -278,6 +288,7 @@
 
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -313,6 +324,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -348,6 +360,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -383,6 +396,7 @@
 }
 .btnLink.whiteForFrontPage {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -2465,7 +2479,8 @@ select {
   width: 100%;
   height: 100%;
   background: #153243;
-  mask-image: linear-gradient(to right, transparent, black);
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+          mask-image: linear-gradient(to right, transparent, black);
   opacity: 0;
 }
 @keyframes glowOnce {
@@ -2550,7 +2565,8 @@ select {
   background-size: cover;
   background-position: center center;
   background-color: rgba(249, 250, 249, 0.95);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   background-blend-mode: soft-light;
   position: fixed;
 }
@@ -2985,7 +3001,10 @@ table {
   margin: 10px 0;
 }
 
-table, th, tr, td {
+table,
+th,
+tr,
+td {
   text-align: center;
   padding: 10px;
 }
@@ -3016,8 +3035,15 @@ tbody > tr:hover {
 
 .pagination button.active {
   font-weight: bold;
-  background-color: #007bff;
+  background-color: #153243;
   color: white;
+  border-radius: 8px;
+}
+
+.deleteButton {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 垂直居中 */
 }
 
 .topBar {
@@ -3042,6 +3068,14 @@ tbody > tr:hover {
 .searchFunction input {
   all: initial;
   width: 100%;
+}
+.searchFunction input::-moz-placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .searchFunction input::placeholder {
   font-family: "Fanwood Text";
@@ -4015,6 +4049,14 @@ tbody > tr:hover {
   border-bottom: #153243 solid 1px;
   text-align: center;
 }
+.CreateNewProject input::-moz-placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
+}
 .CreateNewProject input::placeholder {
   font-family: "Fanwood Text";
   text-transform: capitalize;
@@ -4350,7 +4392,8 @@ tbody > tr:hover {
   left: 0;
   width: 100%;
   height: auto;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .templateText {
@@ -4387,6 +4430,7 @@ button {
 
 .modal-content {
   max-width: 35vw;
+  min-width: 450px;
   width: 100%;
   height: 70vh;
   min-height: 450px;
@@ -4395,9 +4439,8 @@ button {
   position: relative;
 }
 .modal-content .bgc {
-  max-width: 35vw;
   width: 100%;
-  height: 70vh;
+  height: 100%;
   background-color: #f9faf9;
 }
 .modal-content .bgc::before, .modal-content .bgc::after {
@@ -4431,12 +4474,14 @@ button {
 .modal-content.signUp .lightbox-content {
   height: 80vh;
   min-height: 500px;
+  min-width: 450px;
   top: 49%;
 }
 
 /* 光箱內容 */
 .lightbox-content {
   max-width: 30vw;
+  min-width: 450px;
   width: 100%;
   height: 70vh;
   min-height: 450px;
@@ -4576,20 +4621,25 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  min-height: 200px;
+  height: 20vh;
 }
 .modal-content.successPrompt .lightbox-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30vh;
+  height: 20vh;
+  min-height: 200px;
+  max-width: 35vw;
+  min-width: 450px;
+  top: 50.5%;
 }
 
 .successPrompt h2 {
   font-family: Aleo;
   color: #153243;
   font-size: 2.2rem;
-  margin: 25px 0;
+  margin: 7px 0;
 }
 
 .fade-out {

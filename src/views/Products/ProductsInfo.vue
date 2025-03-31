@@ -18,7 +18,9 @@
                 ></div>
                 <div
                   class="pb-inner-layer"
-                  :style="{ backgroundImage: `url(${product.innerCoverImage})` }"
+                  :style="{
+                    backgroundImage: `url(${product.innerCoverImage})`,
+                  }"
                 ></div>
                 <div
                   class="pb-outer-layer"
@@ -126,13 +128,17 @@
                 />
                 <div class="feedback-details3">
                   <div class="feedback-stars3">
-                    <span v-for="n in 5" :key="n" :class="{ filled: n <= comment.rating }"
+                    <span
+                      v-for="n in 5"
+                      :key="n"
+                      :class="{ filled: n <= comment.rating }"
                       >★</span
                     >
                   </div>
                   <p>{{ comment.text }}</p>
                   <p>
-                    {{ comment.userName }} - {{ comment.timestamp.toLocaleDateString() }}
+                    {{ comment.userName }} -
+                    {{ comment.timestamp.toLocaleDateString() }}
                   </p>
                 </div>
               </div>
@@ -156,7 +162,14 @@
 <script setup>
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { doc, getDoc, collection, query, where, getDocs } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { ref as storageRef, getDownloadURL } from "firebase/storage";
 import { db, storage } from "../../firebase/firebaseConfig"; // Adjust path to your Firebase config
 import Header from "@/components/Header.vue";
@@ -172,7 +185,10 @@ const product = ref({});
 const comments = ref([]); // Initialize as empty array instead of hardcoded comments
 
 const handleImageError = (event) => {
-  event.target.src = "/MyColset/character115x409.png"; // Fallback image path
+  event.target.src = new URL(
+    "../../Assets/Day/myColset/avatarDefault.png",
+    import.meta.url
+  ); // Fallback image path
 };
 
 // Computed property to sort comments by timestamp in descending order
@@ -239,11 +255,16 @@ onMounted(async () => {
     });
 
     // Get unique userIds (emails) from comments
-    const userIds = [...new Set(comments.value.map((comment) => comment.userId))];
+    const userIds = [
+      ...new Set(comments.value.map((comment) => comment.userId)),
+    ];
 
     if (userIds.length > 0) {
       // Fetch user data from the 'users' collection
-      const usersQuery = query(collection(db, "users"), where("__name__", "in", userIds));
+      const usersQuery = query(
+        collection(db, "users"),
+        where("__name__", "in", userIds)
+      );
       const usersSnapshot = await getDocs(usersQuery);
 
       // Create a map of userId to user data
@@ -251,7 +272,12 @@ onMounted(async () => {
       usersSnapshot.forEach((doc) => {
         userMap[doc.id] = {
           name: doc.data().name || "Unknown",
-          photoURL: doc.data().photoURL || "/MyColset/character115x409.png",
+          avatarURL:
+            doc.data().avatarURL ||
+            new URL(
+              "../../Assets/Day/myColset/avatarDefault.png",
+              import.meta.url
+            ),
         };
       });
 
@@ -259,10 +285,13 @@ onMounted(async () => {
       comments.value.forEach((comment) => {
         const user = userMap[comment.userId] || {
           name: "Unknown",
-          photoURL: "/MyColset/character115x409.png",
+          avatarURL: new URL(
+            "../../Assets/Day/myColset/avatarDefault.png",
+            import.meta.url
+          ),
         };
         comment.userName = user.name;
-        comment.userAvatar = user.photoURL;
+        comment.userAvatar = user.avatarURL;
       });
     }
   } catch (error) {
@@ -301,7 +330,8 @@ const feedbackList = ref(null);
 const updateActiveDot = () => {
   if (!feedbackList.value) return;
   const list = feedbackList.value;
-  const scrollPercentage = list.scrollTop / (list.scrollHeight - list.clientHeight);
+  const scrollPercentage =
+    list.scrollTop / (list.scrollHeight - list.clientHeight);
   activeDot.value = Math.floor(scrollPercentage * 10); // Maps to 0-9 for 10 comments
 };
 
@@ -348,7 +378,8 @@ const bookStopDragging = () => {
   bookIsDragging.value = false;
   if (bookHolder.value) {
     bookHolder.value.style.cursor = "grab";
-    bookHolder.value.style.animation = "bookFloat 15s ease-in-out infinite alternate";
+    bookHolder.value.style.animation =
+      "bookFloat 15s ease-in-out infinite alternate";
   } else {
     console.error("bookHolder.value is null in bookStopDragging");
   }

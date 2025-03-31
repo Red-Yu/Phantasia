@@ -112,6 +112,13 @@
 <template>
   <BlackCover />
 
+  <MyClosetLoading
+    :isVisible="isUploading"
+    :isUploading="isUploading"
+    :uploadProgress="uploadProgress"
+    @close="closeModal"
+  />
+
   <div class="blackWrapper">
     <div class="wrapper">
       <div class="positionArea">
@@ -281,6 +288,21 @@
         <canvas ref="avatarCanvas" style="display: none"></canvas>
         <canvas ref="partnerCanvas" style="display: none"></canvas>
         <div class="main_container" ref="parallaxContainer">
+          <div class="myCabinCoverBase">
+            <!-- <img
+              ref="MyColsetCover"
+              src="../../Assets/Day/myColset/MyColsetBase.jpg"
+              alt=""
+              class="MyColsetCover"
+            /> -->
+            <video ref="MyColsetCover" class="MyColsetCover" autoplay muted>
+              <source
+                src="../../Assets/Day/myColset/myClosetCoverVideo.webm"
+                type="video/webm"
+              />
+              Your browser does not support the video tag.
+            </video>
+          </div>
           <div class="parallax-wrapper" data-depth="0.04">
             <img
               src="../../Assets/Day/myColset/MyColsetBaseDark.jpg"
@@ -323,7 +345,7 @@
                 v-for="(image, index) in magicCircleImages"
                 :key="index"
                 v-show="selectedMagicCircleImage === index && image.url !== ''"
-                :src="`/MyColset/${image.url}`"
+                :src="image.imageUrl"
                 :alt="image.name"
               />
 
@@ -342,7 +364,7 @@
                 v-for="(image, index) in clothesImages"
                 :key="index"
                 v-show="selectedClothesImage === index"
-                :src="`/MyColset/${image.url}`"
+                :src="image.imageUrl"
                 :alt="image.name"
               />
 
@@ -358,7 +380,7 @@
                 v-for="(image, index) in hairImages"
                 :key="index"
                 v-show="selectedHairImage === index"
-                :src="`/MyColset/${image.url}`"
+                :src="image.imageUrl"
                 :alt="image.name"
               />
               <!-- <img
@@ -376,7 +398,7 @@
                 v-for="(image, index) in partnerImages"
                 :key="index"
                 v-show="selectedPartnerImage === index"
-                :src="`/MyColset/${image.url}`"
+                :src="image.imageUrl"
                 :alt="image.name"
               />
               <!-- <img
@@ -511,21 +533,50 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import { useUserAuthState } from "@/stores/userAuthState";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  collection,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { auth, storage } from "@/firebase/firebaseConfig";
 import { db } from "@/firebase/firebaseConfig";
 import { getAuth, updateProfile } from "firebase/auth";
-import { ref as fsRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref as fsRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
 import BlackCover from "../../components/BlackCover.vue";
+import MyClosetLoading from "../../components/MyClosetLoading.vue";
+
+const isUploading = ref(false);
+const uploadProgress = ref(0);
 
 const router = useRouter();
 const parallaxContainer = ref(null);
 
-onMounted(() => {
+const MyColsetCover = ref(null);
+
+onMounted(async () => {
+  // MyColsetCover消失
+  nextTick(() => {
+    if (MyColsetCover.value) {
+      MyColsetCover.value.style.transition = "opacity 2s ease-out";
+      setTimeout(() => {
+        MyColsetCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值
+        MyColsetCover.value.style.pointerEvents = "none";
+      }, 3700);
+    }
+  });
+
   // 確保 DOM 內容加載完成後執行 Parallax 初始化
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
@@ -556,51 +607,173 @@ onMounted(() => {
       delay: 30,
     },
   });
+
+  try {
+    await loadUserSelection();
+
+    // 進行排序查詢，按 `order` 字段升序排列
+    const elvesQuery = query(
+      collection(db, "MyClosetElves"),
+      orderBy("order", "asc")
+    );
+    const magicCircleQuery = query(
+      collection(db, "MyClosetMagicCircles"),
+      orderBy("order", "asc")
+    );
+
+    const maleHairQuery = query(
+      collection(db, "MyClosetMaleHair"),
+      orderBy("order", "asc")
+    );
+
+    const femaleHairQuery = query(
+      collection(db, "MyClosetFemaleHair"),
+      orderBy("order", "asc")
+    );
+
+    const maleClothingQuery = query(
+      collection(db, "MyClosetMaleClothing"),
+      orderBy("order", "asc")
+    );
+
+    const femaleClothingQuery = query(
+      collection(db, "MyClosetFemaleClothing"),
+      orderBy("order", "asc")
+    );
+
+    // 加載小精靈
+    const elvesSnapshot = await getDocs(elvesQuery);
+    elvesSnapshot.forEach((doc) => {
+      const data = doc.data();
+      partnerImages.value.push({
+        name: data.name,
+        url: data.fileName,
+        imageUrl: data.imageUrl,
+        order: data.order, // 確保獲取到 `order` 字段
+      });
+    });
+
+    // 加載魔法陣
+    const magicCircleSnapshot = await getDocs(magicCircleQuery);
+    magicCircleSnapshot.forEach((doc) => {
+      const data = doc.data();
+      magicCircleImages.value.push({
+        name: data.name,
+        url: data.fileName,
+        imageUrl: data.imageUrl,
+        order: data.order, // 確保獲取到 `order` 字段
+      });
+    });
+
+    // 加載男生髮型
+    const maleHairSnapshot = await getDocs(maleHairQuery);
+    maleHairSnapshot.forEach((doc) => {
+      const data = doc.data();
+      maleHairImages.value.push({
+        name: data.name,
+        url: data.fileName,
+        imageUrl: data.imageUrl,
+        order: data.order, // 確保獲取到 `order` 字段
+      });
+    });
+
+    // 加載女生髮型
+    const femaleHairSnapshot = await getDocs(femaleHairQuery);
+    femaleHairSnapshot.forEach((doc) => {
+      const data = doc.data();
+      femaleHairImages.value.push({
+        name: data.name,
+        url: data.fileName,
+        imageUrl: data.imageUrl,
+        order: data.order, // 確保獲取到 `order` 字段
+      });
+    });
+
+    // 加載男生服裝
+    const maleClothingSnapshot = await getDocs(maleClothingQuery);
+    maleClothingSnapshot.forEach((doc) => {
+      const data = doc.data();
+      maleClothesImages.value.push({
+        name: data.name,
+        url: data.fileName,
+        imageUrl: data.imageUrl,
+        order: data.order, // 確保獲取到 `order` 字段
+      });
+    });
+
+    // 加載女生服裝
+    const femaleClothingSnapshot = await getDocs(femaleClothingQuery);
+    femaleClothingSnapshot.forEach((doc) => {
+      const data = doc.data();
+      femaleClothesImages.value.push({
+        name: data.name,
+        url: data.fileName,
+        imageUrl: data.imageUrl,
+        order: data.order, // 確保獲取到 `order` 字段
+      });
+    });
+
+    // console.log(partnerImages.value[0].imageUrl);
+  } catch (error) {
+    console.error("Error fetching data from Firestore: ", error);
+  }
 });
 
-const maleHairImages = [
-  { name: "Short Hair", url: "shortHair.png" },
-  { name: "Mid-length Hair", url: "mid-lengthHair.png" },
-  { name: "Black Short Hair", url: "blackShortHair.png" },
-];
+const maleHairImages = ref([]);
 
-const femaleHairImages = [
-  { name: "Ponytail", url: "ponytail.png" },
-  { name: "Curly Hair", url: "curlyHair.png" },
-];
+// const maleHairImages = [
+//   { name: "Short Hair", url: "shortHair.png" },
+//   { name: "Mid-length Hair", url: "mid-lengthHair.png" },
+//   { name: "Black Short Hair", url: "blackShortHair.png" },
+// ];
 
-const maleClothesImages = [
-  { name: "Blue Coat", url: "blueCoat.png" },
-  { name: "Red Robe", url: "redRobe.png" },
-  { name: "Blue Robe", url: "blueRobe.png" },
-  { name: "Purple Coat", url: "purpleCoat.png" },
-];
+const femaleHairImages = ref([]);
 
-const femaleClothesImages = [
-  { name: "Black Robe", url: "blackRobe.png" },
-  { name: "Blue Coat", url: "blueCoat.png" },
-  { name: "Blue Robe", url: "blueRobe.png" },
-  { name: "Purple Coat", url: "purpleCoat.png" },
-];
+// const femaleHairImages = [
+//   { name: "Ponytail", url: "ponytail.png" },
+//   { name: "Curly Hair", url: "curlyHair.png" },
+// ];
 
-const partnerImages = [
-  { name: "Ollie", url: "Ollie.png" },
-  { name: "Lyra", url: "Lyra.png" },
-  { name: "Elara", url: "Elara.png" },
-  { name: "Ivy", url: "Ivy.png" },
-  { name: "Eldric", url: "Eldric.png" },
-];
+const maleClothesImages = ref([]);
 
-const magicCircleImages = [
-  { name: "None", url: "" },
-  { name: "Rune of the Elements", url: "RuneOfTheElements.png" },
-  { name: "Sigil of the Ancients", url: "SigilOfTheAncients.png" },
-  { name: "Glyph of the Void", url: "GlyphOfTheVoid.png" },
-];
+// const maleClothesImages = [
+//   { name: "Blue Coat", url: "blueCoat.png" },
+//   { name: "Red Robe", url: "redRobe.png" },
+//   { name: "Blue Robe", url: "blueRobe.png" },
+//   { name: "Purple Coat", url: "purpleCoat.png" },
+// ];
+
+const femaleClothesImages = ref([]);
+
+// const femaleClothesImages = [
+//   { name: "Black Robe", url: "blackRobe.png" },
+//   { name: "Blue Coat", url: "blueCoat.png" },
+//   { name: "Blue Robe", url: "blueRobe.png" },
+//   { name: "Purple Coat", url: "purpleCoat.png" },
+// ];
+
+const partnerImages = ref([]);
+
+// const partnerImages = [
+//   { name: "Ollie", url: "Ollie.png" },
+//   { name: "Lyra", url: "Lyra.png" },
+//   { name: "Elara", url: "Elara.png" },
+//   { name: "Ivy", url: "Ivy.png" },
+//   { name: "Eldric", url: "Eldric.png" },
+// ];
+
+const magicCircleImages = ref([]);
+
+// const magicCircleImages = [
+//   { name: "None", url: "" },
+//   { name: "Rune of the Elements", url: "RuneOfTheElements.png" },
+//   { name: "Sigil of the Ancients", url: "SigilOfTheAncients.png" },
+//   { name: "Glyph of the Void", url: "GlyphOfTheVoid.png" },
+// ];
 
 const selectedGender = ref("male");
-const hairImages = ref(maleHairImages);
-const clothesImages = ref(maleClothesImages);
+const hairImages = ref(maleHairImages.value);
+const clothesImages = ref(maleClothesImages.value);
 
 const selectedBall = ref(null);
 const selectedHairImage = ref(0);
@@ -609,19 +782,34 @@ const selectedPartnerImage = ref(0);
 const selectedMagicCircleImage = ref(0);
 
 // 選擇性別
+// const selectGender = (gender) => {
+//   selectedGender.value = gender;
+//   if (gender === "male") {
+//     hairImages.value = maleHairImages;
+//     clothesImages.value = maleClothesImages;
+//     selectedHairImage.value = 0;
+//     selectedClothesImage.value = 0;
+//   } else {
+//     hairImages.value = femaleHairImages;
+//     clothesImages.value = femaleClothesImages;
+//     selectedHairImage.value = 0;
+//     selectedClothesImage.value = 0;
+//   }
+// };
+
 const selectGender = (gender) => {
   selectedGender.value = gender;
   if (gender === "male") {
-    hairImages.value = maleHairImages;
-    clothesImages.value = maleClothesImages;
-    selectedHairImage.value = 0;
-    selectedClothesImage.value = 0;
+    hairImages.value = maleHairImages.value;
+    clothesImages.value = maleClothesImages.value;
   } else {
-    hairImages.value = femaleHairImages;
-    clothesImages.value = femaleClothesImages;
-    selectedHairImage.value = 0;
-    selectedClothesImage.value = 0;
+    hairImages.value = femaleHairImages.value;
+    clothesImages.value = femaleClothesImages.value;
   }
+
+  // 每次切換性別時，將髮型和服裝選擇回到第一個
+  selectedHairImage.value = 0;
+  selectedClothesImage.value = 0;
 };
 
 // 選擇髮型
@@ -712,12 +900,21 @@ const loadUserSelection = async () => {
       selectedMagicCircleImage.value = userClosetSelections.magicCircle;
 
       // 根據選擇更新髮型和衣服圖片
+      // if (userClosetSelections.gender === "male") {
+      //   hairImages.value = maleHairImages;
+      //   clothesImages.value = maleClothesImages;
+      // } else {
+      //   hairImages.value = femaleHairImages;
+      //   clothesImages.value = femaleClothesImages;
+      // }
+
+      // 根據選擇更新髮型和衣服圖片
       if (userClosetSelections.gender === "male") {
-        hairImages.value = maleHairImages;
-        clothesImages.value = maleClothesImages;
+        hairImages.value = maleHairImages.value;
+        clothesImages.value = maleClothesImages.value;
       } else {
-        hairImages.value = femaleHairImages;
-        clothesImages.value = femaleClothesImages;
+        hairImages.value = femaleHairImages.value;
+        clothesImages.value = femaleClothesImages.value;
       }
     } else {
       // 用戶有登錄但尚未儲存過資料，返回預設值
@@ -741,13 +938,17 @@ const setDefaultSelections = () => {
   selectedMagicCircleImage.value = 0; // 預設魔法圈選擇為 0
 
   // 根據預設性別更新髮型和衣服圖片
-  hairImages.value = maleHairImages; // 預設髮型圖片為 maleHairImages
-  clothesImages.value = maleClothesImages; // 預設衣服圖片為 maleClothesImages
+  hairImages.value = maleHairImages.value; // 預設髮型圖片為 maleHairImages
+  clothesImages.value = maleClothesImages.value; // 預設衣服圖片為 maleClothesImages
 };
 
 // ==================使用canva生成圖片=================
 
 const generateAllImages = async () => {
+  // 開始上傳，設置彈窗狀態
+  isUploading.value = true;
+  uploadProgress.value = 0;
+
   selectedBall.value = null;
   isSaveButtonVisible.value = false;
 
@@ -770,41 +971,58 @@ const generateAllImages = async () => {
 const avatarCanvas = ref(null);
 
 // ========生成人物=======
-const generateCharacterImage = async () => {
-  // selectedBall.value = null;
-  // isSaveButtonVisible.value = false;
 
+const generateCharacterImage = async () => {
   const canvas = avatarCanvas.value;
   const ctx = canvas.getContext("2d");
 
-  // 設定 Canvas 大小，這裡假設是 500x500
+  // 設定 Canvas 大小
   canvas.width = 300;
   canvas.height = 791;
 
-  // 加載圖片並繪製到 Canvas
-  const loadImage = (src) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => resolve(img);
-      img.onerror = (error) => reject(error);
-    });
-  };
+  // 設定衣服和髮型的圖片路徑
+  const clothesImagePath =
+    clothesImages.value[selectedClothesImage.value].imageUrl;
+  const hairImagePath = hairImages.value[selectedHairImage.value].imageUrl;
 
   try {
-    // 加載選中的衣服和髮型圖片
-    const clothesImage = await loadImage(
-      `/MyColset/${clothesImages.value[selectedClothesImage.value].url}`
-    );
-    const hairImage = await loadImage(
-      `/MyColset/${hairImages.value[selectedHairImage.value].url}`
-    );
+    // 使用 Firebase SDK 獲取衣服圖片的下載 URL
+    const clothesStorageRef = fsRef(storage, clothesImagePath);
+    const clothesUrl = await getDownloadURL(clothesStorageRef);
+
+    // 使用 Firebase SDK 獲取髮型圖片的下載 URL
+    const hairStorageRef = fsRef(storage, hairImagePath);
+    const hairUrl = await getDownloadURL(hairStorageRef);
+
+    // 創建圖片元素並加載衣服圖片
+    const clothesImg = new Image();
+    clothesImg.crossOrigin = "Anonymous";
+    clothesImg.src = clothesUrl;
+
+    // 創建圖片元素並加載髮型圖片
+    const hairImg = new Image();
+    hairImg.crossOrigin = "Anonymous";
+    hairImg.src = hairUrl;
+
+    // 等待兩張圖片都加載完成
+    await Promise.all([
+      new Promise((resolve, reject) => {
+        clothesImg.onload = resolve;
+        clothesImg.onerror = reject;
+      }),
+      new Promise((resolve, reject) => {
+        hairImg.onload = resolve;
+        hairImg.onerror = reject;
+      }),
+    ]);
 
     // 清空畫布並繪製圖片
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    ctx.drawImage(clothesImage, 0, 0, canvas.width, canvas.height);
-    ctx.drawImage(hairImage, 0, 0, canvas.width, canvas.height);
+    // 畫衣服圖片
+    ctx.drawImage(clothesImg, 0, 0, canvas.width, canvas.height);
+    // 畫髮型圖片
+    ctx.drawImage(hairImg, 0, 0, canvas.width, canvas.height);
 
     // 生成 Base64 圖像並返回
     return canvas.toDataURL("image/png");
@@ -813,6 +1031,51 @@ const generateCharacterImage = async () => {
     return null;
   }
 };
+
+// 從本地端獲取
+// const generateCharacterImage = async () => {
+//   // selectedBall.value = null;
+//   // isSaveButtonVisible.value = false;
+
+//   const canvas = avatarCanvas.value;
+//   const ctx = canvas.getContext("2d");
+
+//   // 設定 Canvas 大小，這裡假設是 500x500
+//   canvas.width = 300;
+//   canvas.height = 791;
+
+//   // 加載圖片並繪製到 Canvas
+//   const loadImage = (src) => {
+//     return new Promise((resolve, reject) => {
+//       const img = new Image();
+//       img.src = src;
+//       img.onload = () => resolve(img);
+//       img.onerror = (error) => reject(error);
+//     });
+//   };
+
+//   try {
+//     // 加載選中的衣服和髮型圖片
+//     const clothesImage = await loadImage(
+//       `${clothesImages.value[selectedClothesImage.value].imageUrl}`
+//     );
+//     const hairImage = await loadImage(
+//       `${hairImages.value[selectedHairImage.value].imageUrl}`
+//     );
+
+//     // 清空畫布並繪製圖片
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+//     ctx.drawImage(clothesImage, 0, 0, canvas.width, canvas.height);
+//     ctx.drawImage(hairImage, 0, 0, canvas.width, canvas.height);
+
+//     // 生成 Base64 圖像並返回
+//     return canvas.toDataURL("image/png");
+//   } catch (error) {
+//     console.error("圖片加載錯誤:", error);
+//     return null;
+//   }
+// };
 
 // ========生成小精靈=======
 
@@ -826,24 +1089,30 @@ const generatePartnerImage = async () => {
   canvas.width = 120;
   canvas.height = 191;
 
-  // 加載圖片並繪製到 Canvas
-  const loadImage = (src) => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => resolve(img);
-      img.onerror = (error) => reject(error);
-    });
-  };
+  // 從 Firebase Storage 下載圖片 URL
+  const imagePath = `${
+    partnerImages.value[selectedPartnerImage.value].imageUrl
+  }`; // 這是你圖片的路徑
 
   try {
-    const partnerImage = await loadImage(
-      `/MyColset/${partnerImages[selectedPartnerImage.value].url}`
-    );
+    // 使用 Firebase SDK 獲取圖片的下載 URL
+    const storageRef = fsRef(storage, imagePath); // 構建 Storage 參考
+    const url = await getDownloadURL(storageRef); // 獲取圖片的下載 URL
+
+    // 創建圖片元素並加載
+    const img = new Image();
+    img.crossOrigin = "Anonymous";
+    img.src = url;
+
+    // 等待圖片加載完成
+    await new Promise((resolve, reject) => {
+      img.onload = resolve; // 圖片加載成功後進行繪製
+      img.onerror = reject; // 圖片加載失敗處理
+    });
 
     // 清空畫布並繪製圖片
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(partnerImage, 0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     // 生成 Base64 圖像並返回
     return canvas.toDataURL("image/png");
@@ -852,6 +1121,42 @@ const generatePartnerImage = async () => {
     return null;
   }
 };
+
+// 從本地端獲取
+// const generatePartnerImage = async () => {
+//   const canvas = partnerCanvas.value;
+//   const ctx = canvas.getContext("2d");
+
+//   // 設定 Canvas 大小
+//   canvas.width = 120;
+//   canvas.height = 191;
+
+//   // 加載圖片並繪製到 Canvas
+//   const loadImage = (src) => {
+//     return new Promise((resolve, reject) => {
+//       const img = new Image();
+//       img.src = src;
+//       img.onload = () => resolve(img);
+//       img.onerror = (error) => reject(error);
+//     });
+//   };
+
+//   try {
+//     const partnerImage = await loadImage(
+//       `${partnerImages.value[selectedPartnerImage.value].imageUrl}`
+//     );
+
+//     // 清空畫布並繪製圖片
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//     ctx.drawImage(partnerImage, 0, 0, canvas.width, canvas.height);
+
+//     // 生成 Base64 圖像並返回
+//     return canvas.toDataURL("image/png");
+//   } catch (error) {
+//     console.error("圖片加載錯誤:", error);
+//     return null;
+//   }
+// };
 
 const base64ToBlob = (base64) => {
   const byteCharacters = atob(base64.split(",")[1]); // 解碼 Base64
@@ -879,6 +1184,9 @@ const uploadImages = async (avatarDataURL, partnerDataURL) => {
     const avatarBlob = base64ToBlob(avatarDataURL);
     const partnerBlob = base64ToBlob(partnerDataURL);
 
+    // 從storage獲取的圖片邏輯
+    // const partnerBlob = await generatePartnerImage();
+
     // 設定圖片儲存路徑
     const avatarStorageRef = fsRef(
       storage,
@@ -889,23 +1197,47 @@ const uploadImages = async (avatarDataURL, partnerDataURL) => {
       `userAvatars/${user.uid}/partner.png`
     );
 
-    // 上傳圖片
-    const avatarSnapshot = await uploadBytes(avatarStorageRef, avatarBlob);
-    const partnerSnapshot = await uploadBytes(partnerStorageRef, partnerBlob);
+    // 上傳圖片 (處理上傳進度)
+    const avatarUploadTask = uploadBytesResumable(avatarStorageRef, avatarBlob);
+    const partnerUploadTask = uploadBytesResumable(
+      partnerStorageRef,
+      partnerBlob
+    );
+
+    // 監聽上傳進度
+    avatarUploadTask.on("state_changed", (snapshot) => {
+      const progress = Math.floor(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+      uploadProgress.value = Math.max(uploadProgress.value, progress); // 確保進度不會回退
+    });
+
+    partnerUploadTask.on("state_changed", (snapshot) => {
+      const progress = Math.floor(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+      uploadProgress.value = Math.max(uploadProgress.value, progress); // 確保進度不會回退
+    });
+
+    // 等待上傳完成
+    const avatarUploadSnapshot = await avatarUploadTask;
+    const partnerUploadSnapshot = await partnerUploadTask;
 
     // 獲取下載 URL
-    const avatarURL = await getDownloadURL(avatarSnapshot.ref);
-    const partnerURL = await getDownloadURL(partnerSnapshot.ref);
+    const avatarURL = await getDownloadURL(avatarUploadSnapshot.ref);
+    const partnerURL = await getDownloadURL(partnerUploadSnapshot.ref);
 
     // 更新 Firebase Authentication 的頭像 URL
     await updateProfile(user, {
       photoURL: avatarURL, // 更新頭像 URL
     });
 
+    // 儲存 avatarURL 到 Firestore
+    await setDoc(doc(db, "users", user.uid), { avatarURL }, { merge: true });
     // 儲存 partnerURL 到 Firestore
     await setDoc(doc(db, "users", user.uid), { partnerURL }, { merge: true });
 
-    console.log("Partner URL saved to Firestore:", partnerURL);
+    // console.log("Partner URL saved to Firestore:", partnerURL);
 
     // 更新 Pinia store 中
     const userAuthState = useUserAuthState();
@@ -913,6 +1245,15 @@ const uploadImages = async (avatarDataURL, partnerDataURL) => {
     userAuthState.setPartnerURL(partnerURL);
 
     console.log("Avatar and partner images updated successfully!");
+
+    // 上傳完成，隱藏彈窗
+    isUploading.value = false;
+
+    // 在上傳完成後確保最終進度為100%
+    avatarUploadTask.then(() => {
+      uploadProgress.value = 100;
+    });
+    // uploadProgress.value = 100;
 
     // 這裡可以選擇是否要返回這兩個下載 URL 進行進一步處理
     // return { avatarURL, partnerURL };

@@ -4,7 +4,7 @@
     <div class="sidebar">
       <div class="user">
         <div class="useImg">
-          <div class="avatar">
+          <div class="avatar" style="cursor: pointer" @click="ToMyCloset">
             <img
               class="avaterImg"
               v-if="avatarURL"
@@ -51,23 +51,29 @@ const avatarURL = ref("");
 
 // 檢查頭像是否來自 Google
 function isGoogleAvatar(photoURL) {
-  return photoURL && (
-    photoURL.includes('googleusercontent.com') || 
-    photoURL.includes('google.com')
+  return (
+    photoURL &&
+    (photoURL.includes("googleusercontent.com") ||
+      photoURL.includes("google.com"))
   );
 }
 
 // 獲取適當的頭像 URL
 function getProperAvatarURL(user) {
-  if (!user) return "/MyColset/avatarDefault.png";
-  
+  const defaultAvatar = new URL(
+    "../Assets/Day/myColset/avatarDefault.png",
+    import.meta.url
+  ).href;
+
+  if (!user) return defaultAvatar;
+
   // 如果是 Google 頭像，返回預設頭像
   if (isGoogleAvatar(user.photoURL)) {
-    return "/MyColset/avatarDefault.png";
+    return defaultAvatar;
   }
-  
+
   // 否則返回用戶的頭像或預設頭像
-  return user.photoURL || "/MyColset/avatarDefault.png";
+  return user.photoURL || defaultAvatar;
 }
 
 onMounted(() => {
@@ -82,8 +88,15 @@ onMounted(() => {
       // 更新頭像 URL - 使用過濾函數
       avatarURL.value = getProperAvatarURL(user);
     } else {
-      avatarURL.value = "/MyColset/avatarDefault.png";
+      avatarURL.value = new URL(
+        "../Assets/Day/myColset/avatarDefault.png",
+        import.meta.url
+      ).href;
     }
   });
 });
+
+const ToMyCloset = () => {
+  router.push("/MyCabin/MyColset");
+};
 </script>
