@@ -120,13 +120,13 @@ export const useTemplateStore = defineStore("template", () => {
       }
     
       const userId = user.uid; // 使用者 ID
-      const userStoryId = `${userId}-${storyName.name}-${Date.now()}`; // 故事 ID
+      const userStoryId = `${userId}-${storyName.name}-publish`; // 故事 ID
+      const filesTile = storyName.name;                        // 獲取簡報名稱
       
       // [ 打包模板資料 + 圖片存入 getStorage ]
       const storage = getStorage();
 
       const folderName = 'story-images';  // 設定要放置圖片的資料夾名稱
-
       const templatesData = await Promise.all(
         templates.map(async (template) => {
           // 如果模板資料中包含圖片 URL，進行圖片上傳
@@ -169,22 +169,45 @@ export const useTemplateStore = defineStore("template", () => {
       );
 
       // [ 把打包好的陣列存到 Firestore ]
+      const db = getFirestore();
       const docIdStore = useDocIdStore(); // docId store
 
-      const db = getFirestore();
-      const booksCollection = collection(db, "books");
+      // 使用 userStoryId 作為文檔 ID
+      const docRef = doc(db, "books", userStoryId); // 這裡指定文檔 ID
 
-      const docRef = await addDoc(booksCollection, { 
+      // 使用 setDoc() 來儲存資料
+      await setDoc(docRef, {
         userId,
-        userStoryId: userStoryId,
+        userStoryId,
         templatesData, // 儲存模板資料陣列
+        filesTile:filesTile,
+
       });
-      const docId = docRef.id; // 這裡獲取 docId
 
       console.log("Data saved to Firestore!");
-      
+
       // 儲存 docId 到 Pinia Store
-      docIdStore.setDocId(docId); // 儲存 docId
+      docIdStore.setDocId(userStoryId); // 儲存指定的文檔 ID
+
+
+      // =========== {{ 舊檔案存取辦法 addDoc }}
+
+      // const docIdStore = useDocIdStore(); // docId store
+
+      // const db = getFirestore();
+      // const booksCollection = collection(db, "books");
+
+      // const docRef = await addDoc(booksCollection, { 
+      //   userId,
+      //   userStoryId: userStoryId,
+      //   templatesData, // 儲存模板資料陣列
+      // });
+      // const docId = docRef.id; // 這裡獲取 docId
+
+      // console.log("Data saved to Firestore!");
+      
+      // // 儲存 docId 到 Pinia Store
+      // docIdStore.setDocId(docId); // 儲存 docId
     }
 
     // ----{{ 存入草稿 : 透過 docId pinia }}
@@ -368,13 +391,6 @@ export const useTemplateStore = defineStore("template", () => {
         console.error("未找到該文檔，請確認 docId 是否正確。");  // 若文檔不存在，輸出錯誤訊息
       }
     }
-
-
-
-
-
-
-
 
 
   return {

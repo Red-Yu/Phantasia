@@ -84,10 +84,11 @@
       </div>
       <div :class="['file-list', DraftViewMode]">
         <FileItem
-          v-for="File in DraftFiles"
-          :key="File.id"
-          :file="File"
+          v-for="file in DraftFiles"
+          :key="file.id"
+          :file="file"
           :mode="DraftViewMode"
+          @click="openFile(file)"
         />
       </div>
     </div>
@@ -96,10 +97,13 @@
 
 <script setup>
 import { ref, computed , onMounted } from "vue";
+import { useRouter } from "vue-router";
 import FileItem from "../../components/FileItem.vue";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebaseConfig'; // 請確保路徑正確
+import { useFileStore } from "@/stores/FileStore"; // 引入 Pinia store
+
 // ===========================
 // FileManager
 // ===========================
@@ -127,7 +131,7 @@ const searchQuery = ref(""); // 存放使用者輸入的搜尋關鍵字
 // 計算屬性：根據 searchQuery 過濾 files 陣列
 const DraftFiles = computed(() => {
   if (!searchQuery.value) {
-    return files.value; // 如果沒有輸入關鍵字，顯示所有檔案
+    return files.value; // 如果沒有搜尋關鍵字，顯示所有檔案
   }
   return files.value.filter((file) =>
     file.name.toLowerCase().includes(searchQuery.value.toLowerCase())
@@ -167,24 +171,32 @@ const fetchFirestoreData = async () => {
     // 將每本書的資料映射為與 `files` 類似的結構
     querySnapshot.forEach((doc) => {
       const data = doc.data();
-      
-      // 如果書籍已發布或者沒設置published欄位（視為已發布），則加入
-      if (data.published === undefined || data.published === true) {
-        files.value.push({
-          id: doc.id, // Firebase-generated ID
-          name: data.title,
-          size: data.size || 0, // 假設書籍大小為數字，若無則設置為 0
-          type: data.type || "application/pdf", // 書籍類型，預設為 PDF
-          time: data.dateAdded || "Unknown", // 書籍加入時間，若無則顯示為 "Unknown"
-          url: data.imagePath || "", // 書籍封面圖片 URL
-          link: doc.id // 為每本書添加一個跳轉的連結
-        });
-      }
+      files.value.push({
+        id: doc.id, // Firebase-generated ID
+        name: data.filesTile,
+        size: data.size || 0, // 假設書籍大小為數字，若無則設置為 0
+        type: data.type || "application/pdf", // 書籍類型，預設為 PDF
+        time: data.dateAdded || "Unknown", // 書籍加入時間，若無則顯示為 "Unknown"
+        url: data.imagePath || "", // 書籍封面圖片 URL
+        link: doc.id // 為每本書添加一個跳轉的連結
+      });
     });
   } catch (error) {
     console.error("Error fetching data from Firestore:", error);
   }
 };
+
+// ==============================
+// 點選檔案進入舊檔案
+// 從 firebase 抓資料填入
+// ==============================
+const router = useRouter();
+const fileStore = useFileStore();
+
+function openFile(file) {
+  fileStore.setSelectedFile(file); // 儲存選中的檔案資料
+  router.push('/create');
+}
 
 // 在組件加載時獲取資料
 onMounted(() => {

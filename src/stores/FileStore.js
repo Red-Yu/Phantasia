@@ -13,7 +13,7 @@ export const useFileStore = defineStore('fileStore', () => {
   });
 
   function setSelectedFile(file) {
-    selectedFile.id = file.id;
+    selectedFile.id = file.id ;
     selectedFile.name = file.name;
     selectedFile.size = file.size;
     selectedFile.type = file.type;

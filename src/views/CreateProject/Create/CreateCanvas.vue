@@ -91,6 +91,7 @@ function createNewFile() {
 function loadTemplates() {
   if (selectedFile.id) {
     templateStore.loadTemplatesFromFirebase(selectedFile.id); // 根據選中的檔案載入資料
+    templateStore.loadBooksTemplatesFromFirebase(selectedFile.id); // 根據選中的檔案載入資料
     templates.value = templateStore.templates;
   } else {
     createNewFile();
