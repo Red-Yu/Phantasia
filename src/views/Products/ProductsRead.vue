@@ -12,7 +12,7 @@
 </style>
 
 <template>
-  <div class="body3">
+  <div class="body3" ref="mainContentRef">
     <div class="webpage-container5" :class="{ 'no-scroll': showPopup }">
       <!-- Custom Scroll Indicator -->
       <div class="scroll-indicator5">
@@ -32,13 +32,32 @@
       </div>
 
       <!-- Fullscreen Image Sections -->
-      <section
+      <!-- <section
         v-for="(section, index) in sections"
         :key="index"
         :id="'section-' + index"
         class="full-section5"
         :style="{ backgroundImage: `url(${section.image})` }"
-      ></section>
+      ></section> -->
+      <div
+        class="readTemplateGroup"
+        :style="{ height: 380 * templateStore.templates.length * scale + 'px' }"
+      >
+        <div class="readTemplateSize" :style="getPreviewStyle" style="width: 680px">
+          <div
+            class="canvas"
+            v-for="(template, i) in templateStore.templates"
+            :key="template.data.templateId"
+          >
+            <component
+              :is="template.component"
+              v-bind="template.data"
+              :mode="main"
+              @updateData="updateTemplateData(i, $event)"
+            />
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="text-container-6">
@@ -186,6 +205,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import SuccessModal from "../MyCabin/stampSuccess.vue";
+import { useTemplateStore } from "@/stores/template";
+import { useElementSize } from "@vueuse/core";
 
 // Popup logic
 const showPopup = ref(false);
@@ -308,6 +329,7 @@ const addPoint = async () => {
 
 // Load from sessionStorage on mount
 onMounted(() => {
+  loadTemplates(); // 頁面加載時根據檔案資料載入模板
   const savedData = sessionStorage.getItem(`feedback-${bookId}`);
   if (savedData) {
     const { rating, feedback } = JSON.parse(savedData);
@@ -384,7 +406,36 @@ const submitData = async () => {
     alert("An error occurred while submitting your feedback.");
   }
 };
+// -------------------------import pinia-----------------------
+const templates = ref([]);
+const templateStore = useTemplateStore();
+const pathSegments = window.location.pathname.split("/").filter(Boolean);
+const productId = pathSegments[3];
 
+function loadTemplates() {
+  if (bookId) {
+    templateStore.loadBooksTemplatesFromFirebase(bookId); // 根據選中的檔案載入資料
+    templates.value = templateStore.templates;
+  }
+}
+const mainContentRef = ref(null); // 預覽主區塊容器
+const { width } = useElementSize(mainContentRef); // 動態監聽容器寬度變化
+const baseWidth = 680; // 設計稿的寬度基準
+// const scale = ref(1)
+
+const getPreviewStyle = computed(() => {
+  const scale = Math.min(width.value / baseWidth);
+  return {
+    transform: `scale(${scale})`,
+    transformOrigin: "0 0",
+  };
+});
+
+const scale = computed(() => {
+  const scale = Math.min(width.value / baseWidth);
+  return scale;
+});
+// readTemplateGroup
 // Existing Scroll-related logic (unchanged)
 const sections = ref([
   { image: new URL("@/assets/img/pics/one.png", import.meta.url).href },
