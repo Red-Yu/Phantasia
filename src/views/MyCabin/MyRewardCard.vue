@@ -92,8 +92,8 @@
                   /> -->
                   <img
                     class="avaterImg avatar"
-                    v-if="displayAvatarURL"
-                    :src="displayAvatarURL"
+                    v-if="avatarURL"
+                    :src="avatarURL"
                     alt="User Avatar"
                   />
                 </div>
@@ -276,7 +276,7 @@
                     />
                     <img
                       v-else
-                      src="../../Assets/Day/myColset/elf_5.png"
+                      src="../../Assets/Day/rewardCard/gift.png"
                       alt="Key"
                       class="real_dress"
                     />
