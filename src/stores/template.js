@@ -16,7 +16,7 @@ import { nanoid } from 'nanoid';
 import { getAuth } from "firebase/auth";
 // firebase 相關
 import { useDocIdStore } from "@/stores/docIdStore"; // 引入 Pinia store
-import { getFirestore, collection, addDoc , doc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, addDoc , doc, getDoc ,setDoc } from "firebase/firestore";
 import {
   getStorage,
   ref as storageRef,
@@ -199,7 +199,7 @@ export const useTemplateStore = defineStore("template", () => {
       }
     
       const userId = user.uid; // 使用者 ID
-      const userStoryId = `${userId}-${storyName.name}-${Date.now()}`; // 故事 ID
+      const userStoryId = `${userId}-${storyName.name}`; // 故事 ID
       const saveDate = new Date().toLocaleDateString('en-CA'); // en-CA 格式為 YYYY-MM-DD
       const filesTile = storyName.name;                        // 獲取簡報名稱
 
@@ -278,25 +278,26 @@ export const useTemplateStore = defineStore("template", () => {
       
 
       // [ 把打包好的陣列存到 Firestore ]
+      const db = getFirestore();
       const docIdStore = useDocIdStore(); // docId store
 
-      const db = getFirestore();
-      const DraftsCollection = collection(db, "Drafts");
+      // 使用 userStoryId 作為文檔 ID
+      const docRef = doc(db, "Drafts", userStoryId); // 這裡指定文檔 ID
 
-      const docRef = await addDoc(DraftsCollection, { 
+      // 使用 setDoc() 來儲存資料
+      await setDoc(docRef, {
         userId,
-        userStoryId: userStoryId,
-        saveDate: saveDate,
+        userStoryId,
+        saveDate,
         title: filesTile,
-        templatesData, // 儲存模板資料陣列
-        boardImageUrl: boardImageUrl ,  // 將畫板圖片 URL 儲存到 Firestore
+        templatesData,  // 儲存模板資料陣列
+        boardImageUrl,  // 儲存畫板圖片 URL
       });
-      const docId = docRef.id; // 這裡獲取 docId
 
       console.log("Data saved to Firestore!");
-      
+
       // 儲存 docId 到 Pinia Store
-      docIdStore.setDocId(docId); // 儲存 docId
+      docIdStore.setDocId(userStoryId); // 儲存指定的文檔 ID
     }
 
     // ----{{ 叫出完整 books }}
