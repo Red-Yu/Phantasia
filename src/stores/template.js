@@ -30,7 +30,6 @@ import {
 // ===============
 
 export const useTemplateStore = defineStore("template", () => {
-  
   // -----------------------
   // 映射 -> templateName 
   // -----------------------
@@ -80,6 +79,7 @@ export const useTemplateStore = defineStore("template", () => {
       };
       // console.log("原始 templateComponent:", templateComponent);
       console.log("拷貝後 clonedTemplate:",clonedTemplate );
+      console.log("templateData:", templateData);  // 加入 log 檢查 templateData 的結構
       templates.push(clonedTemplate);
       }
     }
@@ -299,8 +299,81 @@ export const useTemplateStore = defineStore("template", () => {
       docIdStore.setDocId(docId); // 儲存 docId
     }
 
-    // ----{{ 叫出 }}
+    // ----{{ 叫出完整 books }}
+    async function loadBooksTemplatesFromFirebase(docId) {
+      const db = getFirestore();
+      const docRef = doc(db, "books", docId); // 根據 docId 讀取資料
+      const docSnap = await getDoc(docRef);
     
+      // 檢查 Firebase 中是否有該文檔
+      if (docSnap.exists()) {
+        console.log("Firebase 文檔資料已成功載入！");  // 加入 log 確認資料已成功載入
+        const templatesData = docSnap.data().templatesData;
+
+        
+        // 清空現有模板資料
+        resetTemplates();
+    
+        // 依次載入每個模板
+        templatesData.forEach((template) => {
+          const component = getTemplateComponent(template.templateData.templateName);
+          console.log("處理模板:", template); // log 出當前正在處理的模板資料
+          
+          // 檢查是否能找到對應的模板組件
+          if (component) {
+            console.log(`找到模板組件: ${template.templateName}`);  // 確認找到了對應的組件
+            addTemplate(component, template.templateData); // 使用已有的 addTemplate 函式
+          } else {
+            console.warn(`未找到模板組件: ${template.templateName}`);  // 如果沒有找到，給出警告
+          }
+        });
+      } else {
+        console.error("未找到該文檔，請確認 docId 是否正確。");  // 若文檔不存在，輸出錯誤訊息
+      }
+    }
+
+    // ----{{ 叫出草稿 }}
+    async function loadTemplatesFromFirebase(docId) {
+      const db = getFirestore();
+      const docRef = doc(db, "Drafts", docId); // 根據 docId 讀取資料
+      const docSnap = await getDoc(docRef);
+    
+      // 檢查 Firebase 中是否有該文檔
+      if (docSnap.exists()) {
+        console.log("Firebase 文檔資料已成功載入！");  // 加入 log 確認資料已成功載入
+        const templatesData = docSnap.data().templatesData;
+
+        // 儲存檔案名稱到 storyName
+        storyName.name = docSnap.data().title || "Untitled";  // 設置檔案名稱
+
+        
+        // 清空現有模板資料
+        resetTemplates();
+    
+        // 依次載入每個模板
+        templatesData.forEach((template) => {
+          const component = getTemplateComponent(template.templateData.templateName);
+          console.log("處理模板:", template); // log 出當前正在處理的模板資料
+          
+          // 檢查是否能找到對應的模板組件
+          if (component) {
+            console.log(`找到模板組件: ${template.templateName}`);  // 確認找到了對應的組件
+            addTemplate(component, template.templateData); // 使用已有的 addTemplate 函式
+          } else {
+            console.warn(`未找到模板組件: ${template.templateName}`);  // 如果沒有找到，給出警告
+          }
+        });
+      } else {
+        console.error("未找到該文檔，請確認 docId 是否正確。");  // 若文檔不存在，輸出錯誤訊息
+      }
+    }
+
+
+
+
+
+
+
 
 
   return {
@@ -314,6 +387,8 @@ export const useTemplateStore = defineStore("template", () => {
     updateTemplateData,
     saveTemplatesToFirebase,
     saveDraftToFirebase,
+    loadBooksTemplatesFromFirebase,
+    loadTemplatesFromFirebase,
   };
 });
 

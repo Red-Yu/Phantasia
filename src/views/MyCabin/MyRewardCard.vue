@@ -92,8 +92,8 @@
                   /> -->
                   <img
                     class="avaterImg avatar"
-                    v-if="avatarURL"
-                    :src="avatarURL"
+                    v-if="displayAvatarURL"
+                    :src="displayAvatarURL"
                     alt="User Avatar"
                   />
                 </div>

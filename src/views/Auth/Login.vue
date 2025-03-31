@@ -55,7 +55,6 @@
         </form>
 
         <p v-if="error" class="error-message">{{ error }}</p>
-
         <!-- 彈出的Coming Soon訊息 -->
         <div v-if="isComingSoonVisible" class="coming-soon-message">
           Coming Soon...
@@ -91,12 +90,8 @@
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .google-login-btn {
@@ -122,12 +117,7 @@
 
 <script setup>
 import { ref } from "vue";
-import {
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  GoogleAuthProvider,
-  updateProfile,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth";
 import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebaseConfig";
 import SuccessModal from "../Auth/LoginSuccess.vue";
@@ -177,7 +167,6 @@ const openSignup = () => {
 // 顯示Coming Soon訊息
 const showComingSoon = () => {
   isComingSoonVisible.value = true;
-
   // 2秒後自動隱藏
   setTimeout(() => {
     isComingSoonVisible.value = false;

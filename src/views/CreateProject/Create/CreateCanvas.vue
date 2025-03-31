@@ -24,7 +24,10 @@
         transformOrigin: 'top center',
       }"
     >
-      <div class="canvas" v-for="(template, i) in templateStore.templates" :key="i">
+    <h1 v-if="selectedFile.id">編輯檔案 (ID: {{ selectedFile.id }})</h1>
+    <h1 v-else>創建新檔案</h1>
+
+      <div class="canvas" v-for="(template, i) in templateStore.templates" :key="template.data.templateId">
         <component
           :is="template.component"
           v-bind="template.data"
@@ -41,18 +44,14 @@ import { ref ,onMounted } from "vue";
 import { throttle } from "lodash";
 // 引入 template store
 import { useTemplateStore } from "@/stores/template";
+import { useFileStore } from "@/stores/fileStore";
+
 
 // =================
 // 使用 Pinia store
 // =================
 const templateStore = useTemplateStore();
-
-// const undo = () => {
-//   templateStore.undo();
-// };
-// const redo = () => {
-//   templateStore.redo();
-// };
+const fileStore = useFileStore();
 
 // =================
 // 縮放比例
@@ -79,4 +78,28 @@ const updateTemplateData = (index, newData) => {
     ...newData,
   };
 };
+
+// =================
+// 判斷是否為舊檔案
+// =================
+const selectedFile = fileStore.selectedFile; // 從 Pinia 讀取選中的檔案資料
+const templates = ref([]);
+const main = 'edit'; // 模式設定，假設為編輯模式
+
+function loadTemplates() {
+  if (selectedFile.id) {
+    templateStore.loadTemplatesFromFirebase(selectedFile.id); // 根據選中的檔案載入資料
+    templates.value = templateStore.templates;
+  } else {
+    createNewFile();
+  }
+}
+
+function createNewFile() {
+  templates.value = []; // 如果是新檔案，初始化空模板
+}
+
+onMounted(() => {
+  loadTemplates(); // 頁面加載時根據檔案資料載入模板
+});
 </script>

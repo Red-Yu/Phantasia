@@ -14,7 +14,7 @@
           <span class="Toggle" @click="toggleFunction" />
         </div>
         <div class="bookInfoBox">
-          <h1 class="title">{{ storyName }}</h1>
+          <h1 class="title">{{ storyName.name ? `${storyName.name}` : " " }}</h1>
           <h3 class="subTitle">Drafts</h3>
         </div>
       </div>
@@ -159,7 +159,7 @@ const accordionItems = ref([
 ]);
 
 // 叫出使用者創建的書名
-const storyName = templateStore.storyName.name;  // 獲取簡報名稱
+const storyName = templateStore.storyName ;  // 獲取簡報名稱
 
 // ====================
 // 右側-PageView

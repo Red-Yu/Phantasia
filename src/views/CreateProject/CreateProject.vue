@@ -71,6 +71,7 @@
           :key="file.id"
           :file="file"
           :mode="RecentViewMode"
+          @click="openFile(file)"
         />
       </div>
     </nav>
@@ -101,11 +102,14 @@
 <script setup>
 
 import { ref, computed , onMounted } from "vue";
+import { useRouter } from "vue-router";
 import FileItem from "../../components/FileItem.vue";
 import CreateNewProject from "./FullScreenModal/CreateNewProject.vue";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { db, auth } from '../../firebase/firebaseConfig'; // 請確保路徑正確
+import { useFileStore } from "@/stores/FileStore"; // 引入 Pinia store
+
 // ===========================
 // CreateNewProject
 // ===========================
@@ -232,15 +236,22 @@ const fetchFirestoreData = async () => {
   }
 };
 
+// ==============================
+// 點選檔案進入舊檔案
+// 從 firebase 抓資料填入
+// ==============================
+const router = useRouter();
+const fileStore = useFileStore();
+
+function openFile(file) {
+  fileStore.setSelectedFile(file); // 儲存選中的檔案資料
+  router.push('/create');
+}
+
 // 在組件加載時獲取資料
 onMounted(() => {
   fetchFirestoreData(); // 獲取 Firestore 中的書籍資料
 });
-
-
-
-
-
 
 
 

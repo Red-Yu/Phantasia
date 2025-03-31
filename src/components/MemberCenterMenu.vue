@@ -137,7 +137,6 @@ onMounted(() => {
     if (user) {
       // 更新頭像 URL - 使用過濾函數
       avatarURL.value = getProperAvatarURL(user);
-
       // 檢查用戶訂閱狀態
       try {
         const ordersRef = collection(db, "orders");
@@ -285,7 +284,6 @@ const selectSubMenu = (mainIndex, subIndex) => {
       // 先更新狀態，再導航
       activeIndex.value = mainIndex;
       activeSubMenu.value = subIndex;
-
       router.push(subItem.path).then(() => {
         // 確保導航後選中狀態仍然保持
         activeIndex.value = mainIndex;
