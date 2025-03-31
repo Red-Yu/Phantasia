@@ -1,17 +1,66 @@
 @charset "UTF-8";
 #menu {
   position: absolute;
-  margin-bottom: auto;
-  padding-left: 40%;
-  gap: 20px;
-  display: flex;
   bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
 }
 
 #container {
   width: 100vw;
   height: 100vh;
   position: fixed;
+  background-image: url("@/Assets/img/myBookcase/backimage.png");
+}
+
+.backToHome_button {
+  position: absolute;
+  bottom: 20px;
+  right: 170px;
+}
+
+button.backToHome {
+  outline: none;
+  border: none;
+}
+
+.btnLink.whiteForFrontPage {
+  color: #f9faf9;
+  width: -moz-fit-content;
+  width: fit-content;
+  align-items: center;
+  display: flex;
+  gap: 0px;
+  padding: 5px;
+  position: relative;
+}
+
+.btnLink.whiteForFrontPage::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1.5px;
+  width: 0;
+  background-color: #f9faf9;
+  transition: width 0.4s ease;
+  transform-origin: left;
+}
+
+.btnLink.whiteForFrontPage:hover::after,
+.btnLink.whiteForFrontPage.active::after {
+  width: 100%;
+}
+
+.btnLink.whiteForFrontPage.active::after.whiteForFrontPage:hover .cols {
+  display: flex;
+  transform: translateX(4%);
+}
+
+.btnLink.whiteForFrontPage:hover .cols span:nth-child(2) {
+  display: none;
 }
 
 /* 元件的主要元素 */
@@ -19,7 +68,7 @@
   width: 130px;
   height: 160px;
   box-shadow: 0px 0px 12px rgba(0, 255, 250, 0.5);
-  border: 3px solid rgba(127, 255, 255, 0.25);
+  border: 3px solid rgba(239, 235, 226, 0.25);
   font-family: Helvetica, sans-serif;
   text-align: center;
   line-height: normal;
@@ -77,12 +126,11 @@ button {
 }
 
 button:hover {
-  background-color: rgba(0, 255, 255, 0.5);
+  box-shadow: #f4f4f2;
 }
 
 button:active {
-  color: #000000;
-  background-color: rgba(0, 255, 255, 0.75);
+  box-shadow: #f4f4f2;
 }
 
 /* 關閉按鈕樣式 */
