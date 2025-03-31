@@ -444,8 +444,10 @@
     flex-wrap: wrap;
   }
   .x {
-    position: static;
-    margin-top: 20px;
+    position: absolute;
+    right: 50px;
+    bottom: 100px;
+    font-family: "Aleo", sans-serif;
   }
   .aboutButton {
     width: 100%;
@@ -496,6 +498,7 @@
   align-items: center;
   gap: 10px;
   /* Adds spacing between buttons */
+  position: sticky;
 }
 
 .pg_controlButton {
@@ -523,6 +526,7 @@
 .pg_controlButton.pg_active-newest,
 .pg_controlButton.pg_active-oldest {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -544,8 +548,7 @@
   transition: width 0.4s ease;
   transform-origin: left;
 }
-.pg_controlButton.pg_active:hover::after,
-.pg_controlButton.pg_active.active::after,
+.pg_controlButton.pg_active:hover::after, .pg_controlButton.pg_active.active::after,
 .pg_controlButton.pg_active-newest:hover::after,
 .pg_controlButton.pg_active-newest.active::after,
 .pg_controlButton.pg_active-oldest:hover::after,
@@ -567,8 +570,7 @@
 .pg_controlButton.pg_active .icon-L,
 .pg_controlButton.pg_active-newest .icon-L,
 .pg_controlButton.pg_active-oldest .icon-L {
-  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%)
-    hue-rotate(10deg);
+  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%) hue-rotate(10deg);
 }
 
 .pg_searchWrapper {
@@ -592,6 +594,13 @@
   padding: 8px;
   outline: none;
   /* Removes the focus outline */
+  font-family: "Fanwood Text", sans-serif;
+}
+
+.pg_searchInput::-moz-placeholder {
+  color: #fffdef;
+  opacity: 40%;
+  /* Change this to modify the placeholder text color */
   font-family: "Fanwood Text", sans-serif;
 }
 
@@ -632,15 +641,6 @@
 }
 .pg_searchIcon {
   width: 30px;
-}
-
-.whiteline {
-  height: 2px;
-  /* Thickness of the line */
-  background-color: white;
-  /* Line color */
-  z-index: 9999;
-  /* Keeps it on top */
 }
 
 @keyframes rotatingAnimation {
@@ -759,10 +759,23 @@
   .pg_itemsGrid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .pg_itemCard:nth-child(3n) {
+    border-right: 1px solid white;
+    margin-right: -1px;
+  }
 }
 @media (max-width: 768px) {
   .pg_itemsGrid {
     grid-template-columns: 1fr;
+  }
+  .pg_itemCard {
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+  }
+  .pg_itemCard:not(:nth-child(3n)) {
+    border-right: 1px solid white;
+    border-left: 1px solid white;
+    margin-right: -1px;
   }
 }
 @media (max-width: 540px) {
@@ -801,7 +814,8 @@
   /* Ensure it fills the container width */
   height: 100%;
   /* Ensure it fills the container height */
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   /* Prevent cropping while maintaining aspect ratio */
   border-radius: 10px;
 }
@@ -1098,34 +1112,28 @@ h2 {
 .product-box--side-left {
   width: 76.49px;
   height: 700px;
-  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px)
-    rotateY(-90deg);
+  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
 }
 
 .product-box--side-right {
   width: 76.49px;
   height: 700px;
-  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px)
-    rotateY(90deg);
+  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
 }
 
 .product-box--top {
   width: 507.93px;
   height: 76.49px;
-  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px)
-    rotateX(90deg);
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
-    no-repeat center center;
+  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
   background-size: cover;
 }
 
 .product-box--bottom {
   width: 507.93px;
   height: 76.49px;
-  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px)
-    rotateX(-90deg);
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
-    no-repeat center center;
+  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
   background-size: cover;
 }
 
@@ -1218,27 +1226,23 @@ h2 {
   .product-box--side-left {
     width: 61.192px;
     height: 560px;
-    transform: translate3d(-214.4px, -300px, 0) translate3d(-16px, 0, -16px)
-      rotateY(-90deg);
+    transform: translate3d(-214.4px, -300px, 0) translate3d(-16px, 0, -16px) rotateY(-90deg);
   }
   .product-box--side-right {
     width: 61.192px;
     height: 560px;
-    transform: translate3d(-209.6px, -300px, 0) translate3d(384px, 0px, -16px)
-      rotateY(90deg);
+    transform: translate3d(-209.6px, -300px, 0) translate3d(384px, 0px, -16px) rotateY(90deg);
     /* 480px × 0.8 */
   }
   .product-box--top {
     width: 406.344px;
     height: 61.192px;
-    transform: translate3d(-200px, -314.4px, 0) translate3d(0px, -16px, -16px)
-      rotateX(90deg);
+    transform: translate3d(-200px, -314.4px, 0) translate3d(0px, -16px, -16px) rotateX(90deg);
   }
   .product-box--bottom {
     width: 406.344px;
     height: 61.192px;
-    transform: translate3d(-200px, -354.4px, 0) translate3d(0px, 584px, -16px)
-      rotateX(-90deg);
+    transform: translate3d(-200px, -354.4px, 0) translate3d(0px, 584px, -16px) rotateX(-90deg);
   }
   .feedback-box3 {
     width: 100%;
@@ -1284,32 +1288,27 @@ h2 {
   .book3d-box--back {
     width: 300px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px)
-      rotateY(180deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px) rotateY(180deg);
   }
   .book3d-box--side-left {
     width: 24px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px)
-      rotateY(-90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px) rotateY(-90deg);
   }
   .book3d-box--side-right {
     width: 24px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px)
-      rotateY(90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px) rotateY(90deg);
   }
   .book3d-box--top {
     width: 300px;
     height: 24px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px)
-      rotateX(90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px) rotateX(90deg);
   }
   .book3d-box--bottom {
     width: 300px;
     height: 24px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px)
-      rotateX(-90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px) rotateX(-90deg);
   }
   .feedback-section3 {
     margin-top: 30px;
@@ -1472,10 +1471,10 @@ h2 {
   border-radius: 50%;
   /* Circular window */
   -o-object-fit: cover;
-  object-fit: cover;
+     object-fit: cover;
   /* Ensures image fits */
   -o-object-position: center top;
-  object-position: center top;
+     object-position: center top;
   /* Shifts focus to the top of the image */
   margin-right: 10px;
 }
@@ -1681,4 +1680,4 @@ h2 {
   .popup-box {
     min-height: 50%;
   }
-} /*# sourceMappingURL=products.css.map */
+}/*# sourceMappingURL=products.css.map */

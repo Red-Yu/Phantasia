@@ -35,7 +35,7 @@ const router = useRouter();
 // 定義按鈕選單
 const menuItems = ref([
   { label: "About Us", link: "/about" },
-  { label: "Product", link: "/Products" },
+  { label: "Products", link: "/Products" },
   { label: "MyCabin", link: "/MyCabin" },
   { label: "Create", link: "/CreateProject" },
   { label: "MemberCenter", link: "/MemberCenter" },
