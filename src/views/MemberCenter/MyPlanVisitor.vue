@@ -267,7 +267,7 @@ const handleJoinNow = async () => {
     document.querySelector('form[action*="ecpay"]').submit();
   } catch (error) {
     console.error('支付處理錯誤:', error);
-    showAlert('支付處理發生錯誤，請稍後再試', '錯誤');
+    showAlert('Payment processing error, please try again later.', 'Notice');
   }
 };
 
