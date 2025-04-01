@@ -46,17 +46,18 @@
         </div>
       </div>
     </div>
+    <!-- 付款方式區域 -->
     <div class="payment-section">
       <h2 class="title">PAYMENT METHOD</h2>
       <div class="payment-options">
-        <!-- LINE PAY -->
+        <!-- ECPay -->
         <div class="payment-option">
           <div 
-            :class="selectedPayment === 'LINE' ? 'btnKey-L dark' : 'btnKey-L dark-border'"
-            @click="togglePayment('LINE')"
+            :class="selectedPayment === 'ECPAY' ? 'btnKey-L dark' : 'btnKey-L dark-border'"
+            @click="togglePayment('ECPAY')"
           >
             <div class="icon-L">
-              <div :class="selectedPayment === 'LINE' ? 'white-cross' : 'dark-cross'">
+              <div :class="selectedPayment === 'ECPAY' ? 'white-cross' : 'dark-cross'">
                 <div class="cols">
                   <span></span>
                   <span></span>
@@ -67,27 +68,7 @@
               </div>
             </div>
           </div>
-          <span class="payment-title">LINE PAY</span>
-        </div>
-        <!-- JKOPAY -->
-        <div class="payment-option">
-          <div 
-            :class="selectedPayment === 'JKO' ? 'btnKey-L dark' : 'btnKey-L dark-border'"
-            @click="togglePayment('JKO')"
-          >
-            <div class="icon-L">
-              <div :class="selectedPayment === 'JKO' ? 'white-cross' : 'dark-cross'">
-                <div class="cols">
-                  <span></span>
-                  <span></span>
-                </div>
-                <div class="rows">
-                  <span></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <span class="payment-title">JKOPAY</span>
+          <span class="payment-title">ECPay</span>
         </div>
       </div>
       <div class="credit-card-section">
@@ -108,10 +89,76 @@
               </div>
             </div>
           </div>
-          <span class="payment-title"
-            >Credit card/debit card payment</span
-          >
+          <span class="payment-title">Credit card/debit card payment</span>
         </div>
+      </div>
+      
+      <!-- 信用卡標誌 -->
+      <div class="card-logos" v-show="showCreditCardForm">
+        <img src="@/assets/img/membercenter/cardlogo.svg" alt="Mastercard" />
+      </div>
+
+      <!-- 信用卡表單 -->
+      <div class="credit-card-form" v-show="showCreditCardForm">
+        <div class="form-group">
+          <label>Credit Card Number <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input
+              :type="showCardnumber ? 'text' : 'password'"
+              v-model="cardNumber"
+              @input="formatCardNumber"
+              placeholder="0000 0000 0000 0000"
+              class="form-input"
+              maxlength="19"
+            />
+            <div class="i" @click="showCardnumber = !showCardnumber">
+                <div class="dark-view" :class="{ closed: showCardnumber }"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Validity Period <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input 
+              :type="showCarddate ? 'text' : 'password'"
+              v-model="validityDate"
+              @input="formatValidityDate"
+              placeholder="MM/YY" 
+              class="form-input" 
+              maxlength="5"
+              autocomplete="off"
+            />
+            <div class="i" @click="showCarddate = !showCarddate">
+                <div class="dark-view" :class="{ closed: showCarddate }"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>CVC <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input
+              :type="showCardcvc ? 'text' : 'password'"
+              v-model="cvcNumber"
+              @input="formatCVC"
+              placeholder="000"
+              maxlength="3"
+              class="form-input"
+            />
+            <div class="i" @click="showCardcvc = !showCardcvc">
+                <div class="dark-view" :class="{ closed: showCardcvc }"></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="disclaimer">
+          Please note that this platform will not charge you any
+          platform transaction fees, but the credit card you use when
+          placing an order may charge you relevant fees. Please refer to
+          its relevant service policies and regulations, and report to
+          your chosen transaction service provider Get more information.
+        </p>
       </div>
     </div>
     <div class="button-container">
@@ -156,12 +203,12 @@ const router = useRouter();
 // 自定義提示框相關狀態
 const alertConfig = ref({
   show: false,
-  title: '提示',
+  title: 'Notice',
   message: ''
 });
 
 // 顯示自定義提示框
-const showAlert = (message, title = '提示') => {
+const showAlert = (message, title = 'Notice') => {
   alertConfig.value.message = message;
   alertConfig.value.title = title;
   alertConfig.value.show = true;
@@ -190,7 +237,7 @@ const handleJoinNow = async () => {
     const currentUser = auth.currentUser;
     
     if (!currentUser) {
-      showAlert('請先登入', '登入提示');
+      showAlert('Please login first', 'Login Required');
       router.push('/login');
       return;
     }
@@ -231,7 +278,7 @@ const handleJoinNow = async () => {
     // 計算結束日期
     const endDate = calculateEndDate(startDate, selectedPlan.value);
     
-    // 儲存訂單到 Firebase
+    // 儲存訂單到 Firebase - 不論哪種付款方式都設為 pending
     const db = getFirestore();
     await setDoc(doc(db, "orders", orderId), {
       orderId,
@@ -240,7 +287,7 @@ const handleJoinNow = async () => {
       planType: selectedPlan.value,
       amount: planDetails.price,
       paymentMethod: selectedPayment.value,
-      status: 'pending', // 初始狀態為待支付
+      status: 'pending', // 所有支付方式初始狀態都設為 pending
       merchantTradeNo: `P${timestamp}`, // 記錄綠界使用的交易編號
       createdAt: new Date().toISOString(),
       startDate: startDate.toISOString(),
@@ -250,27 +297,57 @@ const handleJoinNow = async () => {
     // 將訂單 ID 存到 localStorage，以便在支付後使用
     localStorage.setItem('currentOrderId', orderId);
     
-    // 呼叫後端 API 創建支付表單，傳遞訂單 ID
-    const response = await axios.post('/api/ecpay/create-payment', {
-      planType: selectedPlan.value,
-      amount: planDetails.price,
-      paymentMethod: selectedPayment.value,
-      orderId: orderId // 傳遞訂單 ID 到後端
-    });
-    
-    // 將 ECPay HTML 表單加入到頁面並自動提交
-    const formContainer = document.createElement('div');
-    formContainer.innerHTML = response.data.htmlForm;
-    document.body.appendChild(formContainer);
-    
-    // 自動提交表單
-    document.querySelector('form[action*="ecpay"]').submit();
+    if (selectedPayment.value === 'ECPAY') {
+      // 呼叫後端 API 創建綠界支付表單
+      const response = await axios.post('/api/ecpay/create-payment', {
+        planType: selectedPlan.value,
+        amount: planDetails.price,
+        paymentMethod: selectedPayment.value,
+        orderId: orderId // 傳遞訂單 ID 到後端
+      });
+      
+      // 將 ECPay HTML 表單加入到頁面並自動提交
+      const formContainer = document.createElement('div');
+      formContainer.innerHTML = response.data.htmlForm;
+      document.body.appendChild(formContainer);
+      
+      // 自動提交表單
+      document.querySelector('form[action*="ecpay"]').submit();
+    } else if (selectedPayment.value === 'CREDIT') {
+      // 檢查信用卡欄位是否填寫完整
+      if (!cardNumber.value || !validityDate.value || !cvcNumber.value) {
+        showAlert('Please complete all credit card fields', 'Information Required');
+        return;
+      }
+      
+      try {
+        // 模擬信用卡處理過程
+        showAlert('Processing your payment...', 'Please Wait');
+        
+        // 模擬處理時間
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // 信用卡支付成功的提示
+        showAlert('Credit card payment successful!', 'Payment Completed');
+        
+        // 設置與ECPay支付完成後相同的本地存儲標記
+        localStorage.setItem('paymentCompleted', 'true');
+        localStorage.setItem('subscriptionActive', 'true');
+        
+        // 延遲一下再導向到訂閱狀態頁面
+        setTimeout(() => {
+          router.push('/MemberCenter/SubscriptionStatus');
+        }, 1500);
+      } catch (paymentError) {
+        console.error('Credit card payment error:', paymentError);
+        showAlert('Credit card payment failed. Please check your card information and try again.', 'Payment Failed');
+      }
+    }
   } catch (error) {
-    console.error('支付處理錯誤:', error);
+    console.error('Payment processing error:', error);
     showAlert('Payment processing error, please try again later.', 'Notice');
   }
 };
-
 // 訂閱計劃相關
 const selectedPlan = ref(null);
 const isHovered = ref(null);
@@ -313,6 +390,7 @@ const togglePayment = (paymentType) => {
 };
 
 // 信用卡表單相關
+const showCreditCardForm = computed(() => selectedPayment.value === 'CREDIT');
 const showCardnumber = ref(true);
 const showCarddate = ref(false);
 const showCardcvc = ref(false);
@@ -355,16 +433,13 @@ const formatCVC = (event) => {
   cvcNumber.value = value;
 };
 
-// 計算屬性
-const showCreditCardForm = computed(() => selectedPayment.value === 'CREDIT');
-
 // 檢查用戶是否已登入
 onMounted(() => {
   const auth = getAuth();
   const currentUser = auth.currentUser;
   
   if (!currentUser) {
-    console.log('用戶未登入，建議先登入');
+    console.log('User not logged in, please login first');
   }
 });
 
@@ -548,70 +623,63 @@ const emit = defineEmits(['plan-selected']);
   margin: 0 auto;
 }
 
-.form-group {
-  margin-bottom: 20px;
-
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-family: "Fanwood Text", serif;
-    color: #153243;
-    font-size: 20px;
-
-    .required {
-      color: #EEAD50;
-      margin-left: 4px;
-    }
-  }
-}
-
-.input-wrapper {
-  position: relative;
-  width: 100%;
-  .form-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    font-family: "Fanwood Text", serif;
-    font-size: 16px;
-    background-color: #fff;
-
-    &::placeholder {
-      color: #999;
-    }
-  }
-
-  .i {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dark-view {
-    width: 16px;
-    height: 16px;
-  }
-}
 .card-logos {
   margin: 50px 0;
   padding: 24px;
 }
 
-.disclaimer {
-  margin: 30px 0 50px 0;
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
   font-family: "Fanwood Text", serif;
-  font-size: 14px;
-  line-height: 1.6;
   color: #153243;
-  padding: 0 12px;
+  font-size: 20px;
+}
+
+.form-group .required {
+  color: #EEAD50;
+  margin-left: 4px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: "Fanwood Text", serif;
+  font-size: 16px;
+  background-color: #fff;
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.i {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-view {
+  width: 16px;
+  height: 16px;
 }
 
 .input-wrapper .dark-view.closed {
@@ -621,6 +689,15 @@ const emit = defineEmits(['plan-selected']);
   background-size: contain;   /* 改用 contain 確保圖片完整顯示 */
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.disclaimer {
+  margin: 30px 0 50px 0;
+  font-family: "Fanwood Text", serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #153243;
+  padding: 0 12px;
 }
 
 .button-container {
