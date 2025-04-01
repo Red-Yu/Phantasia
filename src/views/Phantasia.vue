@@ -534,7 +534,10 @@ onMounted(() => {
       islogIn.value = false;
       islogOut.value = true;
       userName.value = ""; // 清空用戶名稱
-      avatarURL.value = "/MyColset/avatarDefault.png";
+      avatarURL.value = new URL(
+        "../Assets/Day/myColset/avatarDefault.png",
+        import.meta.url
+      ).href;
     }
   });
 });
@@ -615,27 +618,26 @@ const ToMemberCenter = () => {
   router.push("/MemberCenter");
 };
 
-
 // ==============================================
 // 檢查頭像是否來自 Google
 function isGoogleAvatar(photoURL) {
-  return photoURL && (
-    photoURL.includes('googleusercontent.com') || 
-    photoURL.includes('google.com')
+  return (
+    photoURL &&
+    (photoURL.includes("googleusercontent.com") ||
+      photoURL.includes("google.com"))
   );
 }
 
 // 獲取適當的頭像 URL
 function getProperAvatarURL(user) {
   if (!user) return "/MyColset/avatarDefault.png";
-  
+
   // 如果是 Google 頭像，返回預設頭像
   if (isGoogleAvatar(user.photoURL)) {
     return "/MyColset/avatarDefault.png";
   }
-  
+
   // 否則返回用戶的頭像或預設頭像
   return user.photoURL || "/MyColset/avatarDefault.png";
 }
-
 </script>
