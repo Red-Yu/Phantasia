@@ -155,12 +155,18 @@ div.btn {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  opacity: 40%;
+  // opacity: 40%;
 }
 
 .outsideContect a {
   display: inline-block; /* 保持 <a> 標籤的自然寬度 */
   text-align: center; /* 確保 <a> 標籤的內容居中 */
+  .fb {
+    opacity: 40%;
+  }
+  .google {
+    cursor: pointer;
+  }
 }
 .outsideContect img {
   width: 50%; /* 控制圖片的寬度 */

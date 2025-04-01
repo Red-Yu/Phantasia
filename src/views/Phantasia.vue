@@ -547,12 +547,12 @@ const intervalId = setInterval(() => {
   // 檢查是否影片是處於播放中，如果是，就不會觸發 load
   if (dayTransferVideo.value.paused || dayTransferVideo.value.ended) {
     dayTransferVideo.value.load(); // 如果影片沒播放或已結束，進行加載
-    console.log(`日間過場影片重新加載..`);
+    // console.log(`日間過場影片重新加載..`);
   }
 
   if (nightTransferVideo.value.paused || nightTransferVideo.value.ended) {
     nightTransferVideo.value.load(); // 如果影片沒播放或已結束，進行加載
-    console.log(`夜間過場影片重新加載..`);
+    // console.log(`夜間過場影片重新加載..`);
   }
 }, 10000); // 每10秒重新加載
 
