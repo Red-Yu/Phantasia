@@ -146,25 +146,21 @@ tbody > tr:hover {
 .preview-image {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .preview-image.hair {
-  -o-object-position: top;
-     object-position: top; /* 使圖片從頂部顯示 */
+  object-position: top; /* 使圖片從頂部顯示 */
 }
 
 .preview-image.clothes {
   transform: scale(1.2);
   transform-origin: bottom;
-  -o-object-fit: contain;
-     object-fit: contain; /* 保證圖片完整顯示，不會被裁切 */
+  object-fit: contain; /* 保證圖片完整顯示，不會被裁切 */
 }
 
 .preview-image.partner {
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
 }
 
 .preview-image.magicCircle {
