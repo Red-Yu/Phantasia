@@ -224,47 +224,26 @@ const loading = ref(true); // New loading state
 // Use Vue Router
 const router = useRouter();
 
-// Define the navigate function (same as footer) using replace
+// Define the navigate function (same as footer)
 function navigate(link) {
   if (link.startsWith("http")) {
     window.location.href = link; // External link
   } else {
-    router
-      .replace(link)
-      .then(() => {
-        // Reset state and force update after navigation
-        resetState();
-        forcePopupUpdate().catch((err) =>
-          console.error("Force update error after navigate:", err)
-        );
-      })
-      .catch((err) => console.error("Navigation error:", err));
+    router.push(link); // Internal route
   }
 }
 
 const collectStamps = () => {
-  router
-    .replace("/MyCabin/MyRewardCard")
-    .then(() => {
-      // Reset state and force update after navigation
-      resetState();
-      forcePopupUpdate().catch((err) =>
-        console.error("Force update error after collectStamps:", err)
-      );
-    })
-    .catch((err) => console.error("Navigation error:", err));
+  router.push("/MyCabin/MyRewardCard");
 };
 
-// Reset state when navigating or re-entering
-const resetState = () => {
-  showPopup.value = false;
-  document.body.style.overflow = "";
-  loading.value = true;
-  setTimeout(() => {
-    loading.value = false;
-  }, 200);
-};
-
+// 辨識為會員才在資料庫紀錄點數
+// onAuthStateChanged(auth, (user) => {
+//         if (user) {
+//           userID.value = user.uid;
+//           fetchPoints(user.uid);
+//         }
+//       });
 // Firebase Auth setup and subscription check
 const auth = getAuth();
 onAuthStateChanged(auth, async (user) => {
@@ -293,9 +272,6 @@ onAuthStateChanged(auth, async (user) => {
     isSubscribed.value = false; // Not logged in, so not subscribed
   }
   loading.value = false; // Set loading false after checks
-  await forcePopupUpdate().catch((err) =>
-    console.error("Force update error after auth:", err)
-  );
 });
 
 // Star rating logic
@@ -304,10 +280,11 @@ const currentRating7 = ref(0);
 const hoverRating7 = ref(0);
 const userInput = ref("");
 
-// Collect points
+//集點
+
 const userID = ref(null);
 const points = ref(0);
-const hasClicked = ref(false); // Track if button has been clicked
+const hasClicked = ref(false); // 用於追蹤是否已點擊
 const isSuccessModalVisible = ref(false);
 
 const fetchPoints = async (uid) => {
@@ -322,22 +299,24 @@ const fetchPoints = async (uid) => {
 };
 
 const addPoint = async () => {
-  if (hasClicked.value || !userID.value) return; // If already clicked or not logged in, return
-  hasClicked.value = true; // Mark as clicked
+  if (hasClicked.value || !userID.value) return; // 如果已點擊或未登入則返回
+  hasClicked.value = true; // 標記為已點擊
   const userRef = doc(db, "users", userID.value);
   try {
     await updateDoc(userRef, {
       points: points.value + 1,
     });
-    points.value++; // Ensure points increase after successful DB update
+    points.value++; // 確保資料庫更新成功後再增加點數
+    // 集點成功後顯示提示
+    // alert("集點成功！");
     isSuccessModalVisible.value = true;
     console.log("isSuccessModalVisible:", isSuccessModalVisible.value);
   } catch (error) {
-    console.error("Error updating points:", error);
-    hasClicked.value = false; // Reset click state if update fails
+    console.error("更新點數時發生錯誤:", error);
+    hasClicked.value = false; // 如果更新失敗，重置點擊狀態
   }
 
-  // Set timer to close success modal after 3 seconds
+  // 設置定時器，3秒後關閉成功彈窗
   setTimeout(() => {
     const modal = document.querySelector(".success-modal");
     if (modal) {
@@ -351,40 +330,20 @@ const addPoint = async () => {
 
 // Load from sessionStorage on mount
 onMounted(() => {
-  resetState(); // Reset state on mount
-  loadTemplates(); // Load templates on page load
+  setTimeout(() => {
+    loading.value = false; // Set loading to false after a short delay
+  }, 200); // Adjust the delay as needed
+  loadTemplates(); // 頁面加載時根據檔案資料載入模板
   const savedData = sessionStorage.getItem(`feedback-${bookId}`);
   if (savedData) {
     const { rating, feedback } = JSON.parse(savedData);
     currentRating7.value = rating || 0;
     userInput.value = feedback || "";
   }
+  // Existing scroll event listeners
   window.addEventListener("scroll", handleScroll);
   window.addEventListener("scroll", updateActiveDot);
-  window.addEventListener("popstate", handlePopState); // Handle back/forward navigation
 });
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-  window.removeEventListener("scroll", updateActiveDot);
-  window.removeEventListener("popstate", handlePopState);
-  document.body.style.overflow = ""; // Ensure body scroll is restored
-  showPopup.value = false; // Reset popup on unmount
-});
-
-// Handle browser back/forward navigation
-const handlePopState = () => {
-  resetState(); // Reset state when user navigates back
-  forcePopupUpdate().catch((err) =>
-    console.error("Force update error on popstate:", err)
-  );
-  router
-    .replace(route.path)
-    .then(() => {
-      loadTemplates(); // Reload templates to ensure data is fresh
-    })
-    .catch((err) => console.error("Router replace error on popstate:", err));
-};
 
 const hoverStar7 = (star7) => {
   hoverRating7.value = star7;
@@ -451,8 +410,7 @@ const submitData = async () => {
     alert("An error occurred while submitting your feedback.");
   }
 };
-
-// Pinia integration
+// -------------------------import pinia-----------------------
 const templates = ref([]);
 const templateStore = useTemplateStore();
 const pathSegments = window.location.pathname.split("/").filter(Boolean);
@@ -460,16 +418,14 @@ const productId = pathSegments[3];
 
 function loadTemplates() {
   if (bookId) {
-    templateStore
-      .loadBooksTemplatesFromFirebase(bookId)
-      .catch((err) => console.error("Error loading templates:", err));
+    templateStore.loadBooksTemplatesFromFirebase(bookId); // 根據選中的檔案載入資料
     templates.value = templateStore.templates;
   }
 }
-
-const mainContentRef = ref(null); // Preview main content container
-const { width } = useElementSize(mainContentRef); // Dynamically monitor container width
-const baseWidth = 680; // Design draft width baseline
+const mainContentRef = ref(null); // 預覽主區塊容器
+const { width } = useElementSize(mainContentRef); // 動態監聽容器寬度變化
+const baseWidth = 680; // 設計稿的寬度基準
+// const scale = ref(1)
 
 const getPreviewStyle = computed(() => {
   const scale = Math.min(width.value / baseWidth);
@@ -484,38 +440,55 @@ const scale = computed(() => {
   return scale;
 });
 
-// Scroll-related logic
+// =================
+// IntersectionObserver 設定：模組進入畫面時觸發動畫
+// 這段是用來判斷進入視窗重新撥放動畫 但因為結構問題沒有辦法處理
+// =================
+// const modelRefs = ref([]); // 收集所有模組區塊的 DOM 參考
+
+// 判斷元素是否進入可視區域 50%
+// function isElementInViewport(el) {
+//   const rect = el.getBoundingClientRect();
+//   return (
+//     rect.top >= 0 && // 元素頂部大於等於視窗頂部
+//     rect.left >= 0 && // 元素左邊大於等於視窗左邊
+//     rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.5 && // 元素頂部小於等於視窗的一半
+//     rect.right <= (window.innerWidth || document.documentElement.clientWidth) // 元素右邊小於等於視窗的右邊界
+//   );
+// }
+
+// function checkScroll() {
+//   console.log('檢查滾動...');
+//   modelRefs.value.forEach(el => {
+//     if (el && isElementInViewport(el)) {
+//       console.log('觸發動畫', el);
+//       el.__startInnerAnimation?.();
+//     }
+//   });
+// }
+
+// // 監聽全域的滾動事件
+// onMounted(() => {
+//   window.addEventListener('scroll', checkScroll);
+//   // 初次檢查一次
+//   checkScroll();
+// });
+
+// // 在元件卸載時移除滾動事件監聽器
+// onUnmounted(() => {
+//   window.removeEventListener('scroll', checkScroll);
+// });
+
+// -------------------------import pinia-----------------------
+
+// readTemplateGroup
+// Existing Scroll-related logic (unchanged)
 const sections = ref([
   { image: new URL("@/assets/img/pics/one.png", import.meta.url).href },
   { image: new URL("@/assets/img/pics/two.png", import.meta.url).href },
 ]);
 const dots = ref(new Array(10).fill(null));
 const activeDot = ref(0);
-
-// Force update helper
-const forcePopupUpdate = async () => {
-  await nextTick(); // Wait for DOM to update
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-  const scrollPercentage = scrollTop / scrollHeight;
-
-  // Show popup if not logged in OR logged in but not subscribed, at 55% scroll
-  if (
-    scrollPercentage >= 0.55 &&
-    (!userId.value || (userId.value && !isSubscribed.value))
-  ) {
-    showPopup.value = true;
-    document.body.style.overflow = "hidden";
-  } else {
-    showPopup.value = false;
-    document.body.style.overflow = "";
-  }
-};
-
-// Watch for changes in user authentication or subscription
-watch([userId, isSubscribed], async () => {
-  await forcePopupUpdate().catch((err) => console.error("Watch update error:", err));
-});
 
 const preventScrollAction = (event) => {
   if (showPopup.value) {
@@ -525,8 +498,19 @@ const preventScrollAction = (event) => {
 };
 
 const handleScroll = () => {
-  if (loading.value) return; // Exit if loading
-  forcePopupUpdate().catch((err) => console.error("Scroll update error:", err));
+  if (showPopup.value || loading.value) return; // Exit if loading
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollPercentage = scrollTop / scrollHeight;
+
+  // Show popup if not logged in OR logged in but not subscribed, at 95% scroll
+  if (
+    scrollPercentage >= 0.55 &&
+    (!userId.value || (userId.value && !isSubscribed.value))
+  ) {
+    showPopup.value = true;
+    document.body.style.overflow = "hidden";
+  }
 };
 
 const closePopup = () => {
