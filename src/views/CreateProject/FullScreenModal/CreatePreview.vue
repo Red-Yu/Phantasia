@@ -9,7 +9,7 @@
             <div
               class="modelPreview"
               v-for="(template, i) in templateStore.templates"
-              :key="i"
+              :key="template.data.templateId"
               :ref="el => modelRefs[i] = el"
               style="pointer-events: none;"
             >

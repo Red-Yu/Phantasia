@@ -18,8 +18,8 @@
   // logoGroup
   // -------------------------
   .logoGroup{
-    height: 78px;
-    width: 78px;
+    height: 75px;
+    width: 75px;
     background-color: $baseBlue;
     padding: 3px;
     display: flex;
@@ -97,7 +97,7 @@
 .night {
   /* 底色 */
   background-color: $baseBlue;
-  border-bottom: $subWhite solid;
+  border: $subWhite solid;
 
   /* slogan */
   .slogan{

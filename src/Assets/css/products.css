@@ -526,7 +526,6 @@
 .pg_controlButton.pg_active-newest,
 .pg_controlButton.pg_active-oldest {
   color: #eead50;
-  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -594,13 +593,6 @@
   padding: 8px;
   outline: none;
   /* Removes the focus outline */
-  font-family: "Fanwood Text", sans-serif;
-}
-
-.pg_searchInput::-moz-placeholder {
-  color: #fffdef;
-  opacity: 40%;
-  /* Change this to modify the placeholder text color */
   font-family: "Fanwood Text", sans-serif;
 }
 
@@ -814,8 +806,7 @@
   /* Ensure it fills the container width */
   height: 100%;
   /* Ensure it fills the container height */
-  -o-object-fit: contain;
-     object-fit: contain;
+  object-fit: contain;
   /* Prevent cropping while maintaining aspect ratio */
   border-radius: 10px;
 }
@@ -1470,11 +1461,9 @@ h2 {
   height: 60px;
   border-radius: 50%;
   /* Circular window */
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   /* Ensures image fits */
-  -o-object-position: center top;
-     object-position: center top;
+  object-position: center top;
   /* Shifts focus to the top of the image */
   margin-right: 10px;
 }

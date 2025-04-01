@@ -185,7 +185,7 @@ watch(
 
         // 自定義動畫函式供外部觸發 , createPreview 呼叫他 
         wrapperEl.__startInnerAnimation = () => {
-          gsap.set(boxRef.value,{ x: 0 ,y: 0 });
+          // gsap.set(boxRef.value,{ x: 0 ,y: 0 });
           gsap.to(boxRef.value, {
             duration: 1,
             x:-10,

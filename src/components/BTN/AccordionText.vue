@@ -8,7 +8,7 @@ import "vue3-colorpicker/style.css";
 const activeTextInputId = ref(null);
 
 const fontFamily = ref("Arial");
-const fontSize = ref("16");
+const fontSize = ref("26");
 const fontWidth = ref("400");
 const textAlign = ref("left");
 const alignItems = ref("end");
@@ -43,8 +43,14 @@ watch(fontColor, updateTextStyle);
         <select v-model="fontFamily" @change="updateTextStyle" class="OtherInput">
           <option value="placeholder" class="placeholder">Typography</option>
           <option value="Arial">Arial</option>
-          <option value="Helvetica">Helvetica</option>
-          <option value="Times New Roman">Times New Roman</option>
+          <option value="Verdana">Verdana</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Tahoma">Tahoma</option>
+          <option value="fantasy">fantasy</option>
+          <option value="system-ui">system-ui</option>
+          <option value="Aleo">Aleo</option>
+          <option value="Fanwood Text">Fanwood Text</option>
+          
         </select>
         <div class="selectIcon">
           <div class="cross">
@@ -61,15 +67,14 @@ watch(fontColor, updateTextStyle);
       <div class="secondRow">
         <div class="inputBox fontSize">
           <select v-model="fontSize" @change="updateTextStyle" class="OtherInput">
-            <option value="16">16</option>
             <option value="18">18</option>
-            <option value="20">20</option>
-            <option value="22">22</option>
-            <option value="24">24</option>
-            <option value="26">26</option>
-            <option value="28">28</option>
-            <option value="30">30</option>
-            <option value="32">32</option>
+            <option value="20">22</option>
+            <option value="22">26</option>
+            <option value="24">30</option>
+            <option value="26">34</option>
+            <option value="28">38</option>
+            <option value="30">42</option>
+            <option value="32">46</option>
           </select>
           <div class="selectIcon">
             <div class="cross">
