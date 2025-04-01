@@ -1,27 +1,32 @@
-.CreateImgInput{
-    .btnKey-M{
-        @include FanwoodText-Ag(16px,$baseBlue);
+.CreateImgInput {
+    .btnKey-M {
+        @include FanwoodText-Ag(16px, $baseBlue);
     }
 }
-.template{
+
+.template {
     width: 680px;
     height: 380px;
     position: relative;
     overflow: hidden;
 }
+
 .templateBgc {
     width: 100%;
     height: 100%;
     position: relative;
+
     .BgcTipBox {
         width: 100%;
         height: 60px;
         position: absolute;
-        top: 0; 
-        .Tip-info{
+        top: 0;
+
+        .Tip-info {
             width: 100%;
             height: 100%;
-            position: absolute; /* 擋 input */
+            position: absolute;
+            /* 擋 input */
             top: 0;
             left: 0;
             // 內部排版
@@ -30,22 +35,26 @@
             justify-content: center;
             align-items: center;
             background-color: $subGray;
-            pointer-events:none;
-            p{
-                @include FanwoodText-AG(14px,$baseBlue);
+            pointer-events: none;
+
+            p {
+                @include FanwoodText-AG(14px, $baseBlue);
                 line-height: 1.5;
-                span{
+
+                span {
                     color: $baseOrange;
                     font-size: 16px;
                 }
             }
         }
-        input{
+
+        input {
             width: 100%;
             height: 100%;
         }
     }
-    img{
+
+    img {
         width: 100%;
         height: 100%;
         position: absolute;
@@ -55,7 +64,8 @@
     }
 
 }
-.templateObject{
+
+.templateObject {
     z-index: 2;
     width: 100%;
     height: 100%;
@@ -63,7 +73,8 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    .ObjectTipBox{
+
+    .ObjectTipBox {
         width: 100%;
         height: 100%;
         // position: relative;
@@ -71,7 +82,8 @@
         left: 0;
         border-radius: 10px;
         overflow: hidden;
-        &::after{
+
+        &::after {
             content: '';
             width: 100%;
             height: 100%;
@@ -86,11 +98,13 @@
             border-radius: 5px;
             // pointer-events:none;
         }
+
         &:hover::after {
             display: none;
         }
+
         // font
-        .Tip-info{
+        .Tip-info {
             width: 100%;
             height: 100%;
             position: absolute;
@@ -104,8 +118,9 @@
             background-color: $baseBlue;
             border: $subGray 2px solid;
             border-radius: 5px;
-            pointer-events:none;
-            &::after{
+            pointer-events: none;
+
+            &::after {
                 content: '';
                 width: 50px;
                 height: 50px;
@@ -117,30 +132,35 @@
                 bottom: 15px;
                 opacity: 50%;
             }
-            p{
-                @include FanwoodText-AG(16px,$subWhite);
+
+            p {
+                @include FanwoodText-AG(16px, $subWhite);
                 line-height: 1.5;
-                span{
+
+                span {
                     color: $baseOrange;
                     font-size: 16px;
                 }
             }
         }
-        input{
+
+        input {
             width: 100%;
             height: 100%;
         }
     }
-    img{
+
+    img {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: auto;
-        object-fit: cover;  
+        width: auto;
+        height: 100%;
+        object-fit: cover;
     }
 }
-.templateText{
+
+.templateText {
     z-index: 3;
     position: relative;
     display: flex;
