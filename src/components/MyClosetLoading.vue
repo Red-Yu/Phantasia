@@ -9,7 +9,7 @@
         <h2 v-if="!isUploading">Welcome to Phantasia.</h2>
 
         <div v-if="isUploading">
-          <h2>Uploading images...</h2>
+          <h2>Saving images...</h2>
           <div class="progress-bar">
             <div
               class="progress-bar-fill"

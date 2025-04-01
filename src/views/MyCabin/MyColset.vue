@@ -1177,7 +1177,10 @@ const uploadImages = async (avatarDataURL, partnerDataURL) => {
     const user = auth.currentUser; // 獲取當前用戶
 
     if (!user) {
-      throw new Error("User not logged in");
+      // 沒有用戶資料，彈出提示並停止上傳
+      alert("Please log in to proceed.");
+      isUploading.value = false; // 停止上傳狀態
+      return; // 提前終止函數執行
     }
 
     // 轉換 Base64 為 Blob
