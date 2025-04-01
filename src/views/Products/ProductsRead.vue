@@ -399,7 +399,7 @@ const submitData = async () => {
   };
   try {
     await addDoc(collection(db, "comments"), feedbackData);
-    alert("Your feedback has been submitted to Firestore.");
+    alert("Your feedback has been submitted.");
 
     // Clear sessionStorage and reset form after submission
     sessionStorage.removeItem(`feedback-${bookId}`);
