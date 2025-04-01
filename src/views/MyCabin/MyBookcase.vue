@@ -35,7 +35,7 @@
 
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, onBeforeRouteLeave } from "vue-router";
 import { db, auth } from "@/firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import {
@@ -114,11 +114,9 @@ function autoRotate() {
 }
 
 async function fetchBooksFromFirestoreAndSaveToMyBookcase() {
-  console.log("fff");
-
   // const user = auth.currentUser;
   // if (!user) return;
-  const booksRef = collection(db, "books");
+  // const booksRef = collection(db, "books");
   // const q = query(booksRef, where("userId", "==", user.uid));
   // const snapshot = await getDocs(q);
   // console.log(snapshot, "snapshot");
@@ -136,14 +134,14 @@ async function fetchBooksFromFirestoreAndSaveToMyBookcase() {
   //   }
   // });
   const placeholders = [
-    "1_0.png",
-    "2_0.png",
-    "3_0.png",
-    "4_0.png",
-    "5_0.png",
-    "6_0.png",
-    "7_0.png",
-    "8_0.png",
+    "1.png",
+    "2.png",
+    "3.png",
+    "4.png",
+    "5.png",
+    "6.png",
+    "7.png",
+    "8.png",
   ];
   for (let i = 0; i < totalSlots; i++) {
     // if (i < extractedBooks.length) {
@@ -160,8 +158,8 @@ async function fetchBooksFromFirestoreAndSaveToMyBookcase() {
 function handleClick(target, isAddCloseBtn) {
   cancelAnimationFrame(autoRotateId);
   isAutoRotating.value = false;
-  // if (isAddCloseBtn) addCloseBtn(true)
-  // else removeCloseBtn(false)
+  if (isAddCloseBtn) addCloseBtn(true);
+  else removeCloseBtn(false);
 
   if (target === "helix" || target === "sphere") {
     isAutoRotating.value = true;
@@ -219,24 +217,10 @@ function removeCloseBtn(state = false) {
   }
 }
 
+let cursorEffectHandler;
+
 function initCursorEffect() {
-  const wand = document.createElement("div");
-  wand.className = "wand";
-  Object.assign(wand.style, {
-    position: "fixed",
-    width: "100px",
-    height: "auto",
-    background: "url('/images/mouse1.jpg') no-repeat center center",
-    backgroundSize: "contain",
-    pointerEvents: "none",
-    transformOrigin: "bottom right",
-    transform: "rotate(-45deg)",
-    zIndex: 9999,
-  });
-  document.body.appendChild(wand);
-  document.addEventListener("mousemove", (e) => {
-    wand.style.left = `${e.clientX}px`;
-    wand.style.top = `${e.clientY}px`;
+  cursorEffectHandler = (e) => {
     const star = document.createElement("div");
     const size = Math.random() * 5 + 2;
     Object.assign(star.style, {
@@ -253,18 +237,22 @@ function initCursorEffect() {
       animation: "twinkle 1s ease-out forwards",
       zIndex: 9998,
     });
+
     document.body.appendChild(star);
     setTimeout(() => star.remove(), 1000);
-  });
-  const style = document.createElement("style");
-  style.textContent = `
+  };
+
+  document.addEventListener("mousemove", cursorEffectHandler);
+
+  const starStyle = document.createElement("starStyle");
+  starStyle.textContent = `
     @keyframes twinkle {
       0% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.8; transform: scale(1.5); }
       100% { opacity: 0; transform: scale(0.8); }
     }
   `;
-  document.head.appendChild(style);
+  document.head.appendChild(starStyle);
 }
 
 function render() {
@@ -291,21 +279,15 @@ function initBookcase() {
     symbol.className = "symbol";
     const img = document.createElement("img");
     const isUrl = book.cover && book.cover.startsWith("http");
-    console.log(book);
+    // console.log(book);
 
     // console.log(book.cover);
 
     img.src = isUrl
       ? book.cover
-      : // : new URL(
-        //     `../../Assets/img/myBookcase/${book.cover || defaultCover}`,
-        //     import.meta.url
-        //   ).href;
-        `/tid201/g1/img/myBookcase/${book.cover || defaultCover}`;
-    // console.log(img.src);
+      : `/tid201/g1/img/myBookcase/${book.cover || defaultCover}`;
 
     img.onerror = () => {
-      // img.src = new URL(`../../Assets/img/myBookcase/${defaultCover}`, import.meta.url).href
       img.src = `/tid201/g1/img/myBookcase/${defaultCover}`;
     };
     symbol.appendChild(img);
@@ -314,11 +296,18 @@ function initBookcase() {
     details.className = "details";
     details.innerHTML = `${book.title}`;
     element.appendChild(details);
+
+    //關閉按鈕
     const closeBtn = document.createElement("div");
     closeBtn.id = `close-btn-${i}`;
     closeBtn.className = "close-btn close-btn-d-none";
     closeBtn.textContent = "×";
     element.appendChild(closeBtn);
+
+    //點擊後切換圖片
+    closeBtn.addEventListener("click", () => {
+      img.src = `/tid201/g1/img/myBookcase/${defaultCover}`;
+    });
 
     const objectCSS = new CSS3DObject(element);
     objectCSS.position.x = pos.x * 140 - 1330;
@@ -376,15 +365,114 @@ function createLayouts() {
   }
 }
 
+function handleMouseDown(event) {
+  const elements = document.getElementsByClassName("close-btn");
+  for (let i = 0; i < elements.length; i++) {
+    const closeBtn = elements[i];
+    const rect = closeBtn.getBoundingClientRect();
+    if (
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom
+    ) {
+      const clickedBtnId = closeBtn.id;
+      const index = clickedBtnId.split("-").pop();
+      console.log("Button index:", index);
+
+      const parentElement = closeBtn.parentElement;
+      if (parentElement) {
+        parentElement.innerHTML = `
+          <img
+            src="/tid201/g1/img/myBookcase/logo.png"
+            style="width:90px;height:90px;margin:35px auto;"
+          >
+        `;
+      }
+      break;
+    }
+  }
+}
+
 onMounted(async () => {
   initCursorEffect();
   await fetchBooksFromFirestoreAndSaveToMyBookcase();
   initBookcase();
   transform(targets.helix, 2000);
   autoRotate();
+
+  document.addEventListener("mousedown", handleMouseDown);
 });
 
-onBeforeUnmount(() => {
+// onBeforeUnmount(() => {
+//   // cancelAnimationFrame(autoRotateId);
+//   // document.removeEventListener("mousedown", handleMouseDown);
+//   // document.removeEventListener("mousemove", handleMouseMove);
+//   // document.removeEventListener("mousemove", initCursorEffect);
+// });
+
+onBeforeRouteLeave(() => {
   cancelAnimationFrame(autoRotateId);
+
+  // 移除光標效果的事件監聽器
+  if (cursorEffectHandler) {
+    document.removeEventListener("mousemove", cursorEffectHandler);
+  }
+
+  // 移除 @keyframes twinkle 樣式
+  const styleTag = document.querySelector("starStyle");
+  if (styleTag) {
+    styleTag.remove();
+  }
+
+  // 清除所有的 TWEEN 動畫
+  TWEEN.removeAll();
+
+  // 清理 Three.js 渲染器的 DOM 元素和資源
+  if (renderer && renderer.domElement) {
+    renderer.domElement.remove();
+  }
+
+  // 清理場景中的所有物件
+  scene.children.forEach((child) => {
+    if (child instanceof THREE.Mesh || child instanceof THREE.Object3D) {
+      // 釋放幾何體資源
+      if (child.geometry) {
+        child.geometry.dispose();
+      }
+
+      // 釋放材質資源
+      if (child.material) {
+        if (Array.isArray(child.material)) {
+          child.material.forEach((mat) => {
+            if (mat && mat.dispose) {
+              mat.dispose();
+            }
+          });
+        } else {
+          if (child.material.dispose) {
+            child.material.dispose();
+          }
+        }
+      }
+    }
+    scene.remove(child);
+  });
+
+  // 清除控制器資源
+  if (controls) {
+    controls.dispose();
+  }
+
+  // 移除事件監聽器
+  document.removeEventListener("mousedown", handleMouseDown);
+
+  // 清除 DOM 元素
+  objects.forEach((object) => {
+    if (object.element) {
+      object.element.remove();
+    }
+  });
+  objects.length = 0; // 清空 objects 陣列
 });
 </script>
