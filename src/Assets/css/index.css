@@ -10,6 +10,7 @@
     Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -38,6 +39,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -68,6 +70,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -96,6 +99,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -126,6 +130,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -144,6 +149,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -172,6 +178,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -202,6 +209,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -230,6 +238,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -260,6 +269,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -278,6 +288,7 @@
 
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -313,6 +324,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -348,6 +360,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -383,6 +396,7 @@
 }
 .btnLink.whiteForFrontPage {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -930,7 +944,8 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 100%;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   transition: transform 0.1s ease-out;
   transition: opacity 0.6s ease-out;
 }
@@ -1485,22 +1500,18 @@ button {
 }
 .about .aboutContent .leftContent .contentBox .menu {
   margin-top: auto;
-  color: white;
   text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
-  font-family: "Fanwood Text";
-  font-size: 44px;
+  font-size: 36px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  font-family: "Aleo";
   font-variant: small-caps;
 }
 .about .aboutContent .leftContent .contentBox .menu .backToHome {
-  font-size: 26px;
-  margin-top: 5px;
-  font-style: italic;
-}
-.about .aboutContent .leftContent .contentBox .menu .backToHome::after {
-  height: 3px;
+  text-transform: capitalize;
+  font-size: 20px;
+  margin-top: 20px;
 }
 .about .aboutContent .leftContent .contentBox .menu .btnLink {
   padding: 0;
@@ -1528,47 +1539,45 @@ button {
   position: absolute;
   z-index: 1;
 }
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox {
   position: absolute;
   width: 390px;
   height: 560px;
 }
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box h3 {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox h3 {
   padding: 10px 0px 7px 17px;
   color: #fff;
-  font-family: "Fanwood Text";
+  font-family: "Aleo";
   font-size: 36px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   font-variant: small-caps;
 }
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box h4 {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox h4 {
   padding: 0px 0px 5px 17px;
   color: #fff;
-  font-family: "Fanwood Text";
-  font-size: 20px;
-  font-style: italic;
-  font-weight: 400;
+  font-family: "Aleo";
+  font-size: 18px;
+  font-weight: 500;
   line-height: 110%;
 }
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box p,
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box li {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox p,
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox li {
   color: #fff;
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
-  font-family: "Fanwood Text";
-  font-size: 17px;
-  font-style: italic;
+  font-family: "Aleo";
+  font-size: 14px;
   font-weight: 400;
-  line-height: 110%; /* 17.6px */
+  line-height: 130%;
 }
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box p {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox p {
   padding: 0 15px 15px 17px;
 }
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box li {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox li {
   padding: 3px 15px 15px 3px;
 }
-.about .aboutContent .rightContent .aboutContents .aboutUsContent .box ul {
+.about .aboutContent .rightContent .aboutContents .aboutUsContent .aboutBox ul {
   padding-left: 35px;
   padding-right: 5px;
 }
@@ -1641,19 +1650,15 @@ button {
   margin-left: auto;
   pointer-events: auto;
   text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
-  font-family: "Fanwood Text";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  font-variant: small-caps;
+  font-family: "Aleo";
+  text-transform: uppercase;
 }
 .myCabinContent .menu .backToHome {
-  font-size: 26px;
+  font-size: 20px;
   margin-top: 5px;
-  font-style: italic;
-}
-.myCabinContent .menu .backToHome::after {
-  height: 3px;
 }
 .myCabinContent .menu .btnLink {
   padding: 0;
@@ -2153,7 +2158,8 @@ button {
   opacity: 1;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* 保持影片的等比縮放並覆蓋整個區域 */
+  -o-object-fit: cover;
+     object-fit: cover; /* 保持影片的等比縮放並覆蓋整個區域 */
 }
 
 .myCabinBaseCover {

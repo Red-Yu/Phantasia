@@ -60,7 +60,7 @@
             <transition name="fade" mode="out-in">
               <div
                 v-show="activeBox === 'aboutUs'"
-                class="slogon box"
+                class="slogon aboutBox box"
                 :class="{
                   show: activeBox === 'aboutUs',
                   hide: activeBox !== 'aboutUs',
@@ -77,7 +77,7 @@
             <transition name="fade" mode="out-in">
               <div
                 v-show="activeBox === 'ourOrigin'"
-                class="slogon box"
+                class="slogon aboutBox box"
                 :class="{
                   show: activeBox === 'ourOrigin',
                   hide: activeBox !== 'ourOrigin',
@@ -94,7 +94,7 @@
             <transition name="fade" mode="out-in">
               <div
                 v-show="activeBox === 'ourServices'"
-                class="slogon box"
+                class="slogon aboutBox box"
                 :class="{
                   show: activeBox === 'ourServices',
                   hide: activeBox !== 'ourServices',
@@ -155,7 +155,7 @@
               <transition name="fade" mode="out-in">
                 <div
                   v-show="activeBox === 'aboutUs'"
-                  class="aboutUsBox box"
+                  class="aboutUsBox aboutBox box"
                   :class="{
                     show: activeBox === 'aboutUs',
                     hide: activeBox !== 'aboutUs',
@@ -205,7 +205,7 @@
               <transition name="fade" mode="out-in">
                 <div
                   v-show="activeBox === 'ourOrigin'"
-                  class="ourOriginBox box"
+                  class="ourOriginBox aboutBox box"
                   :class="{
                     show: activeBox === 'ourOrigin',
                     hide: activeBox !== 'ourOrigin',
@@ -245,7 +245,7 @@
               <transition name="fade" mode="out-in">
                 <div
                   v-show="activeBox === 'ourServices'"
-                  class="ourServicesBox box"
+                  class="ourServicesBox aboutBox box"
                   :class="{
                     show: activeBox === 'ourServices',
                     hide: activeBox !== 'ourServices',
@@ -271,7 +271,7 @@
                       enhancing their sense of exploration and participation,
                       making each story journey truly special.
                     </p>
-                    <h4>Supporting Creators’ Educational Aspirations</h4>
+                    <h4>Supporting Creators’ Academic Goals</h4>
                     <p>
                       If you are a parent passionate about children’s education
                       or an aspiring creator, we welcome you to join our creator

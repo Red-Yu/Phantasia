@@ -86,7 +86,7 @@
         { rightSliding: isRightSliding, leftSliding: isLeftSliding },
       ]"
     >
-      <Preload />
+      <Preload ref="preload" />
     </div>
     <div style="background-color: rgba(255, 255, 255, 0)" class="wrapper">
       <div
@@ -115,9 +115,9 @@
             </div>
             <div class="btnLink white" @click="logout">
               <p>Log Out</p>
-              <div class="icon-M">
+              <!-- <div class="icon-M">
                 <div class="white-setting"></div>
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -125,7 +125,7 @@
           <div v-if="islogOut" class="logInmenuButton">
             <div class="filter"></div>
 
-            <div class="menuAvatar" @click="openModal">
+            <div class="menuAvatar" @click="backToEntrance">
               <img
                 class="avaterImg"
                 src="../Assets/Day/myColset/avatarDefault.png"
@@ -133,7 +133,7 @@
               />
               <img class="avaterBg" src="../Assets/Day/myColset/avaterBg.jpg" />
             </div>
-            <div class="btnLink white loginInfo" @click="openModal">
+            <div class="btnLink white loginInfo" @click="backToEntrance">
               <p>Log In</p>
               <!-- <div class="icon-M">
           <div class="white-edit"></div>
@@ -432,6 +432,15 @@ const updateImagePaths = (newDayNight) => {
 };
 //===============================================
 
+const preload = ref(null);
+
+const backToEntrance = () => {
+  // 通過ref調用子組件的backToEntrance方法
+  if (preload.value && preload.value.backToEntrance) {
+    preload.value.backToEntrance();
+  }
+};
+
 // 登出方法
 const logout = async () => {
   await userAuthState.logout(); // 呼叫 store 中的 logout 方法
@@ -491,16 +500,17 @@ onMounted(() => {
     });
   }
 
-  const currentHour = new Date().getHours();
-  if (currentHour >= 18 || currentHour < 6) {
-    day.value = false;
-  } else {
-    day.value = true;
-  }
+  // const currentHour = new Date().getHours();
+  // if (currentHour >= 18 || currentHour < 6) {
+  //   day.value = false;
+  // } else {
+  //   day.value = true;
+  // }
 
   updateImagePaths(day_night.value);
 
-  router.push(`/${day.value ? "day" : "night"}`);
+  // router.push(`/${day.value ? "day" : "night"}`);
+  router.push("/Day");
 
   // 預加載頭像
   if (userAuthState.user) {

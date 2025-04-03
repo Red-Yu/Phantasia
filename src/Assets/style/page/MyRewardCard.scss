@@ -64,21 +64,23 @@
     margin-left: auto;
     pointer-events: auto;
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
-    font-family: "Fanwood Text";
+    // font-family: "Fanwood Text";
+    // font-variant: small-caps;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    font-variant: small-caps;
+    font-family: "Aleo";
+    text-transform: uppercase;
 
     .backToHome {
-      font-size: 26px;
+      font-size: 20px;
       margin-top: 5px;
-      font-style: italic;
+      // font-style: italic;
       cursor: pointer;
 
-      &::after {
-        height: 3px;
-      }
+      // &::after {
+      //   height: 3px;
+      // }
     }
 
     .btnLink {

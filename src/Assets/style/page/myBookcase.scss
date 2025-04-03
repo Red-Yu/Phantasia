@@ -24,6 +24,29 @@
 button.backToHome {
   outline: none;
   border: none;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-family: "Aleo";
+  text-transform: uppercase;
+  font-size: 20px;
+
+  // &::after {
+  //   height: 3px;
+  // }
+}
+
+.btnLink {
+  padding: 0;
+  opacity: 70%;
+
+  &:hover {
+    opacity: 100%;
+  }
+
+  &.active {
+    opacity: 1;
+  }
 }
 
 .btnLink.whiteForFrontPage {

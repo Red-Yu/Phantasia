@@ -1,5 +1,6 @@
 <style scoped>
 @import "../Assets/css/index.css";
+/* @import "../Assets/css/main.css"; */
 
 .loading-animation {
   position: absolute;
@@ -13,16 +14,19 @@
 p {
   color: white;
   text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
-  font-family: "Fanwood Text";
-  font-size: 36px;
+  /* font-family: "Fanwood Text"; */
+  /* font-variant: small-caps; */
+  font-size: 28px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  font-variant: small-caps;
   pointer-events: auto;
+  font-family: "Aleo";
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
-.visitor,
+/* .visitor,
 .login {
   color: rgba(255, 255, 255, 0.6);
 }
@@ -30,7 +34,7 @@ p {
 .visitor:hover,
 .login:hover {
   color: white;
-}
+} */
 
 .video-container {
   position: absolute;
@@ -40,7 +44,7 @@ p {
   background-color: black;
   width: 100%;
   height: 100%;
-  z-index: 2500;
+  z-index: 2000;
   overflow: hidden;
 }
 
@@ -50,7 +54,8 @@ p {
   top: 50%;
   left: 50%;
   height: 100%;
-  z-index: 2500;
+  /* z-index: 2500; */
+  pointer-events: none;
 }
 
 .loading {
@@ -64,19 +69,20 @@ p {
   position: absolute;
   z-index: 3000;
   transform: translate(-50%, -50%);
-  top: 66%;
+  top: 70%;
   left: 50%;
   display: flex;
   gap: 40px;
 }
 
-.start p {
+/* .start p {
   font-size: 44px;
   text-shadow: 3px 3px 4px rgba(0, 79, 59, 0.8);
-}
+} */
 
 .start_btn {
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .Administrator {
@@ -85,9 +91,7 @@ p {
   bottom: 4%;
   right: 4%;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 28px;
-  font-style: italic;
-  cursor: pointer;
+  font-size: 20px;
 }
 
 .Administrator:hover {
@@ -218,13 +222,17 @@ p {
 
   <div v-if="isStart" class="loading-animation">
     <div class="startWrapper start">
-      <p class="start_btn visitor" @click="startVideo">Visitor</p>
-      <p class="start_btn login" @click="openModal">Login</p>
+      <div class="btnKey-L dark-border">
+        <span class="start_btn visitor" @click="startVideo">Visitor</span>
+      </div>
+      <div class="btnKey-L dark-border">
+        <span class="start_btn login" @click="openModal">Login</span>
+      </div>
     </div>
   </div>
 
   <div v-if="isStart" class="loading-animation">
-    <p class="Administrator" @click="ToBackstage">Administrator</p>
+    <p class="Administrator" @click="ToBackstage">Admin Panel</p>
   </div>
 
   <transition name="fade_Video">
@@ -240,7 +248,7 @@ p {
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, defineEmits } from "vue";
 import { useRouter } from "vue-router";
 import Login from "../views/Auth/Login.vue";
 import Signup from "../views/Auth/Signup.vue";
@@ -325,7 +333,7 @@ const videoTimeUpdate = () => {
   const video = startVideoElement.value;
   setTimeout(() => {
     if (video && video.currentTime / video.duration > 0.91) {
-      // 當影片播放超過 95%，觸發隱藏動畫
+      // 當影片播放超過 91%，觸發隱藏動畫
       isVideo.value = false;
     }
   }, 1900);
@@ -444,25 +452,72 @@ const resetTextillateAnimations = () => {
   $(".title1").textillate("start");
 };
 
-onMounted(() => {
+const initializeRipples = () => {
+  $(".rippleArea").ripples({
+    resolution: 720,
+    dropRadius: 12,
+    perturbance: 0.02,
+    interactive: true,
+    cover: true,
+    dropColor: "rgba(0, 255, 191, 0.5)",
+    ripplesRadius: 25,
+    effect: "complex",
+    duration: 400,
+    imageUrl: new URL("../Assets/Day/startImg.jpg", import.meta.url).href,
+  });
+};
+
+const backToEntrance = () => {
   isVideo.value = true;
-  videoShow.value = true;
-  isRippleArea.value = true;
+  isStart.value = true;
+
+  setTimeout(() => {
+    isRippleArea.value = true;
+  }, 150);
+
+  startVideoElement.value.currentTime = 0;
+  initializeRipples();
+};
+
+// 在beforeunload事件中設置標記，標記是否關閉了頁面
+window.addEventListener("beforeunload", (event) => {
+  // 設置標記為 'closed'，表示頁面即將關閉
+  sessionStorage.setItem("pageClosed", "true");
+});
+
+onMounted(() => {
+  // 檢查 sessionStorage 中的標記來決定是否顯示動畫
+  const isPageClosed = sessionStorage.getItem("pageClosed");
+
+  // 如果標記為 'true'，表示是關閉頁面後重新打開
+  if (isPageClosed) {
+    // 如果沒有標記，則不顯示動畫
+
+    sessionStorage.removeItem("pageClosed"); // 移除標記
+    isLoading.value = false;
+    isStart.value = false;
+    isVideo.value = false;
+    isRippleArea.value = false;
+
+    setTimeout(() => {
+      $(".rippleArea").ripples("destroy");
+    }, 200);
+  } else {
+    // 顯示動畫
+
+    preloadImagesAndVideos();
+    isLoading.value = true;
+    isVideo.value = true;
+    isRippleArea.value = true;
+  }
+
+  // isVideo.value = true;
+  // videoShow.value = true;
+  // isRippleArea.value = true;
 
   nextTick(() => {
     // 確保所有 DOM 更新完成
-    $(".rippleArea").ripples({
-      resolution: 720,
-      dropRadius: 12,
-      perturbance: 0.02,
-      interactive: true,
-      cover: true,
-      dropColor: "rgba(0, 255, 191, 0.5)",
-      ripplesRadius: 25,
-      effect: "complex",
-      duration: 400,
-      imageUrl: new URL("../Assets/Day/startImg.jpg", import.meta.url).href,
-    });
+    initializeRipples();
   });
 
   nextTick(() => {
@@ -497,18 +552,18 @@ onMounted(() => {
   });
 
   // 檢查 sessionStorage 中是否有標記，決定是否顯示 Preload 動畫
-  if (!sessionStorage.getItem("animationShown")) {
-    // 設置標記，防止下次進來還顯示動畫
-    sessionStorage.setItem("animationShown", "true");
-    // 預加載影片和圖片
-    preloadImagesAndVideos();
-  } else {
-    // 如果已經標記過，直接顯示 Start 按鈕
-    isLoading.value = false;
-    isStart.value = false;
-    isVideo.value = false;
-    isRippleArea.value = false;
-  }
+  // if (!sessionStorage.getItem("animationShown")) {
+  //   // 設置標記，防止下次進來還顯示動畫
+  //   sessionStorage.setItem("animationShown", "true");
+  //   // 預加載影片和圖片
+  //   // preloadImagesAndVideos();
+  // } else {
+  //   // 如果已經標記過\
+  //   isLoading.value = false;
+  //   isStart.value = false;
+  //   isVideo.value = false;
+  //   isRippleArea.value = false;
+  // }
 });
 
 // 監聽頁面卸載
@@ -548,4 +603,8 @@ router.afterEach((to, from) => {
 const ToBackstage = () => {
   router.push("/BKMember");
 };
+
+defineExpose({
+  backToEntrance,
+});
 </script>

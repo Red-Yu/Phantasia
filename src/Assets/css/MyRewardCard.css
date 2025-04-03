@@ -10,6 +10,7 @@
     Ag - [ 粗體副標 ] */
 .btnKey-L.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -38,6 +39,7 @@
 }
 .btnKey-L.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -68,6 +70,7 @@
 }
 .btnKey-L.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -96,6 +99,7 @@
 }
 .btnKey-L.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -126,6 +130,7 @@
 }
 .btnKey-L.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -144,6 +149,7 @@
 
 .btnKey-M.dark {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -172,6 +178,7 @@
 }
 .btnKey-M.dark-border {
   background-color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -202,6 +209,7 @@
 }
 .btnKey-M.light {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -230,6 +238,7 @@
 }
 .btnKey-M.light-border {
   background-color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -260,6 +269,7 @@
 }
 .btnKey-M.none {
   background-color: #999999;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   padding: 5px 10px;
@@ -278,6 +288,7 @@
 
 .btnLink.dark {
   color: #153243;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -313,6 +324,7 @@
 }
 .btnLink.light {
   color: #eead50;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -348,6 +360,7 @@
 }
 .btnLink.white {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -383,6 +396,7 @@
 }
 .btnLink.whiteForFrontPage {
   color: #f9faf9;
+  width: -moz-fit-content;
   width: fit-content;
   align-items: center;
   display: flex;
@@ -2465,7 +2479,8 @@ select {
   width: 100%;
   height: 100%;
   background: #153243;
-  mask-image: linear-gradient(to right, transparent, black);
+  -webkit-mask-image: linear-gradient(to right, transparent, black);
+          mask-image: linear-gradient(to right, transparent, black);
   opacity: 0;
 }
 @keyframes glowOnce {
@@ -2550,7 +2565,8 @@ select {
   background-size: cover;
   background-position: center center;
   background-color: rgba(249, 250, 249, 0.95);
-  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   background-blend-mode: soft-light;
   position: fixed;
 }
@@ -3052,6 +3068,14 @@ tbody > tr:hover {
 .searchFunction input {
   all: initial;
   width: 100%;
+}
+.searchFunction input::-moz-placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
 }
 .searchFunction input::placeholder {
   font-family: "Fanwood Text";
@@ -4025,6 +4049,14 @@ tbody > tr:hover {
   border-bottom: #153243 solid 1px;
   text-align: center;
 }
+.CreateNewProject input::-moz-placeholder {
+  font-family: "Fanwood Text";
+  text-transform: capitalize;
+  font-size: 20px;
+  color: rgba(21, 50, 67, 0.5);
+  font-weight: 400;
+  font-style: normal;
+}
 .CreateNewProject input::placeholder {
   font-family: "Fanwood Text";
   text-transform: capitalize;
@@ -4238,7 +4270,8 @@ tbody > tr:hover {
 .templateBgc .BgcTipBox .Tip-info {
   width: 100%;
   height: 100%;
-  position: absolute; /* 擋 input */
+  position: absolute;
+  /* 擋 input */
   top: 0;
   left: 0;
   display: flex;
@@ -4271,7 +4304,8 @@ tbody > tr:hover {
   position: absolute;
   top: 0;
   left: 0;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .templateObject {
@@ -4357,9 +4391,10 @@ tbody > tr:hover {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
+  width: auto;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .templateText {
@@ -4437,20 +4472,16 @@ tbody > tr:hover {
   margin-left: auto;
   pointer-events: auto;
   text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.4);
-  font-family: "Fanwood Text";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  font-variant: small-caps;
+  font-family: "Aleo";
+  text-transform: uppercase;
 }
 .myCabinContent .menu .backToHome {
-  font-size: 26px;
+  font-size: 20px;
   margin-top: 5px;
-  font-style: italic;
   cursor: pointer;
-}
-.myCabinContent .menu .backToHome::after {
-  height: 3px;
 }
 .myCabinContent .menu .btnLink {
   padding: 0;
@@ -4512,7 +4543,8 @@ tbody > tr:hover {
   /* width: 100%; */
   /* height: 100%; */
   /* min-width: 800px; */
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   z-index: 800;
 }
 
@@ -4707,7 +4739,8 @@ tbody > tr:hover {
   height: 100px;
   background-color: #dee2e6;
   opacity: 70%;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+  -webkit-clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
+          clip-path: polygon(25% 0%, 75% 0%, 100% 25%, 100% 75%, 75% 100%, 25% 100%, 0% 75%, 0% 25%);
   margin: 10px;
 }
 
