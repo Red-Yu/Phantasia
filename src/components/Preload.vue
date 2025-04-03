@@ -174,21 +174,6 @@ p {
 </style>
 
 <template>
-  <div class="textContent">
-    <!-- =====introduction===== -->
-    <transition name="fade" mode="out-in">
-      <div class="introduction">
-        <span v-show="isintroduction" class="title1 flipInY"
-          >Welcome to Phantasia, a marvelous magic world.
-        </span>
-
-        <br />
-        <span v-show="isintroduction" class="title1 flipInY"
-          >Try clicking the lamp and other objects to see what happens.</span
-        >
-      </div>
-    </transition>
-  </div>
   <!-- Login Modal -->
   <Login
     :isVisible="isLoginVisible"
@@ -306,11 +291,6 @@ const startVideoElement = ref(null);
 const startVideo = () => {
   isStart.value = false;
   // console.log(startVideoElement.value);
-
-  setTimeout(() => {
-    resetTextillateAnimations();
-    isintroduction.value = true;
-  }, 5800);
 
   setTimeout(() => {
     $(".rippleArea").ripples("destroy");

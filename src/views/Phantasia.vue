@@ -59,26 +59,134 @@
   <!-- ===================登入彈窗===================== -->
 
   <!-- Login Modal -->
-  <Login
+  <!-- <Login
     :isVisible="isLoginVisible"
     @close="closeLogin"
     @openSignup="openSignup"
     :startVideoElement="startVideoElement"
     @login-success="handleLoginSuccess"
-  />
+  /> -->
 
   <!-- Signup Modal -->
-  <Signup
+  <!-- <Signup
     :isVisible="isSignupVisible"
     @close="closeSignup"
     @openLogin="openLogin"
-  />
+  /> -->
 
   <!-- ===================首頁共用組件(前景)===================== -->
 
   <BlackCover />
 
   <div class="blackWrapper" style="overflow: hidden">
+    <!--================= 新手教學================= -->
+    <div class="tutorialWrapper">
+      <div class="positionArea tutorialArea">
+        <div class="main_container tutorialArea" ref="parallaxContainer">
+          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+            <div
+              v-if="isFirstVisit"
+              ref="tutorialOverlay"
+              class="tutorial-overlay"
+              @click="nextTutorialStep"
+            >
+              <div ref="tutorialContent" class="tutorial-content">
+                <p v-html="tutorialText"></p>
+              </div>
+            </div>
+          </div>
+          <!-- ==================新手教學圖片============== -->
+          <div
+            ref="tutorialArea"
+            class="parallax-wrapper tutorialArea"
+            data-depth="0.05"
+          >
+            <img
+              v-if="tutorialStep === 1"
+              src="../Assets/Day/book_day_hover.png"
+              alt="Book"
+              class="tutorial-image scale blink"
+            />
+            <img
+              v-if="tutorialStep === 1"
+              src="../Assets/Day/book_day.png"
+              alt="Book"
+              class="tutorial-image scale"
+            />
+          </div>
+          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+            <img
+              v-if="tutorialStep === 2"
+              src="../Assets/Day/boy_day_hover.png"
+              alt="boy"
+              class="tutorial-image scale blink"
+            />
+            <img
+              v-if="tutorialStep === 2"
+              src="../Assets/Day/boy_day.png"
+              alt="boy"
+              class="tutorial-image scale"
+            />
+          </div>
+          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+            <img
+              v-if="tutorialStep === 3"
+              src="../Assets/Day/day_skyCity_hover.png"
+              alt="skyCity"
+              class="tutorial-image blink"
+            />
+            <img
+              v-if="tutorialStep === 3"
+              src="../Assets/Day/day_skyCity.png"
+              alt="skyCity"
+              class="tutorial-image"
+            />
+          </div>
+
+          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+            <button
+              v-if="tutorialStep === 4"
+              @click="nextTutorialStep"
+              :disabled="isButtonDisabled"
+              class="hoverAreaLamp"
+            ></button>
+
+            <img
+              v-if="tutorialStep === 4"
+              src="../Assets/Day/lamp_day_hover.png"
+              alt="lamp"
+              class="tutorial-image scale blink"
+            />
+            <img
+              v-if="tutorialStep === 4"
+              src="../Assets/Day/lamp_day.png"
+              alt="lamp"
+              class="tutorial-image scale"
+            />
+          </div>
+
+          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+            <img
+              v-if="tutorialStep === 7"
+              src="../Assets/Day/left_castle_hover.png"
+              alt="lamp"
+              class="tutorial-image blink"
+            />
+          </div>
+
+          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+            <img
+              v-if="tutorialStep === 8"
+              src="../Assets/Day//right_castle_hover.png"
+              alt="lamp"
+              class="tutorial-image blink"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ======================================= -->
+
     <div
       class="preloadSlideArea"
       :class="[
@@ -154,6 +262,7 @@
 
         <div class="positionArea">
           <div class="main_container" ref="parallaxContainer">
+            <!-- ======================================= -->
             <div class="parallax-wrapper" data-depth="0.11">
               <img
                 src="../Assets/Day/piller_left_lightoff.png"
@@ -333,9 +442,18 @@ import Signup from "./Auth/Signup.vue";
 import { db } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 
+const isFirstVisit = ref(true); // 標記是否為第一次訪問
+const tutorialText = ref(
+  "Welcome to Phantasia! <br/>  <span style='color: #FFE9BA;'>Click</span> to start the tour of the magical world."
+);
+const tutorialStep = ref(0);
+const tutorialContent = ref(null);
+const tutorialOverlay = ref(null);
+const tutorialArea = ref(null);
+
 // 登入按鈕選單
-const islogIn = ref(false);
-const islogOut = ref(null);
+// const islogIn = ref(false);
+// const islogOut = ref(null);
 
 // 初始化Firebase身份驗證
 const auth = getAuth();
@@ -485,7 +603,81 @@ const toggleDayNight = () => {
   }
 };
 
+// ============新手教學==============
+// 教學步驟進行的邏輯
+const nextTutorialStep = () => {
+  tutorialStep.value++;
+
+  if (tutorialStep.value === 1) {
+    tutorialText.value =
+      "The book in the corner <br/>helps you <span style='color: #FFE9BA;'>learn more about Phantasia.</span>";
+  } else if (tutorialStep.value === 2) {
+    tutorialText.value =
+      "Click the boy in the center to enter your Cabin. <br/> There, you can <span style='color: #FFE9BA;'>change the decor, collect points,</span> and<span style='color: #FFE9BA;'> view your books.</span>";
+  } else if (tutorialStep.value === 3) {
+    tutorialText.value =
+      "Click on the Sky Castle to<span style='color: #FFE9BA;'> read many interesting books.</span>";
+
+    if (tutorialContent.value) {
+      tutorialContent.value.style.marginTop = "0px";
+    }
+  } else if (tutorialStep.value === 4) {
+    tutorialText.value =
+      "Here comes the fun!<br/> <span style='color: #FFE9BA;'>Click on the lamp</span> to see what happens!";
+
+    if (tutorialOverlay.value) {
+      tutorialOverlay.value.style.pointerEvents = "none";
+    }
+
+    if (tutorialArea.value) {
+      tutorialArea.value.style.pointerEvents = "auto";
+    }
+
+    if (tutorialContent.value) {
+      tutorialContent.value.style.marginTop = "15px";
+    }
+  } else if (tutorialStep.value === 5) {
+    if (tutorialOverlay.value) {
+      tutorialOverlay.value.style.pointerEvents = "auto";
+      tutorialOverlay.value.style.opacity = "0"; // 改變透明度
+      tutorialOverlay.value.style.transition = "opacity 0.8s ease"; // 添加過渡效果
+    }
+
+    if (tutorialArea.value) {
+      tutorialArea.value.style.pointerEvents = "none";
+    }
+
+    toggleDayNight();
+  } else if (tutorialStep.value === 6) {
+    tutorialText.value =
+      "Welcome to the night in Phantasia<br/>  <span style='color: #FFE9BA;'>let's continue the tutorial!</span>";
+
+    if (tutorialOverlay.value) {
+      tutorialOverlay.value.style.opacity = "1";
+      tutorialOverlay.value.style.transition = "opacity 0.8s ease"; // 添加過渡效果
+    }
+  } else if (tutorialStep.value === 7) {
+    tutorialText.value =
+      "The castle on the left is the <span style='color: #FFE9BA;'>  Creation Center</span><br/>where you can  <span style='color: #FFE9BA;'> create your own storybook.</span>";
+  } else if (tutorialStep.value === 8) {
+    tutorialText.value =
+      "The castle on the right is the <span style='color: #FFE9BA;'> Member Center</span><br/> where you can  <span style='color: #FFE9BA;'>view your membership details.</span>";
+  } else {
+    isFirstVisit.value = false; // 完成教學，隱藏教程
+  }
+};
+
 onMounted(() => {
+  // ========紀錄是否第一次進入(新手教學)========
+  // const hasVisited = localStorage.getItem("hasVisited"); // 記錄用戶是否曾經訪問過
+  // if (hasVisited) {
+  //   isFirstVisit.value = false; // 如果曾經訪問過，則不顯示教程
+  // } else {
+  //   localStorage.setItem("hasVisited", "true"); // 記錄首次訪問
+  // }
+
+  // ========================
+
   // 確保 DOM 內容加載完成後執行 Parallax 初始化
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
@@ -509,8 +701,8 @@ onMounted(() => {
 
   updateImagePaths(day_night.value);
 
-  // router.push(`/${day.value ? "day" : "night"}`);
-  router.push("/Day");
+  router.push(`/${day.value ? "day" : "night"}`);
+  // router.push("/Day");
 
   // 預加載頭像
   if (userAuthState.user) {
@@ -573,36 +765,36 @@ onBeforeUnmount(() => {
 
 // =================登入彈窗====================
 
-// 控制顯示登入與註冊彈窗
-const isLoginVisible = ref(false);
-const isSignupVisible = ref(false);
+// // 控制顯示登入與註冊彈窗
+// const isLoginVisible = ref(false);
+// const isSignupVisible = ref(false);
 
-// 打開彈窗的方法
-const openModal = () => {
-  isLoginVisible.value = true;
-  // $(".rippleArea").ripples("destroy");
-};
+// // 打開彈窗的方法
+// const openModal = () => {
+//   isLoginVisible.value = true;
+//   // $(".rippleArea").ripples("destroy");
+// };
 
-// 打開註冊彈窗的事件
-const openSignup = () => {
-  isLoginVisible.value = false;
-  isSignupVisible.value = true;
-};
+// // 打開註冊彈窗的事件
+// const openSignup = () => {
+//   isLoginVisible.value = false;
+//   isSignupVisible.value = true;
+// };
 
-// 打開登入彈窗
-const openLogin = () => {
-  isLoginVisible.value = true;
-  isSignupVisible.value = false;
-};
+// // 打開登入彈窗
+// const openLogin = () => {
+//   isLoginVisible.value = true;
+//   isSignupVisible.value = false;
+// };
 
-// 關閉彈窗的方法
-const closeLogin = () => {
-  isLoginVisible.value = false;
-};
+// // 關閉彈窗的方法
+// const closeLogin = () => {
+//   isLoginVisible.value = false;
+// };
 
-const closeSignup = () => {
-  isSignupVisible.value = false;
-};
+// const closeSignup = () => {
+//   isSignupVisible.value = false;
+// };
 
 // ==========================================
 
