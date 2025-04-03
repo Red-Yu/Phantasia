@@ -441,7 +441,12 @@ const preloadImagesAndVideos = () => {
     // 等待所有圖片和影片加載完成
     Promise.all([...imagePromises, ...videoPromises]).then(() => {
       isLoading.value = false;
-      isStart.value = true;
+      // 當所有資源加載完成後，檢查 isVideo.value
+      if (isVideo.value) {
+        isStart.value = true; // 如果 isVideo 為 true，才設置 isStart 為 true
+      } else {
+        isStart.value = false; // 否則設置為 false
+      }
     });
   }, 6000);
 };
@@ -486,31 +491,6 @@ window.addEventListener("beforeunload", (event) => {
 });
 
 onMounted(() => {
-  // 檢查 sessionStorage 中的標記來決定是否顯示動畫
-  const isPageClosed = sessionStorage.getItem("pageClosed");
-
-  // 如果標記為 'true'，表示是關閉頁面後重新打開
-  if (isPageClosed) {
-    // 如果沒有標記，則不顯示動畫
-
-    sessionStorage.removeItem("pageClosed"); // 移除標記
-    isLoading.value = false;
-    isStart.value = false;
-    isVideo.value = false;
-    isRippleArea.value = false;
-
-    setTimeout(() => {
-      $(".rippleArea").ripples("destroy");
-    }, 200);
-  } else {
-    // 顯示動畫
-
-    preloadImagesAndVideos();
-    isLoading.value = true;
-    isVideo.value = true;
-    isRippleArea.value = true;
-  }
-
   // isVideo.value = true;
   // videoShow.value = true;
   // isRippleArea.value = true;
@@ -551,19 +531,39 @@ onMounted(() => {
     },
   });
 
+  // 檢查 sessionStorage 中的標記來決定是否顯示動畫
+  const isPageClosed = sessionStorage.getItem("pageClosed");
+
+  // 如果標記為 'true'，表示是關閉頁面後重新打開
+  if (isPageClosed) {
+    sessionStorage.removeItem("pageClosed"); // 移除標記
+    isLoading.value = false;
+    isStart.value = false;
+    isVideo.value = false;
+    isRippleArea.value = false;
+
+    setTimeout(() => {
+      $(".rippleArea").ripples("destroy");
+    }, 200);
+  } else {
+    isLoading.value = true;
+    isVideo.value = true;
+    isRippleArea.value = true;
+  }
+
   // 檢查 sessionStorage 中是否有標記，決定是否顯示 Preload 動畫
-  // if (!sessionStorage.getItem("animationShown")) {
-  //   // 設置標記，防止下次進來還顯示動畫
-  //   sessionStorage.setItem("animationShown", "true");
-  //   // 預加載影片和圖片
-  //   // preloadImagesAndVideos();
-  // } else {
-  //   // 如果已經標記過\
-  //   isLoading.value = false;
-  //   isStart.value = false;
-  //   isVideo.value = false;
-  //   isRippleArea.value = false;
-  // }
+  if (!sessionStorage.getItem("animationShown")) {
+    // 設置標記，防止下次進來還顯示動畫
+    sessionStorage.setItem("animationShown", "true");
+    // 預加載影片和圖片
+    preloadImagesAndVideos();
+  } else {
+    // 如果已經標記過
+    isLoading.value = false;
+    isStart.value = false;
+    isVideo.value = false;
+    isRippleArea.value = false;
+  }
 });
 
 // 監聽頁面卸載
