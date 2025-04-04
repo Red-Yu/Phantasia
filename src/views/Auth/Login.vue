@@ -12,19 +12,25 @@
             type="email"
             v-model="email"
             placeholder="Please enter your e-mail."
+            class="form-input"
             required
           />
 
           <label for="password">Password</label>
-
-          <input
-            :type="showPassword ? 'text' : 'password'"
-            v-model="password"
-            placeholder="Please enter your password."
-            required
-          />
-          <div class="logInToggleVisibility" @click="togglePasswordVisibility">
-            <div class="dark-view" :class="{ closed: showPassword }"></div>
+          <div class="input-wrapper">
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              v-model="password"
+              placeholder="Please enter your password."
+              class="form-input"
+              required
+            />
+            <div
+              class="logInToggleVisibility"
+              @click="togglePasswordVisibility"
+            >
+              <div class="dark-view" :class="{ closed: showPassword }"></div>
+            </div>
           </div>
           <!-- <p v-if="error" class="error-message">{{ error }}</p> -->
           <p

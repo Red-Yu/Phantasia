@@ -147,27 +147,35 @@ input {
   background-repeat: no-repeat;
   // background-color: yellow;
 }
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.form-input {
+  width: 100%;
+}
 
 .logInToggleVisibility {
   position: absolute;
-  top: 40.4%;
-  right: 85px;
+  top: 50%;
+  right: 10px;
   transform: translateY(-50%);
   cursor: pointer;
 }
 
 .signUpToggleVisibility {
   position: absolute;
-  top: 36.1%;
-  right: 85px;
+  top: 50%;
+  right: 10px;
   transform: translateY(-50%);
   cursor: pointer;
 }
 
 .signUpConfimToggleVisibility {
   position: absolute;
-  top: 48.85%;
-  right: 85px;
+  top: 50%;
+  right: 10px;
   transform: translateY(-50%);
   cursor: pointer;
 }

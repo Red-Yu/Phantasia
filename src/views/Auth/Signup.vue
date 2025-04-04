@@ -13,36 +13,45 @@
             type="email"
             v-model="email"
             placeholder="Please enter your e-mail."
+            class="form-input"
             required
           />
 
           <label for="password">Password</label>
-          <input
-            :type="showPassword ? 'text' : 'password'"
-            v-model="password"
-            placeholder="Please enter your password."
-            required
-          />
-          <div class="signUpToggleVisibility" @click="togglePasswordVisibility">
-            <div class="dark-view" :class="{ closed: showPassword }"></div>
-          </div>
-
-          <label for="confirmPassword">Confirm Password</label>
-          <input
-            :type="showConfirmPassword ? 'text' : 'password'"
-            id="confirmPassword"
-            v-model="confirmPassword"
-            required
-            placeholder="Please enter your password again."
-          />
-          <div
-            class="signUpConfimToggleVisibility"
-            @click="toggleConfirmPasswordVisibility"
-          >
+          <div class="input-wrapper">
+            <input
+              :type="showPassword ? 'text' : 'password'"
+              v-model="password"
+              placeholder="Please enter your password."
+              class="form-input"
+              required
+            />
             <div
-              class="dark-view"
-              :class="{ closed: showConfirmPassword }"
-            ></div>
+              class="signUpToggleVisibility"
+              @click="togglePasswordVisibility"
+            >
+              <div class="dark-view" :class="{ closed: showPassword }"></div>
+            </div>
+          </div>
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="input-wrapper">
+            <input
+              :type="showConfirmPassword ? 'text' : 'password'"
+              id="confirmPassword"
+              v-model="confirmPassword"
+              required
+              placeholder="Please enter your password again."
+              class="form-input"
+            />
+            <div
+              class="signUpConfimToggleVisibility"
+              @click="toggleConfirmPasswordVisibility"
+            >
+              <div
+                class="dark-view"
+                :class="{ closed: showConfirmPassword }"
+              ></div>
+            </div>
           </div>
 
           <label for="username">Name</label>
@@ -50,6 +59,7 @@
             type="text"
             v-model="name"
             placeholder="Please enter your name."
+            class="form-input"
             required
           />
 
@@ -58,6 +68,7 @@
             type="date"
             v-model="birthday"
             placeholder="Please enter your birthday."
+            class="form-input"
             required
           />
 
