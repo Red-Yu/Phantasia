@@ -123,8 +123,53 @@ input {
   padding: 8px;
   margin-top: 3px;
   margin-bottom: 3px;
+  width: 300px;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.dark-view {
+  width: 16px;
+  height: 16px;
+  // background-color: yellow;
+  cursor: pointer;
+  background-image: url(../../Assets/img/icon/dark-view.png);
+  background-size: contain; /* 改用 contain 確保圖片完整顯示 */
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.dark-view.closed {
+  background-image: url(../../Assets/img/icon/gray-view.png);
+  /* width: 80%; */
+  /* height: 80%; */
+  background-size: contain; /* 改用 contain 確保圖片完整顯示 */
+  background-position: center;
+  background-repeat: no-repeat;
+  // background-color: yellow;
+}
+
+.logInToggleVisibility {
+  position: absolute;
+  top: 40.4%;
+  right: 85px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.signUpToggleVisibility {
+  position: absolute;
+  top: 36.1%;
+  right: 85px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.signUpConfimToggleVisibility {
+  position: absolute;
+  top: 48.85%;
+  right: 85px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
 
 /* 提交按鈕 */
@@ -143,6 +188,7 @@ div.btn {
   display: flex;
   justify-content: center;
   padding-top: 8px;
+  box-shadow: 0px 0px 0px 0px rgba(21, 50, 67, 0.6);
 }
 
 // 錯誤提示
@@ -202,8 +248,16 @@ div.or {
 
 p.gotoSingup,
 p.gotoLogin {
-  padding-top: 12px;
+  padding-top: 18px;
   padding-bottom: 10px;
+}
+
+p.gotoSingup {
+  // margin-left: 45px;
+}
+
+p.gotoLogin {
+  padding-top: 10px;
 }
 
 .signup {

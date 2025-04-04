@@ -3,8 +3,8 @@
   <div class="content-center">
     <p class="maintitle">Subscribe Now to Unlock the Full Story!</p>
     <p class="detail">
-      Subscribe to unlock the full story! Join now to enjoy every detail
-      and the thrilling ending—you're just one step away!
+      Subscribe to unlock the full story! Join now to enjoy every detail and the
+      thrilling ending—you're just one step away!
     </p>
 
     <img :src="step" alt="step" />
@@ -12,16 +12,16 @@
   <div class="subscription-section">
     <h2 class="title">SUBSCRIPTION PLAN</h2>
     <div class="content-center">
-      
       <div class="pricing-center">
         <div class="pricing-cards">
-          <div 
-            v-for="plan in plans" 
-            :key="plan.title" 
+          <div
+            v-for="plan in plans"
+            :key="plan.title"
             class="pricing-card"
-            :class="{ 
-              'selected': selectedPlan === plan.title,
-              'hover-effect': selectedPlan === plan.title || isHovered === plan.title 
+            :class="{
+              selected: selectedPlan === plan.title,
+              'hover-effect':
+                selectedPlan === plan.title || isHovered === plan.title,
             }"
             @click="togglePlan(plan.title)"
             @mouseenter="isHovered = plan.title"
@@ -30,8 +30,14 @@
             <!-- 勾勾圖示 -->
             <div class="check-icon" v-if="selectedPlan === plan.title">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="12" fill="#FF9800"/>
-                <path d="M7 12L10 15L17 8" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="12" r="12" fill="#FF9800" />
+                <path
+                  d="M7 12L10 15L17 8"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
               </svg>
             </div>
 
@@ -39,7 +45,7 @@
               <h2 class="card-title">{{ plan.title }}</h2>
               <div class="price">USD ${{ plan.price }}</div>
               <div v-if="plan.monthly" class="monthly-price">
-                Equivalent To<br>${{ plan.monthly }} Per Month
+                Equivalent To<br />${{ plan.monthly }} Per Month
               </div>
             </div>
           </div>
@@ -52,12 +58,20 @@
       <div class="payment-options">
         <!-- ECPay -->
         <div class="payment-option">
-          <div 
-            :class="selectedPayment === 'ECPAY' ? 'btnKey-L dark' : 'btnKey-L dark-border'"
+          <div
+            :class="
+              selectedPayment === 'ECPAY'
+                ? 'btnKey-L dark'
+                : 'btnKey-L dark-border'
+            "
             @click="togglePayment('ECPAY')"
           >
             <div class="icon-L">
-              <div :class="selectedPayment === 'ECPAY' ? 'white-cross' : 'dark-cross'">
+              <div
+                :class="
+                  selectedPayment === 'ECPAY' ? 'white-cross' : 'dark-cross'
+                "
+              >
                 <div class="cols">
                   <span></span>
                   <span></span>
@@ -73,12 +87,20 @@
       </div>
       <div class="credit-card-section">
         <div class="payment-option">
-          <div 
-            :class="selectedPayment === 'CREDIT' ? 'btnKey-L dark' : 'btnKey-L dark-border'"
+          <div
+            :class="
+              selectedPayment === 'CREDIT'
+                ? 'btnKey-L dark'
+                : 'btnKey-L dark-border'
+            "
             @click="togglePayment('CREDIT')"
           >
             <div class="icon-L">
-              <div :class="selectedPayment === 'CREDIT' ? 'white-cross' : 'dark-cross'">
+              <div
+                :class="
+                  selectedPayment === 'CREDIT' ? 'white-cross' : 'dark-cross'
+                "
+              >
                 <div class="cols">
                   <span></span>
                   <span></span>
@@ -92,7 +114,7 @@
           <span class="payment-title">Credit card/debit card payment</span>
         </div>
       </div>
-      
+
       <!-- 信用卡標誌 -->
       <div class="card-logos" v-show="showCreditCardForm">
         <img src="@/assets/img/membercenter/cardlogo.svg" alt="Mastercard" />
@@ -112,7 +134,7 @@
               maxlength="19"
             />
             <div class="i" @click="showCardnumber = !showCardnumber">
-                <div class="dark-view" :class="{ closed: showCardnumber }"></div>
+              <div class="dark-view" :class="{ closed: showCardnumber }"></div>
             </div>
           </div>
         </div>
@@ -120,17 +142,17 @@
         <div class="form-group">
           <label>Validity Period <span class="required">*</span></label>
           <div class="input-wrapper">
-            <input 
+            <input
               :type="showCarddate ? 'text' : 'password'"
               v-model="validityDate"
               @input="formatValidityDate"
-              placeholder="MM/YY" 
-              class="form-input" 
+              placeholder="MM/YY"
+              class="form-input"
               maxlength="5"
               autocomplete="off"
             />
             <div class="i" @click="showCarddate = !showCarddate">
-                <div class="dark-view" :class="{ closed: showCarddate }"></div>
+              <div class="dark-view" :class="{ closed: showCarddate }"></div>
             </div>
           </div>
         </div>
@@ -147,36 +169,36 @@
               class="form-input"
             />
             <div class="i" @click="showCardcvc = !showCardcvc">
-                <div class="dark-view" :class="{ closed: showCardcvc }"></div>
+              <div class="dark-view" :class="{ closed: showCardcvc }"></div>
             </div>
           </div>
         </div>
 
         <p class="disclaimer">
-          Please note that this platform will not charge you any
-          platform transaction fees, but the credit card you use when
-          placing an order may charge you relevant fees. Please refer to
-          its relevant service policies and regulations, and report to
-          your chosen transaction service provider Get more information.
+          Please note that this platform will not charge you any platform
+          transaction fees, but the credit card you use when placing an order
+          may charge you relevant fees. Please refer to its relevant service
+          policies and regulations, and report to your chosen transaction
+          service provider Get more information.
         </p>
       </div>
     </div>
     <div class="button-container">
       <div class="btnKey-L light" @click="handleJoinNow">
-      <p>JOIN NOW</p>
-      <div class="icon-L">
-        <div class="white-cross">
-          <div class="cols">
-            <span></span>
-            <span></span>
-          </div>
-          <div class="rows">
-            <span></span>
+        <p>JOIN NOW</p>
+        <div class="icon-L">
+          <div class="white-cross">
+            <div class="cols">
+              <span></span>
+              <span></span>
+            </div>
+            <div class="rows">
+              <span></span>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
   </div>
 
   <!-- 自定義提示框 -->
@@ -189,26 +211,26 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
-import step from "@/assets/img/membercenter/step.svg"
-import axios from 'axios'
+import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import step from "@/assets/img/membercenter/step.svg";
+import axios from "axios";
 // 引入 Firestore 相關函數
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import SubscriptionAlert from '@/components/SubscriptionAlert.vue'
+import SubscriptionAlert from "@/components/SubscriptionAlert.vue";
 
 const router = useRouter();
 
 // 自定義提示框相關狀態
 const alertConfig = ref({
   show: false,
-  title: 'Notice',
-  message: ''
+  title: "Notice",
+  message: "",
 });
 
 // 顯示自定義提示框
-const showAlert = (message, title = 'Notice') => {
+const showAlert = (message, title = "Notice") => {
   alertConfig.value.message = message;
   alertConfig.value.title = title;
   alertConfig.value.show = true;
@@ -223,41 +245,41 @@ const closeAlert = () => {
 const handleJoinNow = async () => {
   // 檢查是否選擇了訂閱計劃和支付方式
   if (!selectedPlan.value || !selectedPayment.value) {
-    showAlert('Please select a subscription plan and payment method.', 'Hint');
+    showAlert("Please select a subscription plan and payment method.", "Hint");
     // 滾動到訂閱計劃區域讓用戶選擇
-    document.querySelector('.subscription-section').scrollIntoView({ 
-      behavior: 'smooth' 
+    document.querySelector(".subscription-section").scrollIntoView({
+      behavior: "smooth",
     });
     return;
   }
-  
+
   try {
     // 取得當前登入用戶
     const auth = getAuth();
     const currentUser = auth.currentUser;
-    
+
     if (!currentUser) {
-      showAlert('Please login first', 'Login Required');
-      router.push('/login');
+      showAlert("Please login first", "Login Required");
+      router.push("/login");
       return;
     }
-    
+
     // 處理支付
-    const planDetails = plans.value.find(p => p.title === selectedPlan.value);
-    
+    const planDetails = plans.value.find((p) => p.title === selectedPlan.value);
+
     // 生成唯一訂單 ID (使用時間戳)
     const timestamp = new Date().getTime();
     const orderId = `order_${timestamp}`;
-    
+
     // 計算開始日期
     const startDate = new Date();
-    
+
     // 使用您提供的函數計算結束日期
     const calculateEndDate = (startDate, planType) => {
       const start = new Date(startDate);
       const end = new Date(start);
-      
-      switch(planType) {
+
+      switch (planType) {
         case "Monthly Plan":
           end.setMonth(start.getMonth() + 1);
           end.setDate(start.getDate() - 1);
@@ -271,13 +293,13 @@ const handleJoinNow = async () => {
           end.setDate(start.getDate() - 1);
           break;
       }
-      
+
       return end;
     };
-    
+
     // 計算結束日期
     const endDate = calculateEndDate(startDate, selectedPlan.value);
-    
+
     // 儲存訂單到 Firebase - 不論哪種付款方式都設為 pending
     const db = getFirestore();
     await setDoc(doc(db, "orders", orderId), {
@@ -287,65 +309,71 @@ const handleJoinNow = async () => {
       planType: selectedPlan.value,
       amount: planDetails.price,
       paymentMethod: selectedPayment.value,
-      status: 'pending', // 所有支付方式初始狀態都設為 pending
+      status: "pending", // 所有支付方式初始狀態都設為 pending
       merchantTradeNo: `P${timestamp}`, // 記錄綠界使用的交易編號
       createdAt: new Date().toISOString(),
       startDate: startDate.toISOString(),
-      endDate: endDate.toISOString() // 根據您的計算邏輯添加結束日期
+      endDate: endDate.toISOString(), // 根據您的計算邏輯添加結束日期
     });
-    
+
     // 將訂單 ID 存到 localStorage，以便在支付後使用
-    localStorage.setItem('currentOrderId', orderId);
-    
-    if (selectedPayment.value === 'ECPAY') {
+    localStorage.setItem("currentOrderId", orderId);
+
+    if (selectedPayment.value === "ECPAY") {
       // 呼叫後端 API 創建綠界支付表單
-      const response = await axios.post('/api/ecpay/create-payment', {
+      const response = await axios.post("/api/ecpay/create-payment", {
         planType: selectedPlan.value,
         amount: planDetails.price,
         paymentMethod: selectedPayment.value,
-        orderId: orderId // 傳遞訂單 ID 到後端
+        orderId: orderId, // 傳遞訂單 ID 到後端
       });
-      
+
       // 將 ECPay HTML 表單加入到頁面並自動提交
-      const formContainer = document.createElement('div');
+      const formContainer = document.createElement("div");
       formContainer.innerHTML = response.data.htmlForm;
       document.body.appendChild(formContainer);
-      
+
       // 自動提交表單
       document.querySelector('form[action*="ecpay"]').submit();
-    } else if (selectedPayment.value === 'CREDIT') {
+    } else if (selectedPayment.value === "CREDIT") {
       // 檢查信用卡欄位是否填寫完整
       if (!cardNumber.value || !validityDate.value || !cvcNumber.value) {
-        showAlert('Please complete all credit card fields', 'Information Required');
+        showAlert(
+          "Please complete all credit card fields",
+          "Information Required"
+        );
         return;
       }
-      
+
       try {
         // 模擬信用卡處理過程
-        showAlert('Processing your payment...', 'Please Wait');
-        
+        showAlert("Processing your payment...", "Please Wait");
+
         // 模擬處理時間
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
         // 信用卡支付成功的提示
-        showAlert('Credit card payment successful!', 'Payment Completed');
-        
+        showAlert("Credit card payment successful!", "Payment Completed");
+
         // 設置與ECPay支付完成後相同的本地存儲標記
-        localStorage.setItem('paymentCompleted', 'true');
-        localStorage.setItem('subscriptionActive', 'true');
-        
+        localStorage.setItem("paymentCompleted", "true");
+        localStorage.setItem("subscriptionActive", "true");
+
         // 延遲一下再導向到訂閱狀態頁面
         setTimeout(() => {
-          router.push('/MemberCenter/SubscriptionStatus');
+          router.push("/MemberCenter/SubscriptionStatus");
         }, 1500);
       } catch (paymentError) {
-        console.error('Credit card payment error:', paymentError);
-        showAlert('Credit card payment failed. Please check your card information and try again.', 'Payment Failed');
+        console.error("Credit card payment error:", paymentError);
+        showAlert(
+          "Credit card payment failed. Please check your card information and try again.",
+          "Payment Failed"
+        );
       }
     }
   } catch (error) {
-    console.error('Payment processing error:', error);
-    showAlert('Payment processing error, please try again later.', 'Notice');
+    console.error("Payment processing error:", error);
+    showAlert("Payment processing error, please try again later.", "Notice");
   }
 };
 // 訂閱計劃相關
@@ -354,20 +382,20 @@ const isHovered = ref(null);
 
 const plans = ref([
   {
-    title: 'Monthly Plan',
-    price: '12',
-    monthly: null
+    title: "Monthly Plan",
+    price: "12",
+    monthly: null,
   },
   {
-    title: 'Quarterly Plan',
-    price: '30',
-    monthly: '10'
+    title: "Quarterly Plan",
+    price: "30",
+    monthly: "10",
   },
   {
-    title: 'Annual Plan',
-    price: '100',
-    monthly: '8.33'
-  }
+    title: "Annual Plan",
+    price: "100",
+    monthly: "8.33",
+  },
 ]);
 
 const togglePlan = (planTitle) => {
@@ -376,7 +404,7 @@ const togglePlan = (planTitle) => {
   } else {
     selectedPlan.value = planTitle;
   }
-  emit('plan-selected', selectedPlan.value);
+  emit("plan-selected", selectedPlan.value);
 };
 
 // 支付方式相關
@@ -390,45 +418,45 @@ const togglePayment = (paymentType) => {
 };
 
 // 信用卡表單相關
-const showCreditCardForm = computed(() => selectedPayment.value === 'CREDIT');
+const showCreditCardForm = computed(() => selectedPayment.value === "CREDIT");
 const showCardnumber = ref(true);
 const showCarddate = ref(false);
 const showCardcvc = ref(false);
 
-const cardNumber = ref('');
-const validityDate = ref('');
-const cvcNumber = ref('');
+const cardNumber = ref("");
+const validityDate = ref("");
+const cvcNumber = ref("");
 
 const formatCardNumber = (event) => {
   let value = event.target.value;
-  value = value.replace(/[^\d\s]/g, '');
-  value = value.replace(/\s+/g, ' ');
-  value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
-  
+  value = value.replace(/[^\d\s]/g, "");
+  value = value.replace(/\s+/g, " ");
+  value = value.replace(/(\d{4})(?=\d)/g, "$1 ");
+
   if (value.length > 19) {
     value = value.slice(0, 19);
   }
-  
+
   cardNumber.value = value;
 };
 
 const formatValidityDate = (event) => {
-  let value = event.target.value.replace(/\D/g, '');
-  
+  let value = event.target.value.replace(/\D/g, "");
+
   if (value.length >= 2) {
     const month = value.slice(0, 2);
     if (parseInt(month) > 12) {
-      value = '12' + value.slice(2);
+      value = "12" + value.slice(2);
     }
-    value = value.slice(0, 2) + '/' + value.slice(2);
+    value = value.slice(0, 2) + "/" + value.slice(2);
   }
-  
+
   value = value.slice(0, 5);
   validityDate.value = value;
 };
 
 const formatCVC = (event) => {
-  let value = event.target.value.replace(/\D/g, '');
+  let value = event.target.value.replace(/\D/g, "");
   value = value.slice(0, 3);
   cvcNumber.value = value;
 };
@@ -437,19 +465,18 @@ const formatCVC = (event) => {
 onMounted(() => {
   const auth = getAuth();
   const currentUser = auth.currentUser;
-  
+
   if (!currentUser) {
-    console.log('User not logged in, please login first');
+    console.log("User not logged in, please login first");
   }
 });
 
 // 定義 emit
-const emit = defineEmits(['plan-selected']);
+const emit = defineEmits(["plan-selected"]);
 </script>
 
 <style scoped>
 @import "../../Assets/css/main.css";
-
 
 .content-center {
   width: 100%;
@@ -519,7 +546,7 @@ const emit = defineEmits(['plan-selected']);
 .pricing-card.selected .card-title,
 .pricing-card.selected .price,
 .pricing-card.selected .monthly-price {
-  color: #F9FAF9;
+  color: #f9faf9;
 }
 
 .check-icon {
@@ -540,7 +567,7 @@ const emit = defineEmits(['plan-selected']);
 }
 
 .card-title {
-  font-family: 'Aleo';
+  font-family: "Aleo";
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -555,7 +582,7 @@ const emit = defineEmits(['plan-selected']);
 }
 
 .price {
-  font-family: 'Aleo';
+  font-family: "Aleo";
   font-style: normal;
   font-weight: 700;
   font-size: 28px;
@@ -570,7 +597,7 @@ const emit = defineEmits(['plan-selected']);
 }
 
 .monthly-price {
-  font-family: 'Aleo';
+  font-family: "Aleo";
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
@@ -641,7 +668,7 @@ const emit = defineEmits(['plan-selected']);
 }
 
 .form-group .required {
-  color: #EEAD50;
+  color: #eead50;
   margin-left: 4px;
 }
 
@@ -683,10 +710,10 @@ const emit = defineEmits(['plan-selected']);
 }
 
 .input-wrapper .dark-view.closed {
-  background-image: url(/src/Assets/img/membercenter/eyeClose.svg);
+  background-image: url(../../Assets/img/icon/gray-view.png);
   width: 80%;
   height: 80%;
-  background-size: contain;   /* 改用 contain 確保圖片完整顯示 */
+  background-size: contain; /* 改用 contain 確保圖片完整顯示 */
   background-position: center;
   background-repeat: no-repeat;
 }

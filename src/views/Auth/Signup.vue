@@ -18,20 +18,32 @@
 
           <label for="password">Password</label>
           <input
-            type="password"
+            :type="showPassword ? 'text' : 'password'"
             v-model="password"
-            placeholder="Password should be at least 6 characters."
+            placeholder="Please enter your password."
             required
           />
+          <div class="signUpToggleVisibility" @click="togglePasswordVisibility">
+            <div class="dark-view" :class="{ closed: showPassword }"></div>
+          </div>
 
           <label for="confirmPassword">Confirm Password</label>
           <input
-            type="password"
+            :type="showConfirmPassword ? 'text' : 'password'"
             id="confirmPassword"
             v-model="confirmPassword"
             required
             placeholder="Please enter your password again."
           />
+          <div
+            class="signUpConfimToggleVisibility"
+            @click="toggleConfirmPasswordVisibility"
+          >
+            <div
+              class="dark-view"
+              :class="{ closed: showConfirmPassword }"
+            ></div>
+          </div>
 
           <label for="username">Name</label>
           <input
@@ -49,12 +61,15 @@
             required
           />
 
-          <p :class="['error-message', { visible: errorMessage }]" v-text="errorMessage"></p>
+          <p
+            :class="['error-message', { visible: errorMessage }]"
+            v-text="errorMessage"
+          ></p>
 
           <!-- <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p> -->
 
           <div class="btn">
-            <button type="submit" class="btnKey-L dark">Submit</button>
+            <button type="submit" class="btnKey-M dark">Submit</button>
           </div>
 
           <!-- <p>By clicking "Submit", you agree to our <a href="#">Terms of service</a> and our <a href="#">Privacy Policy</a>.</p>
@@ -102,6 +117,18 @@ const password = ref("");
 const confirmPassword = ref("");
 const errorMessage = ref("");
 const isSuccessModalVisible = ref(false);
+
+const showPassword = ref(false);
+const showConfirmPassword = ref(false);
+
+// 切換顯示密碼
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
+
+const toggleConfirmPasswordVisibility = () => {
+  showConfirmPassword.value = !showConfirmPassword.value;
+};
 
 // const signup = async () => {
 //   try {

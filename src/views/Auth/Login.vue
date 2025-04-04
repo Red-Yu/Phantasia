@@ -16,12 +16,16 @@
           />
 
           <label for="password">Password</label>
+
           <input
-            type="password"
+            :type="showPassword ? 'text' : 'password'"
             v-model="password"
             placeholder="Please enter your password."
             required
           />
+          <div class="logInToggleVisibility" @click="togglePasswordVisibility">
+            <div class="dark-view" :class="{ closed: showPassword }"></div>
+          </div>
           <!-- <p v-if="error" class="error-message">{{ error }}</p> -->
           <p
             :class="['error-message', { visible: errorMessage }]"
@@ -29,7 +33,7 @@
           ></p>
 
           <div class="btn">
-            <button type="submit" class="btnKey-L dark">Submit</button>
+            <button type="submit" class="btnKey-M dark">Submit</button>
           </div>
 
           <p class="gotoSingup">
@@ -164,6 +168,13 @@ const errorMessage = ref("");
 const isSuccessModalVisible = ref(false);
 const isComingSoonVisible = ref(false);
 
+const showPassword = ref(false);
+
+// 切換顯示密碼
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value;
+};
+
 // 關閉彈窗
 const closeModal = () => {
   emit("close");
@@ -290,7 +301,7 @@ const login = async () => {
     // 處理登入成功
     handleLoginSuccess(user);
   } catch (err) {
-    errorMessage.value = `Login failed: ${err.message}`;
+    errorMessage.value = `Incorrect email or password.`;
   }
 };
 
