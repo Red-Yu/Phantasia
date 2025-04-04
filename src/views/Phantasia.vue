@@ -82,16 +82,19 @@
     <!--================= 新手教學================= -->
     <div class="tutorialWrapper">
       <div class="positionArea tutorialArea">
-        <div class="main_container tutorialArea" ref="parallaxContainer">
+        <div
+          class="main_container tutorialArea"
+          ref="parallaxContainerTutorial"
+        >
           <div class="parallax-wrapper tutorialArea" data-depth="0.05">
             <div
               v-if="isFirstVisit"
               ref="tutorialOverlay"
-              class="tutorial-overlay"
+              class="tutorial-overlay no-select"
               @click="nextTutorialStep"
             >
-              <div ref="tutorialContent" class="tutorial-content">
-                <p v-html="tutorialText"></p>
+              <div ref="tutorialContent" class="tutorial-content no-select">
+                <p class="no-select" v-html="tutorialText"></p>
               </div>
             </div>
           </div>
@@ -128,7 +131,7 @@
               class="tutorial-image scale"
             />
           </div>
-          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+          <div class="parallax-wrapper tutorialArea" data-depth="0.1">
             <img
               v-if="tutorialStep === 3"
               src="../Assets/Day/day_skyCity_hover.png"
@@ -165,21 +168,34 @@
             />
           </div>
 
-          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+          <div class="parallax-wrapper tutorialArea" data-depth="0.115">
             <img
               v-if="tutorialStep === 7"
-              src="../Assets/Day/left_castle_hover.png"
-              alt="lamp"
+              src="../Assets/Day/left_castle_tutorial_hover.png"
+              alt="leftCastle"
               class="tutorial-image blink"
+            />
+
+            <img
+              v-if="tutorialStep === 7"
+              src="../Assets/Day/left_castle_tutorial.png"
+              alt="leftCastle"
+              class="tutorial-image left_castle"
             />
           </div>
 
-          <div class="parallax-wrapper tutorialArea" data-depth="0.05">
+          <div class="parallax-wrapper tutorialArea" data-depth="0.13">
             <img
               v-if="tutorialStep === 8"
-              src="../Assets/Day//right_castle_hover.png"
-              alt="lamp"
+              src="../Assets/Day/right_castle_tutorial_hover.png"
+              alt="rightCastle"
               class="tutorial-image blink"
+            />
+            <img
+              v-if="tutorialStep === 8"
+              src="../Assets/Day/right_castle_tutorial.png"
+              alt="rightCastle"
+              class="tutorial-image right_castle"
             />
           </div>
         </div>
@@ -221,12 +237,24 @@
               <p v-else>Hi, Visitor !</p>
               <!-- <p>Hi,Chris!</p> -->
             </div>
-            <div class="btnLink white" @click="logout">
+            <span class="divider"></span>
+
+            <div class="btnLink white btnLinkLogout" @click="logout">
               <p>Log Out</p>
               <!-- <div class="icon-M">
                 <div class="white-setting"></div>
               </div> -->
             </div>
+            <span class="divider"></span>
+
+            <span>
+              <img
+                @click="resetTutorial"
+                class="questionMark"
+                src="../Assets/img/icon/questionMark.png"
+                alt=""
+              />
+            </span>
           </div>
 
           <!-- =====log in===== -->
@@ -247,6 +275,16 @@
           <div class="white-edit"></div>
         </div> -->
             </div>
+            <span class="divider"></span>
+
+            <span>
+              <img
+                @click="resetTutorial"
+                class="questionMark"
+                src="../Assets/img/icon/questionMark.png"
+                alt=""
+              />
+            </span>
           </div>
         </div>
 
@@ -430,15 +468,22 @@
 </template>
 
 <script setup>
-import { onMounted, ref, computed, watch, onBeforeUnmount } from "vue";
+import {
+  onMounted,
+  ref,
+  computed,
+  watch,
+  onBeforeUnmount,
+  nextTick,
+} from "vue";
 import Parallax from "parallax-js";
 import { useRouter } from "vue-router";
 import Preload from "../components/Preload.vue";
 import { useUserAuthState } from "@/stores/userAuthState";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import BlackCover from "../components/BlackCover.vue";
-import Login from "./Auth/Login.vue";
-import Signup from "./Auth/Signup.vue";
+// import Login from "./Auth/Login.vue";
+// import Signup from "./Auth/Signup.vue";
 import { db } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -452,8 +497,8 @@ const tutorialOverlay = ref(null);
 const tutorialArea = ref(null);
 
 // 登入按鈕選單
-// const islogIn = ref(false);
-// const islogOut = ref(null);
+const islogIn = ref(false);
+const islogOut = ref(null);
 
 // 初始化Firebase身份驗證
 const auth = getAuth();
@@ -464,6 +509,8 @@ const userName = ref("");
 const avatarURL = ref("");
 
 const parallaxContainer = ref(null);
+const parallaxContainerTutorial = ref(null);
+
 const router = useRouter();
 
 const day = ref(true);
@@ -662,19 +709,49 @@ const nextTutorialStep = () => {
   } else if (tutorialStep.value === 8) {
     tutorialText.value =
       "The castle on the right is the <span style='color: #FFE9BA;'> Member Center</span><br/> where you can  <span style='color: #FFE9BA;'>view your membership details.</span>";
+  } else if (tutorialStep.value === 9) {
+    tutorialText.value =
+      "The tutorial is almost over<br/>now you can<span style='color: #FFE9BA;'>  begin your adventure in Phantasia!</span>";
+  } else if (tutorialStep.value === 10) {
+    tutorialText.value =
+      "If you get lost, just click the <span style='color: #FFE9BA;'>question mark </span><br/>in the<span style='color: #FFE9BA;'> top right</span>, and I'll guide you again.";
   } else {
     isFirstVisit.value = false; // 完成教學，隱藏教程
   }
 };
 
+// 重新觸發教學
+const resetTutorial = () => {
+  const currentRoute = router.currentRoute.value.path;
+  if (currentRoute === "/night") {
+    // 如果當前路由是 'night'，將頁面推送到 'day'
+    toggleDayNight();
+
+    setTimeout(() => {
+      nextTick(() => {
+        // 確保 toggleDayNight 完成後再顯示教學
+        tutorialStep.value = 0; // 重設教學步驟
+        tutorialText.value =
+          "Welcome to Phantasia! <br/> Click to start the tour of a magical world."; // 初始文字
+        isFirstVisit.value = true; // 顯示教學覆蓋層
+      });
+    }, 2500);
+  } else {
+    tutorialStep.value = 0;
+    tutorialText.value =
+      "Welcome to Phantasia! <br/> Click to start the tour of a magical world."; // 初始文字
+    isFirstVisit.value = true;
+  }
+};
+
 onMounted(() => {
   // ========紀錄是否第一次進入(新手教學)========
-  // const hasVisited = localStorage.getItem("hasVisited"); // 記錄用戶是否曾經訪問過
-  // if (hasVisited) {
-  //   isFirstVisit.value = false; // 如果曾經訪問過，則不顯示教程
-  // } else {
-  //   localStorage.setItem("hasVisited", "true"); // 記錄首次訪問
-  // }
+  const hasVisited = localStorage.getItem("hasVisited"); // 記錄用戶是否曾經訪問過
+  if (hasVisited) {
+    isFirstVisit.value = false; // 如果曾經訪問過，則不顯示教程
+  } else {
+    localStorage.setItem("hasVisited", "true"); // 記錄首次訪問
+  }
 
   // ========================
 
@@ -682,6 +759,19 @@ onMounted(() => {
   if (parallaxContainer.value) {
     // 初始化 Parallax 實例
     const scene = parallaxContainer.value;
+    const parallaxInstance = new Parallax(scene, {
+      relativeInput: true, // 啟用相對滑鼠位置偏移
+      hoverOnly: true, // 只在滑鼠懸停時啟動 Parallax
+      originY: 0,
+      originX: 0.8,
+      scalarX: 5.5, // 水平方向移動幅度是滑鼠移動的一半
+      scalarY: 6.5, // 垂直方向移動幅度是滑鼠移動的一半
+    });
+  }
+
+  if (parallaxContainerTutorial.value) {
+    // 初始化 Parallax 實例
+    const scene = parallaxContainerTutorial.value;
     const parallaxInstance = new Parallax(scene, {
       relativeInput: true, // 啟用相對滑鼠位置偏移
       hoverOnly: true, // 只在滑鼠懸停時啟動 Parallax

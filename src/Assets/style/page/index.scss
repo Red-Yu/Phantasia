@@ -30,6 +30,16 @@ button {
   pointer-events: none;
 }
 
+.no-select {
+  user-select: none;
+}
+
+.questionMark.tutorial-image {
+  position: absolute;
+  left: 38px;
+  // background-color: yellow;
+}
+
 /* 黑色遮罩層 */
 .tutorial-overlay {
   position: fixed;
@@ -64,6 +74,9 @@ button {
   line-height: 1.3;
   letter-spacing: 0.5px;
   pointer-events: none;
+  p {
+    pointer-events: none;
+  }
 }
 
 .parallax-wrapper .tutorial-image {
@@ -91,6 +104,7 @@ button {
     opacity: 1;
   }
 }
+
 // ==================================
 
 .bgBook {
@@ -132,9 +146,45 @@ button {
     pointer-events: none;
     // background-color: yellow;
   }
+  .btnLinkLogout {
+    opacity: 0.8;
+    &:hover {
+      opacity: 1;
+    }
+    &:hover::after {
+      width: 0;
+    }
+  }
 
-  .logOutmenuButton {
+  .divider {
+    position: relative;
+    width: 1px;
+    height: 22px;
+    background-color: white;
+    margin: 0 2px;
+    margin-top: 4.25px;
+    opacity: 0.7;
+  }
+  .questionMark {
+    position: relative;
+    margin-top: 1px;
+    margin-left: 5px;
+    width: 28px;
+    height: 28px;
+    opacity: 0.8;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .logOutmenuButton,
+  .logInmenuButton {
     .loginInfo {
+      opacity: 0.8;
+      &:hover {
+        opacity: 1;
+      }
       &:hover::after {
         width: 0;
       }
@@ -146,7 +196,7 @@ button {
     display: flex;
     position: absolute;
     top: 10px;
-    right: 2.5%;
+    right: 1.5%;
     gap: 5px;
     cursor: pointer;
 
