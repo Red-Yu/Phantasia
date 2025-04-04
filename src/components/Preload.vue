@@ -85,6 +85,11 @@ p {
   pointer-events: auto;
 }
 
+.btnKey-L.start_btn:hover {
+  background-color: #284163;
+  color: white;
+}
+
 .Administrator {
   position: absolute;
   z-index: 3000;
@@ -207,10 +212,10 @@ p {
 
   <div v-if="isStart" class="loading-animation">
     <div class="startWrapper start">
-      <div class="btnKey-L dark-border">
+      <div class="btnKey-L dark-border start_btn">
         <span class="start_btn visitor" @click="startVideo">Visitor</span>
       </div>
-      <div class="btnKey-L dark-border">
+      <div class="btnKey-L dark-border start_btn">
         <span class="start_btn login" @click="openModal">Login</span>
       </div>
     </div>
