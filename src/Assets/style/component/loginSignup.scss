@@ -27,7 +27,7 @@ button {
 
 // 光箱大小邊框
 .modal-content {
-  max-width: 35vw;
+  max-width: 32vw;
   // 宏育修改-因為加了這段，所以底下資玲修改的地方可以維持原本，不然我的會被影響到xd
   min-width: 450px;
   // =======
@@ -82,18 +82,20 @@ button {
   .lightbox-content {
     height: 80vh;
     min-height: 500px;
-    min-width: 450px;
+    // min-width: 450px;
+    // width: 100%;
 
-    top: 49%;
+    // top: 50%;
   }
 }
 
 /* 光箱內容 */
 .lightbox-content {
   // width: 40%;
-  max-width: 30vw;
-  min-width: 450px;
-  width: 100%;
+  // max-width: 30vw;
+  // min-width: 700px;
+  width: 350px;
+  // width: 100%;
   height: 70vh;
   min-height: 450px;
 
@@ -237,7 +239,7 @@ div.or {
   ::before {
     content: "";
     display: inline-block;
-    width: 10vw;
+    width: 8vw;
     height: 2px;
     background-color: $baseBlue;
     vertical-align: middle;
@@ -246,7 +248,7 @@ div.or {
   ::after {
     content: "";
     display: inline-block;
-    width: 10vw;
+    width: 8vw;
     height: 2px;
     background-color: $baseBlue;
     vertical-align: middle;
