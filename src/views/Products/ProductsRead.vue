@@ -168,6 +168,17 @@
         <div class="popup-buttons">
           <div @click="navigate('/Products')" class="action-button btnKey-L light">
             <p>BACK TO BOOKS</p>
+            <div class="icon-L">
+              <div class="white-cross">
+                <div class="cols">
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="rows">
+                  <span></span>
+                </div>
+              </div>
+            </div>
           </div>
           <div @click="navigate('/MemberCenter')" class="action-button btnKey-L light">
             <p>SUBSCRIBE</p>

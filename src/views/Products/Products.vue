@@ -98,7 +98,7 @@
           :class="['pg_controlButton ', { pg_active: currentSort === key }]"
         >
           {{ label }}
-          <div class="icon-L">
+          <div class="icon-M">
             <div class="white-cross">
               <div class="cols">
                 <span></span>

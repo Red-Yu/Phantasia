@@ -57,22 +57,26 @@
           </div>
         </div>
         <div class="content-right3">
-          <h1>{{ product.title }}</h1>
-          <h2>{{ product.subtitle }}</h2>
+          <h1 class="product-title">{{ product.title }}</h1>
+          <h2 class="product-subtitle ">{{ product.subtitle }}</h2>
           <div class="info-group3">
-            <span class="info-icon3">🔹</span>
+            <span class="info-icon3">
+              <img src="../../Assets/img/icon/feather.png"  style="width: 25px;height:auto;">
+            </span>
             <span class="info-heading3">Brief Introduction</span>
           </div>
           <hr class="info-divider3" />
-          <p>{{ product.description }}</p>
+          <p class="info-description">{{ product.description }}</p>
           <div class="info-group3">
-            <span class="info-icon3">🔹</span>
+            <span class="info-icon3">
+              <img src="../../Assets/img/icon/feather.png"  style="width: 25px;height:auto;">
+            </span>
             <span class="info-heading3">Information</span>
           </div>
           <hr class="info-divider3" />
-          <p>
-            Author: {{ product.author }}<br />
-            Date Added: {{ product.dateAdded }}<br />
+          <p class="info-description">
+            Author : {{ product.author }}<br />
+            Date Added : {{ product.dateAdded }}<br />
           </p>
           <div class="readButtons">
             <section class="readButtonL">
@@ -110,7 +114,7 @@
           </div>
         </div>
       </section>
-      <div class="commentTitle"><h1>Comments</h1></div>
+      <div class="commentTitle">Comments</div>
       <section class="feedback-section3">
         <div class="feedback-box3">
           <div ref="feedbackList" class="feedback-list3">

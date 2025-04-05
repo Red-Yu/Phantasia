@@ -144,17 +144,17 @@
 
 .text-box-container {
   width: 50%;
-  height: 300px;
+  height: 250px;
   max-width: 400px;
   padding: 5vh 2vw;
   background-color: #2a5670;
-  color: white;
+  color: $subWhite;
   border-radius: 10px;
   position: absolute;
   /* Absolute to overlap */
   left: 350px;
   /* Shift right to overlap with carousel-item; adjust as needed */
-  bottom: -150px;
+  bottom: -130px;
   z-index: 2;
   /* Behind carousel-item */
   text-align: left;
@@ -197,14 +197,14 @@
 }
 
 .leftC {
-  transform: translateX(-30vw);
+  transform: translateX(-35vw);
   /* Scalable translation */
   z-index: 2;
   cursor: default;
 }
 
 .rightC {
-  transform: translateX(30vw);
+  transform: translateX(35vw);
   /* Scalable translation */
   z-index: 2;
   cursor: default;
@@ -268,7 +268,7 @@
     height: 300px;
     padding: 20px;
     background-color: #2a5670;
-    color: white;
+    color: $subWhite;
     border-radius: 10px;
     text-align: left;
     flex-shrink: 0;
@@ -325,7 +325,7 @@
     position: relative;
     /* Ensure it flows naturally in the flex column */
     background-color: #2a5670;
-    color: white;
+    color: $subWhite;
     border-radius: 10px;
     text-align: left;
     flex-shrink: 0;
@@ -379,7 +379,7 @@
   width: 100%;
   height: auto;
   background-color: #153243;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid $subWhite;
   /* Remove border */
   padding: 0px;
   display: flex;
@@ -412,7 +412,7 @@
 }
 
 .title {
-  color: white;
+  color: $subWhite;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
   margin-bottom: 20px;
   text-align: left;
@@ -514,7 +514,7 @@
   /* Ensures it spans across the full width of .pg_wrapper */
   height: 2px;
   /* Adjust thickness */
-  background-color: white;
+  background-color: $subWhite;
   /* Makes it visible */
   margin-top: 10px;
   /* Adjust spacing */
@@ -530,7 +530,8 @@
 .pg_sortWrapper {
   display: grid;
   justify-content: center;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid $subWhite;
+  padding: 10px 0;
 }
 
 .pg_controlsBar {
@@ -549,7 +550,7 @@
   background: transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-  color: white;
+  color: $subWhite;
   font-family: "Fanwood Text", sans-serif;
   display: flex;
   align-items: center;
@@ -594,11 +595,11 @@
   font-size: 18px;
   background-color: transparent;
   /* Makes it blend into the background */
-  color: white;
+  color: $subWhite;
   /* Adjust text color */
   border: none;
   /* Removes all borders */
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid $subWhite;
   /* Keeps only the bottom border */
   padding: 8px;
   outline: none;
@@ -785,7 +786,7 @@
   }
 
   .pg_itemCard:nth-child(3n) {
-    border-right: 1px solid white;
+    border-right: 1px solid $subWhite;
     margin-right: -1px;
   }
 
@@ -797,13 +798,13 @@
   }
 
   .pg_itemCard {
-    border-right: 1px solid white;
-    border-left: 1px solid white;
+    border-right: 1px solid $subWhite;
+    border-left: 1px solid $subWhite;
   }
 
   .pg_itemCard:not(:nth-child(3n)) {
-    border-right: 1px solid white;
-    border-left: 1px solid white;
+    border-right: 1px solid $subWhite;
+    border-left: 1px solid $subWhite;
     margin-right: -1px;
   }
 }
@@ -826,7 +827,7 @@
 }
 
 .pg_itemCard:not(:nth-child(3n)) {
-  border-right: 1px solid white;
+  border-right: 1px solid $subWhite;
   margin-right: -1px;
 }
 
@@ -854,7 +855,7 @@
   font-size: 1.1em;
   margin: 0 0 15px 0;
   flex-grow: 1;
-  color: white;
+  color: $subWhite;
   font-family: "Fanwood Text", sans-serif;
 }
 
@@ -908,7 +909,7 @@
   border-radius: 4px;
   min-width: 80px;
   text-align: center;
-  color: white;
+  color: $subWhite;
 }
 
 // ----------------------------------------------------------------------------
@@ -920,7 +921,7 @@
 }
 
 .page-container3 {
-  width: 80%;
+  width: 90%;
   margin: auto;
   text-align: center;
   padding-bottom: 40px;
@@ -934,7 +935,7 @@
 }
 
 .content-left3 {
-  width: 45%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -945,24 +946,32 @@
 .content-right3 {
   width: 50%;
   text-align: left;
-  color: white;
-  font-size: 24px;
+  @include Aleo-Ag(16px,$subWhite);
 }
 
-h1,
-h2 {
-  margin: 0;
+.product-title{
+  @include FanwoodText-AG(50px,$subWhite);
+  margin-top: 40px;
+}
+.product-subtitle{
+  @include Aleo-Ag(20px,$baseOrange);
+  margin-top: 10px;
 }
 
 .info-group3 {
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  color: white;
+  margin-top: 50px;
 }
 
-.info-group3 p {
-  color: white;
+.info-description {
+  @include Aleo-Ag(16px,$subWhite);
+  line-height: 1.6;
+  padding: 10px 0;
+}
+
+.info-heading3{
+  @include Aleo-Ag(20px,$subDark-gray);
 }
 
 .info-icon3 {
@@ -971,48 +980,37 @@ h2 {
 
 .info-divider3 {
   width: 100%;
-  border: 1px solid white;
+  border: 1px dashed $subDark-gray;
   margin: 10px 0;
-  color: white;
+  color: $subWhite;
 }
 
 .readButtons {
   display: flex;
-  justify-content: center;
+  justify-content: end;
   margin-top: 20px;
-  gap: 60px;
-}
-
-.readButtonL {
-  position: relative;
-  float: right;
-  padding: 20px 0px;
-}
-
-.readButtonR {
-  position: relative;
-  float: right;
-  padding: 20px 0px;
+  gap: 20px;
 }
 
 .commentTitle {
-  margin-top: 40px;
-  color: white;
-  font-size: 24px;
+  @include FanwoodText-AG(50px,$subWhite);
+  margin-top: 80px;
 }
 
 .feedback-section3 {
-  margin-top: 50px;
+  margin-top: 30px;
   display: flex;
   justify-content: center;
+  border: 2px solid $subWhite;
+  padding: 3px;
 }
 
 .feedback-box3 {
   position: relative;
-  border: 2px solid white;
+  border: 1px solid $subWhite;
   padding: 20px;
-  width: 1220px;
-  height: 810px;
+  width: 1200px;
+  height: 780px;
   overflow: hidden;
   display: flex;
 }
@@ -1053,7 +1051,7 @@ h2 {
 .feedback-details3 {
   text-align: left;
   flex-grow: 1;
-  color: white;
+  color: $subWhite;
 }
 
 .feedback-stars3 span {
@@ -1065,13 +1063,13 @@ h2 {
 }
 
 .feedback-stars3 span.filled {
-  color: gold;
+  color: $baseOrange;
   /* Filled stars */
 }
 
 .feedback-divider3 {
   width: 100%;
-  border: 1px solid white;
+  border: 1px solid $subWhite;
   margin-top: 10px;
 }
 
@@ -1126,51 +1124,100 @@ h2 {
   background-color: $baseOrange;
 }
 
+
+// ========================================
+
+// .product-box--front {
+//   width: 507.93px;
+//   height: 700px;
+//   position: absolute;
+//   transform: translate3d(-250px, -375px, 18px);
+//   /* Example for front face */
+// }
+
+// .product-box--back {
+//   width: 507.93px;
+//   height: 700px;
+//   position: absolute;
+//   transform: translate3d(-250px, -375px, -59px) rotateY(180deg);
+//   /* Example for back face */
+//   // background-color: palegoldenrod;
+// }
+
+// .product-box--side-left {
+//   width: 76.49px;
+//   height: 700px;
+//   transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
+//   // background-color: palegoldenrod;
+// }
+
+// .product-box--side-right {
+//   width: 76.49px;
+//   height: 700px;
+//   transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
+// }
+
+// .product-box--top {
+//   width: 507.93px;
+//   height: 76.49px;
+//   transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
+//   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+//   background-size: cover;
+// }
+
+// .product-box--bottom {
+//   width: 507.93px;
+//   height: 76.49px;
+//   transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+//   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+//   background-size: cover;
+// }
+
+// --------------------------------
+
+// 資玲改大小
+
 .product-box--front {
-  width: 507.93px;
-  height: 700px;
-  position: absolute;
-  transform: translate3d(-250px, -375px, 18px);
-  /* Example for front face */
+  width: 507.93px * 0.7;
+  height: 700px * 0.7;
+  transform: translate3d(-250px * 0.7, -375px * 0.7, 18px * 0.7);
 }
 
 .product-box--back {
-  width: 507.93px;
-  height: 700px;
-  position: absolute;
-  transform: translate3d(-250px, -375px, -59px) rotateY(180deg);
-  /* Example for back face */
-  // background-color: palegoldenrod;
+  width: 507.93px * 0.7;
+  height: 700px * 0.7;
+  transform: translate3d(-250px * 0.7, -375px * 0.7, -59px * 0.7) rotateY(180deg);
 }
 
 .product-box--side-left {
-  width: 76.49px;
-  height: 700px;
-  transform: translate3d(-268px, -375px, 0) translate3d(-20px, 0, -20px) rotateY(-90deg);
-  // background-color: palegoldenrod;
+  width: 76.49px * 0.7;
+  height: 700px * 0.7;
+  transform: translate3d(-268px * 0.7, -375px * 0.7, 0) translate3d(-20px * 0.7, 0, -20px * 0.7) rotateY(-90deg);
 }
 
 .product-box--side-right {
-  width: 76.49px;
-  height: 700px;
-  transform: translate3d(-262px, -375px, 0) translate3d(480px, 0px, -20px) rotateY(90deg);
+  width: 76.49px * 0.7;
+  height: 700px * 0.7;
+  transform: translate3d(-262px * 0.7, -375px * 0.7, 0) translate3d(480px * 0.7, 0px, -20px * 0.7) rotateY(90deg);
+  /* 480px × 0.7 */
 }
 
 .product-box--top {
-  width: 507.93px;
-  height: 76.49px;
-  transform: translate3d(-250px, -393px, 0) translate3d(0px, -20px, -20px) rotateX(90deg);
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
-  background-size: cover;
+  width: 507.93px * 0.7;
+  height: 76.49px * 0.7;
+  transform: translate3d(-250px * 0.7, -393px * 0.7, 0) translate3d(0px, -20px * 0.7, -20px * 0.7) rotateX(90deg);
 }
 
 .product-box--bottom {
-  width: 507.93px;
-  height: 76.49px;
-  transform: translate3d(-250px, -443px, 0) translate3d(0px, 730px, -20px) rotateX(-90deg);
+  width: 507.93px * 0.7;
+  height: 76.49px * 0.7;
   background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
+  transform: translate3d(-250px * 0.7, -443px * 0.7, 0) translate3d(0px, 730px * 0.7, -20px * 0.7) rotateX(-90deg);
   background-size: cover;
 }
+
+// ========================================
+
 
 /* Styles for inner divs to fill their parent containers */
 .product-box--front>div,
@@ -1259,40 +1306,40 @@ h2 {
   // 直接*0.8後續要修改比較容易
 
   .product-box--front {
-    width: 507.93px * 0.8;
-    height: 700px * 0.8;
-    transform: translate3d(-250px * 0.8, -375px * 0.8, 18px * 0.8);
+    width: 507.93px * 0.6;
+    height: 700px * 0.6;
+    transform: translate3d(-250px * 0.6, -375px * 0.6, 18px * 0.6);
   }
 
   .product-box--back {
-    width: 507.93px * 0.8;
-    height: 700px * 0.8;
-    transform: translate3d(-250px * 0.8, -375px * 0.8, -59px * 0.8) rotateY(180deg);
+    width: 507.93px * 0.6;
+    height: 700px * 0.6;
+    transform: translate3d(-250px * 0.6, -375px * 0.6, -59px * 0.6) rotateY(180deg);
   }
 
   .product-box--side-left {
-    width: 76.49px * 0.8;
-    height: 700px * 0.8;
-    transform: translate3d(-268px * 0.8, -375px * 0.8, 0) translate3d(-20px * 0.8, 0, -20px * 0.8) rotateY(-90deg);
+    width: 76.49px * 0.6;
+    height: 700px * 0.6;
+    transform: translate3d(-268px * 0.6, -375px * 0.6, 0) translate3d(-20px * 0.6, 0, -20px * 0.6) rotateY(-90deg);
   }
 
   .product-box--side-right {
-    width: 76.49px * 0.8;
-    height: 700px * 0.8;
-    transform: translate3d(-262px * 0.8, -375px * 0.8, 0) translate3d(480px * 0.8, 0px, -20px * 0.8) rotateY(90deg);
-    /* 480px × 0.8 */
+    width: 76.49px * 0.6;
+    height: 700px * 0.6;
+    transform: translate3d(-262px * 0.6, -375px * 0.6, 0) translate3d(480px * 0.6, 0px, -20px * 0.6) rotateY(90deg);
+    /* 480px × 0.6 */
   }
 
   .product-box--top {
-    width: 507.93px * 0.8;
-    height: 76.49px * 0.8;
-    transform: translate3d(-250px * 0.8, -393px * 0.8, 0) translate3d(0px, -20px * 0.8, -20px * 0.8) rotateX(90deg);
+    width: 507.93px * 0.6;
+    height: 76.49px * 0.6;
+    transform: translate3d(-250px * 0.6, -393px * 0.6, 0) translate3d(0px, -20px * 0.6, -20px * 0.6) rotateX(90deg);
   }
 
   .product-box--bottom {
-    width: 507.93px * 0.8;
-    height: 76.49px * 0.8;
-    transform: translate3d(-250px * 0.8, -443px * 0.8, 0) translate3d(0px, 730px * 0.8, -20px * 0.8) rotateX(-90deg);
+    width: 507.93px * 0.6;
+    height: 76.49px * 0.6;
+    transform: translate3d(-250px * 0.6, -443px * 0.6, 0) translate3d(0px, 730px * 0.6, -20px * 0.6) rotateX(-90deg);
   }
 
   // .product-box--front {
@@ -1559,7 +1606,7 @@ h2 {
 .title-6 {
   font-size: 160px;
   font-weight: bold;
-  color: white;
+  color: $subWhite;
   font-family: "Fanwood Text", sans-serif;
 }
 
@@ -1574,14 +1621,14 @@ h2 {
   font-size: 80px;
   font-weight: bold;
   margin: 0 10px;
-  color: white;
+  color: $subWhite;
   font-family: "Fanwood Text", sans-serif;
 }
 
 .line-6 {
   flex-grow: 1;
   height: 2px;
-  background-color: white;
+  background-color: $subWhite;
 }
 
 .user-input-wrapper {
@@ -1590,7 +1637,7 @@ h2 {
   /* Centers the entire block */
   width: 100%;
   background-color: #153243;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid $subWhite;
 }
 
 .feedback-content37 {
@@ -1637,7 +1684,7 @@ h2 {
 }
 
 .reviewText {
-  color: white;
+  color: $subWhite;
   font-family: "Fanwood Text", sans-serif;
   text-align: center;
   /* Ensures text is centered */
@@ -1663,7 +1710,7 @@ h2 {
   resize: none;
   border: 1px solid #153243;
   border-radius: 5px;
-  background-color: white;
+  background-color: $subWhite;
   /* Changes background color */
   color: black;
   /* Changes text color for contrast */
@@ -1717,6 +1764,10 @@ h2 {
 .action-button {
   border: none;
   cursor: pointer;
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .actionButtonWrapper8 {
@@ -1758,29 +1809,38 @@ h2 {
 .popup-box {
   width: 100%;
   height: 45%;
-  background: #153243;
-  text-align: center;
-  padding: 20px;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px 10px 0 0;
+  background: $baseBlue;
+  border: $subWhite 5px solid;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  gap: 20px;
   /* Ensures spacing between text and buttons */
+
+  &::after{
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    border: $subWhite 2px solid;
+    pointer-events: none;
+  }
 }
 
 .popup-box p {
-  font-size: clamp(24px, 5vw, 48px);
-  color: white;
-  font-family: "Aleo";
+  @include Aleo-AG(24px,$subWhite);
 }
 
 .popup-buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
-  padding-bottom: 50px;
-  margin-top: 50px;
   /* Ensures buttons are visible */
 }
 
