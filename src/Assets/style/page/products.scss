@@ -576,7 +576,8 @@
 .pg_controlButton.pg_active .icon-L,
 .pg_controlButton.pg_active-newest .icon-L,
 .pg_controlButton.pg_active-oldest .icon-L {
-  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%) hue-rotate(10deg);
+  filter: brightness(0) saturate(100%) invert(56%) sepia(100%) saturate(600%)
+    hue-rotate(10deg);
 }
 
 // .pg_controlButton:hover {
@@ -650,8 +651,6 @@
 .pg_searchIcon {
   width: 30px;
 }
-
-
 
 @keyframes rotatingAnimation {
   0% {
@@ -789,7 +788,6 @@
     border-right: 1px solid $subWhite;
     margin-right: -1px;
   }
-
 }
 
 @media (max-width: 768px) {
@@ -925,6 +923,8 @@
   margin: auto;
   text-align: center;
   padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-section3 {
@@ -946,15 +946,15 @@
 .content-right3 {
   width: 50%;
   text-align: left;
-  @include Aleo-Ag(16px,$subWhite);
+  @include Aleo-Ag(16px, $subWhite);
 }
 
-.product-title{
-  @include FanwoodText-AG(50px,$subWhite);
+.product-title {
+  @include FanwoodText-AG(50px, $subWhite);
   margin-top: 40px;
 }
-.product-subtitle{
-  @include Aleo-Ag(20px,$baseOrange);
+.product-subtitle {
+  @include Aleo-Ag(20px, $baseOrange);
   margin-top: 10px;
 }
 
@@ -965,13 +965,13 @@
 }
 
 .info-description {
-  @include Aleo-Ag(16px,$subWhite);
+  @include Aleo-Ag(16px, $subWhite);
   line-height: 1.6;
   padding: 10px 0;
 }
 
-.info-heading3{
-  @include Aleo-Ag(20px,$subDark-gray);
+.info-heading3 {
+  @include Aleo-Ag(20px, $subDark-gray);
 }
 
 .info-icon3 {
@@ -993,23 +993,26 @@
 }
 
 .commentTitle {
-  @include FanwoodText-AG(50px,$subWhite);
+  @include FanwoodText-AG(50px, $subWhite);
   margin-top: 80px;
 }
 
 .feedback-section3 {
   margin-top: 30px;
   display: flex;
-  justify-content: center;
+  align-self: center;
   border: 2px solid $subWhite;
   padding: 3px;
+  width: 100%;
+  // max-width: 1210px;
 }
 
 .feedback-box3 {
   position: relative;
   border: 1px solid $subWhite;
   padding: 20px;
-  width: 1200px;
+  // max-width: 1200px;
+  width: 100%;
   height: 780px;
   overflow: hidden;
   display: flex;
@@ -1112,7 +1115,7 @@
   animation: bookFloat 15s ease-in-out infinite alternate; // 預設開啟動畫
 }
 
-.product-box-holder>div {
+.product-box-holder > div {
   position: absolute;
   top: 0;
   left: 0;
@@ -1123,7 +1126,6 @@
   z-index: 0;
   background-color: $baseOrange;
 }
-
 
 // ========================================
 
@@ -1186,43 +1188,48 @@
 .product-box--back {
   width: 507.93px * 0.7;
   height: 700px * 0.7;
-  transform: translate3d(-250px * 0.7, -375px * 0.7, -59px * 0.7) rotateY(180deg);
+  transform: translate3d(-250px * 0.7, -375px * 0.7, -59px * 0.7)
+    rotateY(180deg);
 }
 
 .product-box--side-left {
   width: 76.49px * 0.7;
   height: 700px * 0.7;
-  transform: translate3d(-268px * 0.7, -375px * 0.7, 0) translate3d(-20px * 0.7, 0, -20px * 0.7) rotateY(-90deg);
+  transform: translate3d(-268px * 0.7, -375px * 0.7, 0)
+    translate3d(-20px * 0.7, 0, -20px * 0.7) rotateY(-90deg);
 }
 
 .product-box--side-right {
   width: 76.49px * 0.7;
   height: 700px * 0.7;
-  transform: translate3d(-262px * 0.7, -375px * 0.7, 0) translate3d(480px * 0.7, 0px, -20px * 0.7) rotateY(90deg);
+  transform: translate3d(-262px * 0.7, -375px * 0.7, 0)
+    translate3d(480px * 0.7, 0px, -20px * 0.7) rotateY(90deg);
   /* 480px × 0.7 */
 }
 
 .product-box--top {
   width: 507.93px * 0.7;
   height: 76.49px * 0.7;
-  transform: translate3d(-250px * 0.7, -393px * 0.7, 0) translate3d(0px, -20px * 0.7, -20px * 0.7) rotateX(90deg);
+  transform: translate3d(-250px * 0.7, -393px * 0.7, 0)
+    translate3d(0px, -20px * 0.7, -20px * 0.7) rotateX(90deg);
 }
 
 .product-box--bottom {
   width: 507.93px * 0.7;
   height: 76.49px * 0.7;
-  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg") no-repeat center center;
-  transform: translate3d(-250px * 0.7, -443px * 0.7, 0) translate3d(0px, 730px * 0.7, -20px * 0.7) rotateX(-90deg);
+  background: url("https://s3-ap-southeast-2.amazonaws.com/mephystoprojects/alice/paper-horizontal.jpg")
+    no-repeat center center;
+  transform: translate3d(-250px * 0.7, -443px * 0.7, 0)
+    translate3d(0px, 730px * 0.7, -20px * 0.7) rotateX(-90deg);
   background-size: cover;
 }
 
 // ========================================
 
-
 /* Styles for inner divs to fill their parent containers */
-.product-box--front>div,
-.product-box--back>div,
-.product-box--side-left>div {
+.product-box--front > div,
+.product-box--back > div,
+.product-box--side-left > div {
   position: absolute;
   top: 0;
   left: 0;
@@ -1314,32 +1321,37 @@
   .product-box--back {
     width: 507.93px * 0.6;
     height: 700px * 0.6;
-    transform: translate3d(-250px * 0.6, -375px * 0.6, -59px * 0.6) rotateY(180deg);
+    transform: translate3d(-250px * 0.6, -375px * 0.6, -59px * 0.6)
+      rotateY(180deg);
   }
 
   .product-box--side-left {
     width: 76.49px * 0.6;
     height: 700px * 0.6;
-    transform: translate3d(-268px * 0.6, -375px * 0.6, 0) translate3d(-20px * 0.6, 0, -20px * 0.6) rotateY(-90deg);
+    transform: translate3d(-268px * 0.6, -375px * 0.6, 0)
+      translate3d(-20px * 0.6, 0, -20px * 0.6) rotateY(-90deg);
   }
 
   .product-box--side-right {
     width: 76.49px * 0.6;
     height: 700px * 0.6;
-    transform: translate3d(-262px * 0.6, -375px * 0.6, 0) translate3d(480px * 0.6, 0px, -20px * 0.6) rotateY(90deg);
+    transform: translate3d(-262px * 0.6, -375px * 0.6, 0)
+      translate3d(480px * 0.6, 0px, -20px * 0.6) rotateY(90deg);
     /* 480px × 0.6 */
   }
 
   .product-box--top {
     width: 507.93px * 0.6;
     height: 76.49px * 0.6;
-    transform: translate3d(-250px * 0.6, -393px * 0.6, 0) translate3d(0px, -20px * 0.6, -20px * 0.6) rotateX(90deg);
+    transform: translate3d(-250px * 0.6, -393px * 0.6, 0)
+      translate3d(0px, -20px * 0.6, -20px * 0.6) rotateX(90deg);
   }
 
   .product-box--bottom {
     width: 507.93px * 0.6;
     height: 76.49px * 0.6;
-    transform: translate3d(-250px * 0.6, -443px * 0.6, 0) translate3d(0px, 730px * 0.6, -20px * 0.6) rotateX(-90deg);
+    transform: translate3d(-250px * 0.6, -443px * 0.6, 0)
+      translate3d(0px, 730px * 0.6, -20px * 0.6) rotateX(-90deg);
   }
 
   // .product-box--front {
@@ -1453,31 +1465,36 @@
   .book3d-box--back {
     width: 300px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px) rotateY(180deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0, 0, -24px)
+      rotateY(180deg);
   }
 
   .book3d-box--side-left {
     width: 24px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px) rotateY(-90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(-12px, 0, -12px)
+      rotateY(-90deg);
   }
 
   .book3d-box--side-right {
     width: 24px;
     height: 450px;
-    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px) rotateY(90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(276px, 0px, -12px)
+      rotateY(90deg);
   }
 
   .book3d-box--top {
     width: 300px;
     height: 24px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px) rotateX(90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, -12px, -12px)
+      rotateX(90deg);
   }
 
   .book3d-box--bottom {
     width: 300px;
     height: 24px;
-    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px) rotateX(-90deg);
+    transform: translate3d(-150px, -225px, 0) translate3d(0px, 438px, -12px)
+      rotateX(-90deg);
   }
 
   .feedback-section3 {
@@ -1819,8 +1836,8 @@
   gap: 20px;
   /* Ensures spacing between text and buttons */
 
-  &::after{
-    content: '';
+  &::after {
+    content: "";
     position: absolute;
     top: 3px;
     left: 3px;
@@ -1834,7 +1851,7 @@
 }
 
 .popup-box p {
-  @include Aleo-AG(24px,$subWhite);
+  @include Aleo-AG(24px, $subWhite);
 }
 
 .popup-buttons {
