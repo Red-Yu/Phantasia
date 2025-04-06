@@ -1607,10 +1607,13 @@
 .action-button {
   border: none;
   cursor: pointer;
-  width: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.action-button.popUpActionButton {
+  width: 250px;
 }
 
 .actionButtonWrapper8 {

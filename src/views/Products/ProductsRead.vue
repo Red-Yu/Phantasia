@@ -43,7 +43,11 @@
         class="readTemplateGroup"
         :style="{ height: 380 * templateStore.templates.length * scale + 'px' }"
       >
-        <div class="readTemplateSize" :style="getPreviewStyle" style="width: 680px">
+        <div
+          class="readTemplateSize"
+          :style="getPreviewStyle"
+          style="width: 680px"
+        >
           <div
             class="canvas"
             v-for="(template, i) in templateStore.templates"
@@ -94,8 +98,8 @@
 
         <div class="reviewText">
           <p>
-            Kindly note that your comments will be publicly visible, so please post
-            responsibly.
+            Kindly note that your comments will be publicly visible, so please
+            post responsibly.
           </p>
         </div>
 
@@ -150,7 +154,10 @@
           @close="isSuccessModalVisible = false"
         />
 
-        <div @click="navigate('/Products')" class="action-button8 btnLink light">
+        <div
+          @click="navigate('/Products')"
+          class="action-button8 btnLink light"
+        >
           <p>Back to books</p>
           <div class="icon-L">
             <div class="light-arrow"></div>
@@ -166,7 +173,10 @@
           SUBSCRIBE NOW TO READ MORE
         </p>
         <div class="popup-buttons">
-          <div @click="navigate('/Products')" class="action-button btnKey-L light">
+          <div
+            @click="navigate('/Products')"
+            class="action-button btnKey-L light popUpActionButton"
+          >
             <p>BACK TO BOOKS</p>
             <div class="icon-L">
               <div class="white-cross">
@@ -180,7 +190,10 @@
               </div>
             </div>
           </div>
-          <div @click="navigate('/MemberCenter')" class="action-button btnKey-L light">
+          <div
+            @click="navigate('/MemberCenter')"
+            class="action-button btnKey-L light popUpActionButton"
+          >
             <p>SUBSCRIBE</p>
             <div class="icon-L">
               <div class="white-cross">
@@ -511,7 +524,8 @@ const preventScrollAction = (event) => {
 const handleScroll = () => {
   if (showPopup.value || loading.value) return; // Exit if loading
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
   const scrollPercentage = scrollTop / scrollHeight;
 
   // Show popup if not logged in OR logged in but not subscribed, at 95% scroll
@@ -539,7 +553,8 @@ const scrollToPosition = (index, event) => {
     event.preventDefault();
     return;
   }
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
   const scrollTo = (scrollHeight / 9) * index;
   window.scrollTo({ top: scrollTo, behavior: "smooth" });
 };
@@ -547,7 +562,8 @@ const scrollToPosition = (index, event) => {
 const updateActiveDot = () => {
   if (showPopup.value) return;
   const scrollTop = window.scrollY;
-  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrollHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
   activeDot.value = Math.min(9, Math.floor((scrollTop / scrollHeight) * 10));
 };
 
