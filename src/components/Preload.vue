@@ -322,10 +322,10 @@ const videoTimeUpdate = () => {
   const video = startVideoElement.value;
 
   setTimeout(() => {
-    if (video && video.currentTime / video.duration > 0.88) {
+    if (video && video.currentTime / video.duration > 0.85) {
       location.reload();
     }
-  }, 1900);
+  }, 100);
 
   setTimeout(() => {
     if (video && video.currentTime / video.duration > 0.91) {
