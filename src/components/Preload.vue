@@ -238,7 +238,7 @@ p {
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick, defineEmits } from "vue";
+import { ref, onMounted, nextTick, onBeforeUnmount } from "vue";
 import { useRouter } from "vue-router";
 import Login from "../views/Auth/Login.vue";
 import Signup from "../views/Auth/Signup.vue";
@@ -304,6 +304,10 @@ const startVideo = () => {
   if (startVideoElement.value) {
     startVideoElement.value.play(); // 開始播放影片
   }
+
+  // setTimeout(() => {
+  //   location.reload();
+  // }, 5500);
 };
 
 // 登入成功後，隱藏啟動畫面
@@ -316,6 +320,13 @@ const videoTimeUpdate = () => {
   isRippleArea.value = false;
 
   const video = startVideoElement.value;
+
+  setTimeout(() => {
+    if (video && video.currentTime / video.duration > 0.88) {
+      location.reload();
+    }
+  }, 1900);
+
   setTimeout(() => {
     if (video && video.currentTime / video.duration > 0.91) {
       // 當影片播放超過 91%，觸發隱藏動畫
@@ -459,7 +470,10 @@ const initializeRipples = () => {
 
 const backToEntrance = () => {
   isVideo.value = true;
-  isStart.value = true;
+
+  setTimeout(() => {
+    isStart.value = true;
+  }, 1000);
 
   setTimeout(() => {
     isRippleArea.value = true;
@@ -469,13 +483,23 @@ const backToEntrance = () => {
   initializeRipples();
 };
 
-// 在beforeunload事件中設置標記，標記是否關閉了頁面
-window.addEventListener("beforeunload", (event) => {
-  // 設置標記為 'closed'，表示頁面即將關閉
+const handleBeforeUnload = (event) => {
+  // 設置標記為 'true'，表示頁面即將關閉
   sessionStorage.setItem("pageClosed", "true");
+};
+
+// // 在beforeunload事件中設置標記，標記是否關閉了頁面
+// window.addEventListener("beforeunload", (event) => {
+//   // 設置標記為 'closed'，表示頁面即將關閉
+//   sessionStorage.setItem("pageClosed", "true");
+// });
+
+onBeforeUnmount(() => {
+  window.removeEventListener("beforeunload", handleBeforeUnload);
 });
 
 onMounted(() => {
+  window.addEventListener("beforeunload", handleBeforeUnload);
   // isVideo.value = true;
   // videoShow.value = true;
   // isRippleArea.value = true;
@@ -562,27 +586,38 @@ window.addEventListener("beforeunload", (event) => {
   }
 });
 
-// 設置標記為 'isNavigating' 來標示是否是路由導航
-const clearNavigationFlag = () => {
-  sessionStorage.setItem("isNavigating", "true");
-};
+// // 設置標記為 'isNavigating' 來標示是否是路由導航
+// const clearNavigationFlag = () => {
+//   sessionStorage.setItem("isNavigating", "true");
+// };
 
-// 清除導航標記
-const resetNavigationFlag = () => {
-  sessionStorage.removeItem("isNavigating");
-};
+// // 清除導航標記
+// const resetNavigationFlag = () => {
+//   sessionStorage.removeItem("isNavigating");
+// };
 
-// 使用 Vue Router 的導航守衛進行清理
+// // 使用 Vue Router 的導航守衛進行清理
+// router.beforeEach((to, from, next) => {
+//   // 設置標記，表示正在進行路由導航
+//   clearNavigationFlag();
+//   next();
+// });
+
 router.beforeEach((to, from, next) => {
-  // 設置標記，表示正在進行路由導航
-  clearNavigationFlag();
-  next();
+  // 避免第一次路由切換時執行動畫邏輯
+  if (!sessionStorage.getItem("isNavigating")) {
+    sessionStorage.setItem("isNavigating", "true");
+    // 如果是第一次進行路由導航，保證不觸發動畫
+    next();
+  } else {
+    next();
+  }
 });
 
 // 當路由完成時，重置該標記
 router.afterEach((to, from) => {
-  // 重置標記，表示導航已經完成
-  resetNavigationFlag();
+  // 當路由完成時，重置標記
+  sessionStorage.removeItem("isNavigating");
 });
 
 const ToBackstage = () => {
