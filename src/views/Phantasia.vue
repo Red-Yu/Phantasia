@@ -220,6 +220,11 @@
         ]"
       >
         <div class="textContent">
+          <div class="copyRight">
+            <span>
+              本網站為緯育TibaMe【TID201】前端工程師專業技術養成班學員作品，僅供學習、展示之用途。
+            </span>
+          </div>
           <!-- =====log out===== -->
           <div v-if="islogIn" class="logOutmenuButton">
             <div class="filter"></div>
