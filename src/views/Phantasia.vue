@@ -222,7 +222,7 @@
         <div class="textContent">
           <div class="copyRight">
             <span>
-              本網站為緯育TibaMe【TID201】前端工程師專業技術養成班學員作品，僅供學習、展示之用途。
+              本網站為緯育TibaMe【TID201】前端工程師專業技術養成班學員作品，僅供學習、展示之用途。若有侵權疑慮，請私訊TibaMe-前端開發技術在職培訓班，由專人協助處理。
             </span>
           </div>
           <!-- =====log out===== -->
