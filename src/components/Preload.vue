@@ -229,7 +229,7 @@ p {
     <div v-show="isVideo" class="video-container">
       <video
         ref="startVideoElement"
-        src="../Assets/Day/video/start_video.mp4"
+        src="../Assets/Day/video/start_video.webm"
         class="startVideo"
         @timeupdate="videoTimeUpdate"
       ></video>
@@ -403,12 +403,14 @@ const preloadImagesAndVideos = () => {
 
   // 影片素材
   const preloadVideos = [
-    new URL(`../Assets/Day/video/start_video.mp4`, import.meta.url).href,
-    new URL(`../Assets/Day/video/day_transfer.mp4`, import.meta.url).href,
-    new URL(`../Assets/Day/video/night_transfer.mp4`, import.meta.url).href,
-    new URL(`../Assets/Day/video/dragon_video.mp4`, import.meta.url).href,
-    new URL(`../Assets/Day/video/sword_video.mp4`, import.meta.url).href,
-    new URL(`../Assets/Day/video/knight_video.mp4`, import.meta.url).href,
+    new URL(`../Assets/Day/video/start_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/day_transfer.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/night_transfer.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/dragon_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/sword_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/knight_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/myColset/myClosetCoverVideo.webm`, import.meta.url)
+      .href,
   ];
 
   setTimeout(() => {
@@ -542,9 +544,11 @@ onMounted(() => {
 
   // 檢查 sessionStorage 中的標記來決定是否顯示動畫
   const isPageClosed = sessionStorage.getItem("pageClosed");
+  const fromPage = sessionStorage.getItem("lastPage");
+  const isFromOtherPage = fromPage && fromPage !== "/";
 
   // 如果標記為 'true'，表示是關閉頁面後重新打開
-  if (isPageClosed) {
+  if (isPageClosed || isFromOtherPage) {
     sessionStorage.removeItem("pageClosed"); // 移除標記
     isLoading.value = false;
     isStart.value = false;
@@ -617,6 +621,7 @@ router.beforeEach((to, from, next) => {
 // 當路由完成時，重置該標記
 router.afterEach((to, from) => {
   // 當路由完成時，重置標記
+  sessionStorage.setItem("lastPage", from.path);
   sessionStorage.removeItem("isNavigating");
 });
 

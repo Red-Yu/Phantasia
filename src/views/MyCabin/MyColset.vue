@@ -573,7 +573,7 @@ onMounted(async () => {
       setTimeout(() => {
         MyColsetCover.value.style.opacity = 0; // 或者將 opacity 設為你想要的值
         MyColsetCover.value.style.pointerEvents = "none";
-      }, 3700);
+      }, 4000);
     }
   });
 

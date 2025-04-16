@@ -449,7 +449,7 @@
             height="100vh"
             class="dayTransferVideo"
           >
-            <source src="../Assets/Day/video/day_transfer.mp4" />
+            <source src="../Assets/Day/video/day_transfer.webm" />
             <!-- 您的瀏覽器不支援影片播放。 -->
           </video>
         </transition>
@@ -463,7 +463,7 @@
             height="100vh"
             class="nightTransferVideo"
           >
-            <source src="../Assets/Day/video/night_transfer.mp4" />
+            <source src="../Assets/Day/video/night_transfer.webm" />
             <!-- 您的瀏覽器不支援影片播放。 -->
           </video>
         </transition>
