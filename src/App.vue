@@ -1,8 +1,10 @@
-<script setup></script>
+<script setup>
+import MobileBlocker from "./components/MobileBlocker.vue";
+</script>
 
 <template>
   <div class="overlay"></div>
-
+  <MobileBlocker />
   <RouterView />
 </template>
 

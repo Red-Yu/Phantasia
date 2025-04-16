@@ -321,6 +321,15 @@ button {
   transition: opacity 0.6s ease-out;
 }
 
+// @media (max-width: 768px) {
+//   .main_container .scroll {
+//     opacity: 1;
+//   }
+//   .main_container .magic {
+//     opacity: 1;
+//   }
+// }
+
 .main_container .magic img {
   position: absolute;
   animation-fill-mode: forwards;

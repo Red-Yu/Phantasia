@@ -229,7 +229,7 @@ p {
     <div v-show="isVideo" class="video-container">
       <video
         ref="startVideoElement"
-        src="../Assets/Day/video/start_video.webm"
+        src="../Assets/Day/video/start_video.mp4"
         class="startVideo"
         @timeupdate="videoTimeUpdate"
       ></video>
@@ -403,12 +403,12 @@ const preloadImagesAndVideos = () => {
 
   // 影片素材
   const preloadVideos = [
-    new URL(`../Assets/Day/video/start_video.webm`, import.meta.url).href,
-    new URL(`../Assets/Day/video/day_transfer.webm`, import.meta.url).href,
-    new URL(`../Assets/Day/video/night_transfer.webm`, import.meta.url).href,
-    new URL(`../Assets/Day/video/dragon_video.webm`, import.meta.url).href,
-    new URL(`../Assets/Day/video/sword_video.webm`, import.meta.url).href,
-    new URL(`../Assets/Day/video/knight_video.webm`, import.meta.url).href,
+    new URL(`../Assets/Day/video/start_video.mp4`, import.meta.url).href,
+    new URL(`../Assets/Day/video/day_transfer.mp4`, import.meta.url).href,
+    new URL(`../Assets/Day/video/night_transfer.mp4`, import.meta.url).href,
+    new URL(`../Assets/Day/video/dragon_video.mp4`, import.meta.url).href,
+    new URL(`../Assets/Day/video/sword_video.mp4`, import.meta.url).href,
+    new URL(`../Assets/Day/video/knight_video.mp4`, import.meta.url).href,
   ];
 
   setTimeout(() => {
