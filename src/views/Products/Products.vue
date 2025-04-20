@@ -330,7 +330,7 @@ const fetchFirestoreData = async () => {
       console.log("Doc Data:", data); // Check raw Firestore data
       fetchedProducts.push({
         id: doc.id, // Firebase-generated ID
-        name: data.title,
+        name: data.title || "Untitled", // Add default value here
         author: data.author,
         colorCode: data.colorCode,
         innerCoverImage: data.imagePath, // Map imagePath to innerCoverImage
